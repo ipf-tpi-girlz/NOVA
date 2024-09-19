@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
+const { Schema } = mongoose
+
 
 const professionalSchema = new Schema({
-    fullName: { //nombre y apellido
+    name: { //nombre y apellido
         type: String,
         required: true
     },

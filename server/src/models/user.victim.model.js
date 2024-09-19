@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose
 
 const victimSchema = new Schema({
-    fullName: { //nombre y apellido
+    name: { //nombre y apellido
         type: String,
         required: true
     },

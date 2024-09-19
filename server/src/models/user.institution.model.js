@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+
 const { Schema } = mongoose
 
 
 const institutionSchema = new Schema({
-    companyName: { //nombre de la institución
+    name: { //nombre de la institución
         type: String,
         required: true
     },
