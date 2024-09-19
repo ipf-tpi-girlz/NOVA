@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose
 
 
-const institutionSchema = new Schema({
+export const institutionSchema = new Schema({
     name: { //nombre de la institución
         type: String,
         required: true
@@ -48,4 +48,4 @@ const institutionSchema = new Schema({
     timestamps: true // para registrar fechas
 });
 
-module.exports = mongoose.model('Institution', institutionSchema);
+export default mongoose.model('Institution', institutionSchema);

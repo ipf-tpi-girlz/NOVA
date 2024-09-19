@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
 
+
 export function createToken(user) {
     try {
         const payload = {

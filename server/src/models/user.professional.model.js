@@ -42,4 +42,4 @@ const professionalSchema = new Schema({
     timestamps: true // tiempo de edicion y de creacion
 });
 
-module.exports = mongoose.model('Professional', professionalSchema);
+export default mongoose.model('Professional', professionalSchema);

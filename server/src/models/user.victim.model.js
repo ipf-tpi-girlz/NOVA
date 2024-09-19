@@ -33,4 +33,4 @@ const victimSchema = new Schema({
     timestamps: true // crea tiempo de edicion y creacion
 });
 
-module.exports = mongoose.model('Victim', victimSchema);
+export default mongoose.model('Victim', victimSchema);
