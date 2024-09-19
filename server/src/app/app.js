@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser'
 export const app = express()
 
 //MIDDLEWARE
+app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 app.use(morgan("dev"))
 app.use(express.json())

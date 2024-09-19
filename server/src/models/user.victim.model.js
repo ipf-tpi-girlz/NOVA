@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose
 
+//*Coleccion/tabla de Victima
 const victimSchema = new Schema({
     name: { //nombre y apellido
         type: String,

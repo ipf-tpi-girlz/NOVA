@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose
 
-
+//*Coleccion/tabla de Profesional
 const professionalSchema = new Schema({
     name: { //nombre y apellido
         type: String,
