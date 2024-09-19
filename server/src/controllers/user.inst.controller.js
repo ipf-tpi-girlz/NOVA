@@ -1,17 +1,22 @@
 import bcrypt from "bcryptjs";
 import { createToken } from '../healpers/create.jwt.js'
-import userInstitutionModel from "../models/user.institution.model.js";
+import Institution from "../models/user.institution.model.js";
 //REGISTRAR 
 export const registerInst = async (req, res) => {
     const { name, cuit, phone, state, city, address, email, password, role } = req.body;
     try {
-        const exist = await userInstitutionModel.find({ email });
+        //*Validaciones de la base de datos
+        const exist = await Institution.find({ email });
         if (exist.length > 0) {
             return res.status(400).send('El correo electrónico que desea ingresar ya se encuentra en nuestro sistema');
         }
+        const existCuit = await Institution.find({ cuit });
+        if (existCuit.length > 0) {
+            return res.status(400).send('El CUIT que desea ingresar ya se encuentra en nuestro sistema');
+        }
         //*Encriptacion
         const passHash = await bcrypt.hash(password, 10);
-        const newInst = {
+        const newInst = new Institution({
             name,
             cuit,
             phone,
@@ -19,11 +24,10 @@ export const registerInst = async (req, res) => {
             city,
             address,
             email,
-            password: passHash,
-            role
-        };
+            password: passHash
+        });
         //*Creacion de usuario
-        await newInst.save()
+        await newInst.save();
         res.status(201).send('El registro ha sido un éxito');
     } catch (error) {
         //!manejo de error

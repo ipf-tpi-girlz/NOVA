@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose
 
 //*Coleccion/tabla de institucion
-export const institutionSchema = new Schema({
+const institutionSchema = new Schema({
     name: { //nombre de la institución
         type: String,
         required: true

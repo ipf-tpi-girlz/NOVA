@@ -26,7 +26,8 @@ const professionalSchema = new Schema({
     },
     licenseNumber: { //numero de licencia
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: { //contraseña
         type: String,

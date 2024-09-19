@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-const { Schema } = mongoose
+
 
 //*Coleccion/tabla de Victima
-const victimSchema = new Schema({
-    name: { //nombre y apellido
+const victimSchema = new mongoose.Schema({
+    name: {
         type: String,
         required: true
     },
@@ -31,7 +31,11 @@ const victimSchema = new Schema({
         required: true
     }
 }, {
-    timestamps: true // crea tiempo de edicion y creacion
+    timestamps: true
 });
 
-export default mongoose.model('Victim', victimSchema);
+export default mongoose.model('Victim', victimSchema)
+
+
+
+

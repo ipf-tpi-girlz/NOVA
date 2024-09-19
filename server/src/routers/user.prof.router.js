@@ -4,6 +4,6 @@ import { Router } from "express";
 export const routerProf = Router();
 
 //RUTA PARA REGISTRAR
-routerProf.post("/user/profesional/register", registerProf);
+routerProf.post("/register", registerProf);
 //RUTA PARA LOGUEAR
-routerProf.post("user/profesional/login", loginProf);
+//routerProf.post("user/profesional/login", loginProf);
