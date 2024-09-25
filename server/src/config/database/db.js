@@ -1,19 +1,29 @@
-import { createPool } from 'mysql2/promise';
+import { Sequelize, Model, DataTypes } from 'sequelize';
 import config from '../config.js'
+import { tablesAndRelation } from './sync.js';
 
+export const sequelize = new Sequelize(
+  config.DB_NAME,
+  config.DB_USER,
+  config.DB_PASSWORD,
+  {
+    host: config.DB_HOST,
+    dialect: config.DB_DIALECT,
+  }
+);
+
+// Función para conectar a la base de datos
 export const conectionDB = async () => {
   try {
-
-    const connection = await createPool({
-      host: config.DB_HOST,
-      user: config.DB_USER,
-      password: config.DB_PASSWORD,
-      database: config.DB_NAME
-    });
-    connection
-    console.log("La conexion a la base de datos se ha realizado con exito");
+    await sequelize.authenticate();
+    await sequelize.sync()
+    await tablesAndRelation();
+    console.log('Conexion a la base de datos exitosa');
   } catch (error) {
-    console.log("Se produjo un error al conectar con la base de datos:", error);
+    console.error('Error al conectar a la base de datos:', error);
   }
 }
+conectionDB()
+
+export { Model, DataTypes }
 

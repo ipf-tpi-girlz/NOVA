@@ -4,12 +4,12 @@ import dotenv from "dotenv";
 dotenv.config();
 
 //CONFIGURACIÓN
-//*Configuracion para mantener la seguridad de los datos
 export default {
-    PORT: process.env.PORT || 4000,
-    DB_HOST: process.env.DB_HOST || "localhost",
-    DB_USER: process.env.DB_USER || "root",
-    DB_PASSWORD: process.env.DB_PASSWORD || "root",
-    DB_NAME: process.env.DB_NAME || "nova",
-    SECRET_KEY: process.env.SECRET_KEY || "mi_secreto_del_token",
+    PORT: process.env.PORT,
+    DB_HOST: process.env.DB_HOST,
+    DB_USER: process.env.DB_USER,
+    DB_PASSWORD: process.env.DB_PASS,
+    DB_NAME: process.env.DB_NAME,
+    SECRET_KEY: process.env.SECRET_KEY,
+    DB_DIALECT: process.env.DB_DIALECT,
 };
