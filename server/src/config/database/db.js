@@ -1,13 +1,19 @@
-import mongoose from "mongoose";
-import config from "../config.js";
+import { createPool } from 'mysql2/promise';
+import config from '../config.js'
 
-export async function conectionDB() {
+export const conectionDB = async () => {
   try {
-    await mongoose.connect(`mongodb://localhost:27017/${config.DB_NAME}`, {
-      //!le saque porque se generaban errores
+
+    const connection = await createPool({
+      host: config.DB_HOST,
+      user: config.DB_USER,
+      password: config.DB_PASSWORD,
+      database: config.DB_NAME
     });
-    console.log("base de datos conectada");
+    connection
+    console.log("La conexion a la base de datos se ha realizado con exito");
   } catch (error) {
-    console.error("error al conectar la base de datos: ", error.message);
+    console.log("Se produjo un error al conectar con la base de datos:", error);
   }
 }
+
