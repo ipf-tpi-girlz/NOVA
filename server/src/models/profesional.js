@@ -1,6 +1,5 @@
 
-import { DataTypes } from '../config/database/db.js'
-import { sequelize } from '../config/database/db.js';
+import { sequelize, DataTypes } from '../config/database/db.js'
 import { Usuario } from './users.js';
 
 export const Profesional = sequelize.define('Profesional', {
@@ -26,6 +25,3 @@ export const Profesional = sequelize.define('Profesional', {
     freezeTableName: true,
     underscored: true,
 });
-
-Profesional.belongsTo(Usuario, { foreignKey: 'usuario_id' });
-

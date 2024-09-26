@@ -1,6 +1,5 @@
-
-import { DataTypes } from '../config/database/db.js'
 import { sequelize } from '../config/database/db.js';
+import { DataTypes } from '../config/database/db.js'
 import { Localidad } from './localidades.js';
 
 
@@ -44,11 +43,11 @@ export const Usuario = sequelize.define('Usuario', {
         allowNull: false
     }
 }, {
-    tableName: 'usuarios',
+    tableName: 'Usuario',
     freezeTableName: true,
     underscored: true,
 
 });
 
-Usuario.belongsTo(Localidad, { foreignKey: 'localidad_id' });
+
 

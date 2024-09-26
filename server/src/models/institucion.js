@@ -32,4 +32,3 @@ export const Institucion = sequelize.define('Institucion', {
     underscored: true,
 });
 
-Institucion.belongsTo(Usuario, { foreignKey: 'usuario_id' });

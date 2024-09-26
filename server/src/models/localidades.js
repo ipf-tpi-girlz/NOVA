@@ -1,7 +1,7 @@
 
 import { DataTypes } from '../config/database/db.js'
 import { sequelize } from '../config/database/db.js';
-
+import { Usuario } from './users.js';
 import { Departamento } from './departamentos.js'; // Asumimos que el modelo de departamento ya está definido
 
 export const Localidad = sequelize.define('Localidad', {
@@ -27,6 +27,4 @@ export const Localidad = sequelize.define('Localidad', {
     freezeTableName: true,
     underscored: true,
 });
-
-Localidad.belongsTo(Departamento, { foreignKey: 'departamento_id' });
 
