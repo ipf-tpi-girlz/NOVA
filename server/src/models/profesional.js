@@ -1,6 +1,5 @@
 
 import { sequelize, DataTypes } from '../config/database/db.js'
-import { Usuario } from './users.js';
 
 export const Profesional = sequelize.define('Profesional', {
     id: {
@@ -12,11 +11,11 @@ export const Profesional = sequelize.define('Profesional', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Usuario,
+            model: "Usuario",
             key: 'id'
         }
     },
-    numero_matricula: {
+    nro_matricula: {
         type: DataTypes.STRING(50),
         allowNull: true
     }

@@ -1,8 +1,7 @@
 
 import { DataTypes } from '../config/database/db.js'
 import { sequelize } from '../config/database/db.js';
-import { Usuario } from './users.js';
-import { Departamento } from './departamentos.js'; // Asumimos que el modelo de departamento ya está definido
+
 
 export const Localidad = sequelize.define('Localidad', {
     id: {
@@ -18,7 +17,7 @@ export const Localidad = sequelize.define('Localidad', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Departamento,
+            model: "Departamento",
             key: 'id'
         }
     }

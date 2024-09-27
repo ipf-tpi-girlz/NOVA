@@ -1,7 +1,6 @@
 import { DataTypes } from '../config/database/db.js';
 import { sequelize } from '../config/database/db.js';
-import { Usuario } from './users.js';
-import { Subforo } from './subForo.js';
+
 
 export const Publicacion = sequelize.define('Publicacion', {
     id: {
@@ -24,14 +23,14 @@ export const Publicacion = sequelize.define('Publicacion', {
     usuarioId: {
         type: DataTypes.INTEGER,
         references: {
-            model: Usuario,
+            model: "Usuario",
             key: 'id'
         }
     },
     subforoId: {
         type: DataTypes.INTEGER,
         references: {
-            model: Subforo,
+            model: "Subforo",
             key: 'id'
         }
     }

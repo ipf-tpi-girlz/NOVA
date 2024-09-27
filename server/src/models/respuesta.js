@@ -1,7 +1,6 @@
 import { DataTypes } from '../config/database/db.js';
 import { sequelize } from '../config/database/db.js';
-import { Comentario } from './comentario.js';
-import { Usuario } from './users.js';
+
 
 export const Respuesta = sequelize.define('Respuesta', {
     id: {
@@ -20,14 +19,14 @@ export const Respuesta = sequelize.define('Respuesta', {
     comentarioId: {
         type: DataTypes.INTEGER,
         references: {
-            model: Comentario,
+            model: "Comentario",
             key: 'id'
         }
     },
     usuarioId: {
         type: DataTypes.INTEGER,
         references: {
-            model: Usuario,
+            model: "Usuario",
             key: 'id'
         }
     }
