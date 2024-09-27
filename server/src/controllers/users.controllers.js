@@ -7,6 +7,7 @@ import bcrypt from 'bcryptjs';
 import { createToken } from '../healpers/create.jwt.js';
 
 
+//Funcion para registrar un usuario
 export const registerUser = async (req, res) => {
     try {
         const { role, nombre, mail, departamento, localidad, contrasenia, nro_telefono, nro_matricula, cuit, razon_social, direccion } = req.body;
@@ -49,6 +50,7 @@ export const registerUser = async (req, res) => {
     }
 };
 
+//Funcion para iniciar sesion
 export const loginUser = async (req, res) => {
     const { mail, contrasenia } = req.body;
 
@@ -81,6 +83,7 @@ export const loginUser = async (req, res) => {
     }
 };
 
+//Funcion para cerrar la sesión
 export const logout = (req, res) => {
     try {
         if (!req.session) {
@@ -102,7 +105,21 @@ export const logout = (req, res) => {
     }
 };
 
+//Funcion para proteger las rutas
+export const secureAccess = (req, res) => {
+    try {
+        // Verificar si el usuario está autenticado
+        if (!req.user) {
+            return res.status(401).send("Acceso denegado: usuario no autenticado");
+        }
 
-export const deleteUser = async (req, res) => {
-
+        // Si el usuario está autenticado, devolver información
+        return res.json("Acceso permitido a la zona protegida");
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Error en el servidor" });
+    }
 };
+
+
+
