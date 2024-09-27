@@ -3,7 +3,7 @@ import config from "../config/config.js";
 
 const SECRET_KEY = config.SECRET_KEY;
 
-export default (userId) => {
+export const createToken = (userId) => {
     return new Promise((resolve, reject) => {
         const payload = { userId };
         jwt.sign(

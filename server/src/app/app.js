@@ -4,6 +4,7 @@ import cors from 'cors'
 import session from 'express-session'
 import config from '../config/config.js'
 import cookieParser from 'cookie-parser'
+import { usersRouter } from '../routers/users.routes.js'
 
 export const app = express()
 
@@ -28,7 +29,7 @@ app.use(morgan("dev"))
 app.use(express.json())
 app.use(cookieParser())
 
-
+app.use('/users', usersRouter)
 
 
 app.listen(config.PORT, () => {
