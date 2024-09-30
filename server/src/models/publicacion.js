@@ -2,7 +2,7 @@ import { DataTypes } from '../config/database/db.js';
 import { sequelize } from '../config/database/db.js';
 
 
-export const Publicacion = sequelize.define('Publicacion', {
+export const Publicacion = sequelize.define('publicaciones', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -11,6 +11,9 @@ export const Publicacion = sequelize.define('Publicacion', {
     title: {
         type: DataTypes.STRING(255),
         allowNull: false
+    },
+    img: {
+        type: DataTypes.STRING(255)
     },
     content: {
         type: DataTypes.TEXT,
@@ -23,14 +26,14 @@ export const Publicacion = sequelize.define('Publicacion', {
     usuarioId: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Usuario",
+            model: "usuarios",
             key: 'id'
         }
     },
     subforoId: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Subforo",
+            model: "sub_foros",
             key: 'id'
         }
     }

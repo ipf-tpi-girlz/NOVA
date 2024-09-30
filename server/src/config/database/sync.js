@@ -9,6 +9,10 @@ import { Comentario } from "../../models/comentario.js";
 import { Subforo } from "../../models/subForo.js";
 import { Publicacion } from "../../models/publicacion.js";
 import { Respuesta } from "../../models/respuesta.js";
+import { Foro } from '../../models/foro.js';
+import { CategoriaForo } from '../../models/categoriaForo.js';
+import { PerfilUsuario } from '../../models/perfil.usario.js';
+import { interaccion_publicacion } from "../../models/interaccion-PCR.js";
 
 // Función para sincronizar tablas y relaciones
 export const syncTables = async () => {
@@ -53,8 +57,29 @@ export const syncTables = async () => {
         Usuario.hasMany(Respuesta, { foreignKey: 'usuarioId', onDelete: 'CASCADE' });
         Respuesta.belongsTo(Usuario, { foreignKey: 'usuarioId' });
 
+        // Relación entre Foro y Subforo
+        Foro.belongsTo(Subforo, { foreignKey: 'subforo_id', as: 'subforo' });
+        Subforo.belongsTo(CategoriaForo, { foreignKey: 'categoria_id', as: 'categoria' });
+
+        // Relación entre PerfilUsuario y Usuario
+        PerfilUsuario.belongsTo(Usuario, { foreignKey: 'usuarioId', as: 'usuario' });
+        Usuario.hasMany(PerfilUsuario, { foreignKey: 'usuarioId', as: 'perfiles' });
+
+        // Relación inversa (si una categoria tiene varios subforos)
+        Subforo.hasMany(Foro, { foreignKey: 'subforo_id', as: 'foros' });
+        CategoriaForo.hasMany(Subforo, { foreignKey: 'categoria_id', as: 'subforos' });
+
+        // Relaciones entre Publicación, Comentario y Respuesta
+        Publicacion.hasMany(interaccion_publicacion, { foreignKey: 'publicacionId', onDelete: 'CASCADE' });
+        Comentario.hasMany(interaccion_publicacion, { foreignKey: 'comentarioId', onDelete: 'CASCADE' });
+        Respuesta.hasMany(interaccion_publicacion, { foreignKey: 'respuestaId', onDelete: 'CASCADE' });
+
+        interaccion_publicacion.belongsTo(Publicacion, { foreignKey: 'publicacionId' });
+        interaccion_publicacion.belongsTo(Comentario, { foreignKey: 'comentarioId' });
+        interaccion_publicacion.belongsTo(Respuesta, { foreignKey: 'respuestaId' });
+
         // Sincronización de tablas
-        await sequelize.sync({ force: false });
+        await sequelize.sync();
         console.log('Sincronizado correctamente');
     } catch (error) {
         console.log('Se produjo un error al sincronizar:', error);

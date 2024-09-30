@@ -1,36 +1,29 @@
-import { DataTypes } from '../config/database/db.js';
+import { DataTypes } from '../config/database/db.js'
 import { sequelize } from '../config/database/db.js';
 
-export const Comentario = sequelize.define('comentarios', {
+export const PerfilUsuario = sequelize.define('perfiles_usuarios', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    title: {
-        type: DataTypes.STRING(255),
-        allowNull: false
-    },
-    contenido: {
+    description: {
         type: DataTypes.TEXT,
         allowNull: false
     },
-    publicacionId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: "publicaciones",
-            key: 'id'
-        }
+    img: {
+        type: DataTypes.STRING(255)
     },
     usuarioId: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         references: {
             model: "usuarios",
             key: 'id'
         }
     }
 }, {
+    tableName: 'perfiles_usuarios',
     freezeTableName: true,
     underscored: true,
-    timestamps: false
 });

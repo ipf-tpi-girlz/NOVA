@@ -3,7 +3,7 @@ import { DataTypes } from '../config/database/db.js'
 
 
 
-export const Usuario = sequelize.define('Usuario', {
+export const Usuario = sequelize.define('usuarios', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -25,7 +25,7 @@ export const Usuario = sequelize.define('Usuario', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: "Localidad",
+            model: "localidades",
             key: 'id'
         }
     },
@@ -42,7 +42,7 @@ export const Usuario = sequelize.define('Usuario', {
         allowNull: false
     }
 }, {
-    tableName: 'Usuario',
+    tableName: 'usuarios',
     freezeTableName: true,
     underscored: true,
 

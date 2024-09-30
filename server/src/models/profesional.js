@@ -1,7 +1,7 @@
 
 import { sequelize, DataTypes } from '../config/database/db.js'
 
-export const Profesional = sequelize.define('Profesional', {
+export const Profesional = sequelize.define('profesionales', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -11,7 +11,7 @@ export const Profesional = sequelize.define('Profesional', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: "Usuario",
+            model: "usuarios",
             key: 'id'
         }
     },

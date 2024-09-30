@@ -3,7 +3,7 @@
 import { DataTypes } from '../config/database/db.js'
 import { sequelize } from '../config/database/db.js';
 
-export const Institucion = sequelize.define('Institucion', {
+export const Institucion = sequelize.define('instituciones', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -13,7 +13,7 @@ export const Institucion = sequelize.define('Institucion', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: "Usuario",
+            model: "usuarios",
             key: 'id'
         }
     },

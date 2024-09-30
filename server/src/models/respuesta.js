@@ -2,15 +2,11 @@ import { DataTypes } from '../config/database/db.js';
 import { sequelize } from '../config/database/db.js';
 
 
-export const Respuesta = sequelize.define('Respuesta', {
+export const Respuesta = sequelize.define('respuestas', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
-    },
-    title: {
-        type: DataTypes.STRING(255),
-        allowNull: false
     },
     content: {
         type: DataTypes.TEXT,
@@ -19,14 +15,14 @@ export const Respuesta = sequelize.define('Respuesta', {
     comentarioId: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Comentario",
+            model: "comentarios",
             key: 'id'
         }
     },
     usuarioId: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Usuario",
+            model: "usuarios",
             key: 'id'
         }
     }
