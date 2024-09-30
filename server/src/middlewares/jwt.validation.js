@@ -2,7 +2,7 @@
 import jwt from "jsonwebtoken";
 
 import config from "../config/config.js";
-import { database } from "../config/database/db.js";
+import { conectionDB } from "../config/database/db.js";
 const SECRET_KEY = config.SECRET_KEY
 
 // Middleware para verificar el token JWT
@@ -19,11 +19,11 @@ export default (req, res, next) => {
   const decoded = jwt.verify(token, SECRET_KEY);
 
   // Se busca al usuario en la base de datos
-  const user = database.user.find((user) => user.id === decoded.userId);
+//   const user = conectionDB.user.find((user) => user.id === decoded.userId);
 
-  if (!user) {
-    return res.status(401).json({ message: "Token inválido" });
-  }
+//   if (!user) {
+//     return res.status(401).json({ message: "Token inválido" });
+//   }
 
   req.user = user; // Agrega la información del usuario decodificada al request
 
