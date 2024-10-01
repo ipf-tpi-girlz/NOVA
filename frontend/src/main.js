@@ -1,8 +1,22 @@
 import "./style.css"
-import { registerInstitucion } from "./components/registerInstitucion.js";
+import { formInstitucion } from "./components/registerInstitucion.js"; 
 
-const app = document.getElementById("app");
+const params = window.location.pathname;
 
-document.addEventListener("DOMContentLoaded", () => {
-    app.innerHTML = registerInstitucion();
-})
+const $index = document.getElementById("app");
+
+
+switch (params) {
+  case "/registerInst":
+    $index.appendChild( formInstitucion());
+    break;
+//   case "/login":
+//     $index.appendChild(await Pagelogin());
+//     break;
+//   case "/tasks":
+//     $index.appendChild(await listTasks());
+//     break;
+
+  default:
+    break;
+}
