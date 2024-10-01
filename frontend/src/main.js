@@ -1,5 +1,5 @@
-import "./src/style.css";
-import { homePage } from "./src/pages/homePage.js";
+import "./style.css";
+import { homePage } from "./pages/homePage.js";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
