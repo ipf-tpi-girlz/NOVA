@@ -1,11 +1,11 @@
 import { Comentario } from "../models/comentario";
 
 
-export const getComment = (req, res) => {
+export const getComment = async (req, res) => {
   res.send();
 };
 
-export const createComment = (req, res) => {
+export const createComment = async (req, res) => {
   const { id } = req.params;
   try {
 
@@ -14,7 +14,7 @@ export const createComment = (req, res) => {
   }
 };
 
-export const updateComment = (req, res) => {
+export const updateComment = async (req, res) => {
   res.send();
 };
 

@@ -17,10 +17,25 @@ export const Profesional = sequelize.define('profesionales', {
     },
     nro_matricula: {
         type: DataTypes.STRING(50),
-        allowNull: true
+        allowNull: false
+    },
+    especialidad: {
+        type: DataTypes.STRING(55),
+        allowNull: false
+    },
+    modo_atencion: {
+        type: DataTypes.ENUM('presencial', 'virtual'),
+        allowNull: false
+    },
+    hora_atencion: {
+        type: DataTypes.DATE
+    },
+    genero: {
+        type: DataTypes.ENUM('femenino', 'masculino', 'otro'),
     }
+
 }, {
     tableName: 'profesionales',
     freezeTableName: true,
-    underscored: true,
+    underscored: true
 });

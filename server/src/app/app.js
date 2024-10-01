@@ -5,7 +5,7 @@ import session from 'express-session'
 import config from '../config/config.js'
 import cookieParser from 'cookie-parser'
 import { usersRouter } from '../routers/users.routes.js'
-
+import { subForoRouter } from '../routers/subforo.routes.js'
 export const app = express()
 
 //MIDDLEWARE
@@ -30,7 +30,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use('/users', usersRouter)
-
+app.use('/subforo', subForoRouter)
 
 app.listen(config.PORT, () => {
     console.log(`Servidor corriendo en el puerto ${config.PORT}`)

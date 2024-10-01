@@ -6,29 +6,38 @@ import { Institucion } from '../models/institucion.js';
 import bcrypt from 'bcryptjs';
 import { createToken } from '../healpers/create.jwt.js';
 
-
 //Funcion para registrar un usuario
 export const registerUser = async (req, res) => {
     try {
-        const { role, nombre, mail, departamento, localidad, contrasenia, nro_telefono, nro_matricula, cuit, razon_social, direccion } = req.body;
+        const { role, nombre, mail, departamento, localidad, contrasenia, nro_telefono, nro_matricula, cuit, razon_social, direccion, rp_legal, modo_atencion, servi, especialidad, hora_atencion, genero } = req.body;
 
+        // Validar rol
         if (!['victima', 'profesional', 'institucion'].includes(role)) {
             return res.status(400).json({ error: 'Rol no válido' });
         }
 
+        // Verificar si el departamento existe
         const dep = await Departamento.findOne({ where: { nombre: departamento } });
-        if (!dep) return { error: 'Departamento no encontrado' };
+        if (!dep) {
+            return res.status(400).json({ error: 'El departamento ingresado no existe en nuestro sistema' });
+        }
 
+        // Verificar si la localidad existe
         const loc = await Localidad.findOne({ where: { nombre: localidad, departamento_id: dep.id } });
-        if (!loc) return { error: 'Localidad no encontrada' };
+        if (!loc) {
+            return res.status(400).json({ error: 'La localidad ingresada no existe en nuestro sistema' });
+        }
 
+        // Verificar si el usuario ya existe
         const exist = await Usuario.findOne({ where: { mail } });
-        if (exist) return res.status(400).json({ error: 'El usuario ya existe registrado en nuestro sistema' });
+        if (exist) {
+            return res.status(400).json({ error: 'El usuario ya existe registrado en nuestro sistema' });
+        }
 
+        // Cifrar la contraseña
         const hashedPassword = await bcrypt.hash(contrasenia, 10);
         const usuario = await Usuario.create({
             nombre,
-            razon_social,
             mail,
             localidad_id: loc.id,
             contrasenia: hashedPassword,
@@ -36,13 +45,30 @@ export const registerUser = async (req, res) => {
             role,
         });
 
+        // Crear usuario profesional o institución
         if (role === 'profesional') {
-            await Profesional.create({ usuario_id: usuario.id, nro_matricula });
-        }
-        if (role === 'institucion') {
-            await Institucion.create({ usuario_id: usuario.id, cuit, direccion });
+            await Profesional.create({ usuario_id: usuario.id, nro_matricula, razon_social, modo_atencion, especialidad, genero, hora_atencion });
+        } else if (role === 'institucion') {
+            // Validar campos requeridos para institución
+            if (!cuit || !direccion || !modo_atencion || !servi || !rp_legal) {
+                return res.status(400).json({ error: 'Faltan datos requeridos para la institución' });
+            }
+            try {
+                await Institucion.create({
+                    usuario_id: usuario.id,
+                    cuit,
+                    direccion,
+                    modo_atencion,
+                    servi,
+                    rp_legal
+                });
+            } catch (error) {
+                console.error('Error al crear la institución:', error);
+                return res.status(500).json({ error: 'Error al registrar la institución' });
+            }
         }
 
+        // Responder con éxito
         res.status(201).json({ message: `${role.charAt(0).toUpperCase() + role.slice(1)} registrado exitosamente`, usuario: { id: usuario.id, mail: usuario.mail, role: usuario.role } });
     } catch (error) {
         console.error(error);
@@ -102,22 +128,6 @@ export const logout = (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Error inesperado" });
-    }
-};
-
-//Funcion para proteger las rutas
-export const secureAccess = (req, res) => {
-    try {
-        // Verificar si el usuario está autenticado
-        if (!req.user) {
-            return res.status(401).send("Acceso denegado: usuario no autenticado");
-        }
-
-        // Si el usuario está autenticado, devolver información
-        return res.json("Acceso permitido a la zona protegida");
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Error en el servidor" });
     }
 };
 

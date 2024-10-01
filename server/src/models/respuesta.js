@@ -29,7 +29,6 @@ export const Respuesta = sequelize.define('respuestas', {
 }, {
     tableName: 'respuestas',
     freezeTableName: true,
-    underscored: true,
-    timestamps: false
+    underscored: true
 });
 

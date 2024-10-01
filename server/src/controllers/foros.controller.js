@@ -5,7 +5,6 @@ import { Usuario } from '../models/users.js';
 import { Comentario } from '../models/comentario.js';
 import { Respuesta } from '../models/respuesta.js';
 
-// Función para obtener la información del foro con sus subforos, publicaciones, comentarios y respuestas
 export const obtenerInfoGeneralForo = async (req, res) => {
     try {
         // Obtener todas las categorías (Foros principales)
@@ -53,31 +52,38 @@ export const obtenerInfoGeneralForo = async (req, res) => {
             ],
         });
 
-        // Si no hay categorías, retornar un mensaje
         if (!categorias.length) {
             return res.status(404).json({ message: 'No se encontraron foros' });
         }
 
-        // Devolver la estructura completa del foro
         return res.status(200).json({ categorias });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error al obtener la información del foro' });
     }
 };
 
-export const eliminarForo = async (req, res) => {
-    const { id } = req.params;
+export const crearForo = async (req, res) => {
+    const { cate_name } = req.body
     try {
-        const foro = await Subforo.findByPk(id);
-        if (!foro) {
-            return res.status(404).json({ message: 'Foro no encontrado' });
+        const exist = await CategoriaForo.findOne({ where: { nombre: cate_name } })
+        if (exist.length > 0) {
+            return res.status(400).json({ error: 'La categoría ingresada ya existe en nuestro sistema' })
         }
-        await foro.destroy();
-        return res.status(200).json({ message: 'Foro eliminado exitosamente' });
+        await CategoriaForo.create({ nombre: cate_name })
+        return res.status(200).json({ message: 'Categoría creada exitosamente' })
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al eliminar el foro' });
+        res.status(500).json({ error: 'Error al crear la categoría' })
     }
+}
+
+export const actualizarForo = async (req, res) => {
+
+}
+
+
+export const eliminarForo = async (req, res) => {
+
 }
 

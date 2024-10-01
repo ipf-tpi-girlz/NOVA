@@ -24,6 +24,16 @@ export const Institucion = sequelize.define('instituciones', {
     direccion: {
         type: DataTypes.STRING(255),
         allowNull: true
+    },
+    rp_legal: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+    },
+    modo_atencion: {
+        type: DataTypes.ENUM('presencial', 'virtual'),
+    },
+    servi: {
+        type: DataTypes.TEXT
     }
 }, {
     tableName: 'instituciones',

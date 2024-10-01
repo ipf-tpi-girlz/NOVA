@@ -40,8 +40,7 @@ export const Publicacion = sequelize.define('publicaciones', {
 }, {
     tableName: 'publicaciones',
     freezeTableName: true,
-    underscored: true,
-    timestamps: false
+    underscored: true
 });
 
 

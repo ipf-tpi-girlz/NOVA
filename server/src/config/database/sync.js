@@ -75,6 +75,53 @@ export const syncTables = async () => {
 
         // Sincronización de tablas
         await sequelize.sync();
+        const departamentos = [
+            { nombre: 'bermejo' },
+            { nombre: 'formosa' },
+            { nombre: 'laishi' },
+            { nombre: 'matacos' },
+            { nombre: 'pirané' },
+            { nombre: 'pilagás' },
+            { nombre: 'pilcomayo' },
+            { nombre: 'ramón lista' }
+        ];
+        await Departamento.bulkCreate(departamentos);
+        const localidades = [
+            // Localidades de Bermejo
+            { nombre: 'el colorado', departamento_id: 1 },
+            { nombre: 'villa dos trece', departamento_id: 1 },
+            { nombre: 'herradura', departamento_id: 1 },
+
+            // Localidades de Formosa
+            { nombre: 'formosa', departamento_id: 2 },
+            { nombre: 'san francisco de laishí', departamento_id: 2 },
+
+            // Localidades de Laishi
+            { nombre: 'san francisco de laishí', departamento_id: 3 },
+            { nombre: 'villafañe', departamento_id: 3 },
+
+            // Localidades de Matacos
+            { nombre: 'ingeniero juárez', departamento_id: 4 },
+            { nombre: 'pozo de mazamorra', departamento_id: 4 },
+
+            // Localidades de Pirané
+            { nombre: 'pirané', departamento_id: 5 },
+            { nombre: 'el espinillo', departamento_id: 5 },
+
+            // Localidades de Pilagás
+            { nombre: 'clorinda', departamento_id: 6 },
+            { nombre: 'laguna blanca', departamento_id: 6 },
+
+            // Localidades de Pilcomayo
+            { nombre: 'laguna blanca', departamento_id: 7 },
+            { nombre: 'general manuel belgrano', departamento_id: 7 },
+
+            // Localidades de Ramón Lista
+            { nombre: 'el potrerillo', departamento_id: 8 },
+            { nombre: 'mariano boedo', departamento_id: 8 }
+        ];
+        await Localidad.bulkCreate(localidades);
+
         console.log('Sincronizado correctamente');
     } catch (error) {
         console.log('Se produjo un error al sincronizar:', error);
