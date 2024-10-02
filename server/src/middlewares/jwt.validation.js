@@ -1,31 +1,39 @@
-
 import jwt from "jsonwebtoken";
-
 import config from "../config/config.js";
-import { conectionDB } from "../config/database/db.js";
-const SECRET_KEY = config.SECRET_KEY
+import { Usuario } from "../models/users.js";
+const SECRET_KEY = config.SECRET_KEY;
 
 // Middleware para verificar el token JWT
-export default (req, res, next) => {
-  console.log(req.session);
-  console.log("-----------");
-  console.log(req.cookies);
-  const token = req.cookies.authToken || req.session.token;
+export const validarJWT = async (req, res, next) => {
+    try {
+        console.log("------------session---------------------\n\n");
+        console.log(req.session);
+        console.log("------------cookies---------------------\n\n");
+        console.log(req.cookies);
+        console.log("----------------------------------------");
 
-  if (!token) {
-    return res.status(403).json({ message: "Token no proporcionado" });
-  }
+        // Obtener el token de las cookies o la sesión
+        const token = req.cookies.authToken || req.session.token;
 
-  const decoded = jwt.verify(token, SECRET_KEY);
+        if (!token) {
+            return res.status(403).json({ message: "Token no proporcionado" });
+        }
 
-  // Se busca al usuario en la base de datos
-//   const user = conectionDB.user.find((user) => user.id === decoded.userId);
+        // Verificar el token
+        const decoded = jwt.verify(token, SECRET_KEY);
 
-//   if (!user) {
-//     return res.status(401).json({ message: "Token inválido" });
-//   }
+        // Buscar al usuario en la base de datos
+        const user = await Usuario.findOne({ where: { id: decoded.userId } });
 
-  req.user = user; // Agrega la información del usuario decodificada al request
+        if (!user) {
+            return res.status(401).json({ message: "Token inválido o usuario no encontrado" });
+        }
 
-  next();
+        // Agregar el usuario a la request para acceder en el controlador
+        req.user = user;
+
+        next();
+    } catch (error) {
+        return res.status(500).json({ message: "Error al validar el token", error: error.message });
+    }
 };
