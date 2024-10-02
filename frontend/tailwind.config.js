@@ -6,7 +6,11 @@ export default {
   "./index.html", "./pages/**", "./src/**/*.js"
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        anton: ['Anton', 'sans-serif'],
+      },
+    },
   },
   plugins: [daisyui],
 }

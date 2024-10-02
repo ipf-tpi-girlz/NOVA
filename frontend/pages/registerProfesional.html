@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body  class="bg-gray-100">
+    <body>
+        <div class="container mx-auto mt-5">
+            <div class="card p-6 shadow-lg max-w-lg mx-auto bg-white rounded-lg">
+                <h2 class="text-2xl font-bold mb-6 text-center">Registro de Profesional de Psicología</h2>
+    
+                <form class="space-y-4">
+                    <!-- Nombre -->
+                    <div class="form-group">
+                        <label for="nombre" class="block text-sm font-medium">Nombre y Apellido:</label>
+                        <input type="text" class="form-control mt-1 w-full border border-gray-300 rounded p-2" id="nombre" placeholder="Ingrese su nombre" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email" class="block text-sm font-medium">Correo Electrónico:</label>
+                        <input type="email" class="form-control mt-1 w-full border border-gray-300 rounded p-2" id="email" placeholder="Ingrese su correo electrónico" required>
+                    </div>
+
+    
+                    <!-- Teléfono -->
+                    <div class="form-group">
+                        <label for="telefono" class="block text-sm font-medium">Teléfono de Contacto:</label>
+                        <input type="tel" class="form-control mt-1 w-full border border-gray-300 rounded p-2" id="telefono" placeholder="Ingrese su número de teléfono" required>
+                    </div>
+    
+                    <!-- Número de Matrícula -->
+                    <div class="form-group">
+                        <label for="matricula" class="block text-sm font-medium">Número de Matrícula:</label>
+                        <input type="text" class="form-control mt-1 w-full border border-gray-300 rounded p-2" id="matricula" placeholder="Ingrese su número de matrícula" required>
+                    </div>
+    
+                    <!-- Especialización -->
+                    <div class="form-group">
+                        <label for="especializacion" class="block text-sm font-medium">Especialización:</label>
+                        <input type="text" class="form-control mt-1 w-full border border-gray-300 rounded p-2" id="especializacion" placeholder="Ej. Psicología clínica, Psicología familiar" required>
+                    </div>
+    
+                    <!-- Departamento -->
+                    <div class="form-group">
+                        <label for="departamento" class="block text-sm font-medium">Departamento:</label>
+                        <select class="form-control mt-1 w-full border border-gray-300 rounded p-2" id="departamento" required>
+                            <option value="">Seleccione su departamento</option>
+                            <option value="Formosa">Formosa</option>
+                            <option value="Laishi">Laishí</option>
+                            <option value="Pilcomayo">Pilcomayo</option>
+                            <option value="Pilagás">Pilagás</option>
+                            <option value="Pirané">Pirané</option>
+                            <option value="Ramón Lista">Ramón Lista</option>
+                            <option value="Matacos">Matacos</option>
+                            <option value="Bermejo">Bermejo</option>
+                        </select>
+                    </div>
+    
+                    <!-- Localidad -->
+                    <div class="form-group">
+                        <label for="localidad" class="block text-sm font-medium">Localidad:</label>
+                        <input type="text" class="form-control mt-1 w-full border border-gray-300 rounded p-2" id="localidad" placeholder="Ingrese su localidad" required>
+                    </div>
+    
+                    
+
+    
+                    <!-- Género (Opcional) -->
+                    <div class="form-group">
+                        <label for="genero" class="block text-sm font-medium">Género (Opcional):</label>
+                        <select class="form-control mt-1 w-full border border-gray-300 rounded p-2" id="genero">
+                            <option value="">Seleccione su género</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Otro">Otro</option>
+                            <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+                        </select>
+                    </div>
+    
+                    <!-- Contraseña -->
+                    <div class="form-group">
+                        <label for="password" class="block text-sm font-medium">Contraseña:</label>
+                        <input type="password" class="form-control mt-1 w-full border border-gray-300 rounded p-2" id="password" placeholder="Ingrese una contraseña" required>
+                    </div>
+    
+                    <!-- Repetir Contraseña -->
+                    <div class="form-group">
+                        <label for="confirmPassword" class="block text-sm font-medium">Repetir Contraseña:</label>
+                        <input type="password" class="form-control mt-1 w-full border border-gray-300 rounded p-2" id="confirmPassword" placeholder="Repita su contraseña" required>
+                    </div>
+    
+                    <!-- Botón de envío -->
+                    <button type="submit" class="btn btn-primary w-full bg-blue-600 text-white py-2 rounded mt-4">Registrarse</button>
+                </form>
+            </div>
+        </div>
+    </body>
+    
+</body>
+</html>
