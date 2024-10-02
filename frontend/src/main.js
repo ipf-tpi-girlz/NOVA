@@ -5,6 +5,7 @@ import { footer } from "./components/footer";
 import { createHeroSection } from "./components/post";
 import { separador } from "./components/separador";
 import { landing } from "./pages/lading";
+import { contacts } from "./pages/contacs";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -23,12 +24,13 @@ switch (pathname) {
 
   default:
     break;
-  case "/landing":
+  case "/":
     app.appendChild(navbar());
     app.appendChild(landing());
     app.appendChild(footer());
     break;
   case "/contact":
     app.appendChild(navbar());
+    app.appendChild(contacts());
     app.appendChild(footer());
 }

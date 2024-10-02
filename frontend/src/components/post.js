@@ -16,7 +16,7 @@ export const createHeroSection = () => {
     "items-center",
     "border",
     "mb-2",
-    "w-[1000px]",
+    "w-[300px]",
     "bg-white",
     "rounded-lg",
     "p-5"
@@ -45,30 +45,30 @@ export const createHeroSection = () => {
   btn.textContent = "Crear Post";
   btn.type = "submit";
 
-  //   btn.addEventListener("click", (event) => {
-  //     event.preventDefault();
-  //     const title = input.value;
-  //     if (title) {
-  //       fetch("http://localhost:4000/todos", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         credentials: "include",
-  //         body: JSON.stringify({ title }),
-  //       })
-  //         .then((response) => response.json())
-  //         .then((data) => {
-  //           if (data.todo) {
-  //             renderTaskRow(data.todo);
-  //             input.value = "";
-  //           }
-  //         })
-  //         .catch((error) => {
-  //           console.error("Error:", error);
-  //         });
-  //     }
-  //   });
+  btn.addEventListener("click", (event) => {
+    event.preventDefault();
+    const { title, desc } = input.value;
+    if (title && desc) {
+      fetch("http://localhost:4000/foro", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ title, desc }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.foro) {
+            renderTaskRow(data.foro);
+            input.value = "";
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  });
   form.appendChild(titleform);
   form.appendChild(titlepost);
   form.appendChild(input);
