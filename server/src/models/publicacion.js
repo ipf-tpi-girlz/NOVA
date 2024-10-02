@@ -1,7 +1,8 @@
 import { DataTypes } from '../config/database/db.js';
 import { sequelize } from '../config/database/db.js';
 
-export const Comentario = sequelize.define('comentarios', {
+
+export const Publicacion = sequelize.define('publicaciones', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -11,16 +12,16 @@ export const Comentario = sequelize.define('comentarios', {
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    contenido: {
+    img: {
+        type: DataTypes.STRING(255)
+    },
+    content: {
         type: DataTypes.TEXT,
         allowNull: false
     },
-    publicacionId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: "publicaciones",
-            key: 'id'
-        }
+    date: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW
     },
     usuarioId: {
         type: DataTypes.INTEGER,
@@ -28,9 +29,18 @@ export const Comentario = sequelize.define('comentarios', {
             model: "usuarios",
             key: 'id'
         }
+    },
+    subforoId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "sub_foros",
+            key: 'id'
+        }
     }
 }, {
+    tableName: 'publicaciones',
     freezeTableName: true,
-    underscored: true,
-    timestamps: false
+    underscored: true
 });
+
+

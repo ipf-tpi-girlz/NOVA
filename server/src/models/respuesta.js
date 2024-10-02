@@ -1,24 +1,21 @@
 import { DataTypes } from '../config/database/db.js';
 import { sequelize } from '../config/database/db.js';
 
-export const Comentario = sequelize.define('comentarios', {
+
+export const Respuesta = sequelize.define('respuestas', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    title: {
-        type: DataTypes.STRING(255),
-        allowNull: false
-    },
-    contenido: {
+    content: {
         type: DataTypes.TEXT,
         allowNull: false
     },
-    publicacionId: {
+    comentarioId: {
         type: DataTypes.INTEGER,
         references: {
-            model: "publicaciones",
+            model: "comentarios",
             key: 'id'
         }
     },
@@ -30,7 +27,8 @@ export const Comentario = sequelize.define('comentarios', {
         }
     }
 }, {
+    tableName: 'respuestas',
     freezeTableName: true,
-    underscored: true,
-    timestamps: false
+    underscored: true
 });
+

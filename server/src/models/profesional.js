@@ -1,9 +1,7 @@
 
-import { DataTypes } from '../config/database/db.js'
-import { sequelize } from '../config/database/db.js';
-import { Usuario } from './users.js';
+import { sequelize, DataTypes } from '../config/database/db.js'
 
-export const Profesional = sequelize.define('Profesional', {
+export const Profesional = sequelize.define('profesionales', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -13,19 +11,31 @@ export const Profesional = sequelize.define('Profesional', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Usuario,
+            model: "usuarios",
             key: 'id'
         }
     },
-    numero_matricula: {
+    nro_matricula: {
         type: DataTypes.STRING(50),
-        allowNull: true
+        allowNull: false
+    },
+    especialidad: {
+        type: DataTypes.STRING(55),
+        allowNull: false
+    },
+    modo_atencion: {
+        type: DataTypes.ENUM('presencial', 'virtual'),
+        allowNull: false
+    },
+    hora_atencion: {
+        type: DataTypes.DATE
+    },
+    genero: {
+        type: DataTypes.ENUM('femenino', 'masculino', 'otro'),
     }
+
 }, {
     tableName: 'profesionales',
     freezeTableName: true,
-    underscored: true,
+    underscored: true
 });
-
-Profesional.belongsTo(Usuario, { foreignKey: 'usuario_id' });
-
