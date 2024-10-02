@@ -9,7 +9,7 @@ import { createToken } from '../healpers/create.jwt.js';
 //Funcion para registrar un usuario
 export const registerUser = async (req, res) => {
     try {
-        const { role, nombre_apellido, mail, departamento, localidad, contrasenia, nro_telefono, nro_matricula, cuit, razon_social, direccion, rp_legal, modo_atencion, servi, especialidad, hora_atencion, genero } = req.body;
+        const { role, nombre_apellido, mail, departamento, localidad, contrasenia, nro_telefono, nro_matricula, cuit, razon_social, direccion, rp_legal, modo_atencion, servi, especialidad, genero } = req.body;
 
         // Validar rol
         if (!['victima', 'profesional', 'institucion'].includes(role)) {
@@ -38,6 +38,7 @@ export const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(contrasenia, 10);
         const usuario = await Usuario.create({
             nombre: nombre_apellido,
+            razon_social,
             mail,
             localidad_id: loc.id,
             contrasenia: hashedPassword,
@@ -61,6 +62,7 @@ export const registerUser = async (req, res) => {
                     direccion,
                     modo_atencion,
                     servi,
+                    nro_telefono,
                     rp_legal
                 });
             } catch (error) {
