@@ -31,7 +31,7 @@ export const Institucion = sequelize.define('instituciones', {
         type: DataTypes.ENUM('presencial', 'virtual'),
     },
     nro_telefono: {
-
+        type: DataTypes.STRING(20),
     },
     servi: {
         type: DataTypes.TEXT
