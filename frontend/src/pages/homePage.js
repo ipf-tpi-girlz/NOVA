@@ -28,7 +28,7 @@ export const homePage = () => {
 
   const img = document.createElement("img");
   img.src =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBalzAMrAXTICikBoi3APHXooj-zJuzQ9Tpw&s"; // Use the URL of the image
+    "https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=600"; // Use the URL of the image
   img.classList.add("max-w-max", "h-96", "rounded-lg", "shadow-2xl");
   img.setAttribute("href", "#");
   const tituloinf = document.createElement("h1");
@@ -47,7 +47,7 @@ export const homePage = () => {
   const parrafo = document.createElement("p");
   parrafo.classList.add("py-6", "p-10", "text-center", "lg:text-start");
   parrafo.textContent =
-    "“La violencia de género no va sólo en una modalidad puede normalizarse tanto que no nos damos cuenta que la estamos padeciendo, y es mucho más complicado en un noviazgo; nunca es tarde para romper ese círculo de agresión”";
+    "Abordar la violencia de género es un acto de responsabilidad social que exige sensibilidad y precisión. Al hablar del tema, es crucial usar un lenguaje claro y respetuoso, evitando culpabilizar a las víctimas o justificar el abuso .Es importante describir las diferentes formas de violencia (física, psicológica, sexual, económica y simbólica) y explicar que, aunque afecta principalmente a mujeres, cualquier persona puede sufrirla.                       “La violencia de género no va sólo en una modalidad puede normalizarse tanto que no nos damos cuenta que la estamos padeciendo, y es mucho más complicado en un noviazgo; nunca es tarde para romper ese círculo de agresión”";
   containerHome.appendChild(titulo);
   containerHome.appendChild(subtitulo);
   container2.appendChild(img);
