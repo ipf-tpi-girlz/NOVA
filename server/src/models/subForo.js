@@ -16,17 +16,17 @@ export const Subforo = sequelize.define('sub_foros', {
         type: DataTypes.TEXT,
         allowNull: true
     },
-    categoria_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: "categorias_foro",
-            key: "id"
-        }
-    },
     moderador_id: {
         type: DataTypes.INTEGER,
         references: {
             model: "usuarios",
+            key: "id"
+        }
+    },
+    foro_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "foros",
             key: "id"
         }
     }

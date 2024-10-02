@@ -1,9 +1,8 @@
 
-import { DataTypes } from '../config/database/db.js'
 import { sequelize } from '../config/database/db.js';
+import { DataTypes } from 'sequelize'
 
-
-export const CategoriaForo = sequelize.define('categorias_foro', {
+export const Foro = sequelize.define('Foro', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,7 +13,8 @@ export const CategoriaForo = sequelize.define('categorias_foro', {
         allowNull: false
     }
 }, {
-    tableName: 'categorias_foro',
+    tableName: 'foros',
     freezeTableName: true,
-    underscored: true
+    underscored: true,
+    timestamps: false
 });

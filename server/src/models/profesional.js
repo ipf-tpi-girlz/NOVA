@@ -29,11 +29,7 @@ export const Profesional = sequelize.define('profesionales', {
     },
     hora_atencion: {
         type: DataTypes.DATE
-    },
-    genero: {
-        type: DataTypes.ENUM('femenino', 'masculino', 'otro'),
     }
-
 }, {
     tableName: 'profesionales',
     freezeTableName: true,

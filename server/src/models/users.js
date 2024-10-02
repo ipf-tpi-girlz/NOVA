@@ -33,6 +33,9 @@ export const Usuario = sequelize.define('usuarios', {
         type: DataTypes.STRING(20),
         allowNull: true
     },
+    fecha_nac: {
+        type: DataTypes.DATE,
+    },
     contrasenia: {
         type: DataTypes.STRING(255),
         allowNull: false
@@ -40,6 +43,9 @@ export const Usuario = sequelize.define('usuarios', {
     role: {
         type: DataTypes.ENUM('institucion', 'profesional', 'victima'),
         allowNull: false
+    },
+    genero: {
+        type: DataTypes.ENUM('masculino', 'femenino', 'otro'),
     }
 }, {
     tableName: 'usuarios',

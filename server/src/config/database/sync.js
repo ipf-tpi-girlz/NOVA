@@ -9,7 +9,6 @@ import { Comentario } from "../../models/comentario.js";
 import { Subforo } from "../../models/subForo.js";
 import { Publicacion } from "../../models/publicacion.js";
 import { Respuesta } from "../../models/respuesta.js";
-import { CategoriaForo } from '../../models/categoriaForo.js';
 import { PerfilUsuario } from '../../models/perfil.usario.js';
 import { interaccion_publicacion } from "../../models/interaccion-PCR.js";
 
@@ -17,7 +16,7 @@ import { interaccion_publicacion } from "../../models/interaccion-PCR.js";
 export const syncTables = async () => {
     try {
         // Relaciones entre Departamento y Localidad
-        Departamento.hasMany(Localidad, { foreignKey: 'departamento_id', as: 'localidades' });
+        Departamento.hasMany(Localidad, { foreignKey: 'departamento_id', as: 'localidades', onDelete: 'CASCADE' });
         Localidad.belongsTo(Departamento, { foreignKey: 'departamento_id', as: 'departamento' });
 
         // Relación uno a uno: Usuario y Profesional
@@ -56,13 +55,9 @@ export const syncTables = async () => {
         Usuario.hasMany(Respuesta, { foreignKey: 'usuarioId', onDelete: 'CASCADE' });
         Respuesta.belongsTo(Usuario, { foreignKey: 'usuarioId' });
 
-
         // Relación entre PerfilUsuario y Usuario
         PerfilUsuario.belongsTo(Usuario, { foreignKey: 'usuarioId', as: 'usuario' });
         Usuario.hasMany(PerfilUsuario, { foreignKey: 'usuarioId', as: 'perfiles' });
-
-        // Relación inversa (si una categoria tiene varios subforos)
-        CategoriaForo.hasMany(Subforo, { foreignKey: 'categoria_id', as: 'subforos' });
 
         // Relaciones entre Publicación, Comentario y Respuesta
         Publicacion.hasMany(interaccion_publicacion, { foreignKey: 'publicacionId', onDelete: 'CASCADE' });
@@ -75,6 +70,8 @@ export const syncTables = async () => {
 
         // Sincronización de tablas
         await sequelize.sync();
+
+        // Ejemplo de creación de departamentos y localidades
         const departamentos = [
             { nombre: 'bermejo' },
             { nombre: 'formosa' },
@@ -86,6 +83,7 @@ export const syncTables = async () => {
             { nombre: 'ramón lista' }
         ];
         await Departamento.bulkCreate(departamentos);
+
         const localidades = [
             // Localidades de Bermejo
             { nombre: 'el colorado', departamento_id: 1 },

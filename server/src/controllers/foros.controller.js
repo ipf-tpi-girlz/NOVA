@@ -1,14 +1,38 @@
-import { CategoriaForo } from '../models/categoriaForo.js';
+
 import { Subforo } from '../models/subForo.js';
 import { Publicacion } from '../models/publicacion.js';
 import { Usuario } from '../models/users.js';
 import { Comentario } from '../models/comentario.js';
 import { Respuesta } from '../models/respuesta.js';
-
-export const obtenerInfoGeneralForo = async (req, res) => {
+import { Foro } from '../models/foro.js'
+import color from 'chalk'
+export const getForos = async (req, res) => {
     try {
-        // Obtener todas las categorías de foros con sus subforos
-        const categorias = await CategoriaForo.findAll({
+        // Obtener todos los foros con sus subforos
+        const foros = await Foro.findAll({
+            include: [
+                {
+                    model: Subforo,
+                    as: 'subforos'
+                }
+            ]
+        });
+        if (!foros) return res.status(404).json({ message: 'No existen foros en el sistema' });
+        // Enviar la información de foros y sus subforos
+        res.status(200).json({
+        });
+    } catch (error) {
+        console.log(color.red("----------------------------------------------------------------------------"))
+        console.error(color.red(error));
+        console.log(color.red("----------------------------------------------------------------------------"))
+        res.status(500).json({ error: 'Error al obtener la información de foros' });
+    }
+};
+
+export const getInfoGeneral = async (req, res) => {
+    try {
+        // Obtener todos los foros con sus subforos
+        const foros = await Foro.findAll({
             include: [
                 {
                     model: Subforo,
@@ -52,56 +76,74 @@ export const obtenerInfoGeneralForo = async (req, res) => {
             ]
         });
 
-        // Enviar la información de categorías, subforos, publicaciones, comentarios y respuestas
-        res.status(200).json({
-            message: "Información general del foro obtenida con éxito",
-            data: categorias
-        });
+        // Enviar la información de foros, subforos, publicaciones, comentarios y respuestas
+        res.status(200).json({ foros });
     } catch (error) {
-        console.log("----------------------------------------------------------------------------")
+        console.log(color.red("----------------------------------------------------------------------------"))
         console.error(error);
-        console.log("----------------------------------------------------------------------------")
+        console.log(color.red("----------------------------------------------------------------------------"))
         res.status(500).json({ error: 'Error al obtener la información del foro' });
     }
 };
 
-export const crearForo = async (req, res) => {
-    const { cate_name } = req.body
+
+export const createForo = async (req, res) => {
+    const user = req.user;
+    const { title, desc } = req.body;
+    if (!user) {
+        return res.status(401).json({ message: "No autorizado" });
+    }
     try {
-        const exist = await CategoriaForo.findOne({ where: { nombre: cate_name } })
-        if (exist.length > 0) {
-            return res.status(400).json({ error: 'La categoría ingresada ya existe en nuestro sistema' })
-        }
-        await CategoriaForo.create({ nombre: cate_name })
-        return res.status(200).json({ message: 'Categoría creada exitosamente' })
+        const existF = await Foro.findOne({ where: { title } })
+        if (existF) return res.status(400).json({ error: 'El titulo que desea ingresar ya existe' })
+
+        await Foro.create({
+            title,
+            desc,
+        })
+        res.status(200).json({ message: "El foro ha sido creado exitosamente" });
     } catch (error) {
-        res.status(500).json({ error: 'Error al crear la categoría' })
+        console.log(color.red("----------------------------------------------------------------------------"))
+        console.log(color.red(error))
+        console.log(color.red("----------------------------------------------------------------------------"))
+        res.status(500).json({ error: 'Se produjo un error en el sistema' })
     }
 }
 
-export const actualizarForo = async (req, res) => {
+export const updateForo = async (req, res) => {
+    const { title, desc } = req.body;
+    const { id } = req.params;
+    try {
+        console.log(color.yellow("------------------------------------------"))
+        console.log(color.yellowBright({ id }));
+        console.log(color.yellow("------------------------------------------"))
 
+        const exist = await Foro.findOne({ where: { id } })
+        if (!exist) return res.status(400).json({ error: 'El que desea actualizar foro no existe en el sistema' })
+
+        await Foro.update({ title, desc }, { where: { id } })
+
+        res.status(200).json({ message: "El contenido ha sido actualizado" });
+    } catch (error) {
+        console.log(color.red("----------------------------------------------------------------------------"))
+        console.log(color.redBright(error));
+        console.log(color.red("----------------------------------------------------------------------------"))
+    }
 }
 
 
-export const eliminarForo = async (req, res) => {
-    const { cate_name } = req.body
-    console.log("--------------------------------------------------------------")
-    console.log(req.body)
-    console.log("--------------------------------------------------------------")
+export const deleteForo = async (req, res) => {
+    const { id } = req.params;
     try {
-        const exist = await CategoriaForo.findOne({ where: { nombre: cate_name } })
-        if (!exist) {
-            return res.status(400).json({ error: 'La categoría que desea eliminar no existe en nuestro sistema' })
-        }
-        //!Eliminar categoria
-        await CategoriaForo.destroy({ where: { nombre: cate_name } })
-        return res.status(200).json({ message: 'Categoría eliminada exitosamente' })
+        const exist = await Foro.findOne({ where: { id } })
+        if (!exist) return res.status(400).json({ error: 'El foro que desea eliminar no existe en nuestro sistema' })
+        await Foro.destroy({ where: { id } })
+        res.status(200).json({ message: "El foro ha sido eliminado exitosamente" });
     } catch (error) {
+        console.log(color.red("----------------------------------------------------------------------------"))
+        console.log(color.redBright(error));
+        console.log(color.red("----------------------------------------------------------------------------"))
         res.status(500).json({ error: 'Se produjo un error en el sistema' })
-        console.log('--------------------------------------------------------------')
-        console.log(error)
-        console.log('--------------------------------------------------------------')
     }
 }
 

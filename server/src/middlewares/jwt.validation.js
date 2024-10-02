@@ -1,16 +1,17 @@
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
 import { Usuario } from "../models/users.js";
+import color from "chalk"
 const SECRET_KEY = config.SECRET_KEY;
 
 // Middleware para verificar el token JWT
 export const validarJWT = async (req, res, next) => {
     try {
-        console.log("------------session---------------------\n\n");
-        console.log(req.session);
-        console.log("------------cookies---------------------\n\n");
-        console.log(req.cookies);
-        console.log("----------------------------------------");
+        console.log(color.green("------------session---------------------\n\n"));
+        console.log(color.greenBright(req.session));
+        console.log(color.green("------------cookies---------------------\n\n"));
+        console.log(color.greenBright(req.cookies));
+        console.log(color.green("----------------------------------------"));
 
         // Obtener el token de las cookies o la sesión
         const token = req.cookies.authToken || req.session.token;
