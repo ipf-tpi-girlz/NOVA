@@ -7,60 +7,59 @@ import { Respuesta } from '../models/respuesta.js';
 
 export const obtenerInfoGeneralForo = async (req, res) => {
     try {
-        // Obtener todas las categorías de foros con sus subforos
+        // Obtener todas las categorías (Foros principales)
         const categorias = await CategoriaForo.findAll({
             include: [
                 {
-                    model: Subforo,
-                    as: 'subforos',
+                    model: Subforo,  // Relacionar los subforos con las categorías
+                    as: 'sub_foros',  // Alias de la relación
                     include: [
                         {
-                            model: Publicacion,
-                            as: 'publicaciones',
+                            model: Publicacion,  // Relacionar las publicaciones con los subforos
+                            as: 'publicaciones',  // Alias de la relación
                             include: [
                                 {
-                                    model: Usuario,
-                                    as: 'usuario',
-                                    attributes: ['nombre', 'mail'] // Información básica del usuario
+                                    model: Usuario,  // Incluir el usuario que hizo la publicación
+                                    as: 'usuario',   // Alias de la relación
+                                    attributes: ['id', 'nombre', 'mail'],  // Seleccionar campos específicos del usuario
                                 },
                                 {
-                                    model: Comentario,
-                                    as: 'comentarios',
+                                    model: Comentario,  // Incluir los comentarios relacionados con la publicación
+                                    as: 'comentarios',  // Alias de la relación
                                     include: [
                                         {
-                                            model: Usuario,
-                                            as: 'usuario',
-                                            attributes: ['nombre', 'mail'] // Autor del comentario
+                                            model: Usuario,  // Incluir el usuario que hizo el comentario
+                                            as: 'usuario',   // Alias de la relación
+                                            attributes: ['id', 'nombre', 'mail'],  // Seleccionar campos específicos del usuario
                                         },
                                         {
-                                            model: Respuesta,
-                                            as: 'respuestas',
+                                            model: Respuesta,  // Incluir las respuestas relacionadas con el comentario
+                                            as: 'respuestas',  // Alias de la relación
                                             include: [
                                                 {
-                                                    model: Usuario,
-                                                    as: 'usuario',
-                                                    attributes: ['nombre', 'mail'] // Autor de la respuesta
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+                                                    model: Usuario,  // Incluir el usuario que hizo la respuesta
+                                                    as: 'usuario',   // Alias de la relación
+                                                    attributes: ['id', 'nombre', 'mail'],  // Seleccionar campos específicos del usuario
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
         });
 
-        // Enviar la información de categorías, subforos, publicaciones, comentarios y respuestas
-        res.status(200).json({
-            message: "Información general del foro obtenida con éxito",
-            data: categorias
-        });
+        if (!categorias.length) {
+            return res.status(404).json({ message: 'No se encontraron foros' });
+        }
+
+        return res.status(200).json({ categorias });
+
     } catch (error) {
-        console.log("----------------------------------------------------------------------------")
         console.error(error);
-        console.log("----------------------------------------------------------------------------")
         res.status(500).json({ error: 'Error al obtener la información del foro' });
     }
 };
@@ -85,23 +84,6 @@ export const actualizarForo = async (req, res) => {
 
 
 export const eliminarForo = async (req, res) => {
-    const { cate_name } = req.body
-    console.log("--------------------------------------------------------------")
-    console.log(req.body)
-    console.log("--------------------------------------------------------------")
-    try {
-        const exist = await CategoriaForo.findOne({ where: { nombre: cate_name } })
-        if (!exist) {
-            return res.status(400).json({ error: 'La categoría que desea eliminar no existe en nuestro sistema' })
-        }
-        //!Eliminar categoria
-        await CategoriaForo.destroy({ where: { nombre: cate_name } })
-        return res.status(200).json({ message: 'Categoría eliminada exitosamente' })
-    } catch (error) {
-        res.status(500).json({ error: 'Se produjo un error en el sistema' })
-        console.log('--------------------------------------------------------------')
-        console.log(error)
-        console.log('--------------------------------------------------------------')
-    }
+
 }
 
