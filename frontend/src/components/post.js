@@ -12,10 +12,11 @@ export const createHeroSection = () => {
   const form = document.createElement("div");
   form.classList.add(
     "flex-col",
+    "flex",
     "items-center",
     "border",
     "mb-2",
-    "w-[300px]",
+    "w-[1000px]",
     "bg-white",
     "rounded-lg",
     "p-5"
