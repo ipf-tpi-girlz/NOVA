@@ -4,7 +4,6 @@ export const navbar = () => {
   const navbar = document.createElement("div");
   navbar.classList.add("navbar", "bg-base-100", "gap-6");
 
-
   // Crear el contenedor flex-1 para el título
   const flexOne = document.createElement("div");
   flexOne.classList.add("flex-1");
@@ -14,37 +13,34 @@ export const navbar = () => {
   titleLink.classList.add("btn", "btn-ghost", "text-xl");
   titleLink.textContent = "NOVA";
 
-  const secciones = document.createElement("div")
-  secciones.classList.add("flex","justify-evenly", "gap-8")
+  const secciones = document.createElement("div");
+  secciones.classList.add("flex", "justify-evenly", "gap-8");
   const forosseccion = document.createElement("a");
-  forosseccion.classList.add("text-base")
-  forosseccion.setAttribute("href", "#")
+  forosseccion.classList.add("text-base");
+  forosseccion.setAttribute("href", "#");
   forosseccion.textContent = "Foros";
-  const contactseccion = document.createElement("a")
-  contactseccion.classList.add("text-base")
+  const contactseccion = document.createElement("a");
+  contactseccion.classList.add("text-base");
   contactseccion.textContent = "Contactos";
-  contactseccion.setAttribute("href", "#")
+  contactseccion.setAttribute("href", "#");
   const infseccion = document.createElement("a");
-  infseccion.classList.add("text-base")
-  infseccion.textContent = "Informacion"
-  infseccion.setAttribute("href", "#")
+  infseccion.classList.add("text-base");
+  infseccion.textContent = "Informacion";
+  infseccion.setAttribute("href", "#");
   const aboutUs = document.createElement("a");
-  aboutUs.classList.add("text-base")
-  aboutUs.textContent = "AboutUs"
-  aboutUs.setAttribute("href", "#")
+  aboutUs.classList.add("text-base");
+  aboutUs.textContent = "AboutUs";
+  aboutUs.setAttribute("href", "#");
   secciones.appendChild(forosseccion);
-  secciones.appendChild(contactseccion)
-secciones.appendChild(infseccion)
-secciones.appendChild(aboutUs)
-
- 
+  secciones.appendChild(contactseccion);
+  secciones.appendChild(infseccion);
+  secciones.appendChild(aboutUs);
 
   const btnlogout = document.createElement("button");
-  btnlogout.classList.add("bg-blue-100", "rounded-sm", "box-border")
+  btnlogout.classList.add("btn", "btn-primary", "btn-sm");
   btnlogout.textContent = "Logout";
   // Añadir el enlace al contenedor flex-1
   flexOne.appendChild(titleLink);
-  
 
   // Crear el contenedor flex-none para el botón de opciones
   const flexNoneRight = document.createElement("div");
@@ -53,7 +49,7 @@ secciones.appendChild(aboutUs)
   // Crear el botón de opciones
   const buttonOptions = document.createElement("button");
   buttonOptions.classList.add("btn", "btn-square", "btn-ghost");
-  flexNoneRight.appendChild(btnlogout)
+  flexNoneRight.appendChild(btnlogout);
 
   // Crear el icono SVG dentro del botón de opciones
   const svgOptions = document.createElementNS(
@@ -100,8 +96,6 @@ secciones.appendChild(aboutUs)
 //   const navbar = document.createElement("div");
 //   navbar.classList.add("navbar", "bg-base-100", "gap-6");
 
-
-
 //   // Crear el contenedor flex-1 para el título
 //   const flexOne = document.createElement("div");
 //   flexOne.classList.add("flex-1");
@@ -118,8 +112,6 @@ secciones.appendChild(aboutUs)
 //   aboutUs.textContent = "AboutUs"
 // secciones.appendChild(aboutUs)
 
- 
-
 //   const btnlogout = document.createElement("button");
 //   btnlogout.classList.add("bg-blue-100", "rounded-sm", "box-border")
 //   btnlogout.textContent = "Login";
@@ -128,7 +120,6 @@ secciones.appendChild(aboutUs)
 //   btnregis.textContent = "Registrarse";
 //   // Añadir el enlace al contenedor flex-1
 //   flexOne.appendChild(titleLink);
-  
 
 //   // Crear el contenedor flex-none para el botón de opciones
 //   const flexNoneRight = document.createElement("div");
@@ -139,7 +130,6 @@ secciones.appendChild(aboutUs)
 //   buttonOptions.classList.add("btn", "btn-square", "btn-ghost");
 //   flexNoneRight.appendChild(btnlogout)
 //flexNonrRigth.appendChild(btnregis)
-
 
 //   // Crear el icono SVG dentro del botón de opciones
 //   const svgOptions = document.createElementNS(
