@@ -1,10 +1,9 @@
-
-import { DataTypes } from '../config/database/db.js'
 import { sequelize } from '../config/database/db.js';
-import { Localidad } from './localidades.js';
+import { DataTypes } from '../config/database/db.js'
 
 
-export const Usuario = sequelize.define('Usuario', {
+
+export const Usuario = sequelize.define('usuarios', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,11 +13,10 @@ export const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    apellido_razon_social: {
-        type: DataTypes.STRING(255),
-        allowNull: false
+    razon_social: {
+        type: DataTypes.STRING(255)
     },
-    correo_electronico: {
+    mail: {
         type: DataTypes.STRING(255),
         allowNull: false,
         unique: true
@@ -27,15 +25,15 @@ export const Usuario = sequelize.define('Usuario', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Localidad,
+            model: "localidades",
             key: 'id'
         }
     },
-    numero_telefono: {
+    nro_telefono: {
         type: DataTypes.STRING(20),
         allowNull: true
     },
-    contraseña: {
+    contrasenia: {
         type: DataTypes.STRING(255),
         allowNull: false
     },
@@ -50,5 +48,5 @@ export const Usuario = sequelize.define('Usuario', {
 
 });
 
-Usuario.belongsTo(Localidad, { foreignKey: 'localidad_id' });
+
 

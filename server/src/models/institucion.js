@@ -2,9 +2,8 @@
 
 import { DataTypes } from '../config/database/db.js'
 import { sequelize } from '../config/database/db.js';
-import { Usuario } from './users.js';
 
-export const Institucion = sequelize.define('Institucion', {
+export const Institucion = sequelize.define('instituciones', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,7 +13,7 @@ export const Institucion = sequelize.define('Institucion', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Usuario,
+            model: "usuarios",
             key: 'id'
         }
     },
@@ -25,6 +24,16 @@ export const Institucion = sequelize.define('Institucion', {
     direccion: {
         type: DataTypes.STRING(255),
         allowNull: true
+    },
+    rp_legal: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+    },
+    modo_atencion: {
+        type: DataTypes.ENUM('presencial', 'virtual'),
+    },
+    servi: {
+        type: DataTypes.TEXT
     }
 }, {
     tableName: 'instituciones',
@@ -32,4 +41,3 @@ export const Institucion = sequelize.define('Institucion', {
     underscored: true,
 });
 
-Institucion.belongsTo(Usuario, { foreignKey: 'usuario_id' });
