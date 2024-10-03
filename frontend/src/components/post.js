@@ -1,3 +1,4 @@
+
 export const  createHeroSection= () => {
     const hero = document.createElement("div");
     hero.classList.add("hero", "bg-base-200", "min-h-screen", "flex-row");
@@ -45,47 +46,41 @@ export const  createHeroSection= () => {
     );
     btn.textContent = "Crear Post";
     btn.type = "submit";
-  
-  btn.addEventListener("click", (event) => {
-    event.preventDefault();
-    const { title, desc } = input.value;
-    if (title && desc) {
-      fetch("http://localhost:4000/foro", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ title, desc }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.foro) {
-            renderTaskRow(data.foro);
-            input.value = "";
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
-  });
- 
-  form.appendChild(titleform);
+    form.appendChild(titleform);
   form.appendChild(titlepost);
   form.appendChild(input);
   form.appendChild(btn);
+
+
+      const postearFore = async () => {
+        try {
+          const response = await fetch("http://localhost:4000/foro/create")
+          method: "POST"
+          credentials: "include"
+          if(!response.ok){
+            throw new Error(`HTTT ERROR ! Status: ${response.status}`)
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("ERROR PA", error)
+          throw error
+        };
+
+ 
+
+  }
   // Crear el div max-w-md
-  const maxWmd = document.createElement("div");
-  maxWmd.classList.add(
-    "max-w-md",
-    "border",
-    "mb-2",
-    "w-[300px]",
-    "bg-white",
-    "rounded-lg",
-    "p-5"
-  );
+  // const maxWmd = document.createElement("div");
+  // maxWmd.classList.add(
+  //   "max-w-md",
+  //   "border",
+  //   "mb-2",
+  //   "w-[300px]",
+  //   "bg-white",
+  //   "rounded-lg",
+  //   "p-5"
+  // );
 
 //   // Tiempo de publicación
 //   const time = document.createElement("div");
