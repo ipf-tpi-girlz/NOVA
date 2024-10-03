@@ -1,8 +1,3 @@
-import { Subforo } from "../models/subForo.js";
-import { Publicacion } from "../models/publicacion.js";
-import { Usuario } from "../models/users.js";
-import { Comentario } from "../models/comentario.js";
-import { Respuesta } from "../models/respuesta.js";
 import { Foro } from "../models/foro.js";
 import color from "chalk";
 export const getForos = async (req, res) => {
@@ -34,7 +29,7 @@ export const getForos = async (req, res) => {
 export const getInfoGeneral = async (req, res) => {
   try {
     // Obtener todos los foros con sus subforos
-    const foros = await Foro.findAll({    });
+    const foros = await Foro.findAll({});
     if (foros.length === 0) return res.status(404).json({ message: "No existen foros en el sistema" });
     // Enviar la información de foros, subforos, publicaciones, comentarios y respuestas
     res.status(200).json({ foros });
