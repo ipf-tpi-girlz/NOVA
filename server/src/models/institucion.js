@@ -1,5 +1,3 @@
-
-
 import { DataTypes } from '../config/database/db.js'
 import { sequelize } from '../config/database/db.js';
 
@@ -31,6 +29,9 @@ export const Institucion = sequelize.define('instituciones', {
     },
     modo_atencion: {
         type: DataTypes.ENUM('presencial', 'virtual'),
+    },
+    nro_telefono: {
+        type: DataTypes.STRING(20),
     },
     servi: {
         type: DataTypes.TEXT

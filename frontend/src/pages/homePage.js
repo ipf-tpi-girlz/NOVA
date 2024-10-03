@@ -1,6 +1,6 @@
 export const homePage = () => {
   const containerHome = document.createElement("div");
-  containerHome.classList.add("bg-base", "flex-grow");
+  containerHome.classList.add("bg-base", "flex-grow", "min-h-screen");
 
   const titulo = document.createElement("h1");
   titulo.innerText = "NOVA";
@@ -43,11 +43,14 @@ export const homePage = () => {
   const info = document.createElement("a");
   info.classList.add("link", "px-10");
   info.textContent = "Mas informacion";
-  info.setAttribute("href", "#");
+  info.setAttribute("href", "/chvg");
   const parrafo = document.createElement("p");
   parrafo.classList.add("py-6", "p-10", "text-center", "lg:text-start");
   parrafo.textContent =
     "Abordar la violencia de género es un acto de responsabilidad social que exige sensibilidad y precisión. Al hablar del tema, es crucial usar un lenguaje claro y respetuoso, evitando culpabilizar a las víctimas o justificar el abuso .Es importante describir las diferentes formas de violencia (física, psicológica, sexual, económica y simbólica) y explicar que, aunque afecta principalmente a mujeres, cualquier persona puede sufrirla.                       “La violencia de género no va sólo en una modalidad puede normalizarse tanto que no nos damos cuenta que la estamos padeciendo, y es mucho más complicado en un noviazgo; nunca es tarde para romper ese círculo de agresión”";
+  
+  
+  
   containerHome.appendChild(titulo);
   containerHome.appendChild(subtitulo);
   container2.appendChild(img);

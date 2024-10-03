@@ -1,4 +1,7 @@
-import { Usuario } from "../models/users";
+import { Usuario } from '../models/users.js';
+import { Profesional } from '../models/profesional.js';
+import { Institucion } from '../models/institucion.js';
+import bcrypt from 'bcryptjs';
 
 export const deleteUser = async (req, res) => {
     const { id } = req.params;
@@ -19,11 +22,6 @@ export const deleteUser = async (req, res) => {
         res.status(500).json({ message: "Se produjo un error en el servidor" });
     }
 };
-
-import { Usuario } from '../models/users.js';
-import { Profesional } from '../models/profesional.js';
-import { Institucion } from '../models/institucion.js';
-import bcrypt from 'bcryptjs';
 
 export const updateUser = async (req, res) => {
     const { id } = req.params;
