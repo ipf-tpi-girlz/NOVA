@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser'
 import { usersRouter } from '../routers/users.routes.js'
 import { subForoRouter } from '../routers/subforo.routes.js'
 import { foroRouter } from '../routers/foro.routes.js'
-
+import { authRouter } from '../routers/auth.routes.js'
 
 
 export const app = express()
@@ -38,6 +38,8 @@ app.use(cookieParser())
 app.use('/users', usersRouter)
 app.use('/subforo', subForoRouter)
 app.use('/foro', foroRouter)
+app.use('/auth', authRouter)
+
 
 app.listen(config.PORT, () => {
     console.log(`Servidor corriendo en el puerto ${config.PORT}`)

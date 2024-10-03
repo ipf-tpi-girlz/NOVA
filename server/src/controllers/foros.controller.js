@@ -8,15 +8,8 @@ import color from "chalk";
 export const getForos = async (req, res) => {
   try {
     // Obtener todos los foros con sus subforos
-    const foros = await Foro.findAll({
-      include: [
-        {
-          model: Subforo,
-          as: "subforos",
-        },
-      ],
-    });
-    if (!foros)
+    const foros = await Foro.findAll({});
+    if (foros.length === 0)
       return res
         .status(404)
         .json({ message: "No existen foros en el sistema" });
@@ -84,7 +77,7 @@ export const getInfoGeneral = async (req, res) => {
         },
       ],
     });
-
+    if (foros.length === 0) return res.status(404).json({ message: "No existen foros en el sistema" });
     // Enviar la información de foros, subforos, publicaciones, comentarios y respuestas
     res.status(200).json({ foros });
   } catch (error) {
@@ -153,19 +146,11 @@ export const updateForo = async (req, res) => {
 
     await Foro.update({ title, desc }, { where: { id } });
 
-    res.status(200).json({ message: "El contenido ha sido actualizado" });
+    res.status(200).json({ message: "El contenido del foro ha sido realizado con exito" });
   } catch (error) {
-    console.log(
-      color.red(
-        "----------------------------------------------------------------------------"
-      )
-    );
+    console.log(color.red("-------------------------------------------------------------"));
     console.log(color.redBright(error));
-    console.log(
-      color.red(
-        "----------------------------------------------------------------------------"
-      )
-    );
+    console.log(color.red("-------------------------------------------------------------"));
   }
 };
 
@@ -174,23 +159,13 @@ export const deleteForo = async (req, res) => {
   try {
     const exist = await Foro.findOne({ where: { id } });
     if (!exist)
-      return res.status(400).json({
-        error: "El foro que desea eliminar no existe en nuestro sistema",
-      });
+      return res.status(400).json({ error: "El foro que desea eliminar no existe en nuestro sistema", })
     await Foro.destroy({ where: { id } });
     res.status(200).json({ message: "El foro ha sido eliminado exitosamente" });
   } catch (error) {
-    console.log(
-      color.red(
-        "----------------------------------------------------------------------------"
-      )
-    );
+    console.log(color.red("-------------------------------------------------------------"));
     console.log(color.redBright(error));
-    console.log(
-      color.red(
-        "----------------------------------------------------------------------------"
-      )
-    );
+    console.log(color.red("-------------------------------------------------------------"));
     res.status(500).json({ error: "Se produjo un error en el sistema" });
   }
 };
