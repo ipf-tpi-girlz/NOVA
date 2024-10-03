@@ -9,24 +9,30 @@ import { createToken } from '../healpers/create.jwt.js';
 //Funcion para registrar un usuario
 export const registerUser = async (req, res) => {
     try {
-        const { role, nombre, mail, departamento, localidad, contrasenia, nro_telefono, nro_matricula, cuit, razon_social, direccion, rp_legal, modo_atencion, servi, especialidad, hora_atencion, genero } = req.body;
+        let { role, nombre, mail, departamento, localidad, contrasenia, nro_telefono, nro_matricula, cuit, razon_social, direccion, rp_legal, modo_atencion, servi, especialidad, hora_atencion, genero } = req.body;
 
-        // Validar rol
-        if (!['victima', 'profesional', 'institucion'].includes(role)) {
-            return res.status(400).json({ error: 'Rol no válido' });
-        }
+        console.log({ role, nombre, mail, departamento, localidad, contrasenia, nro_telefono, nro_matricula, cuit, razon_social, direccion, rp_legal, modo_atencion, servi, especialidad, hora_atencion, genero });
+        
+        // // Validar rol
+        // if (!['victima', 'profesional', 'institucion'].includes(role)) { 
+        //     console.log("hasta aca 1");
+        //     return res.status(400).json({ error: 'Rol no válido' });
+        // }
 
+        console.log("hasta desc");
         // Verificar si el departamento existe
         const dep = await Departamento.findOne({ where: { nombre: departamento } });
         if (!dep) {
+            console.log("hasta desc");
             return res.status(400).json({ error: 'El departamento ingresado no existe en nuestro sistema' });
+           
         }
 
         // Verificar si la localidad existe
         const loc = await Localidad.findOne({ where: { nombre: localidad, departamento_id: dep.id } });
-        if (!loc) {
-            return res.status(400).json({ error: 'La localidad ingresada no existe en nuestro sistema' });
-        }
+        // if (!loc) {
+        //     return res.status(400).json({ error: 'La localidad ingresada no existe en nuestro sistema' });
+        // }
 
         // Verificar si el usuario ya existe
         const exist = await Usuario.findOne({ where: { mail } });
@@ -37,12 +43,11 @@ export const registerUser = async (req, res) => {
         // Cifrar la contraseña
         const hashedPassword = await bcrypt.hash(contrasenia, 10);
         const usuario = await Usuario.create({
-            nombre,
+            nombre: nombre,
             mail,
             localidad_id: loc.id,
             contrasenia: hashedPassword,
-            nro_telefono,
-            role,
+            role: "victima",
         });
 
         // Crear usuario profesional o institución
@@ -50,6 +55,7 @@ export const registerUser = async (req, res) => {
             await Profesional.create({ usuario_id: usuario.id, nro_matricula, razon_social, modo_atencion, especialidad, genero, hora_atencion });
         } else if (role === 'institucion') {
             // Validar campos requeridos para institución
+    
             if (!cuit || !direccion || !modo_atencion || !servi || !rp_legal) {
                 return res.status(400).json({ error: 'Faltan datos requeridos para la institución' });
             }
