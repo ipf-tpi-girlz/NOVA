@@ -34,49 +34,7 @@ export const getForos = async (req, res) => {
 export const getInfoGeneral = async (req, res) => {
   try {
     // Obtener todos los foros con sus subforos
-    const foros = await Foro.findAll({
-      include: [
-        {
-          model: Subforo,
-          as: "subforos",
-          include: [
-            {
-              model: Publicacion,
-              as: "publicaciones",
-              include: [
-                {
-                  model: Usuario,
-                  as: "usuario",
-                  attributes: ["nombre", "mail"], // Información básica del usuario
-                },
-                {
-                  model: Comentario,
-                  as: "comentarios",
-                  include: [
-                    {
-                      model: Usuario,
-                      as: "usuario",
-                      attributes: ["nombre", "mail"], // Autor del comentario
-                    },
-                    {
-                      model: Respuesta,
-                      as: "respuestas",
-                      include: [
-                        {
-                          model: Usuario,
-                          as: "usuario",
-                          attributes: ["nombre", "mail"], // Autor de la respuesta
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    });
+    const foros = await Foro.findAll({});
     if (foros.length === 0) return res.status(404).json({ message: "No existen foros en el sistema" });
     // Enviar la información de foros, subforos, publicaciones, comentarios y respuestas
     res.status(200).json({ foros });
@@ -99,6 +57,7 @@ export const getInfoGeneral = async (req, res) => {
 export const createForo = async (req, res) => {
   const user = req.user;
   const { title, desc } = req.body;
+  const id = user.id;
   if (!user) {
     return res.status(401).json({ message: "No autorizado" });
   }
@@ -112,6 +71,7 @@ export const createForo = async (req, res) => {
     await Foro.create({
       nombre: title,
       desc,
+      dueño_f: id
     });
     res.status(200).json({ message: "El foro ha sido creado exitosamente" });
   } catch (error) {

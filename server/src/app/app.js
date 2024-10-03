@@ -11,11 +11,13 @@ import { authRouter } from '../routers/auth.routes.js'
 
 
 export const app = express()
-
+console.log(
+)
 //MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin: "http://localhost:3000",
+    //*Puertos del frontend permitidos
+    origin: ["http://127.0.0.1:5500",],
     credentials: true
 }))
 app.use(session({

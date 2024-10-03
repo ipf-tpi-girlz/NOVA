@@ -9,8 +9,8 @@ import { createToken } from '../healpers/create.jwt.js';
 //Funcion para registrar un usuario
 export const registerUser = async (req, res) => {
     try {
-        const { role, nombre_apellido, mail, departamento, localidad, contrasenia, nro_telefono, nro_matricula, cuit, razon_social, direccion, rp_legal, modo_atencion, servi, especialidad, genero } = req.body;
-
+        let { role, nombre_apellido, mail, departamento, localidad, contrasenia, nro_telefono, nro_matricula, cuit, razon_social, direccion, rp_legal, modo_atencion, servi, especialidad, genero } = req.body;
+        role = "victima"
         // Validar rol
         if (!['victima', 'profesional', 'institucion'].includes(role)) {
             return res.status(400).json({ error: 'Rol no válido' });
@@ -42,7 +42,6 @@ export const registerUser = async (req, res) => {
             mail,
             localidad_id: loc.id,
             contrasenia: hashedPassword,
-            nro_telefono,
             genero,
             role,
         });
@@ -51,10 +50,7 @@ export const registerUser = async (req, res) => {
         if (role === 'profesional') {
             await Profesional.create({ usuario_id: usuario.id, nro_matricula, razon_social, especialidad });
         } else if (role === 'institucion') {
-            // Validar campos requeridos para institución
-            if (!cuit || !direccion || !modo_atencion || !servi || !rp_legal) {
-                return res.status(400).json({ error: 'Faltan datos requeridos para la institución' });
-            }
+
             try {
                 await Institucion.create({
                     usuario_id: usuario.id,
@@ -87,12 +83,13 @@ export const loginUser = async (req, res) => {
         // Verificar si el usuario existe
         const usuario = await Usuario.findOne({ where: { mail } });
         if (!usuario) {
+
             return res.status(400).send('El correo electronico ingresado no existe');
         }
         // Verificar la contraseña
         const match = await bcrypt.compare(contrasenia, usuario.contrasenia);
         if (!match) {
-            return res.status(400).send('La contrasenia es incorrecta');
+            return res.status(400).send('La contraseña es incorrecta');
         }
         //* Crear el token usando la función que ya tienes
         const token = await createToken(usuario.id);

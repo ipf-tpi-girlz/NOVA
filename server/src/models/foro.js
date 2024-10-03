@@ -17,6 +17,13 @@ export const Foro = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    dueño_f: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "usuarios",
+        key: "id",
+      }
+    }
   },
   {
     tableName: "foros",
