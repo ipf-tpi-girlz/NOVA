@@ -30,11 +30,7 @@ export const getInfoGeneral = async (req, res) => {
   const id = req.params
   try {
     // Obtener todos los foros con sus subforos
-<<<<<<< HEAD
     const foros = await Foro.findAll({ where: { id } });
-=======
-    const foros = await Foro.findAll({});
->>>>>>> af34c12abdfd3e37431777ce9b4f09dfcfaf938b
     if (foros.length === 0) return res.status(404).json({ message: "No existen foros en el sistema" });
     // Enviar la información de foros, subforos, publicaciones, comentarios y respuestas
     res.status(200).json({ foros });
@@ -58,9 +54,11 @@ export const createForo = async (req, res) => {
   const user = req.user;
   const { title, desc } = req.body;
   const id = user.id;
+
   if (!user) {
     return res.status(401).json({ message: "No autorizado" });
   }
+
   try {
     const existF = await Foro.findOne({ where: { nombre: title } });
     if (existF)

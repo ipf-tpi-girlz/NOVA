@@ -6,12 +6,12 @@ const SECRET_KEY = config.SECRET_KEY;
 
 // Middleware para verificar el token JWT
 export const validarJWT = async (req, res, next) => {
-    try {
-        console.log(color.green("------------session---------------------\n\n"));
-        console.log(color.greenBright(req.session));
-        console.log(color.green("------------cookies---------------------\n\n"));
-        console.log(color.greenBright(req.cookies));
-        console.log(color.green("----------------------------------------"));
+  try {
+    console.log(color.green("------------session---------------------\n\n"));
+    console.log(color.greenBright(req.session));
+    console.log(color.green("------------cookies---------------------\n\n"));
+    console.log(color.greenBright(req.cookies));
+    console.log(color.green("----------------------------------------"));
 
     // Obtener el token de las cookies o la sesión
     const token = req.cookies.authToken || req.session.token;
@@ -29,7 +29,7 @@ export const validarJWT = async (req, res, next) => {
     if (!user) {
       return res
         .status(401)
-        .json({ message: "Token inválido o usuario no encontrado" });
+        .json({ message: "Token inválido o usuario no encontrado", user });
     }
 
     // Agregar el usuario a la request para acceder en el controlador

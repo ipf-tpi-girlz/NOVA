@@ -6,9 +6,9 @@ export const authRouter = Router();
 
 
 //!trae usuarios
-authRouter.get('/', getUsers);
+authRouter.get('/', validarJWT, getUsers);
 //!eliminar usuario
-authRouter.delete('/:id', validarJWT, deleteUser);
+authRouter.delete('/delete/:id', validarJWT, deleteUser);
 //!actualizar usuario
 //authRouter.put('/:id', updateUser) //!pendiente
 
