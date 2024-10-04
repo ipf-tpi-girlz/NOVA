@@ -1,8 +1,16 @@
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 export const createHeroSection = () => {
   const hero = document.createElement("div");
-  hero.classList.add("hero", "bg-base-200", "min-h-screen", "flex", "flex-col", "items-center", "p-5");
+  hero.classList.add(
+    "hero",
+    "bg-base-200",
+    "min-h-screen",
+    "flex",
+    "flex-col",
+    "items-center",
+    "p-5"
+  );
 
   const titleSection = document.createElement("h2");
   titleSection.classList.add("text-3xl", "font-bold", "text-center", "mb-5");
@@ -27,12 +35,12 @@ export const createHeroSection = () => {
 
   createPostButton.addEventListener("click", () => {
     Swal.fire({
-      title: 'Crear Foro',
+      title: "Crear Foro",
       html: `
         <input id="swal-title" class="swal2-input" placeholder="Título">
         <textarea id="swal-desc" class="swal2-textarea" placeholder="Descripción" rows="4"></textarea>
       `,
-      background: '#f8f9fa',
+      background: "#f8f9fa",
       backdrop: `
         rgba(0, 0, 0, 0.5)
         url("../assets/fon3.jpg") left top
@@ -40,8 +48,8 @@ export const createHeroSection = () => {
       `,
       focusConfirm: false,
       preConfirm: () => {
-        const title = document.getElementById('swal-title').value;
-        const desc = document.getElementById('swal-desc').value;
+        const title = document.getElementById("swal-title").value;
+        const desc = document.getElementById("swal-desc").value;
 
         if (!title || !desc) {
           Swal.showValidationMessage(`Por favor, completa todos los campos.`);
@@ -73,18 +81,17 @@ export const createHeroSection = () => {
 
           const data = await response.json();
           Swal.fire({
-            icon: 'success',
-            title: '¡Post creado!',
+            icon: "success",
+            title: "¡Post creado!",
             text: `Se ha creado el foro: ${data.title}`,
           });
 
           loadForos();
-
         } catch (error) {
           console.error("ERROR PA", error);
           Swal.fire({
-            icon: 'error',
-            title: 'Error al crear el post',
+            icon: "error",
+            title: "Error al crear el post",
             text: error.message,
           });
         }
@@ -93,7 +100,16 @@ export const createHeroSection = () => {
   });
 
   const forumsContainer = document.createElement("div");
-  forumsContainer.classList.add("mt-5", "grid", "grid-cols-1", "gap-4", "md:grid-cols-2", "lg:grid-cols-3");
+  forumsContainer.classList.add(
+    "mt-5",
+    "grid",
+    "grid-cols-1",
+    "gap-4",
+    "md:grid-cols-2",
+    "lg:grid-cols-3",
+    "lg:grid-cols-4",
+    "lg:grid-cols-5"
+  );
 
   const loadForos = async () => {
     try {
@@ -106,7 +122,7 @@ export const createHeroSection = () => {
       }
       const data = await response.json();
 
-      forumsContainer.innerHTML = '';
+      forumsContainer.innerHTML = "";
 
       data.foros.forEach((foro) => {
         const forumCard = document.createElement("div");
