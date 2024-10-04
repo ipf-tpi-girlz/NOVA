@@ -10,5 +10,5 @@ import { validateSchema } from "../middlewares/validator.middleware.js";
 export const usersRouter = Router();
 
 usersRouter.post("/register", registerUser);
-usersRouter.post("/login", validateSchema(loginSchema), loginUser);
+usersRouter.post("/login", loginUser);
 usersRouter.get("/logout", logout);

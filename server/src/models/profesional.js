@@ -22,13 +22,6 @@ export const Profesional = sequelize.define('profesionales', {
     especialidad: {
         type: DataTypes.STRING(55),
         allowNull: false
-    },
-    modo_atencion: {
-        type: DataTypes.ENUM('presencial', 'virtual'),
-        allowNull: false
-    },
-    hora_atencion: {
-        type: DataTypes.DATE
     }
 }, {
     tableName: 'profesionales',

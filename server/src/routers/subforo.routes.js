@@ -8,8 +8,8 @@ export const subForoRouter = Router();
 //!trae subforos
 subForoRouter.get('/', getSubforos);
 //!crear subforo
-subForoRouter.post('/:id', validarJWT, createSubForo);
+subForoRouter.post('/create/:id', validarJWT, createSubForo);
 //!eliminar subforo
-subForoRouter.delete(' /:id', validarJWT, deleteSubForo);
+subForoRouter.delete('/delete/:id', validarJWT, deleteSubForo);
 //!actualizar subforo
-subForoRouter.put('/:id', validarJWT, updateSubForo);
+subForoRouter.put('/update/:id', validarJWT, updateSubForo);

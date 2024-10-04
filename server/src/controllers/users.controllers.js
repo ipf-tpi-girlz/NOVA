@@ -5,12 +5,12 @@ import { Profesional } from '../models/profesional.js';
 import { Institucion } from '../models/institucion.js';
 import bcrypt from 'bcryptjs';
 import { createToken } from '../healpers/create.jwt.js';
+import color from 'chalk'
 
 //Funcion para registrar un usuario
 export const registerUser = async (req, res) => {
     try {
         let { role, nombre_apellido, mail, departamento, localidad, contrasenia, nro_telefono, nro_matricula, cuit, razon_social, direccion, rp_legal, modo_atencion, servi, especialidad, genero } = req.body;
-        role = "victima"
         // Validar rol
         if (!['victima', 'profesional', 'institucion'].includes(role)) {
             return res.status(400).json({ error: 'Rol no válido' });
@@ -36,6 +36,7 @@ export const registerUser = async (req, res) => {
 
         // Cifrar la contraseña
         const hashedPassword = await bcrypt.hash(contrasenia, 10);
+
         const usuario = await Usuario.create({
             nombre: nombre_apellido,
             razon_social,
@@ -48,7 +49,11 @@ export const registerUser = async (req, res) => {
 
         // Crear usuario profesional o institución
         if (role === 'profesional') {
-            await Profesional.create({ usuario_id: usuario.id, nro_matricula, razon_social, especialidad });
+            await Profesional.create({
+                usuario_id: usuario.id,
+                nro_matricula,
+                especialidad
+            });
         } else if (role === 'institucion') {
 
             try {
@@ -56,13 +61,13 @@ export const registerUser = async (req, res) => {
                     usuario_id: usuario.id,
                     cuit,
                     direccion,
-                    modo_atencion,
-                    servi,
                     nro_telefono,
                     rp_legal
                 });
             } catch (error) {
-                console.error('Error al crear la institución:', error);
+                console.log(color.red("-------------------------------------------------------------"));
+                console.log(color.redBright(error));
+                console.log(color.red("-------------------------------------------------------------"));
                 return res.status(500).json({ error: 'Error al registrar la institución' });
             }
         }
@@ -70,7 +75,9 @@ export const registerUser = async (req, res) => {
         // Responder con éxito
         res.status(201).json({ message: `${role.charAt(0).toUpperCase() + role.slice(1)} registrado exitosamente`, usuario: { id: usuario.id, mail: usuario.mail, role: usuario.role } });
     } catch (error) {
-        console.error(error);
+        console.log(color.red("-------------------------------------------------------------"));
+        console.log(color.redBright(error));
+        console.log(color.red("-------------------------------------------------------------"));
         res.status(500).json({ error: 'Error en el servidor' });
     }
 };

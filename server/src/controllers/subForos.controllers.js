@@ -1,5 +1,6 @@
 import { Usuario } from "../models/users.js";
 import { Subforo } from "../models/subForo.js";
+import { Foro } from "../models/foro.js";
 import color from "chalk";
 
 export const getSubforos = async (req, res) => {
@@ -24,9 +25,10 @@ export const getSubforos = async (req, res) => {
 };
 
 export const createSubForo = async (req, res) => {
+  const { id } = req.params
   const user = req.user;
   const { title, desc } = req.body;
-  const id = user.id;
+  const id_user = user.id;
   console.log(
     color.bgBlue(
       "-----------------------------------------------------------------------------"
@@ -39,7 +41,7 @@ export const createSubForo = async (req, res) => {
     )
   );
   try {
-    const exist = await Usuario.findAll({ where: { id: id } });
+    const exist = await Usuario.findAll({ where: { id: id_user } });
 
     if (exist.length === 0) return res.status(404).json({ message: "Usuario no encontrado en nuestro sistema" });
 
@@ -56,15 +58,23 @@ export const createSubForo = async (req, res) => {
       message: "El titulo que desea ingresar ya existe en nuestro sistema",
     });
 
+    //!validar si existe foro
+    const existForo = await Foro.findAll({ where: { id: id } });
+    if (existForo.length === 0) return res.status(404).json({ message: "Foro no encontrado en nuestro sistema" });
+
     //* Crear el subforo
     await Subforo.create({
       title,
       desc,
-      moderador_id: id,
+      moderador_id: id_user,
+      foro_id: id
     });
 
     res.status(200).json({ message: "Seccion creada exitosamente" });
   } catch (error) {
+    console.log(color.red("-------------------------------------------------------------"));
+    console.log(color.redBright(error));
+    console.log(color.red("-------------------------------------------------------------"));
     res.status(500).json({ message: "Error en el servidor", error });
   }
 };
@@ -73,6 +83,7 @@ export const updateSubForo = async (req, res) => {
   const user = req.user;
   const { id } = req.params;
   const id_user = user.id;
+  const { desc, title } = req.body
   try {
     //!validar existencia de usuario
     const userExist = await Usuario.findOne({ where: { id: id_user } });
@@ -83,9 +94,11 @@ export const updateSubForo = async (req, res) => {
     //!validar si el usuario es moderador
     const moderador = subforoExist.moderador_id;
     if (id_user !== moderador) return res.status(400).json({ message: "Solo el moderador puede realizar esta operación" });
-    //*actualizar subforo
-    await Subforo.update(req.body, { where: { id } });
+    if (subforoExist.title === title) return res.status(400).json({ message: "El titulo no puede ser el mismo" });
+    //*actualizar datos
+    await Subforo.update({ title, desc }, { where: { id } });
     res.status(200).json({ message: "Seccion actualizada exitosamente" });
+
   } catch (error) {
     console.log(color.red("------------------------------------------------------------"));
     console.error(color.red(error));

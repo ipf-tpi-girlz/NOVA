@@ -7,22 +7,11 @@ export const Comentario = sequelize.define('comentarios', {
         primaryKey: true,
         autoIncrement: true
     },
-    title: {
-        type: DataTypes.STRING(255),
-        allowNull: false
-    },
-    contenido: {
+    content: {
         type: DataTypes.TEXT,
         allowNull: false
     },
-    publicacionId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: "publicaciones",
-            key: 'id'
-        }
-    },
-    usuarioId: {
+    usuario_id: {
         type: DataTypes.INTEGER,
         references: {
             model: "usuarios",

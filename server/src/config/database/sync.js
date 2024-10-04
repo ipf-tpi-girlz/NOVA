@@ -39,9 +39,6 @@ export const syncTables = async () => {
         Subforo.hasMany(Publicacion, { foreignKey: 'subforoId', onDelete: 'CASCADE' });
         Publicacion.belongsTo(Subforo, { foreignKey: 'subforoId' });
 
-        // Relaciones entre Publicación y Comentario
-        Publicacion.hasMany(Comentario, { foreignKey: 'publicacionId', onDelete: 'CASCADE' });
-        Comentario.belongsTo(Publicacion, { foreignKey: 'publicacionId' });
 
         // Relaciones entre Usuario y Comentario
         Usuario.hasMany(Comentario, { foreignKey: 'usuarioId', onDelete: 'CASCADE' });
@@ -59,14 +56,14 @@ export const syncTables = async () => {
         PerfilUsuario.belongsTo(Usuario, { foreignKey: 'usuarioId', as: 'usuario' });
         Usuario.hasMany(PerfilUsuario, { foreignKey: 'usuarioId', as: 'perfiles' });
 
-        // Relaciones entre Publicación, Comentario y Respuesta
         Publicacion.hasMany(interaccion_publicacion, { foreignKey: 'publicacionId', onDelete: 'CASCADE' });
-        Comentario.hasMany(interaccion_publicacion, { foreignKey: 'comentarioId', onDelete: 'CASCADE' });
-        Respuesta.hasMany(interaccion_publicacion, { foreignKey: 'respuestaId', onDelete: 'CASCADE' });
-
         interaccion_publicacion.belongsTo(Publicacion, { foreignKey: 'publicacionId' });
+        Comentario.hasMany(interaccion_publicacion, { foreignKey: 'comentarioId', onDelete: 'CASCADE' });
         interaccion_publicacion.belongsTo(Comentario, { foreignKey: 'comentarioId' });
+        Respuesta.hasMany(interaccion_publicacion, { foreignKey: 'respuestaId', onDelete: 'CASCADE' });
         interaccion_publicacion.belongsTo(Respuesta, { foreignKey: 'respuestaId' });
+
+
 
         // Sincronización de tablas
         await sequelize.sync();

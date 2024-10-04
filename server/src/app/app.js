@@ -8,8 +8,8 @@ import { usersRouter } from '../routers/users.routes.js'
 import { subForoRouter } from '../routers/subforo.routes.js'
 import { foroRouter } from '../routers/foro.routes.js'
 import { authRouter } from '../routers/auth.routes.js'
-
-
+import { comentRouter } from '../routers/coments.routes.js'
+import { postRouter } from '../routers/post.routes.js'
 export const app = express()
 console.log(
 )
@@ -41,6 +41,8 @@ app.use('/users', usersRouter)
 app.use('/subforo', subForoRouter)
 app.use('/foro', foroRouter)
 app.use('/auth', authRouter)
+app.use('/coments', comentRouter)
+app.use('/post', postRouter)
 
 
 app.listen(config.PORT, () => {

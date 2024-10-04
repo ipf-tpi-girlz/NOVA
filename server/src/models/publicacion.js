@@ -23,14 +23,14 @@ export const Publicacion = sequelize.define('publicaciones', {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
     },
-    usuarioId: {
+    usuario_id: {
         type: DataTypes.INTEGER,
         references: {
             model: "usuarios",
             key: 'id'
         }
     },
-    subforoId: {
+    subforo_id: {
         type: DataTypes.INTEGER,
         references: {
             model: "sub_foros",

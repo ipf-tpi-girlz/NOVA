@@ -14,7 +14,7 @@ export const getForos = async (req, res) => {
         .status(404)
         .json({ message: "No existen foros en el sistema" });
     // Enviar la información de foros y sus subforos
-    res.status(200).json({});
+    res.status(200).json({ foros });
   } catch (error) {
     console.log(
       color.red(
@@ -32,9 +32,10 @@ export const getForos = async (req, res) => {
 };
 
 export const getInfoGeneral = async (req, res) => {
+  const id = req.params
   try {
     // Obtener todos los foros con sus subforos
-    const foros = await Foro.findAll({});
+    const foros = await Foro.findAll({ where: { id } });
     if (foros.length === 0) return res.status(404).json({ message: "No existen foros en el sistema" });
     // Enviar la información de foros, subforos, publicaciones, comentarios y respuestas
     res.status(200).json({ foros });
