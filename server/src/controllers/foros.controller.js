@@ -57,16 +57,10 @@ export const getInfoGeneral = async (req, res) => {
 export const createForo = async (req, res) => {
   const user = req.user;
   const { title, desc } = req.body;
-<<<<<<< HEAD
   const id = user.id;
   if (!user) {
     return res.status(401).json({ message: "No autorizado" });
   }
-=======
-  // if (!user) {
-  //   return res.status(401).json({ message: "No autorizado" });
-  // }
->>>>>>> af34c12abdfd3e37431777ce9b4f09dfcfaf938b
   try {
     const existF = await Foro.findOne({ where: { nombre: title } });
     if (existF)
