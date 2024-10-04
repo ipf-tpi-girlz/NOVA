@@ -38,9 +38,14 @@ switch (pathname) {
     app.appendChild(contacts());
     app.appendChild(footer());
     break;
-    case "/chvg":
+  case "/chvg":
     app.appendChild(navbar());
     app.appendChild(violence());
     app.appendChild(footer())
     break
+  case "/profile":
+    app.appendChild(navbar());
+    app.appendChild(profile());
+    app.appendChild(footer());
+    break;
 }
