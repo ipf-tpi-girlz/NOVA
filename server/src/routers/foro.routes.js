@@ -14,7 +14,7 @@ foroRouter.get("/", getForos);
 //!trae info general de los foros (comentarios y publis)
 foroRouter.get("/infoGeneral", getInfoGeneral);
 //!crea foros
-foroRouter.post("/create", validarJWT, createForo);
+foroRouter.post("/create", createForo);
 //!edita foros
 foroRouter.put("/update/:id", updateForo);
 //!elimina foros

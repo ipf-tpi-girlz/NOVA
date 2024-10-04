@@ -1,8 +1,3 @@
-import { Subforo } from "../models/subForo.js";
-import { Publicacion } from "../models/publicacion.js";
-import { Usuario } from "../models/users.js";
-import { Comentario } from "../models/comentario.js";
-import { Respuesta } from "../models/respuesta.js";
 import { Foro } from "../models/foro.js";
 import color from "chalk";
 export const getForos = async (req, res) => {
@@ -35,7 +30,11 @@ export const getInfoGeneral = async (req, res) => {
   const id = req.params
   try {
     // Obtener todos los foros con sus subforos
+<<<<<<< HEAD
     const foros = await Foro.findAll({ where: { id } });
+=======
+    const foros = await Foro.findAll({});
+>>>>>>> af34c12abdfd3e37431777ce9b4f09dfcfaf938b
     if (foros.length === 0) return res.status(404).json({ message: "No existen foros en el sistema" });
     // Enviar la información de foros, subforos, publicaciones, comentarios y respuestas
     res.status(200).json({ foros });
@@ -58,10 +57,16 @@ export const getInfoGeneral = async (req, res) => {
 export const createForo = async (req, res) => {
   const user = req.user;
   const { title, desc } = req.body;
+<<<<<<< HEAD
   const id = user.id;
   if (!user) {
     return res.status(401).json({ message: "No autorizado" });
   }
+=======
+  // if (!user) {
+  //   return res.status(401).json({ message: "No autorizado" });
+  // }
+>>>>>>> af34c12abdfd3e37431777ce9b4f09dfcfaf938b
   try {
     const existF = await Foro.findOne({ where: { nombre: title } });
     if (existF)
