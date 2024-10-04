@@ -138,6 +138,50 @@ export const createHeroSection = () => {
           "duration-300"
         );
 
+        // Crear el contenedor del dropdown
+        const dropdownContainer = document.createElement("div");
+        dropdownContainer.classList.add("dropdown", "dropdown-hover");
+
+        // Crear el botón para activar el dropdown
+        const dropdownButton = document.createElement("div");
+        dropdownButton.setAttribute("tabindex", "0");
+        dropdownButton.setAttribute("role", "button");
+        dropdownButton.classList.add("btn", "m-1");
+        dropdownButton.textContent = "Hover";
+
+        // Crear el contenido del dropdown
+        const dropdownContent = document.createElement("ul");
+        dropdownContent.setAttribute("tabindex", "0");
+        dropdownContent.classList.add(
+          "dropdown-content",
+          "menu",
+          "bg-base-100",
+          "rounded-box",
+          "z-[1]",
+          "w-52",
+          "p-2",
+          "shadow"
+        );
+
+        // Crear los elementos del menú
+        const item1 = document.createElement("li");
+        const link1 = document.createElement("a");
+        link1.textContent = "Editar";
+        item1.appendChild(link1);
+
+        const item2 = document.createElement("li");
+        const link2 = document.createElement("a");
+        link2.textContent = "Borrar";
+        item2.appendChild(link2);
+
+        // Añadir los elementos al contenido del dropdown
+        dropdownContent.appendChild(item1);
+        dropdownContent.appendChild(item2);
+
+        // Añadir el botón y el contenido al contenedor del dropdown
+        dropdownContainer.appendChild(dropdownButton);
+        dropdownContainer.appendChild(dropdownContent);
+
         const forumTitle = document.createElement("h4");
         forumTitle.classList.add("font-bold", "text-lg");
         forumTitle.textContent = foro.nombre;
@@ -146,6 +190,7 @@ export const createHeroSection = () => {
         forumDesc.classList.add("mt-2");
         forumDesc.textContent = foro.desc;
 
+        forumCard.appendChild(dropdownContainer);
         forumCard.appendChild(forumTitle);
         forumCard.appendChild(forumDesc);
         forumsContainer.appendChild(forumCard);

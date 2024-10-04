@@ -12,6 +12,7 @@ export const navbar = () => {
   const titleLink = document.createElement("a");
   titleLink.classList.add("btn", "btn-ghost", "text-xl");
   titleLink.textContent = "NOVA";
+  titleLink.setAttribute("href", "/home");
 
   const secciones = document.createElement("div");
   secciones.classList.add("flex", "justify-evenly", "gap-8");
@@ -22,11 +23,11 @@ export const navbar = () => {
   const contactseccion = document.createElement("a");
   contactseccion.classList.add("text-base");
   contactseccion.textContent = "Contactos";
-  contactseccion.setAttribute("href", "#");
+  contactseccion.setAttribute("href", "/contact");
   const infseccion = document.createElement("a");
   infseccion.classList.add("text-base");
   infseccion.textContent = "Informacion";
-  infseccion.setAttribute("href", "#");
+  infseccion.setAttribute("href", "/chvg");
   const aboutUs = document.createElement("a");
   aboutUs.classList.add("text-base");
   aboutUs.textContent = "AboutUs";
