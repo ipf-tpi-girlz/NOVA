@@ -1,6 +1,4 @@
-import { formUser } from "../components/formRegisterUsuario";
-
-export const mainRegister = () => {
+export const mainRegister = (form) => {
   // Crear contenedor principal
   const container = document.createElement("div");
   container.className =
@@ -15,7 +13,7 @@ export const mainRegister = () => {
   h1.innerHTML = '"Un espacio seguro <br> para sanar, aprender y apoyar."';
   leftSection.appendChild(h1);
   container.appendChild(leftSection);
-  container.appendChild(formUser());
+  container.appendChild(form());
   // Retornar el contenedor principal para agregarlo al DOM en otro lugar
   return container;
 };
