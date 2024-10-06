@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
 import { Usuario } from "../models/users.js";
-import color from "chalk"
+import color from "chalk";
 const SECRET_KEY = config.SECRET_KEY;
 
 // Middleware para verificar el token JWT
@@ -14,8 +14,7 @@ export const validarJWT = async (req, res, next) => {
     console.log(color.green("----------------------------------------"));
 
     // Obtener el token de las cookies o la sesión
-    const token = req.cookies.authToken || req.session.token;
-
+    const { token } = req.cookies;
     if (!token) {
       return res.status(403).json({ message: "Token no proporcionado" });
     }
