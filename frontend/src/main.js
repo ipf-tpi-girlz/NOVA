@@ -1,22 +1,20 @@
-import "./style.css"
-import { formInstitucion } from "./components/registerInstitucion.js"; 
+import "./style.css";
+import { formUser } from "../src/components/formRegisterUsuario";
+import { mainRegister } from "../src/pages/mainRegister";
+import { formLogin } from "./components/formLogin";
 
-const params = window.location.pathname;
+const app = document.getElementById("app");
+const pathname = window.location.pathname;
 
-const $index = document.getElementById("app");
+switch (pathname) {
+  case "/registerUser":
+    app.appendChild(mainRegister(formUser()));
 
-
-switch (params) {
-  case "/registerInst":
-    $index.appendChild( formInstitucion());
     break;
-//   case "/login":
-//     $index.appendChild(await Pagelogin());
-//     break;
-//   case "/tasks":
-//     $index.appendChild(await listTasks());
-//     break;
-
-  default:
+  case "/login":
+    app.appendChild(mainRegister(formLogin()));
     break;
+  //   case "/tasks":
+  //     $index.appendChild(await listTasks());
+  //     break;
 }
