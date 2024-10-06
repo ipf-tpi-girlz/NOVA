@@ -1,37 +1,48 @@
-// src/middlewares/multerMiddleware.js
-import multer from 'multer';
-import path from 'path';
+import multer from "multer";
+import path from "path";
+import { fileURLToPath } from "url";
+import fs from "fs";
 
-// Configuración de Multer
+// Obtener __dirname en un módulo ES
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Verifica si la carpeta 'uploads' existe y, si no, la crea
+const uploadsDir = path.join(__dirname, "../uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+// Configuración de almacenamiento con Multer
 const storage = multer.diskStorage({
-    //!en el frontend debe entrar como name= "file"
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Carpeta donde se guardarán las imágenes y videos
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname)); // Renombrar el archivo
-    }
+  destination: (req, file, cb) => {
+    cb(null, uploadsDir); // Carpeta de destino
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`); // Nombre del archivo con timestamp
+  },
 });
 
-// Filtro de archivos
+// Filtro de archivos: solo permitir imágenes (jpeg, jpg, png)
 const fileFilter = (req, file, cb) => {
-    // Aceptar solo imágenes y videos
-    const filetypes = /jpg|jpeg|png|gif|mp4|mov|avi/; // Tipos de archivo permitidos
-    const mimetype = filetypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetypeCheck = filetypes.test(file.mimetype);
+  const filetypes = /jpeg|jpg|png/; // Tipos permitidos
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase()); // Validar extensión
+  const mimetype = filetypes.test(file.mimetype); // Validar MIME type
 
-    if (mimetype && mimetypeCheck) {
-        return cb(null, true); // Acepta el archivo
-    }
-    cb(new Error('Error: Tipo de archivo no permitido')); // Rechaza el archivo
+  if (mimetype && extname) {
+    cb(null, true); // Aceptar archivo
+  } else {
+    cb(
+      new Error(
+        "Formato de archivo no válido. Solo se permiten imágenes en formato jpeg, jpg o png."
+      )
+    );
+  }
 };
 
-// Crea el middleware
-const upload = multer({
-    storage,
-    fileFilter
-});
-
-
-export const uploadMiddleware = upload.single('file');
-
+// Configuración del middleware Multer
+export const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1024 * 1024 * 5 }, // Límite de 5MB
+  fileFilter: fileFilter,
+}).single("img");

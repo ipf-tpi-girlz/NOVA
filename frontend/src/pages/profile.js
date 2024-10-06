@@ -1,84 +1,103 @@
+import { updateProfile } from "../api/user.js";
+import Swal from "sweetalert2";
+
+// Crea el formulario de perfil dinámicamente
+const createProfileForm = () => {
+  const formContainer = document.createElement("div");
+  formContainer.className = "flex flex-col items-center p-4";
+
+  const form = document.createElement("form");
+  form.id = "profileForm";
+
+  const label = document.createElement("label");
+  label.htmlFor = "imgInput";
+  label.className = "relative cursor-pointer mb-4";
+
+  const profileImg = document.createElement("img");
+  profileImg.id = "profileImg";
+  profileImg.src = "ruta/a/la/imagen/default.jpg"; // Ruta a tu imagen por defecto
+  profileImg.alt = "Perfil";
+  profileImg.className = "w-24 h-24 rounded-full border-2 border-gray-300";
+
+  const imgInput = document.createElement("input");
+  imgInput.type = "file";
+  imgInput.id = "imgInput";
+  imgInput.accept = "image/*";
+  imgInput.className = "absolute inset-0 opacity-0 cursor-pointer";
+
+  label.appendChild(profileImg);
+  label.appendChild(imgInput);
+  form.appendChild(label);
+
+  const descriptionInput = document.createElement("textarea");
+  descriptionInput.id = "descriptionInput";
+  descriptionInput.placeholder = "Descripción";
+  descriptionInput.className = "textarea textarea-bordered w-full mb-4";
+  descriptionInput.rows = 3;
+  form.appendChild(descriptionInput);
+
+  const submitButton = document.createElement("button");
+  submitButton.type = "submit";
+  submitButton.className = "btn btn-primary";
+  submitButton.textContent = "Actualizar Perfil";
+  form.appendChild(submitButton);
+
+  // Agrega el evento de envío del formulario
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    await handleProfileUpdate(imgInput, descriptionInput, profileImg);
+  });
+
+  formContainer.appendChild(form);
+  return formContainer; // Devuelve el contenedor del formulario
+};
+
+// Función para manejar la actualización del perfil
+const handleProfileUpdate = async (imgInput, descriptionInput, profileImg) => {
+  const img = imgInput.files[0];
+  const description = descriptionInput.value;
+
+  if (!img && !description) {
+    Swal.fire({
+      title: "Advertencia",
+      text: "Debes seleccionar una imagen o ingresar una descripción.",
+      icon: "warning",
+      confirmButtonText: "Aceptar",
+    });
+    return;
+  }
+
+  try {
+    const userData = {
+      img: img || null,
+      description: description || null,
+    };
+
+    const result = await updateProfile(userData);
+
+    // Actualizar la imagen de perfil en la interfaz
+    profileImg.src = `http://localhost:4000/${result.perfil.img}`; // Ajusta la URL según sea necesario
+
+    Swal.fire({
+      title: "¡Éxito!",
+      text: "Perfil actualizado correctamente.",
+      icon: "success",
+      confirmButtonText: "Aceptar",
+    });
+  } catch (error) {
+    Swal.fire({
+      title: "Error",
+      text: "Error al actualizar el perfil.",
+      icon: "error",
+      confirmButtonText: "Aceptar",
+    });
+    console.error("Error:", error);
+  }
+};
+
+// Exporta la función para usarla en otras partes de la aplicación
 export const profile = () => {
-  // Crear el contenedor principal del perfil
-  const containerProfile = document.createElement("div");
-  containerProfile.classList.add(
-    "bg-white",
-    "flex-grow",
-    "min-h-screen",
-    "flex",
-    "flex-col",
-    "items-center",
-    "p-6",
-    "shadow-md",
-    "max-w-lg",
-    "mx-auto",
-    "rounded-lg",
-    "mt-10"
-  );
-
-  // Crear el contenedor para la imagen de perfil
-  const profileImage = document.createElement("img");
-  profileImage.src = "ruta/de/tu/imagen.jpg"; // Reemplaza con la URL o ruta de tu imagen
-  profileImage.alt = "Foto de perfil";
-  profileImage.classList.add(
-    "w-40",
-    "h-40",
-    "rounded-full",
-    "border-4",
-    "border-blue-500",
-    "mb-4"
-  );
-
-  // Crear el nombre de usuario
-  const profileName = document.createElement("h2");
-  profileName.innerText = "Nombre del Usuario"; // Reemplaza con el nombre del usuario
-  profileName.classList.add("text-2xl", "font-bold", "text-gray-800", "mb-2");
-
-  // Crear la descripción del perfil
-  const profileDescription = document.createElement("p");
-  profileDescription.innerText =
-    "Esta es una breve descripción sobre el usuario. Podría ser una biografía corta o algún detalle personal.";
-  profileDescription.classList.add("text-gray-600", "text-center", "mb-4");
-
-  // Botones de interacción (como en Facebook: Añadir amigo y Enviar mensaje)
-  const buttonContainer = document.createElement("div");
-  buttonContainer.classList.add("flex", "space-x-4", "mt-4");
-
-  // Botón "Añadir amigo"
-  const addFriendButton = document.createElement("button");
-  addFriendButton.innerText = "Añadir amigo";
-  addFriendButton.classList.add(
-    "bg-blue-500",
-    "text-white",
-    "py-2",
-    "px-4",
-    "rounded",
-    "hover:bg-blue-600",
-    "transition"
-  );
-
-  // Botón "Enviar mensaje"
-  const sendMessageButton = document.createElement("button");
-  sendMessageButton.innerText = "Enviar mensaje";
-  sendMessageButton.classList.add(
-    "bg-gray-300",
-    "text-gray-800",
-    "py-2",
-    "px-4",
-    "rounded",
-    "hover:bg-gray-400",
-    "transition"
-  );
-
-  // Agregar los botones al contenedor
-  buttonContainer.appendChild(addFriendButton);
-  buttonContainer.appendChild(sendMessageButton);
-
-  // Agregar todos los elementos al contenedor principal
-  containerProfile.appendChild(profileImage);
-  containerProfile.appendChild(profileName);
-  containerProfile.appendChild(profileDescription);
-  containerProfile.appendChild(buttonContainer);
-
-  return containerProfile;
+  const container = document.createElement("div");
+  container.appendChild(createProfileForm()); // Añade el formulario al contenedor
+  return container;
 };

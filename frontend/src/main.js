@@ -9,6 +9,7 @@ import { contacts } from "./pages/contacs";
 import { aboutUs } from "./components/problematica";
 import { navbarNologin } from "./components/navbarNologin";
 import { violence } from "./pages/violenceInf";
+import { profile } from "./pages/profile";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -41,8 +42,8 @@ switch (pathname) {
   case "/chvg":
     app.appendChild(navbar());
     app.appendChild(violence());
-    app.appendChild(footer())
-    break
+    app.appendChild(footer());
+    break;
   case "/profile":
     app.appendChild(navbar());
     app.appendChild(profile());

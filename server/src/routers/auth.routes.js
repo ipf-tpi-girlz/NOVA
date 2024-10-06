@@ -1,26 +1,19 @@
 import { Router } from "express";
-import { deleteUser, updateUser, getUsers } from '../controllers/auth.controller.js'
+import {
+  deleteUser,
+  updateUser,
+  getUsers,
+} from "../controllers/auth.controller.js";
 import { validarJWT } from "../middlewares/jwt.validation.js";
+import { upload } from "../middlewares/img.middleware.js";
+
 export const authRouter = Router();
 
+// Obtener datos del usuario autenticado
+authRouter.get("/", validarJWT, getUsers);
 
+// Eliminar usuario autenticado
+authRouter.delete("/delete/:id", validarJWT, deleteUser);
 
-//!trae usuarios
-authRouter.get('/', validarJWT, getUsers);
-//!eliminar usuario
-authRouter.delete('/delete/:id', validarJWT, deleteUser);
-//!actualizar usuario
-//authRouter.put('/:id', updateUser) //!pendiente
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Actualizar perfil (incluye la imagen de perfil)
+authRouter.post("/update", upload, updateUser);
