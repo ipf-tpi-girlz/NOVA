@@ -8,11 +8,11 @@ const pathname = window.location.pathname;
 
 switch (pathname) {
   case "/registerUser":
-    app.appendChild(mainRegister(formUser()));
+    app.appendChild(mainRegister(formUser));
 
     break;
   case "/login":
-    app.appendChild(mainRegister(formLogin()));
+    app.appendChild(mainRegister(formLogin));
     break;
   //   case "/tasks":
   //     $index.appendChild(await listTasks());

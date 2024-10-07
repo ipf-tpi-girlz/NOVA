@@ -1,7 +1,7 @@
-export const formLogin = async () => {
+export const formLogin = () => {
   const formContainer = document.createElement("div");
   formContainer.className =
-    "bg-white bg-opacity-95 p-8 rounded-lg shadow-lg w-1/2 h-[700px]";
+    " h-1/2 mt-16 bg-white bg-opacity-95 p-8 rounded-lg shadow-lg w-1/2 h-[700px]";
   const container = document.createElement("div");
   container.appendChild(formContainer);
 
@@ -61,7 +61,7 @@ export const formLogin = async () => {
 
   const passwordLabel = crearFormgroup(
     "Contraseña",
-    "contraseña",
+    "password",
     "contrasenia",
     "contrasenia"
   );
@@ -95,20 +95,24 @@ export const formLogin = async () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ mail, password }),
+        body: JSON.stringify({ mail, contrasenia }),
       });
-      const result = await response.json();
-      console.log(result);
+
       // Si el login fue exitoso
-      if (result.ok) {
+      if (response.ok) {
+        const result = await response.text();
+        console.log(result);
         // Redireccionar al dashboard
         window.location.href = "http://localhost:5173/home";
       } else {
         // Mostrar el error en caso de falla
+        console.log(response);
         alert("Error al iniciar sesión. Verifica tu correo y contraseña.");
       }
     } catch (error) {
       console.error("Error al iniciar sesión", error);
     }
   });
+
+  return formContainer;
 };

@@ -2,7 +2,7 @@ export const formUser = () => {
   // Crear formulario de registro
   const formContainer = document.createElement("div");
   formContainer.className =
-    "bg-white bg-opacity-95 p-8 rounded-lg shadow-lg w-1/2 h-[700px]";
+    "bg-white bg-opacity-95 px-5 pt-5 pb-2 rounded-lg shadow-lg w-2/5 h-fit";
 
   const h2 = document.createElement("h2");
   h2.className = "text-2xl font-semibold mb-6 text-center";
