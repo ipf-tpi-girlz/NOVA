@@ -1,29 +1,48 @@
-import { updateProfile } from "../api/user.js";
+import { updateProfile, getUserProfilePicture } from "../api/user.js";
 import Swal from "sweetalert2";
 
 // Crea el formulario de perfil dinámicamente
 const createProfileForm = () => {
   const formContainer = document.createElement("div");
-  formContainer.className = "flex flex-col items-center p-4";
+  formContainer.className =
+    "flex flex-col items-center bg-white shadow-md rounded-lg p-6 max-w-lg mx-auto mt-10";
+
+  const title = document.createElement("h2");
+  title.textContent = "Actualizar Perfil";
+  title.className = "text-2xl font-semibold mb-4";
+  formContainer.appendChild(title);
 
   const form = document.createElement("form");
   form.id = "profileForm";
+  form.className = "w-full";
 
   const label = document.createElement("label");
   label.htmlFor = "imgInput";
-  label.className = "relative cursor-pointer mb-4";
+  label.className = "relative cursor-pointer mb-4 flex justify-center";
 
   const profileImg = document.createElement("img");
   profileImg.id = "profileImg";
-  profileImg.src = "ruta/a/la/imagen/default.jpg"; // Ruta a tu imagen por defecto
+  profileImg.src = "ruta/a/la/imagen/default.jpg"; // Imagen predeterminada
   profileImg.alt = "Perfil";
-  profileImg.className = "w-24 h-24 rounded-full border-2 border-gray-300";
+  profileImg.className = "w-32 h-32 rounded-full border-2 border-gray-300 mb-2";
 
   const imgInput = document.createElement("input");
   imgInput.type = "file";
   imgInput.id = "imgInput";
   imgInput.accept = "image/*";
   imgInput.className = "absolute inset-0 opacity-0 cursor-pointer";
+
+  // Evento para la previsualización de la imagen seleccionada
+  imgInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        profileImg.src = event.target.result; // Actualiza el src de la imagen para previsualizar
+      };
+      reader.readAsDataURL(file); // Lee el archivo de imagen y convierte a base64
+    }
+  });
 
   label.appendChild(profileImg);
   label.appendChild(imgInput);
@@ -32,13 +51,15 @@ const createProfileForm = () => {
   const descriptionInput = document.createElement("textarea");
   descriptionInput.id = "descriptionInput";
   descriptionInput.placeholder = "Descripción";
-  descriptionInput.className = "textarea textarea-bordered w-full mb-4";
+  descriptionInput.className =
+    "textarea textarea-bordered w-full mb-4 p-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400";
   descriptionInput.rows = 3;
   form.appendChild(descriptionInput);
 
   const submitButton = document.createElement("button");
   submitButton.type = "submit";
-  submitButton.className = "btn btn-primary";
+  submitButton.className =
+    "btn btn-primary w-full py-2 mt-4 text-white bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200";
   submitButton.textContent = "Actualizar Perfil";
   form.appendChild(submitButton);
 
@@ -69,14 +90,16 @@ const handleProfileUpdate = async (imgInput, descriptionInput, profileImg) => {
 
   try {
     const userData = {
-      img: img || null,
+      img: img || null, // Asegúrate de que img se envíe correctamente
       description: description || null,
     };
 
     const result = await updateProfile(userData);
 
-    // Actualizar la imagen de perfil en la interfaz
-    profileImg.src = `http://localhost:4000/${result.perfil.img}`; // Ajusta la URL según sea necesario
+    // Actualizar la imagen de perfil en la interfaz solo después de la respuesta exitosa del servidor
+    if (result.perfil && result.perfil.img) {
+      profileImg.src = result.perfil.img; // Utiliza la URL completa directamente
+    }
 
     Swal.fire({
       title: "¡Éxito!",
@@ -95,9 +118,28 @@ const handleProfileUpdate = async (imgInput, descriptionInput, profileImg) => {
   }
 };
 
+// Función para cargar la imagen de perfil al iniciar
+const loadProfilePicture = async (profileImg) => {
+  try {
+    const result = await getUserProfilePicture();
+    if (result && result.img) {
+      profileImg.src = result.img; // Actualiza la imagen de perfil con la URL recibida
+    }
+  } catch (error) {
+    console.error("Error al cargar la imagen de perfil:", error);
+  }
+};
+
 // Exporta la función para usarla en otras partes de la aplicación
 export const profile = () => {
   const container = document.createElement("div");
-  container.appendChild(createProfileForm()); // Añade el formulario al contenedor
+  container.className =
+    "flex justify-center items-center min-h-screen bg-gray-100"; // Fondo gris
+  const formContainer = createProfileForm(); // Crea el formulario
+  container.appendChild(formContainer); // Añade el formulario al contenedor
+
+  // Cargar la imagen de perfil al iniciar
+  loadProfilePicture(formContainer.querySelector("#profileImg"));
+
   return container;
 };

@@ -11,6 +11,10 @@ import { authRouter } from "../routers/auth.routes.js";
 import { comentRouter } from "../routers/coments.routes.js";
 import { postRouter } from "../routers/post.routes.js";
 import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const app = express();
 
@@ -40,7 +44,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Hacer la carpeta 'uploads' accesible públicamente
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads"))); // Asegúrate de que 'uploads' sea accesible desde la raíz
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 //! RUTAS
 app.use("/users", usersRouter);

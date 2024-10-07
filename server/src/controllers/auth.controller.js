@@ -75,25 +75,57 @@ export const updateUser = async (req, res) => {
       perfil = await PerfilUsuario.create({
         usuario_id: user.id,
         description: req.body.description || "Descripción por defecto",
-        img: req.file
-          ? path.join("uploads", req.file.filename)
-          : "ruta/a/default.jpg",
+        img: req.file ? req.file.filename : "ruta/a/default.jpg",
       });
     } else {
       if (req.file) {
-        perfil.img = path.join("uploads", req.file.filename);
+        perfil.img = req.file.filename; // Almacena solo el nombre
       }
       perfil.description = req.body.description || perfil.description;
       await perfil.save();
     }
 
-    res
-      .status(200)
-      .json({ message: "Perfil actualizado correctamente", perfil });
+    const fullImgPath = `http://localhost:4000/uploads/${perfil.img}`; // Construye la URL completa correctamente
+
+    res.status(200).json({
+      message: "Perfil actualizado correctamente",
+      perfil: { ...perfil.toJSON(), img: fullImgPath },
+    });
   } catch (error) {
     console.error("Error al actualizar el perfil:", error);
     res
       .status(500)
       .json({ error: "Se produjo un error al actualizar el perfil" });
+  }
+};
+
+// Obtener la foto de perfil del usuario
+export const getUserProfilePicture = async (req, res) => {
+  const userId = 1; // ID de usuario para pruebas
+
+  try {
+    const perfil = await PerfilUsuario.findOne({
+      where: { usuario_id: userId },
+    });
+
+    // Verificar si el perfil existe
+    if (!perfil || !perfil.img) {
+      return res
+        .status(404)
+        .json({ message: "Perfil o imagen no encontrada." });
+    }
+
+    // Construir la URL completa de la imagen
+    const fullImgPath = `http://localhost:4000/uploads/${perfil.img}`;
+
+    res.status(200).json({
+      message: "Imagen de perfil obtenida correctamente.",
+      img: fullImgPath,
+    });
+  } catch (error) {
+    console.error("Error al obtener la imagen de perfil:", error);
+    return res
+      .status(500)
+      .json({ error: "Se produjo un error al obtener la imagen de perfil." });
   }
 };
