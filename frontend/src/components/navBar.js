@@ -18,7 +18,7 @@ export const navbar = () => {
   secciones.classList.add("flex", "justify-evenly", "gap-8");
   const forosseccion = document.createElement("a");
   forosseccion.classList.add("text-base");
-  forosseccion.setAttribute("href", "#");
+  forosseccion.setAttribute("href", "/foros");
   forosseccion.textContent = "Foros";
   const contactseccion = document.createElement("a");
   contactseccion.classList.add("text-base");

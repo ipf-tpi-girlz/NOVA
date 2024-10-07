@@ -8,7 +8,9 @@ import { landing } from "./pages/lading";
 import { contacts } from "./pages/contacs";
 import { aboutUs } from "./components/problematica";
 import { navbarNologin } from "./components/navbarNologin";
-import { violence } from "./pages/violenceInf";
+import { violence } from "./pages/seccionInf/violenceInf";
+import { foro } from "./pages/foro";
+
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -42,5 +44,10 @@ switch (pathname) {
     app.appendChild(navbar());
     app.appendChild(violence());
     app.appendChild(footer())
-    break
+    break;
+    case "/foros":
+    app.appendChild(navbar());
+    app.appendChild(createHeroSection());
+    app.appendChild(foro())
+  app.appendChild(footer())
 }

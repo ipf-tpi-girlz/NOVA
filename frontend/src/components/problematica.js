@@ -4,7 +4,8 @@ export const aboutUs = () => {
     "hero-content",
     "flex-col",
     "lg:flex-row",
-    "p-14"
+    "p-24",
+    "gap-40",
   );
   const containerA = document.createElement("div");
   containerA.classList.add("flex-col", "self-center", "lg:self-center");
@@ -21,18 +22,18 @@ export const aboutUs = () => {
   containerB1.classList.add("flex", "flex-col", "gap-2");
   const seccion1 = document.createElement("div");
   seccion1.textContent =
-    "Proporciondo un ambiente seguro para que los supervivientes compartan experiencias";
+    "🤍 Proporcionando un ambiente seguro para que los supervivientes compartan experiencias";
   const seccion2 = document.createElement("div");
   seccion2.textContent =
-    "Ofrecemos interacciones con expertos para que los sobrevivientes aprendan y crezcan en su proceso de sanación.";
+    "🤍 Ofrecemos interacciones con expertos para que los sobrevivientes aprendan y crezcan en su proceso de sanación.";
   const containerB2 = document.createElement("div");
   containerB2.classList.add("flex", "flex-col", "gap-2");
   const seccion3 = document.createElement("div");
   seccion3.textContent =
-    "Brindamos recursos informativos para que los usuarios puedan aprender a reconocer, abordar y apoyar en casos de violencia de género.";
+    "🤍 Brindamos recursos informativos para ayudar a reconocer, abordar y apoyar en casos de violencia de género.";
   const seccion4 = document.createElement("div");
   seccion4.textContent =
-    "Empoderamos a cada sobreviviente de violencia  para que encuentre su propio camino hacia la sanación y el bienestar emocional.";
+    "🤍 Empoderamos a cada sobreviviente de violencia  para que encuentre su propio camino hacia la sanación y el bienestar emocional.";
 
   containerA.appendChild(subbtitulo);
   containerA.appendChild(titleAbout);
