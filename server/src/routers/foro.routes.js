@@ -1,7 +1,6 @@
 import { Router } from "express";
 import {
   getForos,
-  getInfoGeneral,
   createForo,
   deleteForo,
   updateForo,
@@ -9,10 +8,10 @@ import {
 import { validarJWT } from "../middlewares/jwt.validation.js";
 
 export const foroRouter = Router();
+
+
 //!trae foros y sub foros
 foroRouter.get("/", getForos);
-//!trae info general de los foros (comentarios y publis)
-foroRouter.get("/infoGeneral", getInfoGeneral);
 //!crea foros
 foroRouter.post("/create", createForo);
 //!edita foros
