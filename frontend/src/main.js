@@ -11,7 +11,6 @@ import { navbarNologin } from "./components/navbarNologin";
 import { violence } from "./pages/seccionInf/violenceInf";
 import { foro } from "./pages/foro";
 
-
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
 
@@ -33,21 +32,25 @@ switch (pathname) {
   case "/":
     app.appendChild(navbarNologin());
     app.appendChild(landing());
+    app.appendChild(aboutUs());
     app.appendChild(footer());
     break;
   case "/contact":
     app.appendChild(navbar());
     app.appendChild(contacts());
+    app.appendChild(aboutUs());
     app.appendChild(footer());
     break;
-    case "/chvg":
+  case "/chvg":
     app.appendChild(navbar());
     app.appendChild(violence());
-    app.appendChild(footer())
+    app.appendChild(aboutUs());
+    app.appendChild(footer());
     break;
-    case "/foros":
+  case "/foros":
     app.appendChild(navbar());
     app.appendChild(createHeroSection());
-    app.appendChild(foro())
-  app.appendChild(footer())
+    app.appendChild(foro());
+    app.appendChild(aboutUs());
+    app.appendChild(footer());
 }
