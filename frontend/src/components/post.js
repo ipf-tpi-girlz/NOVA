@@ -105,9 +105,7 @@ export const createHeroSection = () => {
     "grid",
     "grid-cols-1",
     "gap-4",
-    "md:grid-cols-2",
-    "lg:grid-cols-3",
-    "lg:grid-cols-4",
+    "md:grid-cols-2"
   );
 
   const loadForos = async () => {
@@ -127,6 +125,7 @@ export const createHeroSection = () => {
         const forumCard = document.createElement("div");
         forumCard.classList.add(
           "bg-white",
+          "break-words",
           "rounded-lg",
           "p-5",
           "shadow-md",
@@ -139,13 +138,18 @@ export const createHeroSection = () => {
 
         // Crear el contenedor del dropdown
         const dropdownContainer = document.createElement("div");
-        dropdownContainer.classList.add("dropdown", "ml-28")
+        dropdownContainer.classList.add("dropdown", "ml-28");
 
         // Crear el botón para activar el dropdown
         const dropdownButton = document.createElement("div");
         dropdownButton.setAttribute("tabindex", "0");
         dropdownButton.setAttribute("role", "button");
-        dropdownButton.classList.add("btn", "bg-transparent", "border-transparent", "box-border-0");
+        dropdownButton.classList.add(
+          "btn",
+          "bg-transparent",
+          "border-transparent",
+          "box-border-0"
+        );
         dropdownButton.textContent = "🤍";
 
         // Crear el contenido del dropdown

@@ -85,7 +85,7 @@ export const foro = () => {
     "block",
     "font-sans",
     "antialiased",
-    "font-light",
+    "font-bold",
     "leading-relaxed",
     "text-inherit"
   );
@@ -115,8 +115,8 @@ export const foro = () => {
     "py-3",
     "px-6",
     "rounded-lg",
-    "bg-gray-900",
-    "text-white",
+    "bg-base-400",
+    "text-base",
     "shadow-md",
     "shadow-gray-900/10",
     "hover:shadow-lg",
@@ -163,13 +163,7 @@ export const foro = () => {
 
   const forumTitle = document.createElement("h1");
   forumTitle.textContent = "Manos Unidas";
-  forumTitle.classList.add(
-    "text-3xl",
-    "font-semibold",
-    "mb-6",
-    "text-center",
-    "text-gray-800"
-  );
+  forumTitle.classList.add("text-3xl", "font-semibold", "mb-6", "text-center");
   appContainer.appendChild(forumTitle);
 
   // Crear el contenedor para los posts
