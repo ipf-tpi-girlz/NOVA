@@ -36,32 +36,6 @@ export const getUsers = async (req, res) => {
   }
 };
 
-// Eliminar usuario
-export const deleteUser = async (req, res) => {
-  const user = req.user;
-  try {
-    // Buscar el usuario por ID
-    const usuario = await Usuario.findOne({ where: { id: user.id } });
-
-    if (!usuario) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
-    }
-
-    // Eliminar el usuario
-    await Usuario.destroy({ where: { id: user.id } });
-    res.status(200).json({ message: "Usuario eliminado exitosamente" });
-  } catch (error) {
-    console.log(
-      color.red("-------------------------------------------------------------")
-    );
-    console.log(color.redBright(error));
-    console.log(
-      color.red("-------------------------------------------------------------")
-    );
-    return res.status(500).json({ error: "Se produjo un error en el sistema" });
-  }
-};
-
 // Actualizar perfil de usuario (incluye imagen de perfil)
 export const updateUser = async (req, res) => {
   try {
