@@ -25,7 +25,6 @@ export const registerUser = async (req, res) => {
         if (!dep) {
             console.log("hasta desc");
             return res.status(400).json({ error: 'El departamento ingresado no existe en nuestro sistema' });
-           
         }
 
         // Verificar si la localidad existe
