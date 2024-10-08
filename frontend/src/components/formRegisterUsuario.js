@@ -159,7 +159,7 @@ export const formUser = () => {
 
     try {
       // Enviar los datos al backend con fecht
-      const response = await fetch("http://localhost:4000/users/register", {
+      const response = await fetch("http://localhost:3000/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
