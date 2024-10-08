@@ -12,6 +12,7 @@ export const navbarNologin = () => {
   const titleLink = document.createElement("a");
   titleLink.classList.add("btn", "btn-ghost", "text-xl");
   titleLink.textContent = "NOVA";
+  titleLink.setAttribute("href", "/");
 
   const secciones = document.createElement("div");
   secciones.classList.add("flex", "justify-evenly", "gap-8");

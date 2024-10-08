@@ -128,7 +128,7 @@ export const formUser = () => {
   // Botón de envío
   const submitButton = document.createElement("button");
   submitButton.type = "submit";
-  submitButton.className = "btn w-full bg-blue-600 text-white py-2 rounded-lg";
+  submitButton.className = "btn w-full btn-primary py-2 rounded-lg";
   submitButton.innerText = "Registrarse";
   form.appendChild(submitButton);
 

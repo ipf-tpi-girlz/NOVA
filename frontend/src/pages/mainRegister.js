@@ -7,7 +7,8 @@ export const mainRegister = (form) => {
   container.style.backgroundImage = `url(${bg})`;
   // Crear sección izquierda con el título
   const leftSection = document.createElement("div");
-  leftSection.className = " w-1/2 flex justify-center items-center h-screen";
+  leftSection.className =
+    " w-1/2 flex justify-center items-center h-screen max-w-screen";
 
   const h1 = document.createElement("h1");
   h1.className = "anton_regular text-5xl text-white tracking-wide font-serif";
