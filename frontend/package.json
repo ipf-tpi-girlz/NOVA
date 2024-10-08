@@ -16,12 +16,8 @@
     "vite": "^5.4.1"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "sweetalert2": "^11.14.1"
-=======
     "lucide": "^0.447.0",
     "sweetalert2": "^11.14.1",
     "theme-change": "^2.5.0"
->>>>>>> 02e633c8736f4ce3db609555dc79f455f338683b
   }
 }

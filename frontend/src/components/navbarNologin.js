@@ -13,19 +13,33 @@ export const navbarNologin = () => {
   titleLink.classList.add("btn", "btn-ghost", "text-xl");
   titleLink.textContent = "NOVA";
 
-  const secciones = document.createElement("div")
-  secciones.classList.add("flex","justify-evenly", "gap-8")
+  const secciones = document.createElement("div");
+  secciones.classList.add("flex", "justify-evenly", "gap-8");
   const forosseccion = document.createElement("a");
-  forosseccion.classList.add("text-base")
-  forosseccion.textContent = "AboutUs"
-secciones.appendChild(forosseccion)
+  forosseccion.classList.add("text-base");
+  forosseccion.textContent = "AboutUs";
+  secciones.appendChild(forosseccion);
 
   const btnlogout = document.createElement("button");
-  btnlogout.classList.add("btn", "btn-primary", "btn-sm")
+  btnlogout.classList.add("btn", "btn-primary", "btn-sm");
   btnlogout.textContent = "Login";
+  btnlogout.type = "submit";
+  btnlogout.setAttribute("href", "/login");
+
+  btnlogout.addEventListener("click", () => {
+    window.location.href = "http://localhost:5173/login";
+  });
+
   const btnregis = document.createElement("button");
-  btnregis.classList.add("btn", "btn-primary", "btn-sm")
+  btnregis.classList.add("btn", "btn-primary", "btn-sm");
   btnregis.textContent = "Registrarse";
+  btnregis.type = "submit";
+  btnregis.setAttribute("href", "/registerUser");
+
+  btnregis.addEventListener("click", () => {
+    window.location.href = "http://localhost:5173/registerUser";
+  });
+
   // Añadir el enlace al contenedor flex-1
   flexOne.appendChild(titleLink);
 
@@ -36,8 +50,8 @@ secciones.appendChild(forosseccion)
   // Crear el botón de opciones
   const buttonOptions = document.createElement("button");
   buttonOptions.classList.add("btn", "btn-square", "btn-ghost");
-  flexNoneRight.appendChild(btnlogout)
-flexNoneRight.appendChild(btnregis)
+  flexNoneRight.appendChild(btnlogout);
+  flexNoneRight.appendChild(btnregis);
 
   // Crear el icono SVG dentro del botón de opciones
   const svgOptions = document.createElementNS(

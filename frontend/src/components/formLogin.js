@@ -1,7 +1,7 @@
 export const formLogin = () => {
   const formContainer = document.createElement("div");
   formContainer.className =
-    " h-1/2 mt-16 bg-white bg-opacity-95 p-8 rounded-lg shadow-lg w-1/2 h-[700px]";
+    " h-96 mt-16 bg-white bg-opacity-95 p-8 rounded-lg shadow-lg w-96 mr-32";
   const container = document.createElement("div");
   container.appendChild(formContainer);
 
@@ -70,8 +70,9 @@ export const formLogin = () => {
   // Botón de envío
   const submitButtoon = document.createElement("button");
   submitButtoon.type = "submit";
-  submitButtoon.className = "btn w-full bg-blue-600 text-white py-2 rounded-lg";
+  submitButtoon.className = "btn btn-primary w-full  py-2 rounded-lg ";
   submitButtoon.innerText = "Ingresar";
+  submitButtoon.setAttribute = ("href", "/home");
   form.appendChild(submitButtoon);
 
   // evento

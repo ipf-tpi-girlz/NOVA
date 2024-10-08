@@ -19,11 +19,15 @@ const pathname = window.location.pathname;
 
 switch (pathname) {
   case "/registerUser":
+    app.appendChild(navbarNologin());
     app.appendChild(mainRegister(formUser));
+    app.appendChild(footer());
 
     break;
   case "/login":
+    app.appendChild(navbarNologin());
     app.appendChild(mainRegister(formLogin));
+    app.appendChild(footer());
     break;
   case "/home":
     app.appendChild(navbar());

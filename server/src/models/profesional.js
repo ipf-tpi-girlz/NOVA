@@ -1,44 +1,43 @@
+import { sequelize, DataTypes } from "../config/database/db.js";
 
-import { sequelize, DataTypes } from '../config/database/db.js'
-
-export const Profesional = sequelize.define('profesionales', {
+export const Profesional = sequelize.define(
+  "profesionales",
+  {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
     usuario_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: "usuarios",
-            key: 'id'
-        }
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "usuarios",
+        key: "id",
+      },
     },
     nro_matricula: {
-        type: DataTypes.STRING(50),
-        allowNull: false
+      type: DataTypes.STRING(50),
+      allowNull: false,
     },
     especialidad: {
-        type: DataTypes.STRING(55),
-        allowNull: false
+      type: DataTypes.STRING(55),
+      allowNull: false,
     },
     modo_atencion: {
-        type: DataTypes.ENUM('presencial', 'virtual'),
-        allowNull: false
+      type: DataTypes.ENUM("presencial", "virtual"),
+      allowNull: false,
     },
     hora_atencion: {
-        type: DataTypes.DATE
-<<<<<<< HEAD
+      type: DataTypes.DATE,
     },
     genero: {
-        type: DataTypes.ENUM('femenino', 'masculino', 'otro'),
-=======
->>>>>>> 02e633c8736f4ce3db609555dc79f455f338683b
-    }
-
-}, {
-    tableName: 'profesionales',
+      type: DataTypes.ENUM("femenino", "masculino", "otro"),
+    },
+  },
+  {
+    tableName: "profesionales",
     freezeTableName: true,
-    underscored: true
-});
+    underscored: true,
+  }
+);
