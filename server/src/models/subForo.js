@@ -16,6 +16,7 @@ export const Subforo = sequelize.define('sub_foros', {
         type: DataTypes.TEXT,
         allowNull: true
     },
+<<<<<<< HEAD
     categoria_id: {
         type: DataTypes.INTEGER,
         references: {
@@ -23,12 +24,24 @@ export const Subforo = sequelize.define('sub_foros', {
             key: "id"
         }
     },
+=======
+>>>>>>> 02e633c8736f4ce3db609555dc79f455f338683b
     moderador_id: {
         type: DataTypes.INTEGER,
         references: {
             model: "usuarios",
             key: "id"
         }
+<<<<<<< HEAD
+=======
+    },
+    foro_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "foros",
+            key: "id"
+        }
+>>>>>>> 02e633c8736f4ce3db609555dc79f455f338683b
     }
 }, {
     tableName: 'sub_foros',

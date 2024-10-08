@@ -29,9 +29,12 @@ export const Profesional = sequelize.define('profesionales', {
     },
     hora_atencion: {
         type: DataTypes.DATE
+<<<<<<< HEAD
     },
     genero: {
         type: DataTypes.ENUM('femenino', 'masculino', 'otro'),
+=======
+>>>>>>> 02e633c8736f4ce3db609555dc79f455f338683b
     }
 
 }, {

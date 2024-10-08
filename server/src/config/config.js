@@ -5,7 +5,7 @@ dotenv.config();
 
 //CONFIGURACIÓN
 export default {
-  PORT: process.env.PORT || 3000,
+  PORT: process.env.PORT || 4000,
   DB_HOST: process.env.DB_HOST || "localhost",
   DB_USER: process.env.DB_USER || "root",
   DB_PASSWORD: process.env.DB_PASS || "",
