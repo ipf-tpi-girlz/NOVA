@@ -108,113 +108,10 @@ export const registerUser = async (req, res) => {
 
     // Responder con éxito
     res.status(201).json({
-      message: `${
-        role.charAt(0).toUpperCase() + role.slice(1)
-      } registrado exitosamente`,
+      message: `${role.charAt(0).toUpperCase() + role.slice(1)
+        } registrado exitosamente`,
       usuario: { id: usuario.id, mail: usuario.mail, role: usuario.role },
     });
-  } catch (error) {
-    console.log(
-      color.red("-------------------------------------------------------------")
-    );
-    console.log(color.redBright(error));
-    console.log(
-      color.red("-------------------------------------------------------------")
-    );
-    res.status(500).json({ error: "Error en el servidor" });
-  }
-};
-
-export const updateUser = async (req, res) => {
-  const user = req.user;
-  const {
-    nombre_apellido,
-    departamento,
-    localidad,
-    contrasenia,
-    nro_telefono,
-    razon_social,
-    direccion,
-    rp_legal,
-    modo_atencion,
-    servi,
-    especialidad,
-    genero,
-  } = req.body;
-
-  try {
-    // Verificar si el usuario existe
-    const existUser = await Usuario.findOne({ where: { id: user.id } });
-    if (!existUser) {
-      return res
-        .status(404)
-        .json({ message: "Usuario no encontrado en nuestro sistema" });
-    }
-
-    // Validar el departamento si se proporciona
-    if (departamento) {
-      const dep = await Departamento.findOne({
-        where: { nombre: departamento },
-      });
-      if (!dep) {
-        return res.status(400).json({
-          error: "El departamento ingresado no existe en nuestro sistema",
-        });
-      }
-    }
-
-    // Validar la localidad si se proporciona
-    if (localidad) {
-      const loc = await Localidad.findOne({
-        where: { nombre: localidad, departamento_id: existUser.localidad_id },
-      });
-      if (!loc) {
-        return res.status(400).json({
-          error: "La localidad ingresada no existe en nuestro sistema",
-        });
-      }
-    }
-
-    // Cifrar la nueva contraseña si se proporciona
-    let hashedPassword;
-    if (contrasenia) {
-      hashedPassword = await bcrypt.hash(contrasenia, 10);
-    }
-
-    // Actualizar usuario
-    await Usuario.update(
-      {
-        nombre: nombre_apellido,
-        localidad_id: localidad ? loc.id : existUser.localidad_id,
-        contrasenia: hashedPassword || existUser.contrasenia,
-        genero,
-        nro_telefono,
-      },
-      { where: { id: user.id } }
-    );
-
-    // Actualizar información adicional según el rol
-    if (existUser.role === "profesional") {
-      await Profesional.update(
-        {
-          especialidad: req.body.especialidad || existUser.especialidad,
-        },
-        { where: { usuario_id: user.id } }
-      );
-    } else if (existUser.role === "institucion") {
-      await Institucion.update(
-        {
-          cuit: req.body.cuit || existUser.cuit,
-          direccion: req.body.direccion || existUser.direccion,
-          nro_telefono: req.body.nro_telefono || existUser.nro_telefono,
-          rp_legal: req.body.rp_legal || existUser.rp_legal,
-        },
-        { where: { usuario_id: user.id } }
-      );
-    }
-
-    // Responder con éxito
-    res.status(200).json({ message: "Usuario actualizado exitosamente" });
   } catch (error) {
     console.log(
       color.red("-------------------------------------------------------------")
@@ -257,31 +154,6 @@ export const loginUser = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Error en el servidor");
-  }
-};
-
-export const deleteUser = async (req, res) => {
-  const user = req.user;
-  try {
-    // Buscar el usuario por ID
-    const usuario = await Usuario.findOne({ where: { id: user.id } });
-
-    if (!usuario) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
-    }
-
-    // Eliminar el usuario
-    await Usuario.destroy({ where: { id: user.id } });
-    res.status(200).json({ message: "Usuario eliminado exitosamente" });
-  } catch (error) {
-    console.log(
-      color.red("-------------------------------------------------------------")
-    );
-    console.log(color.redBright(error));
-    console.log(
-      color.red("-------------------------------------------------------------")
-    );
-    return res.status(500).json({ error: "Se produjo un error en el sistema" });
   }
 };
 

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  updateUser,
+  UpdateProfile,
   getUsers,
   getUserProfilePicture,
 } from "../controllers/auth.controller.js";
@@ -13,7 +13,7 @@ export const authRouter = Router();
 authRouter.get("/", validarJWT, getUsers);
 
 // Actualizar perfil (incluye la imagen de perfil)
-authRouter.post("/update", upload, updateUser);
+authRouter.post("/update", upload, UpdateProfile);
 
 // Ruta para obtener la imagen de perfil
 authRouter.get("/profile/picture", getUserProfilePicture);
