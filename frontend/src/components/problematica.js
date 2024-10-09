@@ -5,7 +5,7 @@ export const aboutUs = () => {
     "flex-col",
     "lg:flex-row",
     "p-24",
-    "gap-40",
+    "gap-40"
   );
   const containerA = document.createElement("div");
   containerA.classList.add("flex-col", "self-center", "lg:self-center");

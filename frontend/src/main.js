@@ -12,7 +12,9 @@ import { contacts } from "./pages/contacs";
 import { aboutUs } from "./components/problematica";
 import { navbarNologin } from "./components/navbarNologin";
 import { violence } from "./pages/seccionInf/violenceInf";
-import { foro } from "./pages/foro";
+import { foro } from "./pages/foro.js";
+import { ManosUnidas } from "./pages/manosUnidas.js";
+import { forop } from "./components/foroPreview.js";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -65,6 +67,13 @@ switch (pathname) {
     app.appendChild(navbar());
     app.appendChild(createHeroSection());
     app.appendChild(foro());
+    app.appendChild(aboutUs());
+    app.appendChild(footer());
+    break;
+  case "/ManosUnidas":
+    app.appendChild(navbar());
+    app.appendChild(ManosUnidas());
+    app.appendChild(forop());
     app.appendChild(aboutUs());
     app.appendChild(footer());
 }

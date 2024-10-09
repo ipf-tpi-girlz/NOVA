@@ -5,7 +5,6 @@ export const createHeroSection = () => {
   hero.classList.add(
     "hero",
     "bg-base-200",
-    "min-h-screen",
     "flex",
     "flex-col",
     "items-center",
