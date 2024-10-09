@@ -82,7 +82,7 @@ export const createHeroSection = () => {
           Swal.fire({
             icon: "success",
             title: "¡Post creado!",
-            text: `Se ha creado el foro: ${data.title}`,
+            text: `Se ha creado el foro!`,
           });
 
           loadForos();

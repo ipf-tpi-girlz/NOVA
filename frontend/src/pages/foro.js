@@ -16,12 +16,11 @@ export const foro = () => {
     "hero-content",
     "flex-col",
     "lg:flex-row",
-    "gap-40"
+    "gap-40",
+    "ml-24"
   );
   const containerA = document.createElement("div");
   containerA.classList.add("flex-col", "self-center", "lg:self-start");
-  const subbtitulo = document.createElement("h6");
-  subbtitulo.textContent = "Mis Foros";
 
   const container = document.createElement("div");
   container.classList.add("max-w-[500px]", "mx-auto");
@@ -32,7 +31,6 @@ export const foro = () => {
     "relative",
     "flex",
     "flex-col",
-    "mt-6",
     "text-gray-700",
     "bg-white",
     "shadow-md",
@@ -47,7 +45,7 @@ export const foro = () => {
     "relative",
     "h-56",
     "mx-4",
-    "-mt-6",
+    "-mt-2",
     "overflow-hidden",
     "text-white",
     "shadow-lg",
@@ -143,7 +141,7 @@ export const foro = () => {
   container.appendChild(card);
 
   const containerB = document.createElement("div");
-  containerB.classList.add("flex", "gap-20", "p-8", "mr-20");
+  containerB.classList.add("flex", "gap-20", "mr-20");
 
   //Datos iniciales de posts
   const posts = [
@@ -174,13 +172,7 @@ export const foro = () => {
   // Crear el formulario para un nuevo post
   const formContainer = document.createElement("form");
   formContainer.id = "newPostForm";
-  formContainer.classList.add(
-    "mt-8",
-    "bg-white",
-    "p-6",
-    "rounded-lg",
-    "shadow-md"
-  );
+  formContainer.classList.add("bg-white", "p-6", "rounded-lg", "shadow-md");
 
   // Función para renderizar los posts
   function renderPosts() {
@@ -293,7 +285,6 @@ export const foro = () => {
   // Renderizar los posts iniciales
   renderPosts();
 
-  containerA.appendChild(subbtitulo);
   containerA.appendChild(container);
   containerB.appendChild(appContainer);
   containermisforos.appendChild(containerA);
