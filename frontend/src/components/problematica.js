@@ -4,7 +4,7 @@ export const aboutUs = () => {
     "hero-content",
     "flex-col",
     "lg:flex-row",
-    "p-24",
+    "px-24",
     "gap-40"
   );
   const containerA = document.createElement("div");

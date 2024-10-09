@@ -7,6 +7,17 @@ export default {
   },
   plugins: [daisyui],
   daisyui: {
-    themes: ["light", "dark", "cupcake", "valentine"],
+    themes: [
+      {
+        dark: {
+          ...require("daisyui/src/theming/themes")["dark"],
+          primary: "pink",
+          secondary: "pink",
+        },
+      },
+      "light",
+      "cupcake",
+      "valentine",
+    ],
   },
 };

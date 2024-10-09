@@ -35,7 +35,7 @@ switch (pathname) {
     app.appendChild(navbar());
     app.appendChild(homePage());
     app.appendChild(separador());
-    app.appendChild(createHeroSection());
+    app.appendChild(foro());
     app.appendChild(aboutUs());
     app.appendChild(footer());
     break;

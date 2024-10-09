@@ -22,90 +22,67 @@ export const forop = () => {
       comments: [],
     },
   ];
-  const bodyforum = document.createElement("div");
-  bodyforum.classList.add(
-    "p-4",
-    "flex",
-    "flex-row",
-    "justify-center",
-    "gap-24"
-  );
-  const miembros = document.createElement("div");
-  miembros.classList.add(
+
+  const container = document.createElement("div");
+  container.classList.add("flex", "px-10");
+
+  //Container para el nuevo post
+  const newPostContainer = document.createElement("div");
+  newPostContainer.classList.add("p-5");
+
+  const newPostForm = document.createElement("form");
+  newPostForm.classList.add(
+    "p-5",
     "bg-base-200",
-    "w-72",
-    "h-96",
-    "text-center",
-    "font-bold",
-    "font-serif"
-  );
-  miembros.textContent = "Miembros";
-  //Crear el título del foro
-  const appContainer = document.createElement("div");
-  appContainer.classList.add("w-1/2");
-  // Crear el contenedor para los posts
-  const postsContainer = document.createElement("div");
-  postsContainer.id = "posts";
-  postsContainer.classList.add("space-y-6");
-  appContainer.appendChild(postsContainer);
-
-  // Crear el formulario para un nuevo post
-  const formContainer = document.createElement("form");
-  formContainer.id = "newPostForm";
-  formContainer.classList.add(
-    "mt-8",
-    "bg-white",
-    "p-6",
     "rounded-lg",
-    "shadow-md"
+    "flex",
+    "flex-col",
+    "gap-3"
   );
 
-  const formTitle = document.createElement("h2");
-  formTitle.textContent = "Crear Nuevo Post";
-  formTitle.classList.add("text-xl", "font-semibold", "mb-4", "text-gray-700");
-  formContainer.appendChild(formTitle);
+  //Titulo
+  const newPostTitle = document.createElement("h2");
+  newPostTitle.textContent = "Crear Nuevo Post";
+  newPostTitle.classList.add(
+    "text-xl",
+    "font-semibold",
+    "mb-4",
+    "text-gray-700"
+  );
 
   // Input para el título del nuevo post
-  const postTitleInput = document.createElement("input");
-  postTitleInput.type = "text";
-  postTitleInput.id = "postTitle";
-  postTitleInput.placeholder = "Título del post";
-  postTitleInput.classList.add("w-full", "p-2", "mb-4", "border", "rounded");
-  postTitleInput.required = true;
-  formContainer.appendChild(postTitleInput);
+  const newPostTitleInput = document.createElement("input");
+  newPostTitleInput.type = "text";
+  newPostTitleInput.id = "postTitle";
+  newPostTitleInput.placeholder = "Título del post";
+  newPostTitleInput.classList.add("input");
+  newPostTitleInput.required = true;
 
   // Textarea para el contenido del nuevo post
-  const postContentTextarea = document.createElement("textarea");
-  postContentTextarea.id = "postContent";
-  postContentTextarea.placeholder = "Contenido del post";
-  postContentTextarea.classList.add(
-    "w-full",
-    "p-2",
-    "mb-4",
-    "border",
-    "rounded"
-  );
-  postContentTextarea.rows = 4;
-  postContentTextarea.required = true;
-  formContainer.appendChild(postContentTextarea);
+  const newPostTextArea = document.createElement("textarea");
+  newPostTextArea.id = "postContent";
+  newPostTextArea.placeholder = "Contenido del post";
+  newPostTextArea.classList.add("textarea");
+  newPostTextArea.rows = 4;
+  newPostTextArea.required = true;
 
   // Botón para publicar el nuevo post
-  const postSubmitButton = document.createElement("button");
-  postSubmitButton.type = "submit";
-  postSubmitButton.textContent = "Publicar";
-  postSubmitButton.classList.add(
-    "bg-blue-500",
-    "text-white",
-    "px-4",
-    "py-2",
-    "rounded",
-    "hover:bg-blue-600",
-    "transition"
-  );
-  formContainer.appendChild(postSubmitButton);
+  const newPostButton = document.createElement("button");
+  newPostButton.type = "submit";
+  newPostButton.textContent = "Publicar";
+  newPostButton.classList.add("btn", "btn-primary");
 
-  // Añadir el formulario al contenedor principal
-  appContainer.appendChild(formContainer);
+  newPostForm.appendChild(newPostTitle);
+  newPostForm.appendChild(newPostTitleInput);
+  newPostForm.appendChild(newPostTextArea);
+  newPostForm.appendChild(newPostButton);
+
+  newPostContainer.appendChild(newPostForm);
+
+  //Contenedor de posts
+
+  const postsContainer = document.createElement("div");
+  postsContainer.classList.add("p-5", "flex", "flex-col", "gap-4");
 
   // Función para renderizar los posts
   function renderPosts() {
@@ -114,7 +91,12 @@ export const forop = () => {
     posts.forEach((post) => {
       // Crear el elemento de cada post
       const postElement = document.createElement("div");
-      postElement.classList.add("bg-white", "p-6", "rounded-lg", "shadow-md");
+      postElement.classList.add(
+        "bg-base-200",
+        "p-6",
+        "rounded-lg",
+        "shadow-md"
+      );
 
       // Título del post
       const postTitle = document.createElement("h2");
@@ -138,8 +120,9 @@ export const forop = () => {
       commentsContainer.classList.add("comments", "space-y-2");
 
       post.comments.forEach((comment) => {
+        const commentContainer = document.createElement("div");
         const commentElement = document.createElement("div");
-        commentElement.classList.add("bg-gray-50", "p-3", "rounded");
+        commentElement.classList.add("bg-base-300", "p-3", "rounded-full");
         commentElement.textContent = comment;
         commentsContainer.appendChild(commentElement);
       });
@@ -148,28 +131,19 @@ export const forop = () => {
 
       // Formulario de comentarios
       const commentForm = document.createElement("form");
-      commentForm.classList.add("mt-4", "comment-form");
+      commentForm.classList.add("mt-4", "flex", "gap-3", "comment-form");
       commentForm.dataset.postId = post.id;
 
       const commentInput = document.createElement("input");
       commentInput.type = "text";
       commentInput.placeholder = "Añade un comentario";
-      commentInput.classList.add("w-full", "p-2", "border", "rounded");
+      commentInput.classList.add("input", "w-full");
       commentForm.appendChild(commentInput);
 
       const commentSubmitButton = document.createElement("button");
       commentSubmitButton.type = "submit";
       commentSubmitButton.textContent = "Comentar";
-      commentSubmitButton.classList.add(
-        "mt-2",
-        "bg-gray-200",
-        "text-gray-700",
-        "px-3",
-        "py-1",
-        "rounded",
-        "hover:bg-gray-300",
-        "transition"
-      );
+      commentSubmitButton.classList.add("btn", "btn-primary");
       commentForm.appendChild(commentSubmitButton);
 
       postElement.appendChild(commentForm);
@@ -180,11 +154,11 @@ export const forop = () => {
   }
 
   // Manejador para crear un nuevo post
-  formContainer.addEventListener("submit", function (e) {
+  newPostForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const title = postTitleInput.value;
-    const content = postContentTextarea.value;
+    const title = newPostTitleInput.value;
+    const content = newPostTextArea.value;
 
     if (title && content) {
       posts.unshift({
@@ -215,9 +189,10 @@ export const forop = () => {
     }
   });
 
-  // Renderizar los posts iniciales
   renderPosts();
-  bodyforum.appendChild(miembros);
-  bodyforum.appendChild(appContainer);
-  return bodyforum;
+
+  container.appendChild(newPostContainer);
+  container.appendChild(postsContainer);
+
+  return container;
 };

@@ -1,15 +1,6 @@
 export const foro = () => {
   const containerforo = document.createElement("div");
   containerforo.classList.add("min-h-screen");
-  const title = document.createElement("h1");
-  title.classList.add(
-    "text-4xl",
-    "font-bold",
-    "font-serif",
-    "text-center",
-    "p-24"
-  );
-  title.textContent = "Mis foros";
 
   const containermisforos = document.createElement("div");
   containermisforos.classList.add(
@@ -17,7 +8,8 @@ export const foro = () => {
     "flex-col",
     "lg:flex-row",
     "gap-40",
-    "ml-24"
+    "ml-24",
+    "mt-10"
   );
   const containerA = document.createElement("div");
   containerA.classList.add("flex-col", "self-center", "lg:self-start");
@@ -32,7 +24,7 @@ export const foro = () => {
     "flex",
     "flex-col",
     "text-gray-700",
-    "bg-white",
+    "bg-base-200",
     "shadow-md",
     "bg-clip-border",
     "rounded-xl",
@@ -84,8 +76,7 @@ export const foro = () => {
     "font-sans",
     "antialiased",
     "font-bold",
-    "leading-relaxed",
-    "text-inherit"
+    "leading-relaxed"
   );
   cardText.textContent =
     "Somos una comunidad en busca de la sanacion al trauma, un espacio para poder expresarte e interactuar con otros que han pasado lo mismo.";
@@ -98,32 +89,7 @@ export const foro = () => {
   buttonWrapper.classList.add("p-6", "pt-0");
 
   const button = document.createElement("button");
-  button.classList.add(
-    "align-middle",
-    "select-none",
-    "font-sans",
-    "font-bold",
-    "text-center",
-    "uppercase",
-    "transition-all",
-    "disabled:opacity-50",
-    "disabled:shadow-none",
-    "disabled:pointer-events-none",
-    "text-xs",
-    "py-3",
-    "px-6",
-    "rounded-lg",
-    "bg-base-400",
-    "text-base",
-    "shadow-md",
-    "shadow-gray-900/10",
-    "hover:shadow-lg",
-    "hover:shadow-gray-900/20",
-    "focus:opacity-[0.85]",
-    "focus:shadow-none",
-    "active:opacity-[0.85]",
-    "active:shadow-none"
-  );
+  button.classList.add("btn", "btn-primary");
   button.type = "submit";
   button.textContent = "Ver más";
   button.setAttribute = ("href", "/ManosUnidas");
@@ -160,6 +126,8 @@ export const foro = () => {
     },
   ];
 
+  ///////////////////////////////////////////////
+
   //Crear el título del foro
   const appContainer = document.createElement("div");
 
@@ -181,7 +149,12 @@ export const foro = () => {
     posts.forEach((post) => {
       // Crear el elemento de cada post
       const postElement = document.createElement("div");
-      postElement.classList.add("bg-white", "p-6", "rounded-lg", "shadow-md");
+      postElement.classList.add(
+        "bg-base-200",
+        "p-6",
+        "rounded-lg",
+        "shadow-md"
+      );
 
       // Título del post
       const postTitle = document.createElement("h2");
@@ -206,7 +179,7 @@ export const foro = () => {
 
       post.comments.forEach((comment) => {
         const commentElement = document.createElement("div");
-        commentElement.classList.add("bg-gray-50", "p-3", "rounded");
+        commentElement.classList.add("bg-base-300", "p-3", "rounded-full");
         commentElement.textContent = comment;
         commentsContainer.appendChild(commentElement);
       });
@@ -215,28 +188,19 @@ export const foro = () => {
 
       // Formulario de comentarios
       const commentForm = document.createElement("form");
-      commentForm.classList.add("mt-4", "comment-form");
+      commentForm.classList.add("mt-4", "comment-form", "flex", "gap-2");
       commentForm.dataset.postId = post.id;
 
       const commentInput = document.createElement("input");
       commentInput.type = "text";
       commentInput.placeholder = "Añade un comentario";
-      commentInput.classList.add("w-full", "p-2", "border", "rounded");
+      commentInput.classList.add("input", "w-full");
       commentForm.appendChild(commentInput);
 
       const commentSubmitButton = document.createElement("button");
       commentSubmitButton.type = "submit";
       commentSubmitButton.textContent = "Comentar";
-      commentSubmitButton.classList.add(
-        "mt-2",
-        "bg-gray-200",
-        "text-gray-700",
-        "px-3",
-        "py-1",
-        "rounded",
-        "hover:bg-gray-300",
-        "transition"
-      );
+      commentSubmitButton.classList.add("btn", "btn-primary");
       commentForm.appendChild(commentSubmitButton);
 
       postElement.appendChild(commentForm);
@@ -290,7 +254,6 @@ export const foro = () => {
   containermisforos.appendChild(containerA);
   containermisforos.appendChild(containerB);
 
-  containerforo.appendChild(title);
   containerforo.appendChild(containermisforos);
 
   return containerforo;

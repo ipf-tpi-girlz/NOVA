@@ -1,6 +1,6 @@
 export const separador = () => {
   const containerseparador = document.createElement("div");
-  containerseparador.classList.add("p-4", "text-center");
+  containerseparador.classList.add("p-4", "text-center", "bg-base-200");
 
   const titulosep = document.createElement("h1");
   titulosep.classList.add("text-4xl", "font-bold", "font-serif");

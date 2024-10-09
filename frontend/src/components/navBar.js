@@ -10,7 +10,7 @@ export const navbar = () => {
 
   // Crear el enlace para el título
   const titleLink = document.createElement("a");
-  titleLink.classList.add("btn", "btn-ghost", "text-xl");
+  titleLink.classList.add("btn", "btn-ghost", "text-xl", "font-serif");
   titleLink.textContent = "NOVA";
   titleLink.setAttribute("href", "/home");
 
@@ -40,6 +40,12 @@ export const navbar = () => {
   const btnlogout = document.createElement("button");
   btnlogout.classList.add("btn", "btn-primary", "btn-sm");
   btnlogout.textContent = "Logout";
+  btnlogout.type = "submit";
+  btnlogout.setAttribute("href", "/login");
+  btnlogout.addEventListener("click", () => {
+    window.location.href = "http://localhost:5173/login";
+  });
+
   // Añadir el enlace al contenedor flex-1
   flexOne.appendChild(titleLink);
 

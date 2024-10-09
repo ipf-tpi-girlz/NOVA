@@ -1,4 +1,10 @@
 import Swal from "sweetalert2";
+import {
+  fetchGetForos,
+  fetchCreateForo,
+  fetchUpdateForo,
+  fetchDeleteForo,
+} from "./api/foro.js";
 
 export const createHeroSection = () => {
   const hero = document.createElement("div");
@@ -20,21 +26,12 @@ export const createHeroSection = () => {
 
   // Botón para crear foro
   const createPostButton = document.createElement("button");
-  createPostButton.classList.add(
-    "bg-pink-500",
-    "text-white",
-    "p-3",
-    "rounded",
-    "hover:bg-pink-600",
-    "transition-colors",
-    "duration-300",
-    "mb-5"
-  );
-  createPostButton.textContent = "Crear Foro";
+  createPostButton.classList.add("btn", "btn-lg", "btn-primary");
+  createPostButton.textContent = "Crear Post";
 
   createPostButton.addEventListener("click", () => {
     Swal.fire({
-      title: "Crear Foro",
+      title: "Crear Post",
       html: `
         <input id="swal-title" class="swal2-input" placeholder="Título">
         <textarea id="swal-desc" class="swal2-textarea" placeholder="Descripción" rows="4"></textarea>
@@ -82,7 +79,7 @@ export const createHeroSection = () => {
           Swal.fire({
             icon: "success",
             title: "¡Post creado!",
-            text: `Se ha creado el foro!`,
+            text: `Se ha creado el Post!`,
           });
 
           loadForos();
@@ -167,14 +164,80 @@ export const createHeroSection = () => {
 
         // Crear los elementos del menú
         const item1 = document.createElement("li");
-        const link1 = document.createElement("a");
-        link1.textContent = "Editar";
-        item1.appendChild(link1);
+        const buttonEditar = document.createElement("btn");
+        buttonEditar.textContent = "Editar";
+        item1.appendChild(buttonEditar);
 
         const item2 = document.createElement("li");
-        const link2 = document.createElement("a");
-        link2.textContent = "Borrar";
-        item2.appendChild(link2);
+        const buttonEliminar = document.createElement("btn");
+        buttonEliminar.textContent = "Borrar";
+        item2.appendChild(buttonEliminar);
+
+        // Función para editar el foro
+        buttonEditar.addEventListener("click", () => {
+          Swal.fire({
+            title: "Editar Foro",
+            html: `
+                    <input id="swal-edit-title" class="swal2-input" value="${foro.nombre}" placeholder="Título">
+                    <textarea id="swal-edit-desc" class="swal2-textarea" placeholder="Descripción">${foro.desc}</textarea>
+                `,
+            preConfirm: () => {
+              const title = document.getElementById("swal-edit-title").value;
+              const desc = document.getElementById("swal-edit-desc").value;
+
+              if (!title || !desc) {
+                Swal.showValidationMessage("Completa todos los campos");
+                return false;
+              }
+
+              return { title, desc };
+            },
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              try {
+                await fetchUpdateForo(foro.id, result.value);
+                Swal.fire(
+                  "¡Actualizado!",
+                  "El foro ha sido actualizado.",
+                  "success"
+                );
+                loadForos(); // Actualizar lista de foros
+              } catch (error) {
+                console.log(error);
+                Swal.fire("Error", "No se pudo actualizar el foro", "error");
+              }
+            }
+          });
+        });
+
+        // Función para eliminar el foro
+        buttonEliminar.addEventListener("click", async () => {
+          Swal.fire({
+            title: "¿Estás seguro?",
+            text: "No podrás revertir esto",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Sí, eliminar",
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              try {
+                await fetchDeleteForo(foro.id);
+                Swal.fire(
+                  "¡Eliminado!",
+                  "El foro ha sido eliminado.",
+                  "success"
+                );
+
+                // Eliminar la carta del foro del DOM
+                forumCard.remove(); // Esto elimina la carta del foro inmediatamente
+              } catch (error) {
+                Swal.fire("Error", "No se pudo eliminar el foro", "error");
+              }
+            }
+          });
+        });
 
         // Añadir los elementos al contenido del dropdown
         dropdownContent.appendChild(item1);
