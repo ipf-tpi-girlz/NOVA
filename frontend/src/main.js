@@ -15,6 +15,7 @@ import { violence } from "./pages/seccionInf/violenceInf";
 import { foro } from "./pages/foro.js";
 import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
+import { Articulo } from "./pages/seccionInf/hablardevg.js";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -35,7 +36,7 @@ switch (pathname) {
     app.appendChild(navbar());
     app.appendChild(homePage());
     app.appendChild(separador());
-    app.appendChild(foro());
+    app.appendChild(Articulo());
     app.appendChild(aboutUs());
     app.appendChild(footer());
     break;
@@ -48,6 +49,7 @@ switch (pathname) {
   case "/":
     app.appendChild(navbarNologin());
     app.appendChild(landing());
+    app.appendChild(Articulo());
     app.appendChild(aboutUs());
     app.appendChild(footer());
     break;

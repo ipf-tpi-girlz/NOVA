@@ -3,16 +3,9 @@ export const foro = () => {
   containerforo.classList.add("min-h-screen");
 
   const containermisforos = document.createElement("div");
-  containermisforos.classList.add(
-    "hero-content",
-    "flex-col",
-    "lg:flex-row",
-    "gap-40",
-    "ml-24",
-    "mt-10"
-  );
+  containermisforos.classList.add("hero-content", "flex-col", "lg:flex-row");
   const containerA = document.createElement("div");
-  containerA.classList.add("flex-col", "self-center", "lg:self-start");
+  containerA.classList.add("flex-col");
 
   const container = document.createElement("div");
   container.classList.add("max-w-[500px]", "mx-auto");
@@ -20,7 +13,6 @@ export const foro = () => {
   // Crear la tarjeta (card)
   const card = document.createElement("div");
   card.classList.add(
-    "relative",
     "flex",
     "flex-col",
     "text-gray-700",
@@ -28,22 +20,19 @@ export const foro = () => {
     "shadow-md",
     "bg-clip-border",
     "rounded-xl",
-    "w-72"
+    "w-72",
+    "bg-red-500"
   );
 
   // Imagen de la tarjeta
   const imgWrapper = document.createElement("div");
   imgWrapper.classList.add(
-    "relative",
     "h-56",
-    "mx-4",
-    "-mt-2",
+    "m-4",
     "overflow-hidden",
     "text-white",
     "shadow-lg",
-    "bg-clip-border",
     "rounded-xl",
-    "bg-blue-gray-500",
     "shadow-blue-gray-500/40"
   );
 
@@ -107,7 +96,7 @@ export const foro = () => {
   container.appendChild(card);
 
   const containerB = document.createElement("div");
-  containerB.classList.add("flex", "gap-20", "mr-20");
+  containerB.classList.add("flex", "flex-col", "bg-blue-500");
 
   //Datos iniciales de posts
   const posts = [
@@ -130,6 +119,7 @@ export const foro = () => {
 
   //Crear el título del foro
   const appContainer = document.createElement("div");
+  appContainer.classList.add("bg-green-100");
 
   // Crear el contenedor para los posts
   const postsContainer = document.createElement("div");
@@ -140,7 +130,7 @@ export const foro = () => {
   // Crear el formulario para un nuevo post
   const formContainer = document.createElement("form");
   formContainer.id = "newPostForm";
-  formContainer.classList.add("bg-white", "p-6", "rounded-lg", "shadow-md");
+  formContainer.classList.add("bg-red-700", "p-6", "rounded-lg", "shadow-md");
 
   // Función para renderizar los posts
   function renderPosts() {
@@ -150,7 +140,7 @@ export const foro = () => {
       // Crear el elemento de cada post
       const postElement = document.createElement("div");
       postElement.classList.add(
-        "bg-base-200",
+        "bg-base-300",
         "p-6",
         "rounded-lg",
         "shadow-md"

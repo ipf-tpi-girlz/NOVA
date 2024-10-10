@@ -1,6 +1,28 @@
+import comment from "../assets/comment.svg";
+
+//Datos iniciales de posts
+const posts = [
+  {
+    id: 1,
+    title: "Tema del día: exposicion social",
+    content: "¿Como llevas el salir de tu zona de comfort?",
+    comments: [],
+  },
+  {
+    id: 2,
+    title: "Separacion y soledad",
+    content:
+      "Sali de una relacion toxica, donde sufria de violencia psicologica y fisica, pero no puedo acostumbrarmey hay veces que extraño a mi ex pareja. ¿Que me recomiendan hacer?",
+    comments: [],
+  },
+];
+
 export const homePage = () => {
   const containerHome = document.createElement("div");
-  containerHome.classList.add("bg-base", "flex-grow", "min-h-screen");
+  containerHome.classList.add("mx-5", "flex", "flex-col", "gap-3");
+
+  const containerMain = document.createElement("div");
+  containerMain.classList.add("flex", "gap-5", "mx-14");
 
   const titulo = document.createElement("h1");
   titulo.innerText = "NOVA";
@@ -12,53 +34,166 @@ export const homePage = () => {
     "p-10",
     "bg-base-200"
   );
-  const subtitulo = document.createElement("h4");
-  subtitulo.innerText = "Novas blog";
-  subtitulo.classList.add("font-serif", "text-center", "bg-base-200", "pb-5");
 
-  const informacion = document.createElement("div");
-  informacion.classList.add("hero", "bg-base", "p-8");
+  const containerPost = document.createElement("div");
+  containerPost.classList.add("flex", "flex-col", "gap-6", "mx-auto");
 
-  const containerinf = document.createElement("div");
-  containerinf.classList.add("hero-content", "flex-col", "lg:flex-row");
-  const container2 = document.createElement("div");
-  container2.classList.add("flex-col");
-  const container3 = document.createElement("div");
-  container3.classList.add("flex-col", "self-center", "lg:self-start");
+  const containerArticulo = document.createElement("div");
+  containerArticulo.classList.add("flex", "flex-col");
+
+  //Card
+  const card = document.createElement("div");
+  card.classList.add(
+    "flex",
+    "flex-col",
+    "text-gray-700",
+    "bg-base-200",
+    "shadow-md",
+    "bg-clip-border",
+    "rounded-xl",
+    "w-72"
+  );
+
+  // Imagen de la tarjeta
+  const imgWrapper = document.createElement("div");
+  imgWrapper.classList.add(
+    "h-56",
+    "m-4",
+    "overflow-hidden",
+    "text-white",
+    "shadow-lg",
+    "rounded-xl",
+    "shadow-blue-gray-500/40"
+  );
 
   const img = document.createElement("img");
   img.src =
-    "https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=600"; // Use the URL of the image
-  img.classList.add("max-w-max", "h-96", "rounded-lg", "shadow-2xl");
-  img.setAttribute("href", "/chvg");
-  const tituloinf = document.createElement("h1");
-  tituloinf.classList.add(
-    "text-2xl",
-    "font-bold",
-    "px-10",
-    "text-center",
-    "lg:text-start"
-  );
-  tituloinf.textContent = "¿Como hablar de la violencia de genero?";
-  const info = document.createElement("a");
-  info.classList.add("link", "px-10");
-  info.textContent = "Mas informacion";
-  info.setAttribute("href", "/chvg");
-  const parrafo = document.createElement("p");
-  parrafo.classList.add("py-6", "p-10", "text-center", "lg:text-start");
-  parrafo.textContent =
-    "Abordar la violencia de género es un acto de responsabilidad social que exige sensibilidad y precisión. Al hablar del tema, es crucial usar un lenguaje claro y respetuoso, evitando culpabilizar a las víctimas o justificar el abuso .Es importante describir las diferentes formas de violencia (física, psicológica, sexual, económica y simbólica) y explicar que, aunque afecta principalmente a mujeres, cualquier persona puede sufrirla.                       “La violencia de género no va sólo en una modalidad puede normalizarse tanto que no nos damos cuenta que la estamos padeciendo, y es mucho más complicado en un noviazgo; nunca es tarde para romper ese círculo de agresión”";
+    "https://images.pexels.com/photos/4659806/pexels-photo-4659806.jpeg?auto=compress&cs=tinysrgb&w=600";
+  img.alt = "card-image";
+  imgWrapper.appendChild(img);
 
+  // Contenido de la tarjeta
+  const cardContent = document.createElement("div");
+  cardContent.classList.add("p-6");
+
+  const cardTitle = document.createElement("h5");
+  cardTitle.classList.add(
+    "block",
+    "mb-2",
+    "font-sans",
+    "text-xl",
+    "antialiased",
+    "font-semibold",
+    "leading-snug",
+    "tracking-normal"
+  );
+  cardTitle.textContent = "Manos Unidas";
+
+  const cardText = document.createElement("p");
+  cardText.classList.add(
+    "block",
+    "font-sans",
+    "antialiased",
+    "font-bold",
+    "leading-relaxed"
+  );
+  cardText.textContent =
+    "Somos una comunidad en busca de la sanacion al trauma, un espacio para poder expresarte e interactuar con otros que han pasado lo mismo.";
+
+  cardContent.appendChild(cardTitle);
+  cardContent.appendChild(cardText);
+
+  // Botón de la tarjeta
+  const buttonWrapper = document.createElement("div");
+  buttonWrapper.classList.add("p-6", "pt-0");
+
+  const button = document.createElement("button");
+  button.classList.add("btn", "btn-primary");
+  button.type = "submit";
+  button.textContent = "Ver más";
+  button.setAttribute = ("href", "/ManosUnidas");
+  button.addEventListener("click", () => {
+    window.location.href = "http://localhost:5173/ManosUnidas";
+  });
+
+  buttonWrapper.appendChild(button);
+
+  // Ensamblar todo
+  card.appendChild(imgWrapper);
+  card.appendChild(cardContent);
+  card.appendChild(buttonWrapper);
+  containerArticulo.appendChild(card);
+
+  // Posts
+
+  function renderPosts() {
+    const postsContainer = document.createElement("div");
+    postsContainer.innerHTML = ""; // Limpiar el contenedor de posts
+
+    posts.forEach((post) => {
+      // Crear el elemento de cada post
+      const postElement = document.createElement("div");
+      postElement.classList.add(
+        "bg-base-300",
+        "p-6",
+        "rounded-lg",
+        "shadow-md"
+      );
+
+      // Título del post
+      const postTitle = document.createElement("h2");
+      postTitle.textContent = post.title;
+      postTitle.classList.add(
+        "text-xl",
+        "font-semibold",
+        "mb-2",
+        "text-gray-800"
+      );
+      postElement.appendChild(postTitle);
+
+      // Contenido del post
+      const postContent = document.createElement("p");
+      postContent.textContent = post.content;
+      postContent.classList.add("text-gray-600", "mb-4");
+      postElement.appendChild(postContent);
+
+      // Sección de comentarios
+      const commentsContainer = document.createElement("div");
+      commentsContainer.classList.add("comments", "space-y-2");
+
+      post.comments.forEach((comment) => {
+        const commentElement = document.createElement("div");
+        commentElement.classList.add("bg-base-300", "p-3", "rounded-full");
+        commentElement.textContent = comment;
+        commentsContainer.appendChild(commentElement);
+      });
+
+      postElement.appendChild(commentsContainer);
+
+      // Formulario de comentarios
+      const commentForm = document.createElement("form");
+      commentForm.classList.add("mt-4", "comment-form", "flex", "gap-2");
+      commentForm.dataset.postId = post.id;
+
+      const commentSubmitButton = document.createElement("button");
+      commentSubmitButton.type = "submit";
+      commentSubmitButton.innerHTML = comment;
+      commentSubmitButton.classList.add("btn", "btn-primary");
+      commentForm.appendChild(commentSubmitButton);
+
+      postElement.appendChild(commentForm);
+
+      // Añadir el post al contenedor de posts
+      containerPost.appendChild(postElement);
+    });
+  }
+  renderPosts();
+
+  //Appends
   containerHome.appendChild(titulo);
-  containerHome.appendChild(subtitulo);
-  container2.appendChild(img);
-  container3.appendChild(tituloinf);
-  container3.appendChild(parrafo);
-  container3.appendChild(info);
-  containerinf.appendChild(container2);
-  containerinf.appendChild(container3);
-  informacion.appendChild(containerinf);
-  containerHome.appendChild(informacion);
+  containerMain.appendChild(containerPost);
+  containerMain.appendChild(containerArticulo);
+  containerHome.appendChild(containerMain);
 
   return containerHome;
 };

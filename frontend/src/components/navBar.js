@@ -2,7 +2,7 @@ import { $themeLabel } from "./themeButton";
 export const navbar = () => {
   // Crear el elemento principal del navbar
   const navbar = document.createElement("div");
-  navbar.classList.add("navbar", "bg-base-100", "gap-6");
+  navbar.classList.add("navbar", "bg-base-100", "gap-6", "sticky", "top-0");
 
   // Crear el contenedor flex-1 para el título
   const flexOne = document.createElement("div");
