@@ -46,18 +46,4 @@ const createCard = (profileImageUrl, description) => {
   return cardContainer; // Devuelve el contenedor completo
 };
 
-// Exporta la función para usarla en otras partes de la aplicación
-export const profile = () => {
-  const container = document.createElement("div");
-  container.className = "flex justify-start items-center min-h-screen bg-gray-100"; // Alinear a la izquierda
 
-  // Datos de ejemplo
-  const profileImageUrl = "https://via.placeholder.com/150";
-  const description = "Descripción del usuario.";
-
-  // Crea la carta con la imagen de perfil y el textarea de descripción
-  const card = createCard(profileImageUrl, description);
-  container.appendChild(card);
-
-  return container;
-};

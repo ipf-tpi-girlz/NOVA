@@ -10,6 +10,7 @@ import { aboutUs } from "./components/problematica";
 import { navbarNologin } from "./components/navbarNologin";
 import { violence } from "./pages/violenceInf";
 import { profile } from "./pages/profile";
+import { HeaderProfile } from "./components/HeaderProfile";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -46,7 +47,7 @@ switch (pathname) {
     break;
   case "/profile":
     app.appendChild(navbar());
-    app.appendChild(profile());
+    app.appendChild & (HeaderProfile())
     app.appendChild(footer());
     break;
 }
