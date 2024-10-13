@@ -1,179 +1,141 @@
-import { $themeLabel } from "./themeButton";
-export const navbar = () => {
-  // Crear el elemento principal del navbar
-  const navbar = document.createElement("div");
-  navbar.classList.add("navbar", "bg-base-100", "gap-6", "sticky", "top-0");
+import { $themeLabel } from './themeButton'
+import { isAuthenticated } from '../api/auth'
 
-  // Crear el contenedor flex-1 para el título
-  const flexOne = document.createElement("div");
-  flexOne.classList.add("flex-1");
+export const Navbar = () => {
+  const navbar = document.createElement('nav')
+  navbar.classList.add('navbar', 'md:px-24', 'bg-base-100')
 
-  // Crear el enlace para el título
-  const titleLink = document.createElement("a");
-  titleLink.classList.add("btn", "btn-ghost", "text-xl", "font-serif");
-  titleLink.textContent = "NOVA";
-  titleLink.setAttribute("href", "/home");
+  const navbarStart = document.createElement('div')
+  navbarStart.classList.add('navbar-start', 'w-fit')
 
-  const secciones = document.createElement("div");
-  secciones.classList.add("flex", "justify-evenly", "gap-8");
-  const forosseccion = document.createElement("a");
-  forosseccion.classList.add("text-base");
-  forosseccion.setAttribute("href", "/foros");
-  forosseccion.textContent = "Foros";
-  const contactseccion = document.createElement("a");
-  contactseccion.classList.add("text-base");
-  contactseccion.textContent = "Contactos";
-  contactseccion.setAttribute("href", "/contact");
-  const infseccion = document.createElement("a");
-  infseccion.classList.add("text-base");
-  infseccion.textContent = "Informacion";
-  infseccion.setAttribute("href", "/chvg");
-  const aboutUs = document.createElement("a");
-  aboutUs.classList.add("text-base");
-  aboutUs.textContent = "AboutUs";
-  aboutUs.setAttribute("href", "#");
-  secciones.appendChild(forosseccion);
-  secciones.appendChild(contactseccion);
-  secciones.appendChild(infseccion);
-  secciones.appendChild(aboutUs);
+  const navbarEnd = document.createElement('div')
+  navbarEnd.classList.add('navbar-end', 'gap-3', 'w-full')
 
-  const btnlogout = document.createElement("button");
-  btnlogout.classList.add("btn", "btn-primary", "btn-sm");
-  btnlogout.textContent = "Logout";
-  btnlogout.type = "submit";
-  btnlogout.setAttribute("href", "/login");
-  btnlogout.addEventListener("click", () => {
-    window.location.href = "http://localhost:5173/login";
-  });
+  //Logo
+  const logo = document.createElement('a')
+  logo.classList.add('btn', 'btn-ghost', 'text-2xl', 'font-serif')
+  logo.textContent = 'NOVA'
+  logo.setAttribute('href', '/')
 
-  // Añadir el enlace al contenedor flex-1
-  flexOne.appendChild(titleLink);
+  navbarStart.appendChild(logo)
 
-  // Crear el contenedor flex-none para el botón de opciones
-  const flexNoneRight = document.createElement("div");
-  flexNoneRight.classList.add("flex-none", "gap-4");
+  //Dropdown para pantallas pequeñas
+  const dropdown = document.createElement('div')
+  dropdown.classList.add('dropdown', 'dropdown-end')
 
-  // Crear el botón de opciones
-  const buttonOptions = document.createElement("button");
-  buttonOptions.classList.add("btn", "btn-square", "btn-ghost");
-  flexNoneRight.appendChild(btnlogout);
+  // Dropdown boton
+  const dropdownButton = document.createElement('label')
+  dropdownButton.classList.add('btn', 'btn-ghost', 'lg:hidden')
+  dropdownButton.setAttribute('role', 'button')
+  dropdownButton.setAttribute('tabindex', '0')
+  dropdownButton.innerHTML = `<span class = "material-symbols-rounded dark:text-pink-200">menu</span>`
 
-  // Crear el icono SVG dentro del botón de opciones
-  const svgOptions = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "svg"
-  );
-  svgOptions.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-  svgOptions.setAttribute("fill", "none");
-  svgOptions.setAttribute("viewBox", "0 0 24 24");
-  svgOptions.classList.add("inline-block", "h-5", "w-5", "stroke-current");
+  // Dropdown contenido
+  const dropdownContent = document.createElement('ul')
+  dropdownContent.classList.add(
+    'menu',
+    'menu-compact',
+    'dropdown-content',
+    'mt-3',
+    'p-2',
+    'shadow',
+    'bg-base-100',
+    'rounded-box',
+    'z-[1]',
+    'w-52',
+    'gap-2'
+  )
 
-  // Crear el path del SVG
-  const pathOptions = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "path"
-  );
-  pathOptions.setAttribute("stroke-linecap", "round");
-  pathOptions.setAttribute("stroke-linejoin", "round");
-  pathOptions.setAttribute("stroke-width", "2");
-  pathOptions.setAttribute(
-    "d",
-    "M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-  );
+  // Menu para pantallas grandes
+  const menu = document.createElement('ul')
+  menu.classList.add(
+    'menu',
+    'menu-md',
+    'menu-horizontal',
+    'px-1',
+    'font-semibold',
+    'text-lg',
+    'hidden',
+    'lg:flex',
+    'gap-2'
+  )
 
-  // Añadir el path al SVG
-  svgOptions.appendChild(pathOptions);
+  // Valida si el usuario inició sesión
+  if (isAuthenticated()) {
+    //Funcion para crear link para el menu
+    function createLink(link, text) {
+      const li = document.createElement('li')
+      const a = document.createElement('a')
+      a.setAttribute('href', link)
+      a.textContent = text
 
-  // Añadir el SVG al botón
-  buttonOptions.appendChild(svgOptions);
+      li.appendChild(a)
 
-  // Añadir el botón de opciones al contenedor
-  flexNoneRight.appendChild($themeLabel());
+      return li
+    }
 
-  // Añadir todos los elementos al navbar principal
+    const home = createLink('/home', 'Inicio')
+    const forums = createLink('/forums', 'Foros')
+    const articles = createLink('/articles', 'Artículos')
+    const prof = createLink('/professionals', 'Profesionales')
+    const contact = createLink('/contact', 'Contactos')
 
-  navbar.appendChild(flexOne);
-  navbar.appendChild(secciones);
-  navbar.appendChild(flexNoneRight);
+    //Boton de cerrar sesión
+    const btnLogOut = document.createElement('button')
+    btnLogOut.classList.add('btn', 'btn-primary', 'btn-sm')
+    btnLogOut.textContent = 'Cerrar Sesión'
+    btnLogOut.type = 'submit'
+    btnLogOut.addEventListener('click', () => {
+      window.location.href = 'http://localhost:5173/logout'
+    })
 
-  return navbar;
-};
-// export const navbar = (session = null) => {
-//   // Crear el elemento principal del navbar
-//   const navbar = document.createElement("div");
-//   navbar.classList.add("navbar", "bg-base-100", "gap-6");
+    //Se añaden los links al menu para pantallas grandes
+    menu.appendChild(home)
+    menu.appendChild(forums)
+    menu.appendChild(articles)
+    menu.appendChild(prof)
+    menu.appendChild(contact)
+    menu.appendChild(btnLogOut)
 
-//   // Crear el contenedor flex-1 para el título
-//   const flexOne = document.createElement("div");
-//   flexOne.classList.add("flex-1");
+    // Se copian los links al menu del dropdown
+    dropdownContent.appendChild(home.cloneNode(true))
+    dropdownContent.appendChild(forums.cloneNode(true))
+    dropdownContent.appendChild(articles.cloneNode(true))
+    dropdownContent.appendChild(prof.cloneNode(true))
+    dropdownContent.appendChild(contact.cloneNode(true))
+    dropdownContent.appendChild(btnLogOut.cloneNode(true))
 
-//   // Crear el enlace para el título
-//   const titleLink = document.createElement("a");
-//   titleLink.classList.add("btn", "btn-ghost", "text-xl");
-//   titleLink.textContent = "NOVA";
+    navbarEnd.appendChild(menu)
+    navbarEnd.appendChild(dropdownContent)
+  } else {
+    // Mostrar botones de login y register si el usuario no está autenticado
+    const btnLogin = document.createElement('a')
+    btnLogin.classList.add('btn', 'btn-primary', 'btn-sm')
+    btnLogin.textContent = 'Iniciar Sesión'
+    btnLogin.type = 'submit'
+    btnLogin.setAttribute('href', '/login')
 
-//   const secciones = document.createElement("div")
-//   secciones.classList.add("flex","justify-evenly", "gap-8")
-//   const forosseccion = document.createElement("a");
-//   forosseccion.classList.add("text-base")
-//   aboutUs.textContent = "AboutUs"
-// secciones.appendChild(aboutUs)
+    const btnRegister = document.createElement('a')
+    btnRegister.classList.add('btn', 'btn-primary', 'btn-sm')
+    btnRegister.textContent = 'Registrarse'
+    btnRegister.type = 'submit'
+    btnRegister.setAttribute('href', '/register-user')
 
-//   const btnlogout = document.createElement("button");
-//   btnlogout.classList.add("bg-blue-100", "rounded-sm", "box-border")
-//   btnlogout.textContent = "Login";
-//   const btnregis = document.createElement("button");
-//   btnregis.classList.add("bg-blue-100", "rounded-sm", "box-border")
-//   btnregis.textContent = "Registrarse";
-//   // Añadir el enlace al contenedor flex-1
-//   flexOne.appendChild(titleLink);
+    dropdownContent.appendChild(btnLogin)
+    dropdownContent.appendChild(btnRegister)
+    menu.appendChild(btnLogin.cloneNode(true))
+    menu.appendChild(btnRegister.cloneNode(true))
+  }
 
-//   // Crear el contenedor flex-none para el botón de opciones
-//   const flexNoneRight = document.createElement("div");
-//   flexNoneRight.classList.add("flex-none", "gap-4");
+  dropdown.appendChild(dropdownButton)
+  dropdown.appendChild(dropdownContent)
 
-//   // Crear el botón de opciones
-//   const buttonOptions = document.createElement("button");
-//   buttonOptions.classList.add("btn", "btn-square", "btn-ghost");
-//   flexNoneRight.appendChild(btnlogout)
-//flexNonrRigth.appendChild(btnregis)
+  navbarEnd.appendChild(menu)
+  navbarEnd.appendChild($themeLabel())
+  navbarEnd.appendChild(dropdown)
 
-//   // Crear el icono SVG dentro del botón de opciones
-//   const svgOptions = document.createElementNS(
-//     "http://www.w3.org/2000/svg",
-//     "svg"
-//   );
-//   svgOptions.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-//   svgOptions.setAttribute("fill", "none");
-//   svgOptions.setAttribute("viewBox", "0 0 24 24");
-//   svgOptions.classList.add("inline-block", "h-5", "w-5", "stroke-current");
+  navbar.appendChild(navbarStart)
+  navbar.appendChild(navbarEnd)
 
-//   // Crear el path del SVG
-//   const pathOptions = document.createElementNS(
-//     "http://www.w3.org/2000/svg",
-//     "path"
-//   );
-//   pathOptions.setAttribute("stroke-linecap", "round");
-//   pathOptions.setAttribute("stroke-linejoin", "round");
-//   pathOptions.setAttribute("stroke-width", "2");
-//   pathOptions.setAttribute(
-//     "d",
-//     "M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-//   );
-
-//   // Añadir el path al SVG
-//   svgOptions.appendChild(pathOptions);
-
-//   // Añadir el SVG al botón
-//   buttonOptions.appendChild(svgOptions);
-
-//   // Añadir el botón de opciones al contenedor
-//   flexNoneRight.appendChild($themeLabel());
-
-//   // Añadir todos los elementos al navbar principal
-//   navbar.appendChild(flexOne);
-//   navbar.appendChild(secciones);
-//   navbar.appendChild(flexNoneRight);
-
-//   return navbar;
-// };
+  return navbar
+}

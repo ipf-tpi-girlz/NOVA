@@ -1,7 +1,7 @@
-import daisyui from "daisyui";
+import daisyui from 'daisyui'
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.js"],
+  content: ['./index.html', './src/**/*.js'],
   theme: {
     extend: {},
   },
@@ -10,14 +10,15 @@ export default {
     themes: [
       {
         dark: {
-          ...require("daisyui/src/theming/themes")["dark"],
-          primary: "pink",
-          secondary: "pink",
+          ...require('daisyui/src/theming/themes')['dark'],
+          primary: 'pink',
+          secondary: 'pink',
         },
       },
-      "light",
-      "cupcake",
-      "valentine",
+      'light',
+      'cupcake',
+      'valentine',
     ],
   },
-};
+  darkMode: ['class', '[data-theme="dark"]'],
+}
