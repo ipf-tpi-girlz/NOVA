@@ -1,7 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.landing {
-  background-image: url("https://cdn.pixabay.com/photo/2016/11/18/22/58/stars-1837306_640.jpg");
-}
