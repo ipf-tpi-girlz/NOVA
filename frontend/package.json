@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "lucide": "^0.447.0",
+    "material-symbols": "^0.24.0",
     "sweetalert2": "^11.14.1",
     "theme-change": "^2.5.0"
   }
