@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto mt-10">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg mx-auto">
+            <h2 class="text-2xl font-semibold mb-6 text-center">Registro de Institución</h2>
+            <form id="registroForm">
+
+                <!-- Email -->
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700">Correo Electrónico:</label>
+                    <input name=" mail" type="email" id="email" class="mt-2 p-2 w-full border rounded-md" placeholder="Ingrese el correo electrónico de la institución" required>
+                </div>
+
+                <!-- Dirección -->
+                <div class="mb-4">
+                    <label for="direccion" class="block text-gray-700">Dirección:</label>
+                    <input name="direccion" type="text" id="direccion" class="mt-2 p-2 w-full border rounded-md" placeholder="Ingrese la dirección de la institución" required>
+                </div>
+
+                <!-- Teléfono de Contacto -->
+                <div class="mb-4">
+                    <label for="telefono" class="block text-gray-700">Teléfono de Contacto:</label>
+                    <input  name="nr_telefono" type="tel" id="telefono" class="mt-2 p-2 w-full border rounded-md" placeholder="Ingrese el teléfono de contacto" required>
+                </div>
+
+                <!-- CUIT -->
+                <div class="mb-4">
+                    <label for="cuit" class="block text-gray-700">CUIT:</label>
+                    <input name="cuit" type="text" id="cuit" class="mt-2 p-2 w-full border rounded-md" placeholder="Ingrese el CUIT de la institución" required>
+                </div>
+
+                <!-- Razón Social -->
+                <div class="mb-4">
+                    <label for="razonSocial" class="block text-gray-700">Razón Social:</label>
+                    <input name= "razon_social" type="text" id="razonSocial" class="mt-2 p-2 w-full border rounded-md" placeholder="Ingrese la razón social de la institución" required>
+                </div>
+
+                <!-- Representante Legal -->
+                <div class="mb-4">
+                    <label for="representante" class="block text-gray-700">Representante Legal:</label>
+                    <input name=" rp_legal" type="text" id="representante" class="mt-2 p-2 w-full border rounded-md" placeholder="Ingrese el nombre del representante legal" required>
+                </div>
+
+                <!-- Departamento -->
+                <div class="mb-4">
+                    <label for="departamento" class="block text-gray-700">Departamento:</label>
+                    <select name="departamento" id="departamento" class="mt-2 p-2 w-full border rounded-md" required>
+                        <option value="">Seleccione su departamento</option>
+                        <option value="formosa">Formosa</option>
+                        <option value="laishi">Laishí</option>
+                        <option value="pilcomayo">Pilcomayo</option>
+                        <option value="pilagás">Pilagás</option>
+                        <option value="pirané">Pirané</option>
+                        <option value="ramón Lista">Ramón Lista</option>
+                        <option value="matacos">Matacos</option>
+                        <option value="bermejo">Bermejo</option>
+                    </select>
+                </div>
+
+                <!-- Localidad -->
+                <div class="mb-4">
+                    <label for="localidad" class="block text-gray-700">Localidad:</label>
+                    <input name="localidad" type="text" id="localidad" class="mt-2 p-2 w-full border rounded-md" placeholder="Ingrese la localidad de la institución" required>
+                </div>
+
+                <!-- Servicios que ofrece -->
+                <div class="mb-4">
+                    <label for="servicios" class="block text-gray-700">Servicios que ofrece:</label>
+                    <textarea name="servi" id="servicios" class="mt-2 p-2 w-full border rounded-md" placeholder="Describa los servicios que ofrece la institución" rows="3" required></textarea>
+                </div>
+
+
+                <!-- Contraseña -->
+                <div class="mb-4">
+                    <label for="password" class="block text-gray-700">Contraseña:</label>
+                    <input name=" contrasenia" type="password" id="password" class="mt-2 p-2 w-full border rounded-md" placeholder="Ingrese una contraseña" required>
+                </div>
+
+                <!-- Botón de envío -->
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">Registrarse</button>
+            </form> 
+        </div> 
+    </div>
+
+</body>
+</html>

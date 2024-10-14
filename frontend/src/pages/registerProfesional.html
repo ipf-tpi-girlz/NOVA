@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <style>
+        /* Estilo adicional para el fondo */
+        .background_img {
+            background-image:url('../src/assets/fon3.jpg')  ;
+            background-size: cover; /* Asegura que cubra todo el fondo */
+            background-position: center; /* Centra la imagen */
+        }
+        .anton_regular {
+            font-family: "Anton", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        </style>
+</head>
+<body  class="background_img min-h-screen bg-cover bg-center">
+        <div class="container mx-auto mt-10 flex justify-end">  
+            <div class=" flex justify-center items-center h-screen " > 
+                <h1 class="anton_regular text-5xl text-white tracking-wide " >"Un espacio seguro <br> para sanar, aprender y apoyar."</h1>
+                
+        </div>
+
+            <div class="bg-white bg-opacity-95 p-8 rounded-lg shadow-lg w-[800px] mx-10 ">
+                <h2 class="text-2xl font-semibold mb-6 text-center">Registro de Profesional de Psicología</h2>
+    
+                <form class="space-y-4" id="form-prof">
+                    <!-- Nombre -->
+                    <div class="form-group">
+                        <label for="nombre" class="block text-sm font-medium">Nombre y Apellido:</label>
+                        <input  name="nombre" type="text" class="form-control mt-1 w-full  border-gray-300 rounded-lg p-2" id="nombre" placeholder="Ingrese su nombre" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email" class="block text-sm font-medium">Correo Electrónico:</label>
+                        <input name="mail" type="email" class="form-control mt-1 w-full border-gray-300 rounded-lg p-2" id="email" placeholder="Ingrese su correo electrónico" required>
+                    </div>
+
+    
+                    <!-- Teléfono -->
+                    <div class="form-group">
+                        <label for="telefono" class="block text-sm font-medium">Teléfono de Contacto:</label>
+                        <input name="nuero_telefono" type="tel" class="form-control mt-1 w-full  border-gray-300 rounded-lg p-2" id="telefono" placeholder="Ingrese su número de teléfono" required>
+                    </div>
+    
+                    <!-- Número de Matrícula -->
+                    <div class="form-group">
+                        <label for="matricula" class="block text-sm font-medium">Número de Matrícula:</label>
+                        <input name="nro_matricula" type="text" class="form-control mt-1 w-full border-gray-300 rounded-lg p-2" id="matricula" placeholder="Ingrese su número de matrícula" required>
+                    </div>
+    
+                    <!-- Especialización -->
+                    <div class="form-group">
+                        <label for="especializacion" class="block text-sm font-medium">Especialización:</label>
+                        <input name="especialidad" type="text" class="form-control mt-1 w-full  border-gray-300 rounded-lg p-2" id="especializacion" placeholder="Ej. Psicología clínica, Psicología familiar" required>
+                    </div>
+    
+                    <!-- Departamento -->
+                    <div class="form-group">
+                        <label for="departamento" class="block text-sm font-medium">Departamento:</label>
+                        <select name=" departamento" class="form-control mt-1 w-full  border-gray-300 rounded-lg p-2" id="departamento" required>
+                            <option value="">Seleccione su departamento</option>
+                            <option value="formosa">Formosa</option>
+                            <option value="laishi">Laishí</option>
+                            <option value="pilcomayo">Pilcomayo</option>
+                            <option value="pilagás">Pilagás</option>
+                            <option value="pirané">Pirané</option>
+                            <option value="ramón Lista">Ramón Lista</option>
+                            <option value="matacos">Matacos</option>
+                            <option value="bermejo">Bermejo</option>
+                        </select>
+                    </div>
+    
+                    <!-- Localidad -->
+                    <div class="form-group">
+                        <label for="localidad" class="block text-sm font-medium">Localidad:</label>
+                        <input name=" localidad" type="text" class="form-control mt-1 w-full  border-gray-300 rounded-lg p-2" id="localidad" placeholder="Ingrese su localidad" required>
+                    </div>
+    
+                    
+
+    
+                    <!-- Género (Opcional) -->
+                    <div class="form-group">
+                        <label for="genero" class="block text-sm font-medium">Género (Opcional):</label>
+                        <select name="genero" class="form-control mt-1 w-full  border-gray-300 rounded-lg p-2" id="genero">
+                            <option value="">Seleccione su género</option>
+                            <option value="femenino">Femenino</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+    
+                    <!-- Contraseña -->
+                    <div class="form-group">
+                        <label for="password" class="block text-sm font-medium">Contraseña:</label>
+                        <input  name= "contrasenia" type="password" class="form-control mt-1 w-full border-gray-300 rounded-lg p-2" id="password" placeholder="Ingrese una contraseña" required>
+                    </div>
+    
+    
+                    <!-- Botón de envío -->
+                    <button type="submit" class="btn btn-primary w-full bg-blue-600 text-white py-2 rounded mt-4">Registrarse</button>
+                </form>
+            </div>
+        
+    </body>
+    
+</body>
+</html>
