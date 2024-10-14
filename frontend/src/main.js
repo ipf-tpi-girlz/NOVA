@@ -17,7 +17,7 @@ import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
 import { Articulo } from "./pages/seccionInf/hablardevg.js";
 import { HeaderProfile } from "./components/HeaderProfile.js";
-
+import { ProfileUser } from "./pages/profileUser.js";
 document.addEventListener('DOMContentLoaded', () => {
   const app = document.getElementById("app");
   const pathname = window.location.pathname;
@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     case "/profile":
       app.appendChild(navbar());
       app.appendChild(HeaderProfile());
+      app.appendChild(ProfileUser());
       app.appendChild(aboutUs());
       app.appendChild(footer());
       break;
