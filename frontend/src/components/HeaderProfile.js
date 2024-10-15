@@ -3,9 +3,12 @@ import { deleteAccount } from "../api/auth";
 import Swal from "sweetalert2";
 
 export const HeaderProfile = () => {
-    // --- Contenedor principal ---
+    const $main = document.createElement('div');
+    $main.className = "flex flex-col min-h-screen bg-base-200  w-full min-w-screen p-5";
+
+    // --- Contenedor secundario ---
     const $conteiner = document.createElement('div');
-    $conteiner.classList.add('bg-base', 'flex', 'justify-between', 'items-start', 'gap-6', 'mx-auto', 'max-w-7xl', 'm-10', 'px-10');
+    $conteiner.classList.add('flex', 'justify-between', 'items-start', 'gap-6', 'w-full', 'min-w-screen');
 
     // --- Contenedor para la imagen y el texto ---
     const $leftSide = document.createElement('div');
@@ -62,136 +65,71 @@ export const HeaderProfile = () => {
     $conteiner.appendChild($leftSide);
     $conteiner.appendChild($btnContainer);
 
-    // --- Modal de Configuración ---
-    const $settingsModal = document.createElement('div');
-    $settingsModal.classList.add('fixed', 'inset-0', 'bg-black', 'bg-opacity-50', 'flex', 'justify-center', 'items-center', 'hidden');
+    //Divisor
+    const $divider = document.createElement("div");
+    $divider.classList.add("divider");
 
-    const $settingsModalContent = document.createElement('div');
-    $settingsModalContent.classList.add('bg-white', 'rounded-lg', 'p-8', 'shadow-lg', 'max-w-lg', 'w-full');
+    // ---- Añadir las pestañas aquí ----
+    const $tabsContainer = document.createElement("div");
+    $tabsContainer.setAttribute("role", "tablist");
+    $tabsContainer.classList.add("tabs", "tabs-bordered", "flex", "justify-center");
+    // Tab 1
+    const $tab1 = document.createElement("input");
+    $tab1.type = "radio";
+    $tab1.name = "my_tabs_1";
+    $tab1.setAttribute("role", "tab");
+    $tab1.classList.add("tab");
+    $tab1.setAttribute("aria-label", "Publicaciones");
 
-    const $titleConfig = document.createElement('h3');
-    $titleConfig.classList.add('text-lg', 'font-bold', 'mb-2', 'text-center');
-    $titleConfig.textContent = 'Configuración';
+    // Tab 2
+    const $tab2 = document.createElement("input");
+    $tab2.type = "radio";
+    $tab2.name = "my_tabs_1";
+    $tab2.setAttribute("role", "tab");
+    $tab2.classList.add("tab");
+    $tab2.setAttribute("aria-label", "Comunidades");
+    $tab2.checked = true;
 
-    const $settingsImg = document.createElement('img');
-    $settingsImg.classList.add('w-48', 'h-48', 'rounded-full', 'mb-4', 'mx-auto');
-    $settingsImg.src = $img.src;
+    // Contenido de las pestañas
+    const $tabContent = document.createElement("div");
+    $tabContent.classList.add("tab-content", "p-10", "mt-4");
 
-    const $hr = document.createElement('hr');
+    const $tabContent1 = document.createElement("div");
+    $tabContent1.setAttribute("role", "tabpanel");
+    $tabContent1.textContent = "Contenido de Publicaciones";
+    $tabContent1.style.display = "none";
 
-    const options = [
-        { text: 'Editar Datos', id: 'edit-data' },
-        { text: 'Eliminar Cuenta', id: 'delete-account' },
-        { text: 'Usuarios Bloqueados', id: 'blocked-users' },
-        { text: 'Ayuda', href: '/ayuda' },
-        { text: 'Comunidades', href: '/comunidades' },
-        { text: 'Contáctanos', href: '/contacto' }
-    ];
+    const $tabContent2 = document.createElement("div");
+    $tabContent2.setAttribute("role", "tabpanel");
+    $tabContent2.textContent = "Contenido de Comunidades";
 
-    const $optionsList = document.createElement('ul');
-    options.forEach(option => {
-        const $li = document.createElement('li');
-        $li.classList.add('mt-2');
+    $tabContent.appendChild($tabContent1);
+    $tabContent.appendChild($tabContent2);
 
-        const $link = document.createElement('a');
-        $link.classList.add('text-black-500', 'hover:text-pink-500');
-        $link.textContent = option.text;
-
-        if (option.href) {
-            $link.href = option.href;
-        } else {
-            $link.href = '#';
-            $link.id = option.id;
-        }
-
-        $li.appendChild($link);
-        $optionsList.appendChild($li);
-    });
-
-    const $btnLogout = document.createElement('button');
-    $btnLogout.classList.add('bg-red-500', 'text-white', 'p-2', 'rounded', 'mt-4', 'hover:bg-red-600', 'w-full');
-    $btnLogout.textContent = 'Cerrar Sesión';
-
-    $settingsModalContent.appendChild($titleConfig);
-    $settingsModalContent.appendChild($hr);
-    $settingsModalContent.appendChild($settingsImg);
-    $settingsModalContent.appendChild($hr);
-    $settingsModalContent.appendChild($optionsList);
-    $settingsModalContent.appendChild($btnLogout);
-    $settingsModal.appendChild($settingsModalContent);
-
-    // Función para manejar eventos de opciones sin href
-    const handleLinkClick = (linkId, action) => {
-        const $link = $settingsModalContent.querySelector(`#${linkId}`);
-        if ($link) {
-            $link.addEventListener('click', action);
-        }
+    // Función para cambiar entre pestañas
+    const switchTab = (tab, content) => {
+        $tabContent1.style.display = "none";
+        $tabContent2.style.display = "none";
+        content.style.display = "block";
+        $tab1.checked = false;
+        $tab2.checked = false;
+        tab.checked = true;
     };
 
-    // Evento para "Eliminar Cuenta"
-    handleLinkClick('delete-account', async (e) => {
-        e.preventDefault();
-        const result = await Swal.fire({
-            title: '¿Eliminar Cuenta?',
-            text: 'Esta acción no se puede deshacer. ¿Estás seguro de que deseas eliminar tu cuenta?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, eliminar cuenta',
-            cancelButtonText: 'Cancelar'
-        });
+    $tab1.addEventListener("change", () => switchTab($tab1, $tabContent1));
+    $tab2.addEventListener("change", () => switchTab($tab2, $tabContent2));
 
-        if (result.isConfirmed) {
-            try {
-                await deleteAccount();
-                Swal.fire('Eliminada', 'Tu cuenta ha sido eliminada exitosamente.', 'success');
-                setTimeout(() => {
-                    window.location.href = '/';
-                }, 2000);
-            } catch (error) {
-                Swal.fire('Error', 'Hubo un problema al eliminar tu cuenta. Por favor, intenta de nuevo más tarde.', 'error');
-            }
-        }
-    });
 
-    // Funcionalidad de Cerrar Sesión
-    $btnLogout.addEventListener('click', async () => {
-        try {
-            const result = await Swal.fire({
-                title: '¿Estás seguro?',
-                text: '¿Quieres cerrar sesión?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, cerrar sesión',
-                cancelButtonText: 'Cancelar'
-            });
+    // Añadir las pestañas al contenedor
+    $tabsContainer.appendChild($tab1);
+    $tabsContainer.appendChild($tabContent1);
+    $tabsContainer.appendChild($tab2);
+    $tabsContainer.appendChild($tabContent2);
 
-            if (result.isConfirmed) {
-                await logout();
-                await Swal.fire('Cerrado', 'Has cerrado sesión exitosamente.', 'success');
-                window.location.href = '/login';
-            }
-        } catch (error) {
-            console.error('Error al cerrar sesión:', error);
-            await Swal.fire('Error', 'Hubo un problema al cerrar sesión. Por favor, intenta de nuevo más tarde.', 'error');
-        }
-    });
+    // --- Añadir las pestañas al DOM ---
+    $main.appendChild($conteiner);
+    $main.appendChild($divider);
+    $main.appendChild($tabsContainer);
 
-    // Añadir el modal de configuración al documento
-    document.body.appendChild($settingsModal);
-
-    $btnSettings.addEventListener('click', () => {
-        $settingsModal.classList.remove('hidden');
-    });
-
-    $settingsModal.addEventListener('click', (e) => {
-        if (e.target === $settingsModal) {
-            $settingsModal.classList.add('hidden');
-        }
-    });
-
-    return $conteiner;
+    return $main;
 };

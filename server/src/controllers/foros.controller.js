@@ -27,6 +27,22 @@ export const getForos = async (req, res) => {
   }
 };
 
+export const getForosById = async (req, res) => {
+  console.log('hasta aca')
+  const user = req.user;
+  console.log(user)
+  try {
+    const foro = await Foro.findAll({ where: { dueño_f: user.id } });
+    if (!foro) {
+      return res.status(404).json({ error: "Aun no tienes foros creados" });
+    }
+    res.status(200).json({ foro });
+  } catch (error) {
+    console.log(color.red("Error al obtener el foro por ID:", error));
+    res.status(500).json({ error: "Error al obtener el foro por ID" });
+  }
+};
+
 // Función para crear un nuevo foro
 export const createForo = async (req, res) => {
   const user = req.user || { id: 1 }; // Asignar un usuario de prueba si req.user es undefined

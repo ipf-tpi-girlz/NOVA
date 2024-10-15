@@ -5,6 +5,7 @@ export const logout = async () => {
   try {
     const response = await fetch(`${BASEURL}/users/logout`, {
       method: "POST",
+      credentials: "include",
     });
 
     if (!response.ok) {

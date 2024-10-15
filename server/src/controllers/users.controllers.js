@@ -156,23 +156,24 @@ export const loginUser = async (req, res) => {
     res.status(500).send("Error en el servidor");
   }
 };
-
-//Funcion para cerrar la sesión
-export const logout = (req, res) => {
+//Función para cerrar la sesión
+export const logout = async (req, res) => {
   try {
-    if (!req.session) {
+    if (!req.cookies.authToken) {
+      console.log(req.cookies.authToken)
       return res.status(400).json({ message: "No hay ninguna sesión activa" });
     }
 
-    req.session.destroy((err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: "Error al cerrar sesión" });
-      }
-
-      res.clearCookie("authToken");
-      return res.json({ message: "Logout exitoso" });
+    // Limpiar la cookie de autenticación
+    res.clearCookie("authToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
     });
+
+    // Enviar respuesta exitosa
+    return res.status(200).json({ message: "Sesión cerrada exitosamente" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error inesperado" });

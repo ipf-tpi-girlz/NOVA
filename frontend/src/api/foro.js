@@ -7,12 +7,28 @@ export const fetchGetForos = async () => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include", // Agregado para incluir credenciales
+      credentials: "include",
     });
     const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error al obtener los foros:", error);
+  }
+};
+
+export const fetchGetForosById = async () => {
+  try {
+    const response = await fetch("http://localhost:4000/foro/user", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error al obtener los foros por ID:", error);
   }
 };
 
