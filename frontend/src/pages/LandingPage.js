@@ -1,19 +1,22 @@
-import { HeroLanding, Info, Features, JoinNow } from '../components'
+import { HeroLanding, Info, Features, JoinNow, Stats } from "../components";
 
 export const LandingPage = () => {
-  const main = document.createElement('main')
+  const main = document.createElement("main");
 
   //Hero
-  main.appendChild(HeroLanding())
+  main.appendChild(HeroLanding());
 
   //Info
-  main.appendChild(Info())
+  main.appendChild(Info());
+
+  //Estadisticas
+  main.appendChild(Stats());
 
   //Features
-  main.appendChild(Features())
+  main.appendChild(Features());
 
   //Join Now
-  main.appendChild(JoinNow())
+  main.appendChild(JoinNow());
 
-  return main
-}
+  return main;
+};
