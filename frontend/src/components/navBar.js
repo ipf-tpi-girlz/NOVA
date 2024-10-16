@@ -15,7 +15,7 @@ export const Navbar = () => {
   const logo = document.createElement("a");
   logo.classList.add("btn", "btn-ghost", "text-2xl", "font-serif");
   logo.textContent = "NOVA";
-  logo.setAttribute("href", "/");
+  logo.setAttribute("href", "/home");
 
   navbarStart.appendChild(logo);
 
@@ -74,7 +74,6 @@ export const Navbar = () => {
       return li;
     }
 
-    const home = createLink("/home", "Inicio");
     const forums = createLink("/foros", "Foros");
     const articles = createLink("/chvg", "Artículos");
     const prof = createLink("/contact", "Profesionales");
@@ -89,14 +88,14 @@ export const Navbar = () => {
     });
 
     //Se añaden los links al menu para pantallas grandes
-    menu.appendChild(home);
+
     menu.appendChild(forums);
     menu.appendChild(articles);
     menu.appendChild(prof);
     menu.appendChild(btnLogOut);
 
     // Se copian los links al menu del dropdown
-    dropdownContent.appendChild(home.cloneNode(true));
+
     dropdownContent.appendChild(forums.cloneNode(true));
     dropdownContent.appendChild(articles.cloneNode(true));
     dropdownContent.appendChild(prof.cloneNode(true));

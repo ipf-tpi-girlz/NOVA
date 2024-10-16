@@ -20,8 +20,7 @@ export const foro = () => {
     "shadow-md",
     "bg-clip-border",
     "rounded-xl",
-    "w-72",
-    "bg-red-500"
+    "w-72"
   );
 
   // Imagen de la tarjeta

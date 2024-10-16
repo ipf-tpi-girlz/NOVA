@@ -69,7 +69,7 @@ export function HeroLanding() {
   buttonreg.setAttribute("href", "/register-user");
 
   buttonreg.addEventListener("click", () => {
-    window.location.href = "http://localhost:5173/registerUser";
+    window.location.href = "http://localhost:5173/register-user";
   });
 
   containerBtn.appendChild(buttonlog);
