@@ -76,10 +76,11 @@ export const createHeroSection = () => {
           }
 
           const data = await response.json();
+          console.log(data)
           Swal.fire({
             icon: "success",
-            title: "¡Post creado!",
-            text: `Se ha creado el Post!`,
+            title: "¡Publicacion creada!",
+            text: `Se ha creado la publicacion!`,
           });
 
           loadForos();
@@ -87,7 +88,7 @@ export const createHeroSection = () => {
           console.error("ERROR PA", error);
           Swal.fire({
             icon: "error",
-            title: "Error al crear el post",
+            title: "Error al crear la publicacion",
             text: error.message,
           });
         }

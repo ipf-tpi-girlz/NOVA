@@ -81,19 +81,23 @@ export const updateForo = async (req, res) => {
   const { title, desc } = req.body;
   const { id } = req.params;
 
+  console.log(req.body.desc)
   try {
     console.log(color.yellow("------------------------------------------"));
     console.log(color.yellowBright({ id }));
     console.log(color.yellow("------------------------------------------"));
 
-    const exist = await Foro.findOne({ where: { id } });
-    if (!exist) {
-      return res.status(404).json({ error: "El foro no existe en el sistema" });
+    const exist = await Foro.findAll({ where: { id } });
+    console.log(exist)
+    if (exist < 0) {
+      res.status(404).json({ error: "El foro no existe en el sistema" });
+      return console.log("hasta aca")
     }
 
     // Validar que los campos title y desc no estén vacíos
     if (!title || !desc) {
-      return res.status(400).json({ error: "El título y la descripción son obligatorios" });
+      res.status(400).json({ error: "El título y la descripción son obligatorios" });
+      return console.log("hasta aca")
     }
 
     await Foro.update({ nombre: title, desc }, { where: { id } });

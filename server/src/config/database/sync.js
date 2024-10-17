@@ -6,11 +6,12 @@ import { Departamento } from "../../models/departamentos.js";
 import { sequelize } from "../../config/database/db.js";
 import { Institucion } from "../../models/institucion.js";
 import { Comentario } from "../../models/comentario.js";
-import { Subforo } from "../../models/subForo.js";
 import { Publicacion } from "../../models/publicacion.js";
 import { Respuesta } from "../../models/respuesta.js";
 import { PerfilUsuario } from "../../models/perfil.usario.js";
 import { interaccion_publicacion } from "../../models/interaccion-PCR.js";
+import { Foro } from "../../models/foro.js";
+import { Subforo } from "../../models/subforo.js";
 
 // Función para sincronizar tablas y relaciones
 export const syncTables = async () => {
@@ -45,7 +46,7 @@ export const syncTables = async () => {
     // Relaciones entre Localidad y Usuario
     Localidad.hasMany(Usuario, {
       foreignKey: "localidad_id",
-      onDelete: "CASCADE",
+      onDelete: "SET NULL",
     });
     Usuario.belongsTo(Localidad, { foreignKey: "localidad_id" });
 
@@ -56,19 +57,19 @@ export const syncTables = async () => {
     });
     Publicacion.belongsTo(Usuario, { foreignKey: "usuario_id" });
 
-    // Relaciones entre Subforo y Publicación
-    Subforo.hasMany(Publicacion, {
-      foreignKey: "subforo_id",
-      onDelete: "CASCADE",
-    });
-    Publicacion.belongsTo(Subforo, { foreignKey: "subforo_id" });
-
     // Relaciones entre Usuario y Comentario
     Usuario.hasMany(Comentario, {
       foreignKey: "usuario_id",
       onDelete: "CASCADE",
     });
     Comentario.belongsTo(Usuario, { foreignKey: "usuario_id" });
+
+    // Relaciones entre Publicación y Comentario
+    Publicacion.hasMany(Comentario, {
+      foreignKey: "publicacion_id",
+      onDelete: "CASCADE",
+    });
+    Comentario.belongsTo(Publicacion, { foreignKey: "publicacion_id" });
 
     // Relaciones entre Comentario y Respuesta
     Comentario.hasMany(Respuesta, {
@@ -97,6 +98,27 @@ export const syncTables = async () => {
       as: "perfiles",
       onDelete: "CASCADE",
     });
+
+    // Relaciones entre Usuario y Foro
+    Usuario.hasMany(Foro, {
+      foreignKey: "usuario_id",
+      onDelete: "CASCADE",
+    });
+    Foro.belongsTo(Usuario, { foreignKey: "usuario_id" });
+
+    // Relaciones entre Usuario y SubForo
+    Usuario.hasMany(Subforo, {
+      foreignKey: "usuario_id",
+      onDelete: "CASCADE",
+    });
+    Subforo.belongsTo(Usuario, { foreignKey: "usuario_id" });
+
+    // Relaciones entre Foro y SubForo
+    Foro.hasMany(Subforo, {
+      foreignKey: "foro_id",
+      onDelete: "CASCADE",
+    });
+    Subforo.belongsTo(Foro, { foreignKey: "foro_id" });
 
     Publicacion.hasMany(interaccion_publicacion, {
       foreignKey: "publicacion_id",

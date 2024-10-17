@@ -51,15 +51,15 @@ export const fetchCreateForo = async (foroData) => {
 };
 
 // Función para actualizar un foro existente
-export const fetchUpdateForo = async (id, foroData) => {
+export const fetchUpdateForo = async (id, dataForo) => {
   try {
     const response = await fetch(`http://localhost:4000/foro/update/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(foroData),
-      credentials: "include", // Agregado para incluir credenciales
+      body: JSON.stringify(dataForo),
+      credentials: "include",
     });
     const data = await response.json();
     return data;
@@ -76,7 +76,7 @@ export const fetchDeleteForo = async (id) => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include", // Agregado para incluir credenciales
+      credentials: "include",
     });
     const data = await response.json();
     return data;
