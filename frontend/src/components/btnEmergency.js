@@ -18,16 +18,16 @@ export const BtnEmergency = () => {
 
   //contenido
   const title = document.createElement("h1");
-  title.className = "text-2xl mb-1";
+  title.className = "text-2xl mb-1 p-6";
   title.textContent = "Red de contencion";
 
   const subTitle = document.createElement("h2");
-  subTitle.className = "text-sm mb-3";
+  subTitle.className = "text-sm mb-3 ";
   subTitle.textContent = "Estamos aqui para escucharte";
 
   const helpBtn = document.createElement("button");
-  helpBtn.className = "btn bg-pink-200 items-center hover:bg-pink-400";
-  helpBtn.innerHTML = `<span class = "material-symbols-rounded ">favorite</span> Necesito ayuda ahora`;
+  helpBtn.className = "btn bg-pink-200 items-center hover:bg-pink-400 w-96";
+  helpBtn.innerHTML = `<span class = "material-symbols-rounded ">favorite</span> Necesito ayuda ahora `;
 
   const modalBackdrop = document.createElement("form");
   modalBackdrop.method = "dialog";

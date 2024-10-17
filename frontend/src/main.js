@@ -24,6 +24,7 @@ import { ContactsPage } from "./pages/contacs";
 import { violence } from "./pages/seccionInf/violenceInf";
 import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
+import { foro } from "./pages/foro.js";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -39,6 +40,7 @@ switch (pathname) {
   case "/register-user":
     app.appendChild(Navbar());
     app.appendChild(RegisterPage(FormRegisterUser()));
+    app.appendChild(Footer());
     LocalStorage();
 
     break;
@@ -71,6 +73,7 @@ switch (pathname) {
   case "/foros":
     app.appendChild(Navbar());
     app.appendChild(createHeroSection());
+
     app.appendChild(BtnEmergency());
     app.appendChild(Footer());
     break;

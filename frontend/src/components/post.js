@@ -6,24 +6,49 @@ import {
   fetchDeleteForo,
 } from "../api/foro";
 
+const frases = [
+  {
+    id: 1,
+    title:
+      "Cada pequeño paso que des, por más diminuto que sea, sigue siendo un paso hacia adelante. Tómate todo el tiempo que necesites para darlos.",
+  },
+  {
+    id: 2,
+    title:
+      "Cada pequeño paso que des, por más diminuto que sea, sigue siendo un paso hacia adelante. Tómate todo el tiempo que necesites para darlos.",
+  },
+  {
+    id: 2,
+    title:
+      "Cada pequeño paso que des, por más diminuto que sea, sigue siendo un paso hacia adelante. Tómate todo el tiempo que necesites para darlos.",
+  },
+  {
+    id: 2,
+    title:
+      "Cada pequeño paso que des, por más diminuto que sea, sigue siendo un paso hacia adelante. Tómate todo el tiempo que necesites para darlos.",
+  },
+];
+
+let frasesIndex = 0;
+
 export const createHeroSection = () => {
   const hero = document.createElement("div");
   hero.classList.add(
     "hero",
-    "bg-base-200",
+
     "flex",
     "flex-col",
     "items-center",
-    "flex-grow",
     "min-h-screen"
   );
+  let cardcount = 0;
 
   const titleSection = document.createElement("h2");
   titleSection.classList.add("text-3xl", "font-bold", "text-center", "mb-5");
-  titleSection.textContent = "Sección de Foros";
+  titleSection.textContent = "historias";
 
   const heroContent = document.createElement("div");
-  heroContent.classList.add("text-center", "w-full", "max-w-3xl", "mx-auto");
+  heroContent.classList.add("text-center", "w-full", "p-4");
 
   // Botón para crear foro
   const createPostButton = document.createElement("button");
@@ -102,7 +127,8 @@ export const createHeroSection = () => {
     "grid",
     "grid-cols-1",
     "gap-4",
-    "md:grid-cols-2"
+    "md:grid-cols-2",
+    "md:grid-cols-3"
   );
 
   const loadForos = async () => {
@@ -132,6 +158,8 @@ export const createHeroSection = () => {
           "transition-bg",
           "duration-300"
         );
+
+        cardcount++;
 
         // Crear el contenedor del dropdown
         const dropdownContainer = document.createElement("div");
@@ -260,6 +288,16 @@ export const createHeroSection = () => {
         forumCard.appendChild(forumTitle);
         forumCard.appendChild(forumDesc);
         forumsContainer.appendChild(forumCard);
+        if (cardcount % 4 === 0) {
+          const emotionalMessage = document.createElement("div");
+          emotionalMessage.className =
+            "font-serif text-cener font-semibold text-lg p-2";
+          emotionalMessage.innerText = `"${frases[frasesIndex].title}"`;
+          forumsContainer.appendChild(emotionalMessage);
+
+          // Aumenta el índice para la próxima frase y reinicia si llega al final
+          frasesIndex = (frasesIndex + 1) % frases.length;
+        }
       });
     } catch (error) {
       console.error("Error loading forums:", error);

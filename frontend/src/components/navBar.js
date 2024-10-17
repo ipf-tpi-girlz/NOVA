@@ -83,8 +83,9 @@ export const Navbar = () => {
     btnLogOut.classList.add("btn", "btn-primary", "btn-sm");
     btnLogOut.textContent = "Cerrar Sesión";
     btnLogOut.type = "submit";
+    btnLogOut.setAttribute = ("href", "/");
     btnLogOut.addEventListener("click", () => {
-      window.location.href = "http://localhost:5173/logout";
+      window.location.href = "http://localhost:5173";
     });
 
     //Se añaden los links al menu para pantallas grandes
