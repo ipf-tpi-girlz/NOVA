@@ -13,6 +13,7 @@ import {
   FormRegisterUser,
   BtnEmergency,
 } from "./components";
+import { FormRegisterProf } from "./components/forms/FormRegisterProf.js";
 
 //Paginas
 import { LandingPage } from "./pages/LandingPage.js";
@@ -39,6 +40,13 @@ switch (pathname) {
   case "/register-user":
     app.appendChild(Navbar());
     app.appendChild(RegisterPage(FormRegisterUser()));
+    LocalStorage();
+
+    break;
+  case "/register-prof":
+    app.innerHTML = ""; // Limpia el contenido previo
+    app.appendChild(Navbar());
+    app.appendChild(RegisterPage(FormRegisterProf()));
     LocalStorage();
 
     break;

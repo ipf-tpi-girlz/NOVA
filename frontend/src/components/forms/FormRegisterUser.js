@@ -159,7 +159,7 @@ export const FormRegisterUser = () => {
 
   // Eventos para los botones adicionales
   professionalButton.addEventListener("click", () => {
-    window.location.href = "http://localhost:5173/register-professional";
+    window.location.href = "http://localhost:5173/register-prof";
   });
 
   institutionButton.addEventListener("click", () => {
