@@ -1,18 +1,18 @@
-export const FormRegisterUser = () => {
-  // Crear formulario de registro
+export const FormRegisterProf = () => {
+  // Crear el contenedor del formulario
   const formContainer = document.createElement("div");
   formContainer.className =
     "bg-base-200 px-5 pt-5 pb-2 rounded-lg shadow md:w-4/5 mx-auto";
 
   const h2 = document.createElement("h2");
   h2.className = "text-2xl font-semibold mb-6 text-center";
-  h2.innerText = "Registro de Usuario";
+  h2.innerText = "Registro de Profesional";
   formContainer.appendChild(h2);
 
   // Crear el formulario
   const form = document.createElement("form");
   form.className = "space-y-4";
-  form.id = "form-register";
+  form.id = "form-prof";
   formContainer.appendChild(form);
 
   // Función para crear grupos de formularios
@@ -36,9 +36,10 @@ export const FormRegisterUser = () => {
     const input = document.createElement(
       inputType === "select" ? "select" : "input"
     );
-    input.className = "form-control input w-full";
+    input.className = "form-control mt-1 w-full border-gray-300 rounded-lg p-2";
     input.id = inputId;
     input.name = name; // Atributo name para enviar los datos al backend
+
     if (inputType !== "select") {
       input.type = inputType;
       input.placeholder = placeholder;
@@ -59,15 +60,34 @@ export const FormRegisterUser = () => {
   );
   form.appendChild(nombreField);
 
-  const gmailField = createFormGroup(
-    "Correo Electrónico :",
+  const emailField = createFormGroup(
+    "Correo Electrónico:",
     "email",
     "mail",
     "mail",
-    "Ingrese su correo de Gmail"
+    "Ingrese su correo electrónico"
   );
-  form.appendChild(gmailField);
+  form.appendChild(emailField);
 
+  const matriculaField = createFormGroup(
+    "Número de Matrícula:",
+    "text",
+    "nro_matricula",
+    "nro_matricula",
+    "Ingrese su número de matrícula"
+  );
+  form.appendChild(matriculaField);
+
+  const especializacionField = createFormGroup(
+    "Especialización:",
+    "text",
+    "especialidad",
+    "especialidad",
+    "Ej. Psicología clínica, Psicología familiar"
+  );
+  form.appendChild(especializacionField);
+
+  // Crear el campo select para Departamento
   const departamentoField = createFormGroup(
     "Departamento:",
     "select",
@@ -87,10 +107,9 @@ export const FormRegisterUser = () => {
   ];
   departamentos.forEach((dep) => {
     const option = document.createElement("option");
-    option.value = dep;
+    option.value = dep.toLowerCase();
     option.innerText = dep === "" ? "Seleccione su departamento" : dep;
     departamentoField.querySelector("select").appendChild(option);
-    departamentoField.querySelector("select").classList.add("select");
   });
   form.appendChild(departamentoField);
 
@@ -109,19 +128,19 @@ export const FormRegisterUser = () => {
     "genero",
     "genero"
   );
-  const generos = ["", "Femenino", "Masculino", "Otro", "Prefiero no decirlo"];
+  const generos = ["", "Femenino", "Masculino", "Otro"];
   generos.forEach((gen) => {
     const option = document.createElement("option");
-    option.value = gen;
+    option.value = gen.toLowerCase();
     option.innerText = gen === "" ? "Seleccione su género" : gen;
     generoField.querySelector("select").appendChild(option);
-    generoField.querySelector("select").classList.add("select");
   });
   form.appendChild(generoField);
 
   const passwordField = createFormGroup(
     "Contraseña:",
     "password",
+    "contrasenia",
     "contrasenia",
     "Ingrese una contraseña"
   );
@@ -130,58 +149,31 @@ export const FormRegisterUser = () => {
   // Botón de envío
   const submitButton = document.createElement("button");
   submitButton.type = "submit";
-  submitButton.className = "btn w-full btn-primary py-2 rounded-lg";
+  submitButton.className =
+    "btn btn-primary w-full bg-blue-600 text-white py-2 rounded mt-4";
   submitButton.innerText = "Registrarse";
   form.appendChild(submitButton);
 
-  // Línea divisoria
-  const hr = document.createElement("div");
-  hr.className = "divider";
-  hr.textContent = "O registrate como";
-  form.appendChild(hr);
-  const buttonContainer = document.createElement("div");
-  buttonContainer.className = "flex space-x-2 "; // Flexbox con espacio entre los botones
-  form.appendChild(buttonContainer);
-
-  // Botón para registrarse como profesional
-  const professionalButton = document.createElement("button");
-  professionalButton.type = "button"; // Evita que el botón envíe el formulario
-  professionalButton.className = "btn w-1/2 btn-primary  py-2 rounded-lg";
-  professionalButton.innerText = "Profesional";
-  buttonContainer.appendChild(professionalButton);
-
-  // Botón para registrarse como institución
-  const institutionButton = document.createElement("button");
-  institutionButton.type = "button"; // Evita que el botón envíe el formulario
-  institutionButton.className = "btn w-1/2 btn-primary  py-2 rounded-lg";
-  institutionButton.innerText = "Institución";
-  buttonContainer.appendChild(institutionButton);
-
-  // Eventos para los botones adicionales
-  professionalButton.addEventListener("click", () => {
-    window.location.href = "http://localhost:5173/register-professional";
-  });
-
-  institutionButton.addEventListener("click", () => {
-    window.location.href = "http://localhost:5173/register-institution";
-  });
-
-  // Evento de envío del formulario...
-  form.addEventListener("submit", async (evento) => {
-    evento.preventDefault();
+  // Evento de envío del formulario
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
     // Obtener los valores del formulario
     const nombre = document.getElementById("nombre").value;
     const mail = document.getElementById("mail").value;
+    const nro_matricula = document.getElementById("nro_matricula").value;
+    const especialidad = document.getElementById("especialidad").value;
     const departamento = document.getElementById("departamento").value;
     const localidad = document.getElementById("localidad").value;
     const genero = document.getElementById("genero").value;
     const contrasenia = document.getElementById("contrasenia").value;
 
-    // Validar los campos...
+    // Validar los campos
     if (
       nombre === "" ||
       mail === "" ||
+      nro_matricula === "" ||
+      especialidad === "" ||
       departamento === "" ||
       localidad === "" ||
       contrasenia === ""
@@ -191,7 +183,7 @@ export const FormRegisterUser = () => {
     }
 
     try {
-      // Enviar los datos al backend con fetch...
+      // Enviar los datos al backend usando fetch
       const response = await fetch("http://localhost:4000/users/register", {
         method: "POST",
         headers: {
@@ -200,23 +192,25 @@ export const FormRegisterUser = () => {
         body: JSON.stringify({
           nombre,
           mail,
+          nro_matricula,
+          especialidad,
           departamento,
           localidad,
           genero,
           contrasenia,
-          role: "victima",
+          role: "profesional",
         }),
       });
       const result = await response.json();
       console.log(result);
 
-      // Registro exitoso
+      // Si el registro es exitoso, redirigir al login
       if (result.ok) {
-        console.log({ message: "Se ha registrado exitosamente" });
+        alert("Registro exitoso");
         window.location.href = "http://localhost:5173/login";
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error al registrar:", error);
     }
   });
 
