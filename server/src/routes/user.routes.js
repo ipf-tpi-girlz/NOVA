@@ -3,8 +3,8 @@ import { loginUser, registerUser, logout } from "../controllers/users.controller
 
 const UserRouter = Router();
 
-router.post("/login", loginUser);
-router.post("/register", registerUser);
-router.post("/logout", logout);
+UserRouter.post("/login", loginUser);
+UserRouter.post("/register", registerUser);
+UserRouter.post("/logout", logout);
 
 export default UserRouter;  

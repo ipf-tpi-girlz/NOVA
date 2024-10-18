@@ -5,7 +5,10 @@ import session from "express-session";
 import config from "../config/config.js";
 import cookieParser from "cookie-parser";
 import path from "path";
-
+import UserRouter from "../routes/user.routes.js";
+import routerComunity from "../routes/comunity.routes.js";
+import routerPostComunity from "../routes/post.comunity.routes.js";
+import postRouter from "../routes/post.routes.js";
 
 export const app = express();
 
@@ -39,7 +42,9 @@ app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 //! RUTAS
 app.use("/users", UserRouter);
-app.use("/foro", foroRouter);
+app.use("/foro", postRouter);
+app.use(routerComunity);
+app.use(routerPostComunity);
 
 
 app.listen(config.PORT, () => {

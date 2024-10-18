@@ -11,7 +11,7 @@ export const HeaderProfile = () => {
 
     const $main = createElementWithClasses('div', ["flex", "flex-col", "min-h-screen", "w-full", "min-w-screen", "p-5"]);
 
-    const $container = createElementWithClasses('div', ['flex', 'flex-col', 'md:flex-row', 'justify-between', 'items-center', 'md:items-start', 'gap-6', 'w-full', 'min-w-screen', 'rounded-3xl', 'bg-white', 'p-6', 'shadow-lg', 'relative']);
+    const $container = createElementWithClasses('div', ['flex', 'flex-col', 'md:flex-row', 'justify-between', 'items-center', 'md:items-start', 'gap-4', 'rounded-3xl', 'bg-white', 'p-6', 'relative']);
 
     const $leftSide = createElementWithClasses('div', ['flex', 'flex-col', 'md:flex-row', 'gap-4', 'items-center', 'md:items-start']);
 

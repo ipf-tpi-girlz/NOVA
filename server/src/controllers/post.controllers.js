@@ -12,7 +12,7 @@ export const getPosts = async (req, res) => {
 }
 
 export const getPostUser = async (req, res) => {
-    const user = req.user;
+    const { user } = req;
     try {
         const post = await Publicacion.findOne({ where: { usuario_id: user.id } });
         if (!post) {
@@ -29,12 +29,12 @@ export const getPostUser = async (req, res) => {
 
 export const createPost = async (req, res) => {
     const { nombre, desc } = req.body;
-    //const user = req.user;
+    const { user } = req;
     try {
         await Publicacion.create({
             nombre,
             desc,
-            //usuario_id: user.id
+            usuario_id: user.id
         })
         res.status(201).json({
             message: "La publicacion se ha creado correctamente"
@@ -49,17 +49,17 @@ export const createPost = async (req, res) => {
 export const updatePost = async (req, res) => {
     const { id } = req.params;
     const { nombre, desc } = req.body;
-    const user = req.user;
+    const { user } = req;
     try {
         const post = await Publicacion.findOne({ where: { id } });
         if (!post) {
             console.log(color.red("No se encontro la publicacion"))
             return res.status(404).json({ message: "No se encontro la publicacion" });
         }
-        //if (post.usuario_id !== user.id) {
-        //    console.log(color.red("No tienes permiso para actualizar esta publicacion"))
-        //    return res.status(403).json({ message: "No tienes permiso para actualizar esta publicacion" });
-        //}
+        if (post.usuario_id !== user.id) {
+            console.log(color.red("No tienes permiso para actualizar esta publicacion"))
+            return res.status(403).json({ message: "No tienes permiso para actualizar esta publicacion" });
+        }
         await post.update({
             nombre,
             desc
@@ -76,17 +76,17 @@ export const updatePost = async (req, res) => {
 
 export const deletePost = async (req, res) => {
     const { id } = req.params;
-    const user = req.user;
+    const { user } = req;
     try {
         const post = await Publicacion.findOne({ where: { id } });
         if (!post) {
             console.log(color.red("No se encontro la publicacion"))
             return res.status(404).json({ message: "No se encontro la publicacion" });
         }
-        //if (post.usuario_id !== user.id) {
-        //    console.log(color.red("No tienes permiso para actualizar esta publicacion"))
-        //    return res.status(403).json({ message: "No tienes permiso para actualizar esta publicacion" });
-        //}
+        if (post.usuario_id !== user.id) {
+            console.log(color.red("No tienes permiso para eliminar esta publicacion"))
+            return res.status(403).json({ message: "No tienes permiso para eliminar esta publicacion" });
+        }
         await post.destroy()
         console.log(color.green("Publicacion eliminada correctamente"))
         res.status(200).json({
