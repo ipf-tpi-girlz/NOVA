@@ -74,7 +74,7 @@ export const Navbar = () => {
       return li;
     }
 
-    const forums = createLink("/foros", "Foros");
+    const forums = createLink("/historias", "Historias");
     const articles = createLink("/chvg", "Artículos");
     const prof = createLink("/contact", "Profesionales");
 

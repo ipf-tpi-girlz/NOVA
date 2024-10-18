@@ -25,6 +25,7 @@ import { violence } from "./pages/seccionInf/violenceInf";
 import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
 import { foro } from "./pages/foro.js";
+import { StoriesPage } from "./components/historiesprueba/StoriesPage.js";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -70,10 +71,9 @@ switch (pathname) {
     app.appendChild(BtnEmergency());
     app.appendChild(Footer());
     break;
-  case "/foros":
+  case "/historias":
     app.appendChild(Navbar());
     app.appendChild(createHeroSection());
-
     app.appendChild(BtnEmergency());
     app.appendChild(Footer());
     break;
