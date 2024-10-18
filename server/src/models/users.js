@@ -1,58 +1,45 @@
 import { sequelize } from '../config/database/db.js';
-import { DataTypes } from '../config/database/db.js'
+import { DataTypes } from '../config/database/db.js';
 
-
-
-export const Usuario = sequelize.define('usuarios', {
+const Usuario = sequelize.define('Usuario', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
-    },
-    nombre: {
-        type: DataTypes.STRING(255),
-        allowNull: false
-    },
-    razon_social: {
-        type: DataTypes.STRING(255)
-    },
-    mail: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        unique: true
-    },
-    localidad_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: "localidades",
-            key: 'id'
-        }
-    },
-    nro_telefono: {
-        type: DataTypes.STRING(20),
-        allowNull: true
-    },
-    fecha_nac: {
-        type: DataTypes.DATE,
-    },
-    contrasenia: {
-        type: DataTypes.STRING(255),
-        allowNull: false
+        autoIncrement: true,
     },
     role: {
-        type: DataTypes.ENUM('institucion', 'profesional', 'victima'),
-        allowNull: false
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+            isIn: [['institucion', 'profesional', 'normal']],
+        },
     },
-    genero: {
-        type: DataTypes.ENUM('masculino', 'femenino', 'otro'),
-    }
+    img: DataTypes.TEXT,
+    nombre: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+    },
+    mail: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        unique: true,
+    },
+    contrasenia: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+    },
+    genero: DataTypes.TEXT,
+    fecha_nac: DataTypes.DATE,
+    provincia: DataTypes.TEXT,
+    localidad: DataTypes.TEXT,
+    fecha_registro: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
 }, {
-    tableName: 'usuarios',
-    freezeTableName: true,
-    underscored: true,
-
+    modelName: 'Usuario',
+    freezeTableName: true
 });
 
-
+export default Usuario;
 

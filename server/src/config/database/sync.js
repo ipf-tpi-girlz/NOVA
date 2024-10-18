@@ -1,198 +1,90 @@
-// Importaciones de modelos y sequelize
-import { Profesional } from "../../models/profesional.js";
-import { Localidad } from "../../models/localidades.js";
+import { sequelize } from "./db.js";
 import { Usuario } from "../../models/users.js";
-import { Departamento } from "../../models/departamentos.js";
-import { sequelize } from "../../config/database/db.js";
-import { Institucion } from "../../models/institucion.js";
-import { Comentario } from "../../models/comentario.js";
-import { Publicacion } from "../../models/publicacion.js";
-import { Respuesta } from "../../models/respuesta.js";
-import { PerfilUsuario } from "../../models/perfil.usario.js";
-import { interaccion_publicacion } from "../../models/interaccion-PCR.js";
-import { Foro } from "../../models/foro.js";
-import { Subforo } from "../../models/subforo.js";
+import { Perfil } from "../../models/profile.js";
+import { Publicacion } from "../../models/post.js";
+import { PublicacionImagen } from "../../models/postImg.js";
+import { Reaccion } from "../../models/reacciones.js";
+import { Comentario } from "../../models/coments.js";
+import { Conversacion } from "../../models/chat.js";
+import { InformacionProfesional } from "../../models/info.js";
+import { Comunidad } from "../../models/comunnity.js";
+import { PublicacionComunidad } from "../../models/post.community.js";
+
+import { ParticipanteComunidad } from "../../models/participan.comunity.js";
 
 // Función para sincronizar tablas y relaciones
 export const syncTables = async () => {
   try {
-    // Relaciones entre Departamento y Localidad
-    Departamento.hasMany(Localidad, {
-      foreignKey: "departamento_id",
-      as: "localidades",
-      onDelete: "CASCADE",
-    });
-    Localidad.belongsTo(Departamento, {
-      foreignKey: "departamento_id",
-      as: "departamento",
-    });
+    // Usuario -> Perfil (One-to-One)
+    Usuario.hasOne(Perfil, { foreignKey: 'usuario_id' });
+    Perfil.belongsTo(Usuario, { foreignKey: 'usuario_id' });
 
-    // Relación uno a uno: Usuario y Profesional
-    Usuario.hasOne(Profesional, {
-      foreignKey: "usuario_id",
-      as: "profesional",
-      onDelete: "CASCADE",
-    });
-    Profesional.belongsTo(Usuario, { foreignKey: "usuario_id", as: "usuario" });
+    // Usuario -> Publicacion (One-to-Many)
+    Usuario.hasMany(Publicacion, { foreignKey: 'usuario_id' });
+    Publicacion.belongsTo(Usuario, { foreignKey: 'usuario_id' });
 
-    // Relación uno a uno: Usuario y Institución
-    Usuario.hasOne(Institucion, {
-      foreignKey: "usuario_id",
-      as: "institucion",
-      onDelete: "CASCADE",
-    });
-    Institucion.belongsTo(Usuario, { foreignKey: "usuario_id", as: "usuario" });
+    // Publicacion -> PublicacionImagen (One-to-Many)
+    Publicacion.hasMany(PublicacionImagen, { foreignKey: 'publicacion_id' });
+    PublicacionImagen.belongsTo(Publicacion, { foreignKey: 'publicacion_id' });
 
-    // Relaciones entre Localidad y Usuario
-    Localidad.hasMany(Usuario, {
-      foreignKey: "localidad_id",
-      onDelete: "SET NULL",
-    });
-    Usuario.belongsTo(Localidad, { foreignKey: "localidad_id" });
+    // Publicacion -> Reaccion (One-to-Many)
+    Publicacion.hasMany(Reaccion, { foreignKey: 'publicacion_id' });
+    Reaccion.belongsTo(Publicacion, { foreignKey: 'publicacion_id' });
 
-    // Relaciones entre Usuario y Publicación
-    Usuario.hasMany(Publicacion, {
-      foreignKey: "usuario_id",
-      onDelete: "CASCADE",
-    });
-    Publicacion.belongsTo(Usuario, { foreignKey: "usuario_id" });
+    // Usuario -> Reaccion (One-to-Many)
+    Usuario.hasMany(Reaccion, { foreignKey: 'usuario_id' });
+    Reaccion.belongsTo(Usuario, { foreignKey: 'usuario_id' });
 
-    // Relaciones entre Usuario y Comentario
-    Usuario.hasMany(Comentario, {
-      foreignKey: "usuario_id",
-      onDelete: "CASCADE",
-    });
-    Comentario.belongsTo(Usuario, { foreignKey: "usuario_id" });
+    // Publicacion -> Comentario (One-to-Many)
+    Publicacion.hasMany(Comentario, { foreignKey: 'publicacion_id' });
+    Comentario.belongsTo(Publicacion, { foreignKey: 'publicacion_id' });
 
-    // Relaciones entre Publicación y Comentario
-    Publicacion.hasMany(Comentario, {
-      foreignKey: "publicacion_id",
-      onDelete: "CASCADE",
-    });
-    Comentario.belongsTo(Publicacion, { foreignKey: "publicacion_id" });
+    // Comentario -> Comentario (Self-referencing)
+    Comentario.hasMany(Comentario, { foreignKey: 'comentario_padre_id' });
+    Comentario.belongsTo(Comentario, { foreignKey: 'comentario_padre_id' });
 
-    // Relaciones entre Comentario y Respuesta
-    Comentario.hasMany(Respuesta, {
-      foreignKey: "comentario_id",
-      onDelete: "CASCADE",
-    });
-    Respuesta.belongsTo(Comentario, {
-      foreignKey: "comentario_id",
-      onDelete: "CASCADE",
-    });
+    // Usuario -> Conversacion (One-to-Many, user can be either usuario1 or usuario2)
+    Usuario.hasMany(Conversacion, { foreignKey: 'usuario1_id' });
+    Conversacion.belongsTo(Usuario, { foreignKey: 'usuario1_id' });
 
-    // Relaciones entre Usuario y Respuesta
-    Usuario.hasMany(Respuesta, {
-      foreignKey: "usuario_id",
-      onDelete: "CASCADE",
-    });
-    Respuesta.belongsTo(Usuario, { foreignKey: "usuario_id" });
+    Usuario.hasMany(Conversacion, { foreignKey: 'usuario2_id' });
+    Conversacion.belongsTo(Usuario, { foreignKey: 'usuario2_id' });
 
-    // Relación entre PerfilUsuario y Usuario
-    PerfilUsuario.belongsTo(Usuario, {
-      foreignKey: "usuario_id",
-      as: "usuario",
-    });
-    Usuario.hasMany(PerfilUsuario, {
-      foreignKey: "usuario_id",
-      as: "perfiles",
-      onDelete: "CASCADE",
-    });
+    // Conversacion -> Mensaje (One-to-Many)
+    Conversacion.hasMany(Mensaje, { foreignKey: 'conversacion_id' });
+    Mensaje.belongsTo(Conversacion, { foreignKey: 'conversacion_id' });
 
-    // Relaciones entre Usuario y Foro
-    Usuario.hasMany(Foro, {
-      foreignKey: "usuario_id",
-      onDelete: "CASCADE",
-    });
-    Foro.belongsTo(Usuario, { foreignKey: "usuario_id" });
+    // Usuario -> Mensaje (One-to-Many)
+    Usuario.hasMany(Mensaje, { foreignKey: 'remitente_id' });
+    Mensaje.belongsTo(Usuario, { foreignKey: 'remitente_id' });
 
-    // Relaciones entre Usuario y SubForo
-    Usuario.hasMany(Subforo, {
-      foreignKey: "usuario_id",
-      onDelete: "CASCADE",
-    });
-    Subforo.belongsTo(Usuario, { foreignKey: "usuario_id" });
+    // Usuario -> InformacionProfesional (One-to-One)
+    Usuario.hasOne(InformacionProfesional, { foreignKey: 'profesional_id' });
+    InformacionProfesional.belongsTo(Usuario, { foreignKey: 'profesional_id' });
 
-    // Relaciones entre Foro y SubForo
-    Foro.hasMany(Subforo, {
-      foreignKey: "foro_id",
-      onDelete: "CASCADE",
-    });
-    Subforo.belongsTo(Foro, { foreignKey: "foro_id" });
+    // Usuario -> Comunidad (One-to-Many, user is the moderator)
+    Usuario.hasMany(Comunidad, { foreignKey: 'moderador_id' });
+    Comunidad.belongsTo(Usuario, { foreignKey: 'moderador_id' });
 
-    Publicacion.hasMany(interaccion_publicacion, {
-      foreignKey: "publicacion_id",
-      onDelete: "CASCADE",
-    });
-    interaccion_publicacion.belongsTo(Publicacion, {
-      foreignKey: "publicacion_id",
-    });
-    Comentario.hasMany(interaccion_publicacion, {
-      foreignKey: "comentario_id",
-      onDelete: "CASCADE",
-    });
-    interaccion_publicacion.belongsTo(Comentario, {
-      foreignKey: "comentario_id",
-    });
-    Respuesta.hasMany(interaccion_publicacion, {
-      foreignKey: "respuesta_id",
-      onDelete: "CASCADE",
-    });
-    interaccion_publicacion.belongsTo(Respuesta, {
-      foreignKey: "respuesta_id",
-    });
+    // Comunidad -> PublicacionComunidad (One-to-Many)
+    Comunidad.hasMany(PublicacionComunidad, { foreignKey: 'comunidad_id' });
+    PublicacionComunidad.belongsTo(Comunidad, { foreignKey: 'comunidad_id' });
+
+    // Usuario -> PublicacionComunidad (One-to-Many)
+    Usuario.hasMany(PublicacionComunidad, { foreignKey: 'usuario_id' });
+    PublicacionComunidad.belongsTo(Usuario, { foreignKey: 'usuario_id' });
+
+    // Comunidad -> ParticipanteComunidad (One-to-Many)
+    Comunidad.hasMany(ParticipanteComunidad, { foreignKey: 'comunidad_id' });
+    ParticipanteComunidad.belongsTo(Comunidad, { foreignKey: 'comunidad_id' });
+
+    // Usuario -> ParticipanteComunidad (One-to-Many)
+    Usuario.hasMany(ParticipanteComunidad, { foreignKey: 'usuario_id' });
+    ParticipanteComunidad.belongsTo(Usuario, { foreignKey: 'usuario_id' });
+
 
     // Sincronización de tablas
     await sequelize.sync();
-
-    // Ejemplo de creación de departamentos y localidades
-    const departamentos = [
-      { nombre: "bermejo" },
-      { nombre: "formosa" },
-      { nombre: "laishi" },
-      { nombre: "matacos" },
-      { nombre: "pirané" },
-      { nombre: "pilagás" },
-      { nombre: "pilcomayo" },
-      { nombre: "ramón lista" },
-    ];
-    await Departamento.bulkCreate(departamentos);
-
-    const localidades = [
-      // Localidades de Bermejo
-      { nombre: "el colorado", departamento_id: 1 },
-      { nombre: "villa dos trece", departamento_id: 1 },
-      { nombre: "herradura", departamento_id: 1 },
-
-      // Localidades de Formosa
-      { nombre: "formosa", departamento_id: 2 },
-      { nombre: "san francisco de laishí", departamento_id: 2 },
-
-      // Localidades de Laishi
-      { nombre: "san francisco de laishí", departamento_id: 3 },
-      { nombre: "villafañe", departamento_id: 3 },
-
-      // Localidades de Matacos
-      { nombre: "ingeniero juárez", departamento_id: 4 },
-      { nombre: "pozo de mazamorra", departamento_id: 4 },
-
-      // Localidades de Pirané
-      { nombre: "pirané", departamento_id: 5 },
-      { nombre: "el espinillo", departamento_id: 5 },
-
-      // Localidades de Pilagás
-      { nombre: "clorinda", departamento_id: 6 },
-      { nombre: "laguna blanca", departamento_id: 6 },
-
-      // Localidades de Pilcomayo
-      { nombre: "laguna blanca", departamento_id: 7 },
-      { nombre: "general manuel belgrano", departamento_id: 7 },
-
-      // Localidades de Ramón Lista
-      { nombre: "el potrerillo", departamento_id: 8 },
-      { nombre: "mariano boedo", departamento_id: 8 },
-    ];
-    await Localidad.bulkCreate(localidades);
 
     console.log("Sincronizado correctamente");
   } catch (error) {

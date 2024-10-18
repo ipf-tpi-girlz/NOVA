@@ -1,151 +1,99 @@
-import { Publicacion } from "../models/publicacion.js";
-import { Subforo } from "../models/subForo.js";
-import { Usuario } from "../models/users.js";
 import color from "chalk";
-export const getPost = async (req, res) => {
-  try {
-    const publicacion = await Publicacion.findAll({});
-    if (publicacion.length === 0)
-      return res
-        .status(404)
-        .json({ message: "No existen publicaciones actualmente" });
-    res.status(200).json({ publicacion });
-  } catch (error) {
-    console.log(
-      color.red("------------------------------------------------------------")
-    );
-    console.error(color.red(error));
-    console.log(
-      color.red("-----------------------------------------------------------")
-    );
-    res.status(500).json({ message: "Error en el servidor", error });
-  }
-};
+import Publicacion from "../models/post.js";
 
-export const getPostId = async (req, res) => {
-  const user = req.user;
-  try {
-    const userExist = await Usuario.findAll({ where: { id: user.id } });
-    if (userExist.length > 0)
-      return res
-        .status(404)
-        .json({ message: "Usuario no encontrado en nuestro sistema" });
+export const getPosts = async (req, res) => {
+    try {
+        const posts = await Publicacion.findAll();
+        res.status(200).json({ posts });
+    } catch (error) {
+        console.log(color.red(error));
+        res.status(500).json({ message: "Se produjo un error en el servidor" });
+    }
+}
 
-    const postUser = await Publicacion.findAll({ usuarioId: user.id });
-    if (postUser.length > 0)
-      return res
-        .status(404)
-        .json({ message: "Este usuario no ha publicado nada aun" });
-
-    res.status(200).json({ postUser });
-  } catch (error) {
-    console.log(
-      color.red("------------------------------------------------------------")
-    );
-    console.error(color.red(error));
-    console.log(
-      color.red("-----------------------------------------------------------")
-    );
-    res.status(500).json({ message: "Error en el servidor", error });
-  }
-};
+export const getPostUser = async (req, res) => {
+    const user = req.user;
+    try {
+        const post = await Publicacion.findOne({ where: { usuario_id: user.id } });
+        if (!post) {
+            console.log(color.red("No se encontro la publicacion"))
+            return res.status(404).json({ message: "No se encontro la publicacion" });
+        }
+        console.log(color.green(`Publicacion encontrada: ${post}`))
+        res.status(200).json({ post });
+    } catch (error) {
+        console.log(color.red(error));
+        res.status(500).json({ message: "Se produjo un error en el servidor" });
+    }
+}
 
 export const createPost = async (req, res) => {
-  const user = req.user;
-  const { id } = req.params;
-  const { title, content } = req.body;
-  const img = req.file ? req.file.path : null;
-  console.log(color.green("----------------------------"))
-  console.log(color.green(id))
-  console.log(color.green("----------------------------"))
-  console.log(color.blue("----------------------------"))
-  console.log(color.blue(user.id))
-  console.log(color.blue("----------------------------"))
-  try {
-    const existUser = await Usuario.findAll({ where: { id: user.id } });
-    if (existUser.length === 0)
-      return res
-        .status(404)
-        .json({ message: "Usuario no encontrado en nuestro sistema" });
-    const existSubForo = await Subforo.findAll({ where: { id } });
-    if (existSubForo.length === 0)
-      return res.status(404).json({ message: "Seccion no encontrada" });
-    const existPost = await Publicacion.findAll({ where: { title: title } });
-    if (existPost.length > 0)
-      return res
-        .status(400)
-        .json({ message: "El titulo que desea ingresar ya existe" });
-
-    const newPublic = await Publicacion.create({
-      title,
-      img,
-      content,
-      subforo_id: id,  // Relacionado con el subforo
-      usuario_id: user.id  // Relacionado con el usuario que la crea
-    });
-    newPublic
-    res.status(200).json({ message: "Publicacion creada exitosamente", newPublic });
-  } catch (error) {
-    console.log(color.red("-------------------------------------------------------------"));
-    console.log(color.redBright(error));
-    console.log(color.red("-------------------------------------------------------------"));
-    return res.status(500).json({ error: "Se produjo un error en el sistema" });
-  }
-};
+    const { nombre, desc } = req.body;
+    //const user = req.user;
+    try {
+        await Publicacion.create({
+            nombre,
+            desc,
+            //usuario_id: user.id
+        })
+        res.status(201).json({
+            message: "La publicacion se ha creado correctamente"
+        })
+        console.log(color.green("Publicacion creada correctamente"))
+    } catch (error) {
+        console.log(color.red(error))
+        res.status(500).json({ message: "Se produjo un error en el servidor" })
+    }
+}
 
 export const updatePost = async (req, res) => {
-  const user = req.user;
-  const { id } = req.params;
-  const { title, content } = req.body;
-  const img = req.file ? req.file.path : null;
-  try {
-    //!validar existencia de usuario
-    const userExist = await Usuario.findAll({ where: { id: user.id } });
-
-    if (userExist.length === 0) return res.status(404).json({ message: "Usuario no encontrado en nuestro sistema" });
-    //!validar existencia de publicacion
-    const publicacionExist = await Publicacion.findAll({ where: { id } });
-
-    if (publicacionExist.length === 0) return res.status(404).json({ message: "La publicacion que desea eliminar no existe" });
-    //!validar si el usuario es el dueño de la publicacion
-    if (publicacionExist[0].usuarioId !== user.id) return res.status(401).json({ message: "solo el usuario que creo la publicacion puede eliminarlo" });
-
-    //*Actualizar datos
-    await Publicacion.update({ title, img, content }, { where: { id } });
-
-    res.status(200).json({ message: "Publicacion actualizada exitosamente" });
-
-  } catch (error) {
-    console.log(color.red("-------------------------------------------------------------"));
-    console.log(color.redBright(error));
-    console.log(color.red("-------------------------------------------------------------"));
-    return res.status(500).json({ error: "Se produjo un error en el sistema" });
-  }
-};
+    const { id } = req.params;
+    const { nombre, desc } = req.body;
+    const user = req.user;
+    try {
+        const post = await Publicacion.findOne({ where: { id } });
+        if (!post) {
+            console.log(color.red("No se encontro la publicacion"))
+            return res.status(404).json({ message: "No se encontro la publicacion" });
+        }
+        //if (post.usuario_id !== user.id) {
+        //    console.log(color.red("No tienes permiso para actualizar esta publicacion"))
+        //    return res.status(403).json({ message: "No tienes permiso para actualizar esta publicacion" });
+        //}
+        await post.update({
+            nombre,
+            desc
+        })
+        console.log(color.green("Publicacion actualizada correctamente"))
+        res.status(200).json({
+            message: "La publicacion se ha actualizado correctamente"
+        })
+    } catch (error) {
+        console.log(color.red(error))
+        res.status(500).json({ message: "Se produjo un error en el servidor" })
+    }
+}
 
 export const deletePost = async (req, res) => {
-  const user = req.user;
-  const { id } = req.params;
-
-  try {
-    //!validar existencia de usuario
-    const userExist = await Usuario.findAll({ where: { id: user.id } });
-
-    if (userExist.length === 0) return res.status(404).json({ message: "Usuario no encontrado en nuestro sistema" });
-    //!validar existencia de publicacion
-    const publicacionExist = await Publicacion.findAll({ where: { id } });
-
-    if (publicacionExist.length === 0) return res.status(404).json({ message: "La publicacion que desea eliminar no existe" });
-    //!validar si el usuario es el dueño de la publicacion
-    if (publicacionExist[0].usuarioId !== user.id) return res.status(401).json({ message: "solo el usuario que creo la publicacion puede eliminarlo" });
-
-    await Publicacion.destroy({ where: { id } });
-    res.status(200).json({ message: "Publicacion eliminada exitosamente" });
-  } catch (error) {
-    console.log(color.red("-------------------------------------------------------------"));
-    console.log(color.redBright(error));
-    console.log(color.red("-------------------------------------------------------------"));
-    return res.status(500).json({ error: "Se produjo un error en el sistema" });
-  }
-
+    const { id } = req.params;
+    const user = req.user;
+    try {
+        const post = await Publicacion.findOne({ where: { id } });
+        if (!post) {
+            console.log(color.red("No se encontro la publicacion"))
+            return res.status(404).json({ message: "No se encontro la publicacion" });
+        }
+        //if (post.usuario_id !== user.id) {
+        //    console.log(color.red("No tienes permiso para actualizar esta publicacion"))
+        //    return res.status(403).json({ message: "No tienes permiso para actualizar esta publicacion" });
+        //}
+        await post.destroy()
+        console.log(color.green("Publicacion eliminada correctamente"))
+        res.status(200).json({
+            message: "La publicacion se ha eliminado correctamente"
+        })
+    } catch (error) {
+        console.log(color.red(error))
+        res.status(500).json({ message: "Se produjo un error en el servidor" })
+    }
 }
