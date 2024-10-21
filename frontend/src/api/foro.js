@@ -2,7 +2,7 @@
 
 export const fetchGetForos = async () => {
   try {
-    const response = await fetch("http://localhost:4000/foro", {
+    const response = await fetch("http://localhost:4000/foro/infoGeneral", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

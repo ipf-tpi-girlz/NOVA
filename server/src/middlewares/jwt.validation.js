@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
-import { Usuario } from "../models/users.js";
+import Usuario from "../models/users.js";
 import color from "chalk";
 const SECRET_KEY = config.SECRET_KEY;
 
@@ -8,13 +8,14 @@ const SECRET_KEY = config.SECRET_KEY;
 export const validarJWT = async (req, res, next) => {
   try {
     console.log(color.green("------------session---------------------\n\n"));
-    console.log(color.greenBright(req.session));
+    console.log(color.greenBright(req.session.token));
     console.log(color.green("------------cookies---------------------\n\n"));
-    console.log(color.greenBright(req.cookies));
+    console.log(color.greenBright(req.cookies.authToken));
     console.log(color.green("----------------------------------------"));
 
     // Obtener el token de las cookies o la sesión
-    const { token } = req.cookies;
+    const token = req.cookies.authToken || req.session.token;
+    console.log(token);
     if (!token) {
       return res.status(403).json({ message: "Token no proporcionado" });
     }

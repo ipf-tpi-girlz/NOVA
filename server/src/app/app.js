@@ -43,9 +43,8 @@ app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 //! RUTAS
 app.use("/users", UserRouter);
 app.use("/foro", postRouter);
-app.use(routerComunity);
-app.use(routerPostComunity);
-
+app.use("comunity", routerComunity);
+app.use("comunity-post", routerPostComunity);
 
 app.listen(config.PORT, () => {
   console.log(`Servidor corriendo en el puerto ${config.PORT}`);

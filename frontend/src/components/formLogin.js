@@ -97,7 +97,7 @@ export const formLogin = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ mail, contrasenia }),
-        credentials: 'include',
+        credentials: "include",
       });
 
       // Si el login fue exitoso
@@ -105,17 +105,9 @@ export const formLogin = () => {
         const data = await response.json();
         console.log("Login exitoso:", data.message);
 
-        // Guardar el token en una cookie
-        const token = data.token;
-        document.cookie = `token=${token}; path=/; secure; HttpOnly; SameSite=Strict`;
-
-        // Redireccionar al dashboard
         window.location.href = "/home";
-      } else {
-        // Mostrar el error en caso de falla
-        const errorData = await response.json();
-        alert(errorData.message || "Error al iniciar sesión. Verifica tu correo y contraseña.");
       }
+      console.log(response);
     } catch (error) {
       console.error("Error al iniciar sesión", error);
       alert("Error al iniciar sesión. Por favor, intenta de nuevo más tarde.");

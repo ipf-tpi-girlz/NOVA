@@ -6,45 +6,71 @@ import {
   fetchDeleteForo,
 } from "../api/foro";
 
+const frases = [
+  {
+    id: 1,
+    title:
+      " Realmente espero que compartir mi historia ayude a otros de una forma u otra, y puedo decir con certeza que a mí me ayudará a ser m abierto al contarla.",
+  },
+  {
+    id: 2,
+    title: "Creemos en ti. Eres fuerte.",
+  },
+  {
+    id: 3,
+    title:
+      "Cada pequeño paso que des, por más diminuto que sea, sigue siendo un paso hacia adelante. Tómate todo el tiempo que necesites para darlos.",
+  },
+  {
+    id: 4,
+    title:
+      "A quienes estén enfrentando algo similar, no están solos. Valen muchísimo y son amados por muchas personas. Son mucho más fuertes de lo que creen.",
+  },
+];
+
+let frasesIndex = 0;
+
 export const createHeroSection = () => {
   const hero = document.createElement("div");
   hero.classList.add(
-    "hero",
-    "bg-base-200",
     "flex",
-    "flex-col",
+    "flex-row",
     "items-center",
-    "p-5"
+    "min-h-dvh",
+    "px-5",
+    "md:px-25",
+    "md:-10"
   );
+  let cardcount = 0;
 
   const titleSection = document.createElement("h2");
-  titleSection.classList.add("text-3xl", "font-bold", "text-center", "mb-5");
-  titleSection.textContent = "Sección de Foros";
+  titleSection.classList.add(
+    "font-serif",
+    "text-4xl",
+    "font-bold",
+    "text-center",
+    "p-6"
+  );
+  titleSection.textContent = "Historias";
 
   const heroContent = document.createElement("div");
-  heroContent.classList.add("text-center", "w-full", "max-w-3xl", "mx-auto");
+  heroContent.classList.add("text-center", "w-full", "p-4");
 
   // Botón para crear foro
   const createPostButton = document.createElement("button");
-  createPostButton.classList.add("btn", "btn-lg", "btn-primary");
-  createPostButton.textContent = "Crear Post";
+  createPostButton.className = "btn btn-primary   w-fit self-center";
+  createPostButton.textContent = "Crear historia";
 
   createPostButton.addEventListener("click", () => {
     Swal.fire({
-      title: "Crear Post",
+      title: "Crear historia",
       html: `
-        <input id="swal-title" class="swal2-input" placeholder="Título">
-        <textarea id="swal-desc" class="swal2-textarea" placeholder="Descripción" rows="4"></textarea>
-      `,
-      background: "#f8f9fa",
-      backdrop: `
-        rgba(0, 0, 0, 0.5)
-        url("../assets/fon3.jpg") left top
-        no-repeat
+        <input id="card-title" class="input input-bordered  w-full" placeholder="Título">
+        <textarea id="swal-desc" class="textarea textarea-bordered w-full " placeholder="Cuéntanos tu historia" rows="4"></textarea>
       `,
       focusConfirm: false,
       preConfirm: () => {
-        const title = document.getElementById("swal-title").value;
+        const title = document.getElementById("card-title").value;
         const desc = document.getElementById("swal-desc").value;
 
         if (!title || !desc) {
@@ -76,11 +102,10 @@ export const createHeroSection = () => {
           }
 
           const data = await response.json();
-          console.log(data)
           Swal.fire({
             icon: "success",
-            title: "¡Publicacion creada!",
-            text: `Se ha creado la publicacion!`,
+            title: "¡Post creado!",
+            text: `Se ha creado el Post!`,
           });
 
           loadForos();
@@ -88,7 +113,7 @@ export const createHeroSection = () => {
           console.error("ERROR PA", error);
           Swal.fire({
             icon: "error",
-            title: "Error al crear la publicacion",
+            title: "Error al crear el post",
             text: error.message,
           });
         }
@@ -97,13 +122,8 @@ export const createHeroSection = () => {
   });
 
   const forumsContainer = document.createElement("div");
-  forumsContainer.classList.add(
-    "mt-5",
-    "grid",
-    "grid-cols-1",
-    "gap-4",
-    "md:grid-cols-2"
-  );
+  forumsContainer.className =
+    "grid grid-cols-1 gap-9  md:grid-cols-3 mt-5 w-full";
 
   const loadForos = async () => {
     try {
@@ -121,21 +141,24 @@ export const createHeroSection = () => {
       data.foros.forEach((foro) => {
         const forumCard = document.createElement("div");
         forumCard.classList.add(
-          "bg-white",
+          "card",
+          "bg-base-200",
           "break-words",
           "rounded-lg",
-          "p-5",
-          "shadow-md",
+          "p-2",
+          "shadow-xl",
           "hover:shadow-lg",
           "hover:bg-gray-100",
           "transition-shadow",
           "transition-bg",
-          "duration-300"
+          "!text-center"
         );
+
+        cardcount++;
 
         // Crear el contenedor del dropdown
         const dropdownContainer = document.createElement("div");
-        dropdownContainer.classList.add("dropdown", "ml-28");
+        dropdownContainer.classList.add("dropdown");
 
         // Crear el botón para activar el dropdown
         const dropdownButton = document.createElement("div");
@@ -260,6 +283,18 @@ export const createHeroSection = () => {
         forumCard.appendChild(forumTitle);
         forumCard.appendChild(forumDesc);
         forumsContainer.appendChild(forumCard);
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
+        if (cardcount % 3 === 0) {
+          const emotionalMessage = document.createElement("div");
+          emotionalMessage.className =
+            "font-serif text-center font-semibold text-2xl md:text-sm lg:text-md self-center  ";
+          emotionalMessage.innerText = `"${frases[frasesIndex].title}"`;
+          forumsContainer.appendChild(emotionalMessage);
+
+          // Aumenta el índice para la próxima frase y reinicia si llega al final
+          frasesIndex = (frasesIndex + 3) % frases.length;
+        }
       });
     } catch (error) {
       console.error("Error loading forums:", error);

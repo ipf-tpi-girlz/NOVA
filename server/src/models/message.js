@@ -1,39 +1,43 @@
-import { DataTypes } from '../config/database/db.js';
-import { sequelize } from '../config/database/db.js';
-import Conversacion from './chat.js';
-import Usuario from './users.js';
+import { DataTypes } from "../config/database/db.js";
+import { sequelize } from "../config/database/db.js";
+import Conversacion from "./chat.js";
+import Usuario from "./users.js";
 
-const Mensaje = sequelize.define('Mensaje', {
+const Mensaje = sequelize.define(
+  "Mensaje",
+  {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
     conversacion_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Conversacion,
-            key: 'id',
-        },
+      type: DataTypes.INTEGER,
+      references: {
+        model: Conversacion,
+        key: "id",
+      },
     },
     remitente_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Usuario,
-            key: 'id',
-        },
+      type: DataTypes.INTEGER,
+      references: {
+        model: Usuario,
+        key: "id",
+      },
     },
     contenido: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      type: DataTypes.TEXT,
+      allowNull: false,
     },
     enviado_en: {
-        type: DataTypes.DATE,
-        defaultValue: Sequelize.NOW,
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
-}, {
-    modelName: 'Mensaje',
-    freezeTableName: true
-});
+  },
+  {
+    modelName: "Mensaje",
+    freezeTableName: true,
+  }
+);
 
 export default Mensaje;

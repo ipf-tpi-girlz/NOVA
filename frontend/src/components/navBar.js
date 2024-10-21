@@ -1,4 +1,5 @@
 import { $themeLabel } from "./themeButton";
+import { logout } from "../api/user";
 export const navbar = () => {
   // Crear el elemento principal del navbar
   const navbar = document.createElement("div");
@@ -42,8 +43,15 @@ export const navbar = () => {
   btnlogout.textContent = "Logout";
   btnlogout.type = "submit";
   btnlogout.setAttribute("href", "/login");
-  btnlogout.addEventListener("click", () => {
-    window.location.href = "http://localhost:5173/login";
+  btnlogout.addEventListener("click", async () => {
+    try {
+      const response = await logout();
+      if (!response.ok) {
+        console.log("no se pudo");
+      }
+    } catch (error) {
+      console.log("error del servidor");
+    }
   });
 
   // Añadir el enlace al contenedor flex-1

@@ -1,6 +1,11 @@
 import { Router } from "express";
-import { getPostsComunity, createPostComunity, updatePostComunity, deletePostComunity } from "../controllers/post.comunity.controllers.js";
-import { validarJWT } from "../healpers/validar.jwt.js";
+import {
+  getPostsComunity,
+  createPostComunity,
+  updatePostComunity,
+  deletePostComunity,
+} from "../controllers/post.comunity.controllers.js";
+import { validarJWT } from "../middlewares/jwt.validation.js";
 const routerPostComunity = Router();
 
 routerPostComunity.get("/:id", getPostsComunity);

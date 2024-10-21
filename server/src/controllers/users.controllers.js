@@ -20,36 +20,51 @@ export const loginUser = async (req, res) => {
     req.session.token = token;
     res.cookie("authToken", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      path: "/",
+      secure: "production",
+      sameSite: "production" ? "none" : "lax",
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.status(200).send("Inicio de sesion exitoso");
   } catch (error) {
     res.status(500).json({ message: "Error al iniciar sesión" });
-    return console.log(color.red(error))
+    return console.log(color.red(error));
   }
-}
+};
 //registrar
 export const registerUser = async (req, res) => {
-  const { role, nombre_apellido, mail, departamento, localidad, contrasenia, nro_telefono, nro_matricula, cuit, direccion, rp_legal, servi, especialidad, genero } = req.body;
+  const {
+    role,
+    nombre,
+    mail,
+    departamento,
+    localidad,
+    contrasenia,
+    nro_telefono,
+    nro_matricula,
+    cuit,
+    direccion,
+    rp_legal,
+    servi,
+    especialidad,
+    genero,
+  } = req.body;
   try {
     const existUser = await Usuario.findOne({ where: { mail } });
     if (existUser) {
       return res.status(400).json({ message: "El usuario ya existe" });
     }
+
+    console.log(color.green(role, provincia));
     const hashPassword = await bcrypt.hash(contrasenia, 10);
     const newUser = {
-      role,
-      nombre: nombre_apellido,
+      role: role,
+      nombre: nombre,
       mail,
       departamento,
       genero,
-      fecha_nac,
       localidad,
-      contrasenia: hashPassword
-    }
+      contrasenia: hashPassword,
+    };
     if (role === "profesional") {
       try {
         const newP = await Usuario.create(newUser);
@@ -58,11 +73,15 @@ export const registerUser = async (req, res) => {
           nro_matricula,
           nro_telefono,
           especialidad,
-        })
-        return res.status(200).json({ message: "Usuario registrado exitosamente" });
+        });
+        return res
+          .status(200)
+          .json({ message: "Usuario registrado exitosamente" });
       } catch (error) {
-        console.log(color.red(`Error al registrar el profesional: ${error}`))
-        return res.status(500).json({ message: "Error al registrar el usuario" });
+        console.log(color.red(`Error al registrar el profesional: ${error}`));
+        return res
+          .status(500)
+          .json({ message: "Error al registrar el usuario" });
       }
     }
     if (role === "institucion") {
@@ -75,36 +94,45 @@ export const registerUser = async (req, res) => {
           servi,
           nro_matricula,
           rp_legal,
-          direccion
-        })
-        return res.status(200).json({ message: "Usuario registrado exitosamente" });
+          direccion,
+        });
+        return res
+          .status(200)
+          .json({ message: "Usuario registrado exitosamente" });
       } catch (error) {
-        console.log(color.red(`Error al registrar la institucion: ${error}`))
-        return res.status(500).json({ message: "Error al registrar el usuario" });
+        console.log(color.red(`Error al registrar la institucion: ${error}`));
+        return res
+          .status(500)
+          .json({ message: "Error al registrar el usuario" });
       }
-
     }
-    if (role === "normal") {
+    if (role === "victima") {
       try {
         await Usuario.create(newUser);
-        return res.status(200).json({ message: "Usuario registrado exitosamente" });
+        return res
+          .status(200)
+          .json({ message: "Usuario registrado exitosamente" });
       } catch (error) {
-        console.log(color.red(`Error al registrar el usuario normal: ${error}`))
-        return res.status(500).json({ message: "Error al registrar el usuario" });
+        console.log(
+          color.red(`Error al registrar el usuario normal: ${error}`)
+        );
+        return res
+          .status(500)
+          .json({ message: "Error al registrar el usuario" });
       }
     }
-    console.log('rol no valido', role)
+    console.log("rol no valido", role);
     return res.status(400).json({ message: "Rol no válido" });
   } catch (error) {
-    console.log(color.red(`Error al registrar el usuario: ${error}`))
+    console.log(color.red(`Error al registrar el usuario: ${error}`));
     return res.status(500).json({ message: "Error al registrar el usuario" });
   }
-}
+};
 //cerrar sesion
 export const logout = async (req, res) => {
   try {
     if (!req.cookies.authToken) {
-      console.log(req.cookies.authToken)
+      console.log(req.cookies.authToken);
       return res.status(400).json({ message: "No hay ninguna sesión activa" });
     }
 
