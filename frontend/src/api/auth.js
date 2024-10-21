@@ -26,10 +26,11 @@ export const updateProfile = async ({ img, description }) => {
 };
 
 // Función para obtener la imagen de perfil
-export const getUserProfilePicture = async () => {
+export const getUserProfile = async () => {
     try {
-        const response = await fetch(`${BASEURL}/auth/profile/picture`, {
+        const response = await fetch(`${BASEURL}/auth/user`, {
             method: "GET",
+            credentials: "include",
         });
 
         if (!response.ok) {
@@ -38,7 +39,6 @@ export const getUserProfilePicture = async () => {
                 errorData.message || "Error al obtener la imagen de perfil"
             );
         }
-
         return await response.json();
     } catch (error) {
         console.error("Error al obtener la imagen de perfil:", error);
@@ -51,9 +51,7 @@ export const deleteAccount = async () => {
     try {
         const response = await fetch(`${BASEURL}/auth/delete`, {
             method: "DELETE",
-            headers: {
-                "credentials": "include",
-            },
+            "credentials": "include",
         });
 
         if (!response.ok) {

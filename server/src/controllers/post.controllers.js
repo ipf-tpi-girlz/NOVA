@@ -5,7 +5,7 @@ export const getPosts = async (req, res) => {
   try {
     const posts = await Publicacion.findAll();
     console.log(posts);
-    res.status(200).json({ posts });
+    res.status(200).json({ foros: posts });
   } catch (error) {
     console.log(color.red(error));
     res.status(500).json({ message: "Se produjo un error en el servidor" });
@@ -50,7 +50,7 @@ export const createPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   const { id } = req.params;
-  const { nombre, desc } = req.body;
+  const { title, desc } = req.body;
   const { user } = req;
   try {
     const post = await Publicacion.findOne({ where: { id } });
@@ -67,7 +67,7 @@ export const updatePost = async (req, res) => {
       });
     }
     await post.update({
-      nombre,
+      nombre: title,
       desc,
     });
     console.log(color.green("Publicacion actualizada correctamente"));

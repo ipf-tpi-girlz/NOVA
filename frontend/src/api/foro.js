@@ -1,8 +1,9 @@
+import { BASEURL } from "./user";
 // Función para obtener todos los foros
 
 export const fetchGetForos = async () => {
   try {
-    const response = await fetch("http://localhost:4000/foro/infoGeneral", {
+    const response = await fetch(`${BASEURL}/foro/infoGeneral`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +19,7 @@ export const fetchGetForos = async () => {
 
 export const fetchGetForosById = async () => {
   try {
-    const response = await fetch("http://localhost:4000/foro/user", {
+    const response = await fetch(`${BASEURL}/foro/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +36,7 @@ export const fetchGetForosById = async () => {
 // Función para crear un nuevo foro
 export const fetchCreateForo = async (foroData) => {
   try {
-    const response = await fetch("http://localhost:4000/foro/create", {
+    const response = await fetch(`${BASEURL}/foro/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +54,7 @@ export const fetchCreateForo = async (foroData) => {
 // Función para actualizar un foro existente
 export const fetchUpdateForo = async (id, dataForo) => {
   try {
-    const response = await fetch(`http://localhost:4000/foro/update/${id}`, {
+    const response = await fetch(`${BASEURL}/foro/update/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +72,7 @@ export const fetchUpdateForo = async (id, dataForo) => {
 // Función para eliminar un foro
 export const fetchDeleteForo = async (id) => {
   try {
-    const response = await fetch(`http://localhost:4000/foro/delete/${id}`, {
+    const response = await fetch(`${BASEURL}/foro/delete/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -82,5 +83,18 @@ export const fetchDeleteForo = async (id) => {
     return data;
   } catch (error) {
     console.error("Error al eliminar el foro:", error);
+  }
+};
+
+export const fetchDeleteAllForos = async () => {
+  try {
+    const response = await fetch(`${BASEURL}/foro/deleteAll`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error al eliminar todas las publicaciones:", error);
   }
 };

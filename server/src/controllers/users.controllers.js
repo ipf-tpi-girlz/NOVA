@@ -48,13 +48,13 @@ export const registerUser = async (req, res) => {
     especialidad,
     genero,
   } = req.body;
+  console.log(req.body);
   try {
     const existUser = await Usuario.findOne({ where: { mail } });
     if (existUser) {
       return res.status(400).json({ message: "El usuario ya existe" });
     }
 
-    console.log(color.green(role, provincia));
     const hashPassword = await bcrypt.hash(contrasenia, 10);
     const newUser = {
       role: role,

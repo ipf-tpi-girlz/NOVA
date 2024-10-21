@@ -1,5 +1,5 @@
-import Usuario from "../models/users";
-import Perfil from "../models/profile";
+import Usuario from "../models/users.js";
+import Perfil from "../models/profile.js";
 import color from "chalk";
 export const getUsers = async (req, res) => {
   try {
@@ -13,6 +13,7 @@ export const getUsers = async (req, res) => {
 
 export const getUserById = async (req, res) => {
   const user = req.user;
+  console.log(color.green(user.role));
   try {
     if (user.role === "profesional" || user.role === "institucion") {
       const perfil = await Perfil.findOne({ where: { usuario_id: user.id } });
@@ -88,5 +89,22 @@ export const updateUser = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Se produjo un error en el servidor" });
+  }
+};
+
+export const deleteAccount = async (req, res) => {
+  try {
+    const user = req.user;
+    await Usuario.destroy({ where: { id: user.id } });
+
+    res.clearCookie('authToken');
+
+    res.status(200).json("La cuenta ha sido eliminada correctamente");
+  } catch (error) {
+    console.log(color.red(error));
+    return res
+      .status(500)
+      .json({ message: "Se produjo un error en el servidor" });
+
   }
 };
