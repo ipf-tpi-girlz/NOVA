@@ -33,16 +33,16 @@ export const createCommunity = async (req, res) => {
     const user = req.user
     const { nombre, desc } = req.body;
     try {
-        //if (user.role !== "institucion" && user.role !== "profesional") {
-        //    console.log(color.red("No puede crear una comunidad"))
-        //    return res.status(403).json({ message: "Solo las instituciones y profesionales pueden crear una comunidad" });
-        //}
+        if (user.role !== "institucion" && user.role !== "profesional") {
+            console.log(color.red("No puede crear una comunidad"))
+            return res.status(403).json({ message: "Solo las instituciones y profesionales pueden crear una comunidad" });
+        }
 
         await Comunidad.create({
             nombre,
             desc,
             img_perfil: req.file ? req.file.path : null,
-            //moderador_id: user.id
+            moderador_id: user.id
         })
         console.log(color.blue(`Comunidad creada`))
         return res.status(201).json({ message: "Comunidad creada" })
@@ -63,10 +63,10 @@ export const updateCommunity = async (req, res) => {
             console.log(color.red("No se encontro la comunidad"))
             return res.status(404).json({ message: "No se encontro la comunidad" })
         }
-        //if (community.moderador_id !== user.id) {
-        //    console.log(color.red("No puede modificar esta comunidad"))
-        //    return res.status(403).json({ message: "Solo puedes modificar tus comunidades" })
-        //}
+        if (community.moderador_id !== user.id) {
+            console.log(color.red("No puede modificar esta comunidad"))
+            return res.status(403).json({ message: "Solo puedes modificar tus comunidades" })
+        }
         await Comunidad.update({
             nombre,
             desc,
@@ -91,10 +91,10 @@ export const deleteCommunity = async (req, res) => {
             console.log(color.red("No se encontro la comunidad"))
             return res.status(404).json({ message: "No se encontro la comunidad" })
         }
-        //if (community.moderador_id !== user.id) {
-        //    console.log(color.red("No puede eliminar esta comunidad"))
-        //    return res.status(403).json({ message: "Solo puedes eliminar tus comunidades" })
-        //}
+        if (community.moderador_id !== user.id) {
+            console.log(color.red("No puede eliminar esta comunidad"))
+            return res.status(403).json({ message: "Solo puedes eliminar tus comunidades" })
+        }
         await Comunidad.destroy({ where: { id } })
         console.log(color.blue(`Comunidad eliminada`))
         return res.status(200).json({ message: "Comunidad eliminada" })

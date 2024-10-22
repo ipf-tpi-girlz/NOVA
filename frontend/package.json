@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "lucide": "^0.447.0",
+    "react-toastify": "^10.0.6",
     "sweetalert2": "^11.14.1",
     "theme-change": "^2.5.0"
   }

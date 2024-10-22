@@ -6,79 +6,78 @@ import { homePage } from "./pages/homePage";
 import { navbar } from "./components/navBar";
 import { footer } from "./components/footer";
 import { createHeroSection } from "./components/post";
-import { separador } from "./components/separador";
 import { landing } from "./pages/lading";
 import { contacts } from "./pages/contacs";
-import { aboutUs } from "./components/problematica";
 import { navbarNologin } from "./components/navbarNologin";
 import { violence } from "./pages/seccionInf/violenceInf";
 import { foro } from "./pages/foro.js";
 import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
-import { Articulo } from "./pages/seccionInf/hablardevg.js";
 import { Perfil } from "./pages/perfil.js";
+
+// Función para obtener una cookie por su nombre
+const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   const app = document.getElementById("app");
   const pathname = window.location.pathname;
 
+  // Función para verificar la autenticación
+  const isAuthenticated = () => {
+    return !!getCookie('authToken'); // Verifica si existe la cookie authToken
+  };
+
+  // Función para manejar rutas públicas
+  const publicRoute = (children) => {
+    app.appendChild(navbarNologin());
+    app.appendChild(children);
+    app.appendChild(footer());
+  };
+
+  // Función para manejar rutas privadas
+  const privateRoute = (children) => {
+    if (isAuthenticated()) {
+      app.appendChild(navbar());
+      app.appendChild(children);
+      app.appendChild(footer());
+    } else {
+      window.location.href = '/login';
+    }
+  };
+
   switch (pathname) {
     case "/registerUser":
-      app.appendChild(navbarNologin());
-      app.appendChild(mainRegister(formUser));
-      app.appendChild(footer());
+      publicRoute(mainRegister(formUser));
       break;
     case "/login":
-      app.appendChild(navbarNologin());
-      app.appendChild(mainRegister(formLogin));
-      app.appendChild(footer());
+      publicRoute(mainRegister(formLogin));
       break;
     case "/home":
-      app.appendChild(navbar());
-      app.appendChild(homePage());
-      app.appendChild(separador());
-      app.appendChild(Articulo());
-      app.appendChild(aboutUs());
-      app.appendChild(footer());
+      privateRoute(homePage());
       break;
     case "/":
-      app.appendChild(navbarNologin());
-      app.appendChild(landing());
-      app.appendChild(Articulo());
-      app.appendChild(aboutUs());
-      app.appendChild(footer());
+      publicRoute(landing());
       break;
     case "/contact":
-      app.appendChild(navbar());
-      app.appendChild(contacts());
-      app.appendChild(aboutUs());
-      app.appendChild(footer());
+      privateRoute(contacts());
       break;
     case "/chvg":
-      app.appendChild(navbar());
-      app.appendChild(violence());
-      app.appendChild(aboutUs());
-      app.appendChild(footer());
+      privateRoute(violence());
       break;
     case "/foros":
-      app.appendChild(navbar());
-      app.appendChild(createHeroSection());
-      app.appendChild(foro());
-      app.appendChild(aboutUs());
-      app.appendChild(footer());
+      privateRoute(createHeroSection());
+      privateRoute(foro());
       break;
     case "/ManosUnidas":
-      app.appendChild(navbar());
-      app.appendChild(ManosUnidas());
-      app.appendChild(forop());
-      app.appendChild(aboutUs());
-      app.appendChild(footer());
+      privateRoute(ManosUnidas());
+      privateRoute(forop());
       break;
     case "/profile":
-      app.appendChild(navbar());
-
-      app.appendChild(Perfil())
-
-      app.appendChild(footer());
+      privateRoute(Perfil());
       break;
     default:
       console.log("Ruta no encontrada");
