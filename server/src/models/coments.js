@@ -1,6 +1,6 @@
 import { DataTypes } from "../config/database/db.js";
 import { sequelize } from "../config/database/db.js";
-import Publicacion from "./post.js";
+import PublicacionComunidad from "./post.community.js";
 import Usuario from "./users.js";
 
 const Comentario = sequelize.define(
@@ -14,7 +14,7 @@ const Comentario = sequelize.define(
     publicacion_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: Publicacion,
+        model: PublicacionComunidad,
         key: "id",
       },
     },
@@ -28,14 +28,7 @@ const Comentario = sequelize.define(
     contenido: {
       type: DataTypes.TEXT,
       allowNull: false,
-    },
-    comentario_padre_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Comentario",
-        key: "id",
-      },
-    },
+    }
   },
   {
     modelName: "Comentario",

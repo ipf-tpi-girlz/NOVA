@@ -1,6 +1,7 @@
 import Usuario from "../models/users.js";
 import Perfil from "../models/profile.js";
 import color from "chalk";
+
 export const getUsers = async (req, res) => {
   try {
     const users = await Usuario.findAll();
@@ -34,63 +35,57 @@ export const getUserById = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const user = req.user;
-  const {
-    nombre,
-    mail,
-    departamento,
-    localidad,
-    contrasenia,
-    nro_telefono,
-    direccion,
-    servi,
-    especialidad,
-  } = req.body;
+  const id = user.id;
+  const { nombre, departamento, localidad, nro_telefono, direccion, especialidad } = req.body;
+
   try {
     const updateUser = {
       nombre,
-      mail,
       departamento,
       localidad,
-      contrasenia,
     };
+
     if (user.role === "profesional") {
-      await Usuario.update({ updateUser }, { where: { usuario_id: user.id } });
-      const perfil = await Perfil.findOne({ where: { usuario_id: user.id } });
+      const userUpdateResult = await Usuario.update(updateUser, { where: { usuario_id: id } });
+
+      if (userUpdateResult[0] === 0) {
+        return res.status(404).json({ message: "Usuario no encontrado o no actualizado" });
+      }
+
+      const perfil = await Perfil.findOne({ where: { usuario_id: id } });
       if (!perfil) {
         return res.status(404).json({ message: "Perfil no encontrado" });
       }
+
+      const updatedEspecialidad = perfil.especialidad
+        ? `${perfil.especialidad} ${especialidad || ''}`.trim()
+        : especialidad;
+
       await perfil.update({
-        usuario_id: user.id,
         nro_telefono,
         direccion,
-        especialidad: perfil.especialidad + " " + especialidad,
+        especialidad: updatedEspecialidad,
       });
-      return res
-        .status(200)
-        .json("Los datos han sido actualizados correctamente");
+
+      return res.status(200).json({ message: "Los datos han sido actualizados correctamente" });
     }
-    if (user.role === "institucion") {
-      await Usuario.update({ updateUser }, { where: { usuario_id: user.id } });
-      const perfil = await Perfil.findOne({ where: { usuario_id: user.id } });
-      if (!perfil) {
-        return res.status(404).json({ message: "Perfil no encontrado" });
+
+    if (user.role === "victima") {
+      const userUpdateResult = await Usuario.update(updateUser, { where: { id } });
+
+      if (userUpdateResult[0] === 0) {
+        return res.status(404).json({ message: "Perfil no encontrado o no actualizado" });
       }
-      Perfil.update({
-        usuario_id: user.id,
-        nro_telefono,
-        direccion,
-        servi,
-      });
+
+      return res.status(200).json({ message: "Los datos han sido actualizados correctamente" });
     }
-    await Perfil.update({ updateUser }, { where: { usuario_id: user.id } });
-    res.status(200).json("Los datos han sido actualizados correctamente");
   } catch (error) {
     console.log(color.red(error));
-    return res
-      .status(500)
-      .json({ message: "Se produjo un error en el servidor" });
+    return res.status(500).json({ message: "Se produjo un error en el servidor" });
   }
 };
+
+
 
 export const deleteAccount = async (req, res) => {
   try {

@@ -2,29 +2,29 @@
 const BASEURL = "http://localhost:4000";
 
 // Función para actualizar el perfil
-export const updateProfile = async ({ img, description }) => {
+export const updateProfile = async (data) => {
     try {
-        const formData = new FormData();
-        if (img) formData.append("img", img); // Agrega la imagen
-        if (description) formData.append("description", description); // Agrega la descripción
-
         const response = await fetch(`${BASEURL}/auth/update`, {
             method: "POST",
-            body: formData,
+            headers: {
+                "Content-Type": "application/json" // Asegúrate de establecer el tipo de contenido
+            },
+            body: JSON.stringify(data),
+            credentials: "include",
         });
 
+        // Verifica si la respuesta es ok
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || "Error al actualizar el perfil");
         }
 
-        return await response.json(); // Devuelve la respuesta JSON
+        return response; // Devuelve la respuesta completa
     } catch (error) {
         console.error("Error en la actualización del perfil:", error);
-        throw error; // Lanza el error para que pueda ser manejado en otro lugar
+        throw error; // Lanza el error para manejarlo en otro lugar
     }
 };
-
 // Función para obtener la imagen de perfil
 export const getUserProfile = async () => {
     try {

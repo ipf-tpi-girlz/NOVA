@@ -26,7 +26,7 @@ const Conversacion = sequelize.define('Conversacion', {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
-            isIn: [['institucion-normal', 'profesional-normal']],
+            isIn: [['institucion', 'profesional']],
         },
     },
 }, {

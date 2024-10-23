@@ -85,7 +85,7 @@ export const deletePostComunity = async (req, res) => {
   const { id } = req.params;
   const user = req.user;
   try {
-    const post = await PublicacionComunidad.findByPk(id);
+    const post = await PublicacionComunidad.findOne({ where: { id } });
     if (!post) {
       return res.status(404).json({
         message: "La publicación no se encuentra en nuestros registros",
