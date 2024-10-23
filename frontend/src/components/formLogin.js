@@ -5,8 +5,6 @@ export const formLogin = () => {
   const formContainer = document.createElement("div");
   formContainer.className =
     "h-96 mt-16 bg-white bg-opacity-95 p-8 rounded-lg shadow-lg w-96 mr-32";
-  const container = document.createElement("div");
-  container.appendChild(formContainer);
 
   const h2 = document.createElement("h2");
   h2.className = "text-2xl font-semibold mb-6 text-center";
@@ -15,17 +13,10 @@ export const formLogin = () => {
 
   const form = document.createElement("form");
   form.className = "space-y-4";
-  form.id = "form-login";
+  form.id = "form-login"; // Asegúrate de que este ID es el correcto
   formContainer.appendChild(form);
 
-  function crearFormgroup(
-    labelText,
-    inputType,
-    inputId,
-    name,
-    placeholder = "",
-    required = true
-  ) {
+  function crearFormgroup(labelText, inputType, inputId, name, placeholder = "", required = true) {
     const div = document.createElement("div");
     div.className = "form-group";
 
@@ -35,12 +26,11 @@ export const formLogin = () => {
     label.innerText = labelText;
     div.appendChild(label);
 
-    const input = document.createElement(
-      inputType === "select" ? "select" : "input"
-    );
+    const input = document.createElement(inputType === "select" ? "select" : "input");
     input.className = "form-control mt-1 w-full border-gray-300 rounded-lg p-2";
-    input.id = inputId;
+    input.id = inputId; // Asignar el ID
     input.name = name;
+
     if (inputType !== "select") {
       input.type = inputType;
       input.placeholder = placeholder;
@@ -51,20 +41,11 @@ export const formLogin = () => {
     return div;
   }
 
-  const emailLabel = crearFormgroup(
-    "Correo electrónico",
-    "email",
-    "mail",
-    "mail"
-  );
+  // Creando los campos del formulario
+  const emailLabel = crearFormgroup("Correo electrónico", "email", "mail", "mail");
   form.appendChild(emailLabel);
 
-  const passwordLabel = crearFormgroup(
-    "Contraseña",
-    "password",
-    "contrasenia",
-    "contrasenia"
-  );
+  const passwordLabel = crearFormgroup("Contraseña", "password", "contrasenia", "contrasenia");
   form.appendChild(passwordLabel);
 
   const submitButton = document.createElement("button");
@@ -73,6 +54,7 @@ export const formLogin = () => {
   submitButton.innerText = "Ingresar";
   form.appendChild(submitButton);
 
+  // Manejo del evento de envío del formulario
   form.addEventListener("submit", async (evento) => {
     evento.preventDefault();
 
@@ -86,6 +68,7 @@ export const formLogin = () => {
       });
       return;
     }
+
     try {
       const response = await loginUser(mail, contrasenia);
 

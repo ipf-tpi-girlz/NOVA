@@ -98,8 +98,7 @@ export const ProfileUser = () => {
         });
 
         $changePasswordButton.addEventListener("click", async () => {
-            // Aquí puedes implementar la lógica para cambiar la contraseña
-            // Por ejemplo, abrir un modal o redirigir a una página de cambio de contraseña
+
         });
 
         $deleteButton.addEventListener("click", async () => {
@@ -164,4 +163,9 @@ export const ProfileUser = () => {
     $container.appendChild($card);
 
     return $container;
+}
+
+const UpdateProfileUser = () => {
+    const $container = document.createElement("div");
+    $container.classList.add("flex", "justify-center", "items-center", "min-h-screen", "bg-gradient-to-br", "from-purple-100", "to-indigo-200", "p-4");
 }

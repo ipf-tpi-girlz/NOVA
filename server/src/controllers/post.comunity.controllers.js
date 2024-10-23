@@ -1,3 +1,4 @@
+import Comunidad from "../models/comunnity.js";
 import PublicacionComunidad from "../models/post.community.js";
 import color from "chalk";
 
@@ -5,7 +6,7 @@ export const getPostsComunity = async (req, res) => {
   //*id de la comunidad
   const { id } = req.params;
   try {
-    const posts = await PostComunity.findAll({ where: { comunidad_id: id } });
+    const posts = await PublicacionComunidad.findAll({ where: { comunidad_id: id } });
     if (posts.length === 0) {
       console.log(color.red("No se encontraron posts en esta comunidad"));
       return res
@@ -33,7 +34,7 @@ export const createPostComunity = async (req, res) => {
         message: "La comunidad no se encuentra en nuestros registros",
       });
     }
-    const post = await PostComunity.create({
+    const post = await PublicacionComunidad.create({
       comunidad_id: id,
       usuario_id: user.id,
       titulo,
@@ -54,7 +55,7 @@ export const updatePostComunity = async (req, res) => {
   const { titulo, contenido } = req.body;
   const user = req.user;
   try {
-    const post = await PostComunity.findOne({ where: { id } });
+    const post = await PublicacionComunidad.findOne({ where: { id } });
     if (!post) {
       return res.status(404).json({
         message: "La publicación no se encuentra en nuestros registros",
@@ -84,7 +85,7 @@ export const deletePostComunity = async (req, res) => {
   const { id } = req.params;
   const user = req.user;
   try {
-    const post = await PostComunity.findByPk(id);
+    const post = await PublicacionComunidad.findByPk(id);
     if (!post) {
       return res.status(404).json({
         message: "La publicación no se encuentra en nuestros registros",
