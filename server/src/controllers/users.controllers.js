@@ -7,29 +7,44 @@ import color from "chalk";
 //iniciar sesion
 export const loginUser = async (req, res) => {
   const { mail, contrasenia } = req.body;
+
+  console.log("Datos de login:", { mail, contrasenia }); // Debug: Muestra los datos recibidos
+
   try {
     const user = await Usuario.findOne({ where: { mail } });
+
     if (!user) {
-      return res.status(400).json({ message: "Usuario no encontrado" });
+      return res.status(401).json({ success: false, message: "Usuario no encontrado" });
     }
+
     const isMatch = await bcrypt.compare(contrasenia, user.contrasenia);
     if (!isMatch) {
-      return res.status(400).json({ message: "Contraseña incorrecta" });
+      return res.status(401).json({ success: false, message: "Contraseña incorrecta" });
     }
+
+    // Generar el token
     const token = await createToken(user.id);
-    req.session.token = token;
+    console.log("Token generado:", token); // Debug: Muestra el token generado
+
+    // Guardar el token en la sesión
+    req.session.token = token; // Asegúrate de que estás usando sesiones correctamente
+
+    // Configurar la cookie
     res.cookie("authToken", token, {
       httpOnly: true,
-      secure: "production",
-      sameSite: "production" ? "none" : "lax",
-      maxAge: 24 * 60 * 60 * 1000,
+      secure: process.env.NODE_ENV === 'production', // Usa HTTPS en producción
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // Cambiar según tu entorno
+      maxAge: 24 * 60 * 60 * 1000, // 24 horas
     });
-    res.status(200).send("Inicio de sesion exitoso");
+
+    return res.status(200).json({ success: true, message: "Inicio de sesión exitoso", token }); // Incluye el token en la respuesta si lo deseas
+
   } catch (error) {
-    res.status(500).json({ message: "Error al iniciar sesión" });
-    return console.log(color.red(error));
+    console.log(color.red(error)); // Imprime el error en consola
+    return res.status(500).json({ success: false, message: "Error al iniciar sesión" });
   }
 };
+
 //registrar
 export const registerUser = async (req, res) => {
   const {
@@ -48,7 +63,9 @@ export const registerUser = async (req, res) => {
     especialidad,
     genero,
   } = req.body;
+
   console.log(req.body);
+
   try {
     const existUser = await Usuario.findOne({ where: { mail } });
     if (existUser) {
@@ -57,77 +74,61 @@ export const registerUser = async (req, res) => {
 
     const hashPassword = await bcrypt.hash(contrasenia, 10);
     const newUser = {
-      role: role,
-      nombre: nombre,
+      role,
+      nombre,
       mail,
       departamento,
       genero,
       localidad,
       contrasenia: hashPassword,
     };
+
+    let perfilData;
+
+    // Determinar los datos del perfil según el rol
     if (role === "profesional") {
-      try {
-        const newP = await Usuario.create(newUser);
-        await Perfil.create({
-          usuario_id: newP.id,
-          nro_matricula,
-          nro_telefono,
-          especialidad,
-        });
-        return res
-          .status(200)
-          .json({ message: "Usuario registrado exitosamente" });
-      } catch (error) {
-        console.log(color.red(`Error al registrar el profesional: ${error}`));
-        return res
-          .status(500)
-          .json({ message: "Error al registrar el usuario" });
-      }
+      perfilData = {
+        nro_matricula,
+        nro_telefono,
+        especialidad,
+      };
+    } else if (role === "institucion") {
+      perfilData = {
+        nro_telefono,
+        cuit,
+        servi,
+        nro_matricula,
+        rp_legal,
+        direccion,
+      };
+    } else if (role === "victima") {
+      // Para "victima", no se requiere perfil adicional
+      perfilData = null;
+    } else {
+      console.log("Rol no válido", role);
+      return res.status(400).json({ message: "Rol no válido" });
     }
-    if (role === "institucion") {
-      try {
-        const newI = await Usuario.create(newUser);
-        await Perfil.create({
-          usuario_id: newI.id,
-          nro_telefono,
-          cuit,
-          servi,
-          nro_matricula,
-          rp_legal,
-          direccion,
-        });
-        return res
-          .status(200)
-          .json({ message: "Usuario registrado exitosamente" });
-      } catch (error) {
-        console.log(color.red(`Error al registrar la institucion: ${error}`));
-        return res
-          .status(500)
-          .json({ message: "Error al registrar el usuario" });
-      }
+
+    // Crear el usuario
+    const newUserRecord = await Usuario.create(newUser);
+
+    // Crear el perfil si es necesario
+    if (perfilData) {
+      await Perfil.create({
+        usuario_id: newUserRecord.id,
+        ...perfilData,
+      });
     }
-    if (role === "victima") {
-      try {
-        await Usuario.create(newUser);
-        return res
-          .status(200)
-          .json({ message: "Usuario registrado exitosamente" });
-      } catch (error) {
-        console.log(
-          color.red(`Error al registrar el usuario normal: ${error}`)
-        );
-        return res
-          .status(500)
-          .json({ message: "Error al registrar el usuario" });
-      }
-    }
-    console.log("rol no valido", role);
-    return res.status(400).json({ message: "Rol no válido" });
+
+    return res.status(200).json({ success: true, message: "Usuario registrado exitosamente" });
+
+
   } catch (error) {
     console.log(color.red(`Error al registrar el usuario: ${error}`));
     return res.status(500).json({ message: "Error al registrar el usuario" });
   }
 };
+
 //cerrar sesion
 export const logout = async (req, res) => {
   try {
@@ -145,7 +146,8 @@ export const logout = async (req, res) => {
     });
 
     // Enviar respuesta exitosa
-    return res.status(200).json({ message: "Sesión cerrada exitosamente" });
+    return res.status(200).json({ success: true, message: "Sesión cerrada exitosamente" });
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error inesperado" });

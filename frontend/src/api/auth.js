@@ -46,12 +46,12 @@ export const getUserProfile = async () => {
     }
 };
 
-
+// Función para eliminar la cuenta
 export const deleteAccount = async () => {
     try {
         const response = await fetch(`${BASEURL}/auth/delete`, {
             method: "DELETE",
-            "credentials": "include",
+            credentials: "include",
         });
 
         if (!response.ok) {
@@ -63,5 +63,83 @@ export const deleteAccount = async () => {
     } catch (error) {
         console.error("Error al eliminar la cuenta:", error);
         throw error; // Lanza el error para que pueda ser manejado en otro lugar
+    }
+};
+
+// Función para iniciar sesión
+export const loginUser = async (mail, contrasenia) => {
+    try {
+        const response = await fetch(`${BASEURL}/users/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ mail, contrasenia }),
+            credentials: "include", // Necesario para que las cookies se envíen y reciban
+        });
+
+        const data = await response.json(); // Cambiado a json()
+
+        if (!response.ok) {
+            throw new Error(data.message || "Error al iniciar sesión");
+        }
+
+        console.log(data); // Aquí deberías ver { success: true, message: "Inicio de sesión exitoso" }
+        return data; // Devuelve el objeto de datos
+
+    } catch (error) {
+        console.error("Error en login:", error.message);
+        return { success: false, error: error.message }; // Devuelve un objeto con error
+    }
+};
+
+
+// Función para registrar un usuario
+export const registerUser = async (userData) => {
+    try {
+        const response = await fetch(`${BASEURL}/users/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        });
+
+        const result = await response.json(); // Parsear el resultado
+
+        if (!response.ok) {
+            throw new Error(result.message || 'Error en la solicitud al servidor');
+        }
+
+        return result; // Devolver el resultado exitoso (que debería incluir `success: true`)
+
+    } catch (error) {
+        console.error("Error en register:", error);
+        return { success: false, error: error.message };
+    }
+};
+
+
+// Función para cerrar sesión
+export const logoutUser = async () => {
+    try {
+        const response = await fetch(`${BASEURL}/users/logout`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include", // Para que la cookie de sesión sea eliminada
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Error al cerrar sesión");
+        }
+
+        const data = await response.json();
+        console.log(data); // "Sesión cerrada exitosamente"
+        return data;
+    } catch (error) {
+        console.error("Error en logout:", error.message);
     }
 };

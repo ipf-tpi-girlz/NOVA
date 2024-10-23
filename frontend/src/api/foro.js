@@ -1,4 +1,4 @@
-import { BASEURL } from "./user";
+const BASEURL = 'http://localhost:4000';
 // Función para obtener todos los foros
 
 export const fetchGetForos = async () => {
