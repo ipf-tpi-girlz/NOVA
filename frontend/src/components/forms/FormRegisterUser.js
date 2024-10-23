@@ -207,12 +207,14 @@ export const FormRegisterUser = () => {
           role: "victima",
         }),
       });
-      const result = await response.json();
-      console.log(result);
+      // console.log(result);
+      console.log(response);
 
       // Registro exitoso
-      if (result.ok) {
-        console.log({ message: "Se ha registrado exitosamente" });
+      if (response.ok) {
+        const result = await response.json();
+        alert(result.message);
+        // console.log({ message: "Se ha registrado exitosamente" });
         window.location.href = "http://localhost:5173/login";
       }
     } catch (error) {

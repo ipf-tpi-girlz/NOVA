@@ -201,16 +201,26 @@ export const FormRegisterProf = () => {
           role: "profesional",
         }),
       });
-      const result = await response.json();
-      console.log(result);
+      // const result = await response.json();
+      // console.log(result);
 
       // Si el registro es exitoso, redirigir al login
-      if (result.ok) {
+      console.log(response);
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result.message);
         alert("Registro exitoso");
         window.location.href = "http://localhost:5173/login";
+      } else {
+        const error = await response.json();
+        console.log(error);
+        // alert("Error en el registro: " + error.message);
       }
     } catch (error) {
-      console.error("Error al registrar:", error);
+      if (!response.ok) {
+        throw new Error("Error en el registro: " + response.statusText);
+      }
     }
   });
 
