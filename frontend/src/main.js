@@ -17,10 +17,10 @@ import {
 //Paginas
 import { LandingPage } from "./pages/LandingPage.js";
 import { RegisterPage } from "./pages/RegisterPage.js";
-import { HomePage } from "./pages/homePage.js";
+import { HomePage } from "./pages/homePageUsuarios.js";
 
 import { createHeroSection } from "./components/post";
-import { ContactsPage } from "./pages/contacs";
+import { ContactsPage } from "./pages/contacsUsuario.js";
 import { violence } from "./pages/seccionInf/violenceInf";
 import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";

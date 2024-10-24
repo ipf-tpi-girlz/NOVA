@@ -28,7 +28,7 @@ export const BtnEmergency = () => {
   const helpBtn = document.createElement("button");
   helpBtn.className = "btn bg-pink-200 items-center hover:bg-pink-400 w-96";
   helpBtn.innerHTML = `<span class = "material-symbols-rounded ">favorite</span> Necesito ayuda ahora `;
-
+  // helpBtn.addEventListener(click );
   const modalBackdrop = document.createElement("form");
   modalBackdrop.method = "dialog";
   modalBackdrop.className = "modal-backdrop";

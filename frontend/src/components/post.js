@@ -123,7 +123,7 @@ export const createHeroSection = () => {
 
   const forumsContainer = document.createElement("div");
   forumsContainer.className =
-    "grid grid-cols-1 gap-9  md:grid-cols-3 mt-5 w-full";
+    "grid grid-cols-1 gap-9  md:grid-cols-3 mt-5 w-full ";
 
   const loadForos = async () => {
     try {
@@ -151,7 +151,8 @@ export const createHeroSection = () => {
           "hover:bg-gray-100",
           "transition-shadow",
           "transition-bg",
-          "!text-center"
+          "!text-center",
+          "p-8"
         );
 
         cardcount++;
@@ -285,7 +286,7 @@ export const createHeroSection = () => {
         forumsContainer.appendChild(forumCard);
         /////////////////////////////////////////////////////////////////////////////////////////////
 
-        if (cardcount % 3 === 0) {
+        if (cardcount % 4 === 0) {
           const emotionalMessage = document.createElement("div");
           emotionalMessage.className =
             "font-serif text-center font-semibold text-2xl md:text-sm lg:text-md self-center  ";
