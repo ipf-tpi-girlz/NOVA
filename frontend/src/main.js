@@ -13,6 +13,7 @@ import {
   FormRegisterUser,
   BtnEmergency,
 } from "./components";
+
 import { FormRegisterProf } from "./components/forms/FormRegisterProf.js";
 
 //Paginas
@@ -25,6 +26,7 @@ import { ContactsPage } from "./pages/contacs";
 import { violence } from "./pages/seccionInf/violenceInf";
 import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
+import { menu } from "./components/menuProf.js";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -88,4 +90,10 @@ switch (pathname) {
     app.appendChild(forop());
     app.appendChild(BtnEmergency());
     app.appendChild(Footer());
+    break;
+  case "/home-Prof":
+    app.appendChild(Navbar());
+    app.appendChild(menu());
+    app.appendChild(Footer());
+    break;
 }

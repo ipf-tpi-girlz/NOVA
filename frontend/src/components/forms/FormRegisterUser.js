@@ -150,20 +150,9 @@ export const FormRegisterUser = () => {
   professionalButton.innerText = "Profesional";
   buttonContainer.appendChild(professionalButton);
 
-  // Botón para registrarse como institución
-  const institutionButton = document.createElement("button");
-  institutionButton.type = "button"; // Evita que el botón envíe el formulario
-  institutionButton.className = "btn w-1/2 btn-primary  py-2 rounded-lg";
-  institutionButton.innerText = "Institución";
-  buttonContainer.appendChild(institutionButton);
-
   // Eventos para los botones adicionales
   professionalButton.addEventListener("click", () => {
     window.location.href = "http://localhost:5173/register-prof";
-  });
-
-  institutionButton.addEventListener("click", () => {
-    window.location.href = "http://localhost:5173/register-institution";
   });
 
   // Evento de envío del formulario...
