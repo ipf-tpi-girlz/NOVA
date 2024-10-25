@@ -1,6 +1,6 @@
 export const foro = () => {
   const containerforo = document.createElement("div");
-  containerforo.classList.add("min-h-screen");
+  // containerforo.classList.add("min-h-screen");
 
   const containermisforos = document.createElement("div");
   containermisforos.classList.add("hero-content", "flex-col", "lg:flex-row");

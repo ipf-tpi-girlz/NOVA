@@ -36,7 +36,6 @@ export const createHeroSection = () => {
     "flex",
     "flex-row",
     "items-center",
-    "min-h-dvh",
     "px-5",
     "md:px-25",
     "md:-10"

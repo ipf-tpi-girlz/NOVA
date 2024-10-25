@@ -3,7 +3,15 @@ import { isAuthenticated } from "../api/auth";
 
 export const Navbar = () => {
   const navbar = document.createElement("nav");
-  navbar.classList.add("navbar", "md:px-24", "bg-base-100");
+  navbar.classList.add(
+    "navbar",
+    "md:px-24",
+    "bg-base-100",
+    "shadow-md",
+    "sticky",
+    "top-0",
+    "z-50"
+  );
 
   const navbarStart = document.createElement("div");
   navbarStart.classList.add("navbar-start", "w-fit");
@@ -73,34 +81,34 @@ export const Navbar = () => {
 
       return li;
     }
-
-    const forums = createLink("/historias", "Historias");
+    const forums = createLink("/foros", "Foros");
+    const histories = createLink("/historias", "Historias");
     const articles = createLink("/chvg", "Artículos");
     const prof = createLink("/contact", "Profesionales");
 
     //Boton de cerrar sesión
-    const btnLogOut = document.createElement("button");
-    btnLogOut.classList.add("btn", "btn-primary", "btn-sm");
-    btnLogOut.textContent = "Cerrar Sesión";
-    btnLogOut.type = "submit";
-    btnLogOut.setAttribute = ("href", "/");
-    btnLogOut.addEventListener("click", () => {
+    const profile = document.createElement("button");
+    profile.classList.add("btn", "btn-primary", "btn-sm");
+    profile.textContent = "Mi perfil";
+    profile.type = "submit";
+    profile.setAttribute = ("href", "/");
+    profile.addEventListener("click", () => {
       window.location.href = "http://localhost:5173";
     });
 
     //Se añaden los links al menu para pantallas grandes
-
     menu.appendChild(forums);
+    menu.appendChild(histories);
     menu.appendChild(articles);
     menu.appendChild(prof);
-    menu.appendChild(btnLogOut);
+    menu.appendChild(profile);
 
     // Se copian los links al menu del dropdown
-
     dropdownContent.appendChild(forums.cloneNode(true));
+    dropdownContent.appendChild(histories.cloneNode(true));
     dropdownContent.appendChild(articles.cloneNode(true));
     dropdownContent.appendChild(prof.cloneNode(true));
-    dropdownContent.appendChild(btnLogOut.cloneNode(true));
+    dropdownContent.appendChild(profile.cloneNode(true));
 
     navbarEnd.appendChild(menu);
     navbarEnd.appendChild(dropdownContent);

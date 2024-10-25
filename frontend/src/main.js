@@ -63,7 +63,6 @@ switch (pathname) {
     app.appendChild(Navbar());
     app.appendChild(ContactsPage());
     app.appendChild(BtnEmergency());
-    app.appendChild(Footer());
     break;
   case "/chvg":
     app.appendChild(Navbar());
@@ -75,6 +74,10 @@ switch (pathname) {
     app.appendChild(Navbar());
     app.appendChild(createHeroSection());
     app.appendChild(BtnEmergency());
+    app.appendChild(Footer());
+    break;
+  case "/foros":
+    app.appendChild(Navbar());
     app.appendChild(Footer());
     break;
   case "/manos-unidas":
