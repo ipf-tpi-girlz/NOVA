@@ -27,6 +27,9 @@ import { violence } from "./pages/seccionInf/violenceInf";
 import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
 import { menu } from "./components/menuProf.js";
+import { articuloPsicologico } from "./pages/seccionInf/infoPsicologica.js";
+import { articuloVioSex } from "./pages/seccionInf/infoSexual.js";
+import { articuloFisco } from "./pages/seccionInf/infoFisico.js";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -94,6 +97,20 @@ switch (pathname) {
   case "/home-Prof":
     app.appendChild(Navbar());
     app.appendChild(menu());
+    app.appendChild(Footer());
+    break;
+  case "/info-Psico":
+    app.appendChild(Navbar());
+    app.appendChild(articuloPsicologico());
+    app.appendChild(Footer());
+  case "/info-Sex":
+    app.appendChild(Navbar());
+    app.appendChild(articuloVioSex());
+    app.appendChild(Footer());
+    break;
+  case "/info-Fisico":
+    app.appendChild(Navbar());
+    app.appendChild(articuloFisco());
     app.appendChild(Footer());
     break;
 }

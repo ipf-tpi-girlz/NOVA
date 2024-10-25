@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información sobre Violencia Física - Formosa</title>
+    <style>
+        :root {
+            --primary-color: #D00000;
+            --secondary-color: #DC2F02;
+            --accent-color: #9D0208;
+            --text-color: #2B2B2B;
+            --background-light: #FFFFFF;
+            --card-background: #FFFFFF;
+            --highlight-color: #E85D04;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+                        linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%);
+            background-size: 60px 60px;
+            opacity: 0.1;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .content-section {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary-color);
+            font-size: 1.8rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--highlight-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.4rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 0.5rem;
+        }
+
+        .emergency-box {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(208, 0, 0, 0.15);
+        }
+
+        .emergency-box h3 {
+            color: white;
+            margin-top: 0;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .emergency-box p {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .emergency-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+                        linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%);
+            background-size: 30px 30px;
+            opacity: 0.1;
+        }
+
+        .statistics {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            border-left: 5px solid var(--highlight-color);
+        }
+
+        .statistics p {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .statistics p::before {
+            content: '•';
+            color: var(--highlight-color);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+
+        .warning-sign {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+        }
+
+        .warning-sign:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            header {
+                padding: 2rem 0;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+                padding: 0 1rem;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.3rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .emergency-box {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .grid-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Violencia Física: Identificación, Prevención e Impacto</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="grid-container">
+            <section class="content-section">
+                <h2>¿Qué es la Violencia Física?</h2>
+                <p>La violencia física es cualquier acto que implique el uso de la fuerza contra otra persona con el propósito de causar daño. Está contemplada en la Ley N° 26.485 de Argentina como un componente clave de la violencia de género.</p>
+                
+                <h3>Manifestaciones</h3>
+                <ul>
+                    <li>Golpes y agresiones directas</li>
+                    <li>Empujones y forcejeos</li>
+                    <li>Agresiones con objetos</li>
+                    <li>Privación de libertad</li>
+                </ul>
+            </section>
+
+            <section class="content-section">
+                <h2>Señales de Alerta</h2>
+                <div class="warning-signs">
+                    <div class="warning-sign">Lesiones Visibles</div>
+                    <div class="warning-sign">Cambios de Comportamiento</div>
+                    <div class="warning-sign">Justificaciones Frecuentes</div>
+                    <div class="warning-sign">Aislamiento Social</div>
+                </div>
+            </section>
+        </div>
+
+        <div class="emergency-box">
+            <h3>Recursos de Ayuda Inmediata</h3>
+            <p><strong>Línea 144:</strong> Asistencia gratuita y confidencial las 24 horas</p>
+            <p><strong>Centro de Atención Integral:</strong> Apoyo psicológico, legal y social</p>
+            <p><strong>Comisarías de la Mujer:</strong> Entorno seguro para denuncias</p>
+        </div>
+
+        <section class="content-section">
+            <h2>Estadísticas en Formosa</h2>
+            <div class="statistics">
+                <p>40% de las mujeres han experimentado violencia física en Argentina</p>
+                <p>Aumento significativo en denuncias durante la pandemia</p>
+                <p>Incremento sostenido en registros del RUCVM</p>
+            </div>
+        </section>
+
+        <div class="grid-container">
+            <section class="content-section">
+                <h2>Prevención</h2>
+                <ul>
+                    <li>Educación sobre violencia de género</li>
+                    <li>Fomento de la igualdad</li>
+                    <li>Campañas de sensibilización</li>
+                    <li>Formación profesional</li>
+                </ul>
+            </section>
+
+            <section class="content-section">
+                <h2>Impacto</h2>
+                <h3>Consecuencias</h3>
+                <ul>
+                    <li>Trastornos de salud mental</li>
+                    <li>Lesiones físicas permanentes</li>
+                    <li>Dificultades en relaciones</li>
+                    <li>Aislamiento social</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+</body>
+</html>
