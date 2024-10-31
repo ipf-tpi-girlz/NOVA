@@ -31,6 +31,7 @@ import { articuloVioSex } from "./pages/seccionInf/infoSexual.js";
 import { artFisco } from "./pages/seccionInf/artFisico.js";
 import { artPsico } from "./pages/seccionInf/artPsico.js";
 import { artAbuso } from "./pages/seccionInf/artAbuso.js";
+import { articulos } from "./pages/seccionInf/seccionArticulos.js";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -97,7 +98,12 @@ switch (pathname) {
     app.appendChild(BtnEmergency());
     app.appendChild(Footer());
     break;
-  case "/articulo-fisico":
+  case "/articulos":
+    app.appendChild(Navbar());
+    app.appendChild(articulos());
+    app.appendChild(Footer());
+    break;
+  case "/articulo-fisica":
     app.appendChild(Navbar());
     app.appendChild(artFisco());
     app.appendChild(Footer());
@@ -112,24 +118,15 @@ switch (pathname) {
     app.appendChild(artAbuso());
     app.appendChild(Footer());
     break;
+  case "/art":
+    app.appendChild(Navbar()); //renderiza un nadvar distinto a los otros
+    app.appendChild(articulos());
+    app.appendChild(Footer()); //no renderiza
+    break;
 
-  // case "/home-Prof":
-  //   app.appendChild(Navbar());
-  //   app.appendChild(menu());
-  //   app.appendChild(Footer());
-  //   break;
-  // case "/info-Psico":
-  //   app.appendChild(Navbar());
-  //   app.appendChild(articuloPsicologico());
-  //   app.appendChild(Footer());
-  // case "/info-Sex":
-  //   app.appendChild(Navbar());
-  //   app.appendChild(articuloVioSex());
-  //   app.appendChild(Footer());
-  //   break;
-  // case "/info-Fisico":
-  //   app.appendChild(Navbar());
-  //   app.appendChild(articuloFisco());
-  //   app.appendChild(Footer());
-  //   break;
+  case "/home-prof": //no renderiza nada
+    app.appendChild(Navbar());
+    app.appendChild(menu());
+    app.appendChild(Footer());
+    break;
 }

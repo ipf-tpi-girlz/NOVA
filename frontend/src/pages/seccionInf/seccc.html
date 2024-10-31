@@ -8,53 +8,65 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
       body {
-        font-family: "Poppins", sans-serif;
+        font-family: "Jenson", sans-serif;
         background-color: #e6e6fa; /* Color lavanda */
       }
     </style>
   </head>
-  <body class="min-h-screen p-8">
-    <div class="max-w-5xl mx-auto">
-      <h1 class="text-4xl font-semibold text-center text-purple-800 mb-12">
-        Recursos sobre Violencia de Género
-      </h1>
-      <div
-        id="articleContainer"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-      ></div>
-    </div>
-
-    <div
-      id="modal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden"
-    >
-      <div class="bg-white rounded-2xl p-8 max-w-lg w-full shadow-xl">
-        <div class="flex justify-between items-center mb-6">
-          <h2
-            id="modalTitle"
-            class="text-2xl font-semibold text-purple-800"
-          ></h2>
+  <body>
+    <div class="contenedorPrincipal bg-gray-100 min-h-screen">
+      <div class="max-w-5xl mx-auto">
+        <h1 class="text-4xl font-semibold text-center text-red-600 mb-12">
+          Recursos sobre Violencia de Género
+        </h1>
+        <div
+          id="articleContainer"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        ></div>
+        <div class="text-center mt-8">
           <button
-            id="closeModal"
-            class="text-purple-600 hover:text-purple-800 transition-colors"
+            onclick="openCreateArticleModal()"
+            class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-8 w-8"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            Crear Artículo
           </button>
         </div>
-        <p id="modalContent" class="text-gray-700 leading-relaxed"></p>
+      </div>
+
+      <!-- Modal para Crear Artículo -->
+      <div
+        id="createArticleModal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden"
+      >
+        <div class="bg-white rounded-xl p-6 max-w-md w-full">
+          <h2 class="text-2xl font-semibold text-red-600 mb-4">
+            Nuevo Artículo
+          </h2>
+          <input
+            id="newArticleTitle"
+            type="text"
+            placeholder="Título del artículo"
+            class="w-full mb-4 p-2 border border-gray-300 rounded"
+          />
+          <textarea
+            id="newArticleContent"
+            placeholder="Descripción del artículo"
+            class="w-full mb-4 p-2 border border-gray-300 rounded"
+            rows="4"
+          ></textarea>
+          <button
+            onclick="publishArticle()"
+            class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
+          >
+            Publicar
+          </button>
+          <button
+            onclick="closeCreateArticleModal()"
+            class="text-gray-500 mt-4 hover:underline"
+          >
+            Cancelar
+          </button>
+        </div>
       </div>
     </div>
 
@@ -64,102 +76,87 @@
           id: 1,
           title: "Comprendiendo la Violencia Psicológica",
           content:
-            "La violencia psicológica es una forma de abuso que afecta profundamente la salud mental y emocional de la víctima. Puede manifestarse a través de insultos constantes, manipulación emocional, control excesivo y aislamiento social. Reconocer estas señales es el primer paso para buscar ayuda y recuperación.",
-          type: "psicologica",
-          icon: "◇", // Diamante minimalista para representar la mente
+            "Conoce cómo identificar y enfrentar la violencia psicológica.",
+          redirectUrl: "/psicologica",
         },
         {
           id: 2,
           title: "Identificando la Violencia Sexual",
           content:
-            "La violencia sexual abarca cualquier acto sexual, intento de obtener un acto sexual, comentarios o insinuaciones sexuales no deseados. Es crucial entender que el consentimiento debe ser claro, entusiasta y continuo en todas las interacciones sexuales. Si has experimentado violencia sexual, recuerda que no es tu culpa y hay recursos disponibles para apoyarte.",
-          type: "sexual",
-          icon: "✕", // X minimalista para representar "no"
+            "Descubre los recursos para prevenir y denunciar la violencia sexual.",
+          redirectUrl: "/sexual",
         },
         {
           id: 3,
           title: "Afrontando la Violencia Física",
-          content:
-            "La violencia física implica cualquier acto que cause daño corporal o dolor. Esto puede incluir golpes, empujones, quemaduras o cualquier forma de agresión física. Si estás en una situación de violencia física, tu seguridad es primordial. Es crucial buscar ayuda inmediata y tener un plan de seguridad. Recuerda, tienes derecho a vivir sin miedo y sin violencia.",
-          type: "fisica",
-          icon: "□", // Cuadrado minimalista para representar protección
+          content: "Encuentra información y ayuda sobre la violencia física.",
+          redirectUrl: "/fisica",
         },
         {
           id: 4,
           title: "Recursos de Ayuda y Apoyo",
           content:
-            "Existen numerosas organizaciones y servicios dedicados a apoyar a las víctimas de violencia de género. Estos recursos incluyen líneas de ayuda 24/7, refugios de emergencia, asesoramiento legal y terapia psicológica. No dudes en buscar ayuda; hay profesionales capacitados para brindarte el apoyo que necesitas para recuperarte y reconstruir tu vida.",
-          type: "ayuda",
-          icon: "○", // Círculo minimalista para representar unidad y apoyo
+            "Accede a recursos de ayuda y apoyo para víctimas de violencia.",
+          redirectUrl: "/ayuda",
         },
       ];
 
       const articleContainer = document.getElementById("articleContainer");
-      const modal = document.getElementById("modal");
-      const modalTitle = document.getElementById("modalTitle");
-      const modalContent = document.getElementById("modalContent");
-      const closeModal = document.getElementById("closeModal");
+      const createArticleModal = document.getElementById("createArticleModal");
 
       function createArticleCard(article) {
         const card = document.createElement("div");
-        card.className =
-          "bg-white rounded-xl shadow-md p-6 cursor-pointer transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg";
+        card.className = "bg-white rounded-xl shadow-md p-6";
+
         card.innerHTML = `
-                <div class="flex items-center mb-4">
-                    <span class="text-3xl mr-3 text-purple-600">${
-                      article.icon
-                    }</span>
-                    <h2 class="text-xl font-semibold text-purple-800">${
-                      article.title
-                    }</h2>
-                </div>
-                <p class="text-gray-600 mb-4 line-clamp-3">${
-                  article.content
-                }</p>
-                <div class="inline-block px-3 py-1 rounded-full text-sm font-medium ${getTypeClass(
-                  article.type
-                )}">
-                    ${capitalizeFirstLetter(article.type)}
-                </div>
-            `;
-        card.addEventListener("click", () => openModal(article));
+          <h2 class="text-xl font-semibold text-red-600 mb-2">${article.title}</h2>
+          <p class="text-black mb-4">${article.content}</p>
+          <button onclick="redirectTo('${article.redirectUrl}')" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
+            Ver más
+          </button>
+        `;
+
         return card;
       }
 
-      function getTypeClass(type) {
-        switch (type) {
-          case "psicologica":
-            return "bg-indigo-100 text-indigo-800";
-          case "sexual":
-            return "bg-red-100 text-red-800";
-          case "fisica":
-            return "bg-emerald-100 text-emerald-800";
-          default:
-            return "bg-purple-100 text-purple-800";
+      function redirectTo(url) {
+        window.location.href = url;
+      }
+
+      function openCreateArticleModal() {
+        createArticleModal.classList.remove("hidden");
+      }
+
+      function closeCreateArticleModal() {
+        createArticleModal.classList.add("hidden");
+      }
+
+      function publishArticle() {
+        const title = document.getElementById("newArticleTitle").value;
+        const content = document.getElementById("newArticleContent").value;
+
+        if (title && content) {
+          const newArticle = {
+            id: articles.length + 1,
+            title: title,
+            content: content,
+            redirectUrl: "#",
+          };
+
+          articles.push(newArticle);
+          articleContainer.appendChild(createArticleCard(newArticle));
+          closeCreateArticleModal();
+
+          // Limpiar los campos
+          document.getElementById("newArticleTitle").value = "";
+          document.getElementById("newArticleContent").value = "";
+        } else {
+          alert("Por favor, complete ambos campos antes de publicar.");
         }
-      }
-
-      function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-      }
-
-      function openModal(article) {
-        modalTitle.textContent = article.title;
-        modalContent.textContent = article.content;
-        modal.classList.remove("hidden");
-      }
-
-      function closeModalHandler() {
-        modal.classList.add("hidden");
       }
 
       articles.forEach((article) => {
         articleContainer.appendChild(createArticleCard(article));
-      });
-
-      closeModal.addEventListener("click", closeModalHandler);
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) closeModalHandler();
       });
     </script>
   </body>
