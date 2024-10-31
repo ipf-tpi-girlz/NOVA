@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Información sobre Violencia de Género</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #e6e6fa; /* Lavender color */
+      }
+    </style>
+  </head>
+  <body class="min-h-screen p-4 md:p-8 bg-purple-50">
+    <div class="max-w-4xl mx-auto">
+      <h1
+        class="text-3xl md:text-4xl font-semibold text-center text-purple-800 mb-8"
+      >
+        Información sobre Violencia de Género
+      </h1>
+      <div id="articleContainer" class="space-y-6"></div>
+    </div>
+
+    <div
+      id="modal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden"
+    >
+      <div class="bg-white rounded-lg p-6 max-w-lg w-full">
+        <div class="flex justify-between items-center mb-4">
+          <h2
+            id="modalTitle"
+            class="text-xl font-semibold text-purple-800"
+          ></h2>
+          <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <p id="modalContent" class="text-gray-600"></p>
+      </div>
+    </div>
+
+    <script>
+      const articles = [
+        {
+          id: 1,
+          title: "Violencia Psicológica",
+          content:
+            "La violencia psicológica es una forma de abuso que afecta la salud mental y emocional de la víctima. Puede incluir insultos, manipulación, control y aislamiento social. Reconocer estas señales es crucial para buscar ayuda y recuperación.",
+          type: "psicologica",
+        },
+        {
+          id: 2,
+          title: "Violencia Sexual",
+          content:
+            "La violencia sexual abarca cualquier acto sexual no consentido, incluyendo acoso, abuso y violación. Es fundamental entender que el consentimiento debe ser claro y continuo en todas las interacciones sexuales. Si has experimentado violencia sexual, recuerda que no es tu culpa y hay recursos disponibles.",
+          type: "sexual",
+        },
+        {
+          id: 3,
+          title: "Violencia Física",
+          content:
+            "La violencia física implica cualquier acto que cause daño corporal. Esto incluye golpes, empujones o cualquier forma de agresión física. Si estás en una situación de violencia física, tu seguridad es primordial. Busca ayuda inmediata y considera tener un plan de seguridad.",
+          type: "fisica",
+        },
+        {
+          id: 4,
+          title: "Recursos de Ayuda",
+          content:
+            "Existen múltiples organizaciones y servicios dedicados a apoyar a las víctimas de violencia de género. Estos incluyen líneas de ayuda 24/7, refugios de emergencia, asesoramiento legal y terapia psicológica. No dudes en buscar apoyo profesional para tu recuperación y bienestar.",
+          type: "ayuda",
+        },
+      ];
+
+      const articleContainer = document.getElementById("articleContainer");
+      const modal = document.getElementById("modal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalContent = document.getElementById("modalContent");
+      const closeModal = document.getElementById("closeModal");
+
+      function createArticleCard(article) {
+        const card = document.createElement("div");
+        card.className =
+          "bg-white border border-purple-200 rounded-lg shadow-sm p-6 cursor-pointer transition duration-300 ease-in-out hover:shadow-lg hover:border-purple-400 hover:-translate-y-1";
+        card.style.borderLeftWidth = "4px";
+        card.style.borderLeftColor = getTypeColor(article.type);
+        card.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold text-purple-800">${article.title}</h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+                <p class="text-gray-600 mt-2 line-clamp-2">${article.content}</p>
+            `;
+        card.addEventListener("click", () => openModal(article));
+        return card;
+      }
+
+      function getTypeColor(type) {
+        switch (type) {
+          case "psicologica":
+            return "#9F7AEA"; // purple-400
+          case "sexual":
+            return "#F687B3"; // pink-400
+          case "fisica":
+            return "#4FD1C5"; // teal-400
+          default:
+            return "#63B3ED"; // blue-400
+        }
+      }
+
+      function openModal(article) {
+        modalTitle.textContent = article.title;
+        modalContent.textContent = article.content;
+        modal.classList.remove("hidden");
+      }
+
+      function closeModalHandler() {
+        modal.classList.add("hidden");
+      }
+
+      articles.forEach((article) => {
+        articleContainer.appendChild(createArticleCard(article));
+      });
+
+      closeModal.addEventListener("click", closeModalHandler);
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModalHandler();
+      });
+    </script>
+  </body>
+</html>

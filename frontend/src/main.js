@@ -27,9 +27,10 @@ import { violence } from "./pages/seccionInf/violenceInf";
 import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
 import { menu } from "./components/menuProf.js";
-import { articuloPsicologico } from "./pages/seccionInf/infoPsicologica.js";
 import { articuloVioSex } from "./pages/seccionInf/infoSexual.js";
-import { articuloFisco } from "./pages/seccionInf/infoFisico.js";
+import { artFisco } from "./pages/seccionInf/artFisico.js";
+import { artPsico } from "./pages/seccionInf/artPsico.js";
+import { artAbuso } from "./pages/seccionInf/artAbuso.js";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -74,12 +75,14 @@ switch (pathname) {
     app.appendChild(ContactsPage());
     app.appendChild(BtnEmergency());
     app.appendChild(Footer());
+
     break;
   case "/chvg":
     app.appendChild(Navbar());
     app.appendChild(violence());
     app.appendChild(BtnEmergency());
     app.appendChild(Footer());
+
     break;
   case "/foros":
     app.appendChild(Navbar());
@@ -94,23 +97,39 @@ switch (pathname) {
     app.appendChild(BtnEmergency());
     app.appendChild(Footer());
     break;
-  case "/home-Prof":
+  case "/articulo-fisico":
     app.appendChild(Navbar());
-    app.appendChild(menu());
+    app.appendChild(artFisco());
     app.appendChild(Footer());
     break;
-  case "/info-Psico":
+  case "/articulo-psicologico":
     app.appendChild(Navbar());
-    app.appendChild(articuloPsicologico());
-    app.appendChild(Footer());
-  case "/info-Sex":
-    app.appendChild(Navbar());
-    app.appendChild(articuloVioSex());
+    app.appendChild(artPsico());
     app.appendChild(Footer());
     break;
-  case "/info-Fisico":
+  case "/articulo-abuso":
     app.appendChild(Navbar());
-    app.appendChild(articuloFisco());
+    app.appendChild(artAbuso());
     app.appendChild(Footer());
     break;
+
+  // case "/home-Prof":
+  //   app.appendChild(Navbar());
+  //   app.appendChild(menu());
+  //   app.appendChild(Footer());
+  //   break;
+  // case "/info-Psico":
+  //   app.appendChild(Navbar());
+  //   app.appendChild(articuloPsicologico());
+  //   app.appendChild(Footer());
+  // case "/info-Sex":
+  //   app.appendChild(Navbar());
+  //   app.appendChild(articuloVioSex());
+  //   app.appendChild(Footer());
+  //   break;
+  // case "/info-Fisico":
+  //   app.appendChild(Navbar());
+  //   app.appendChild(articuloFisco());
+  //   app.appendChild(Footer());
+  //   break;
 }

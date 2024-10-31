@@ -209,3 +209,5 @@ export const articuloVioSex = () => {
   content.appendChild(conclusionDesc);
   return container;
 };
+
+//esto dejo para cambiar la info que tengo aca a la otra pagina
