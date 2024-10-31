@@ -1,3 +1,6 @@
+import { loginUser } from '../../api/auth'
+import { notification } from "antd";
+
 export const FormLogin = () => {
   const formContainer = document.createElement('div')
   formContainer.className =
@@ -91,27 +94,29 @@ export const FormLogin = () => {
 
     // Enviar los datos al backend
     try {
-      const response = await fetch('http://localhost:4000/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ mail, contrasenia }),
-      })
+      const response = await loginUser(mail, contrasenia);
 
-      // Si el login fue exitoso
-      if (response.ok) {
-        const result = await response.text()
-        console.log(result)
-        // Redireccionar al dashboard
-        window.location.href = 'http://localhost:5173/home'
+      if (response && response.success) {
+        notification.success({
+          message: 'Inicio de sesión exitoso',
+          description: response.message,
+        });
+
+        setTimeout(() => {
+          window.location.href = "/home";
+        }, 2000);
       } else {
-        // Mostrar el error en caso de falla
-        console.log(response)
-        alert('Error al iniciar sesión. Verifica tu correo y contraseña.')
+        notification.error({
+          message: 'Error al iniciar sesión',
+          description: response.message || 'Por favor, verifica tus credenciales.',
+        });
       }
     } catch (error) {
-      console.error('Error al iniciar sesión', error)
+      console.error("Error al iniciar sesión", error);
+      notification.error({
+        message: 'Error en el servidor',
+        description: 'Por favor, intenta de nuevo más tarde.',
+      });
     }
   })
 

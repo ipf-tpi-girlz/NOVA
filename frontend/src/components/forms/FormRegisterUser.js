@@ -1,3 +1,6 @@
+import { notification } from "antd";
+import "antd/dist/reset.css";
+import { registerUser } from '../../api/auth.js';
 export const FormRegisterUser = () => {
   // Crear formulario de registro
   const formContainer = document.createElement('div')
@@ -158,38 +161,42 @@ export const FormRegisterUser = () => {
       alert('todos los cmapos son obligatorios')
       return
     }
-
     try {
-      // Enviar los datos al backend con fecht
-      const response = await fetch('http://localhost:4000/users/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          nombre,
-          mail,
-          departamento,
-          localidad,
-          genero,
-          contrasenia,
-          role: 'victima',
-        }),
-      })
-      const result = await response.json()
-      console.log(result)
-      // registro exitoso del registro con un
-      if (result.ok) {
-        console.log({ mensagge: 'se ha registrado exitosamente' })
+      const result = await registerUser({
+        nombre,
+        mail,
+        departamento,
+        localidad,
+        genero,
+        contrasenia,
+        role: "victima",
+      });
+
+      // Manejo de respuesta
+      if (result && result.success) {
+        notification.success({
+          message: 'Registro exitoso',
+          description: result.message || 'Se ha registrado exitosamente',
+        });
+        setTimeout(() => {
+          window.location.href = "http://localhost:5173/login";
+        }, 2000);
+      } else {
+        notification.error({
+          message: 'Error en el registro',
+          description: result.error || 'Ocurrió un error durante el registro.',
+        });
       }
 
-      window.location.href = 'http://localhost:5173/login'
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-      } else {
-        console.error(error.response.data.error)
-      }
+      console.error("Error en el proceso de registro:", error);
+      notification.error({
+        message: 'Error en el servidor',
+        description: 'Hubo un error en el servidor. Por favor, intente más tarde.',
+      });
     }
+
+
   })
 
   return formContainer

@@ -1,5 +1,6 @@
 import { $themeLabel } from "./themeButton";
-import { isAuthenticated } from "../api/auth";
+import { checkSession } from '../api/auth.js'
+
 
 export const Navbar = () => {
   const navbar = document.createElement("nav");
@@ -69,7 +70,7 @@ export const Navbar = () => {
   );
 
   // Valida si el usuario inició sesión
-  if (isAuthenticated()) {
+  if (checkSession()) {
     //Funcion para crear link para el menu
     function createLink(link, text) {
       const li = document.createElement("li");
