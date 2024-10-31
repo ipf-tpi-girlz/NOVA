@@ -20,12 +20,17 @@ import { RegisterPage } from "./pages/RegisterPage.js";
 import { HomePage } from "./pages/homePageUsuarios.js";
 import { createHeroSection } from "./components/post";
 import { ContactsPage } from "./pages/contacsUsuario.js";
-import { violence } from "./pages/seccionInf/violenceInf";
 import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
 import { Perfil } from './pages/profileUser.js';
 import { checkSession } from "./api/auth.js";
 import { formContacts } from "./pages/form.contacts.js"
+
+import { articuloVioSex } from "./pages/seccionInf/infoSexual.js";
+import { artFisco } from "./pages/seccionInf/artFisico.js";
+import { artPsico } from "./pages/seccionInf/artPsico.js";
+import { artAbuso } from "./pages/seccionInf/artAbuso.js";
+import { articulos } from "./pages/seccionInf/seccionArticulos.js";
 
 // Rutas públicas
 const publicRoutes = ["/", "/register-user", "/login"];
@@ -109,6 +114,31 @@ document.addEventListener("DOMContentLoaded", async () => {
       app.appendChild(Navbar());
       app.appendChild(formContacts());
       app.appendChild(Footer());
+      break;
+    case "/articulos":
+      app.appendChild(Navbar());
+      app.appendChild(articulos());
+      app.appendChild(Footer());
+      break;
+    case "/articulo-fisica":
+      app.appendChild(Navbar());
+      app.appendChild(artFisco());
+      app.appendChild(Footer());
+      break;
+    case "/articulo-psicologico":
+      app.appendChild(Navbar());
+      app.appendChild(artPsico());
+      app.appendChild(Footer());
+      break;
+    case "/articulo-abuso":
+      app.appendChild(Navbar());
+      app.appendChild(artAbuso());
+      app.appendChild(Footer());
+      break;
+    case "/art":
+      app.appendChild(Navbar()); //renderiza un nadvar distinto a los otros
+      app.appendChild(articulos());
+      app.appendChild(Footer()); //no renderiza
       break;
   }
 });
