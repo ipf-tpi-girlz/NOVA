@@ -1,53 +1,47 @@
 import { sequelize } from "../config/database/db.js";
 import { DataTypes } from "../config/database/db.js";
 
-export const Usuario = sequelize.define(
-  "usuarios",
+const Usuario = sequelize.define(
+  "Usuario",
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
+    role: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        isIn: [["institucion", "profesional", "victima"]],
+      },
+    },
+    img: DataTypes.TEXT,
     nombre: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
-    razon_social: {
-      type: DataTypes.STRING(255),
-    },
     mail: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.TEXT,
       allowNull: false,
       unique: true,
     },
-    localidad_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "localidades",
-        key: "id",
-      },
-    },
-    nro_telefono: {
-      type: DataTypes.STRING(20),
-      allowNull: true,
-    },
     contrasenia: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.TEXT,
       allowNull: false,
     },
-    role: {
-      type: DataTypes.ENUM("institucion", "profesional", "victima"),
-      allowNull: false,
-    },
-    genero: {
-      type: DataTypes.ENUM("masculino", "femenino", "otro"),
+    genero: DataTypes.TEXT,
+    departamento: DataTypes.TEXT,
+    localidad: DataTypes.TEXT,
+    fecha_registro: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
   },
   {
-    tableName: "usuarios",
+    modelName: "Usuario",
     freezeTableName: true,
-    underscored: true,
   }
 );
+
+export default Usuario;
