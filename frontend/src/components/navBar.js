@@ -1,8 +1,14 @@
 import { $themeLabel } from "./themeButton";
-import { checkSession } from '../api/auth.js'
+import { checkSession } from '../api/auth.js';
 
+export const Navbar = async () => {
+  const isAuthenticated = await checkSession().catch(error => {
+    console.error("Error al verificar sesión:", error);
+    return false; // Devuelve `false` si ocurre un error en `checkSession`
+  });
 
-export const Navbar = () => {
+  console.log("Estado de autenticación:", isAuthenticated);
+
   const navbar = document.createElement("nav");
   navbar.classList.add(
     "navbar",
@@ -20,26 +26,23 @@ export const Navbar = () => {
   const navbarEnd = document.createElement("div");
   navbarEnd.classList.add("navbar-end", "gap-3", "w-full");
 
-  //Logo
+  // Logo
   const logo = document.createElement("a");
   logo.classList.add("btn", "btn-ghost", "text-2xl", "font-serif");
   logo.textContent = "NOVA";
   logo.setAttribute("href", "/home");
-
   navbarStart.appendChild(logo);
 
-  //Dropdown para pantallas pequeñas
+  // Dropdown para pantallas pequeñas
   const dropdown = document.createElement("div");
   dropdown.classList.add("dropdown", "dropdown-end");
 
-  // Dropdown boton
   const dropdownButton = document.createElement("label");
   dropdownButton.classList.add("btn", "btn-ghost", "lg:hidden");
   dropdownButton.setAttribute("role", "button");
   dropdownButton.setAttribute("tabindex", "0");
-  dropdownButton.innerHTML = `<span class = "material-symbols-rounded dark:text-pink-200">menu</span>`;
+  dropdownButton.innerHTML = `<span class="material-symbols-rounded dark:text-pink-200">menu</span>`;
 
-  // Dropdown contenido
   const dropdownContent = document.createElement("ul");
   dropdownContent.classList.add(
     "menu",
@@ -55,7 +58,6 @@ export const Navbar = () => {
     "gap-2"
   );
 
-  // Menu para pantallas grandes
   const menu = document.createElement("ul");
   menu.classList.add(
     "menu",
@@ -69,79 +71,55 @@ export const Navbar = () => {
     "gap-2"
   );
 
-  // Valida si el usuario inició sesión
-  if (checkSession()) {
-    //Funcion para crear link para el menu
-    function createLink(link, text) {
+  // Verifica si el usuario está autenticado
+  if (isAuthenticated) {
+    console.log("Usuario autenticado");
+
+    const createLink = (link, text) => {
       const li = document.createElement("li");
       const a = document.createElement("a");
       a.setAttribute("href", link);
       a.textContent = text;
-
       li.appendChild(a);
-
       return li;
-    }
+    };
+
     const forums = createLink("/foros", "Foros");
     const histories = createLink("/historias", "Historias");
     const articles = createLink("/chvg", "Artículos");
     const prof = createLink("/contact", "Profesionales");
 
-    //Boton de cerrar sesión
     const profile = document.createElement("button");
     profile.classList.add("btn", "btn-primary", "btn-sm");
     profile.textContent = "Mi perfil";
-    profile.type = "submit";
-    profile.setAttribute = ("href", "/");
-    profile.addEventListener("click", () => {
+    profile.addEventListener("click", (e) => {
+      e.preventDefault();
       window.location.href = "http://localhost:5173";
     });
 
-    //Se añaden los links al menu para pantallas grandes
-    menu.appendChild(forums);
-    menu.appendChild(histories);
-    menu.appendChild(articles);
-    menu.appendChild(prof);
-    menu.appendChild(profile);
-
-    // Se copian los links al menu del dropdown
-    dropdownContent.appendChild(forums.cloneNode(true));
-    dropdownContent.appendChild(histories.cloneNode(true));
-    dropdownContent.appendChild(articles.cloneNode(true));
-    dropdownContent.appendChild(prof.cloneNode(true));
-    dropdownContent.appendChild(profile.cloneNode(true));
-
-    navbarEnd.appendChild(menu);
-    navbarEnd.appendChild(dropdownContent);
+    menu.append(forums, histories, articles, prof, profile);
+    dropdownContent.append(forums.cloneNode(true), histories.cloneNode(true), articles.cloneNode(true), prof.cloneNode(true), profile.cloneNode(true));
   } else {
-    // Mostrar botones de login y register si el usuario no está autenticado
+    console.log("Usuario no autenticado");
+
     const btnLogin = document.createElement("a");
     btnLogin.classList.add("btn", "btn-primary", "btn-sm");
     btnLogin.textContent = "Iniciar Sesión";
-    btnLogin.type = "submit";
     btnLogin.setAttribute("href", "/login");
 
     const btnRegister = document.createElement("a");
     btnRegister.classList.add("btn", "btn-primary", "btn-sm");
     btnRegister.textContent = "Registrarse";
-    btnRegister.type = "submit";
     btnRegister.setAttribute("href", "/register-user");
 
-    dropdownContent.appendChild(btnLogin);
-    dropdownContent.appendChild(btnRegister);
-    menu.appendChild(btnLogin.cloneNode(true));
-    menu.appendChild(btnRegister.cloneNode(true));
+    dropdownContent.append(btnLogin, btnRegister);
+    menu.append(btnLogin.cloneNode(true), btnRegister.cloneNode(true));
   }
 
-  dropdown.appendChild(dropdownButton);
-  dropdown.appendChild(dropdownContent);
+  dropdown.append(dropdownButton, dropdownContent);
+  navbarEnd.append(menu, $themeLabel(), dropdown);
 
-  navbarEnd.appendChild(menu);
-  navbarEnd.appendChild($themeLabel());
-  navbarEnd.appendChild(dropdown);
-
-  navbar.appendChild(navbarStart);
-  navbar.appendChild(navbarEnd);
+  navbar.append(navbarStart, navbarEnd);
 
   return navbar;
 };

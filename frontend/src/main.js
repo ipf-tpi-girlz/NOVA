@@ -26,7 +26,6 @@ import { Perfil } from './pages/profileUser.js';
 import { checkSession } from "./api/auth.js";
 import { formContacts } from "./pages/form.contacts.js"
 
-import { articuloVioSex } from "./pages/seccionInf/infoSexual.js";
 import { artFisco } from "./pages/seccionInf/artFisico.js";
 import { artPsico } from "./pages/seccionInf/artPsico.js";
 import { artAbuso } from "./pages/seccionInf/artAbuso.js";
@@ -36,109 +35,103 @@ import { articulos } from "./pages/seccionInf/seccionArticulos.js";
 const publicRoutes = ["/", "/register-user", "/login"];
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const isAuthenticated = await checkSession();
-  const pathname = window.location.pathname;
+  try {
+    const isAuthenticated = await checkSession();
+    const pathname = window.location.pathname;
 
-  if (!isAuthenticated && !publicRoutes.includes(pathname)) {
-    window.location.href = "/login";
-    return;
-  }
+    if (!isAuthenticated && !publicRoutes.includes(pathname)) {
+      window.location.href = "/login";
+      return;
+    }
 
-  if (isAuthenticated && publicRoutes.includes(pathname)) {
-    window.location.href = "/home";
-    return;
-  }
+    if (isAuthenticated && publicRoutes.includes(pathname)) {
+      window.location.href = "/home";
+      return;
+    }
 
+    const app = document.getElementById("app");
+    themeChange();
 
-  const app = document.getElementById("app");
-  themeChange();
+    // Renderizado de Navbar y componentes según la ruta
+    const renderPage = async () => {
+      const navbar = await Navbar();
+      app.appendChild(navbar);
 
-  switch (pathname) {
-    case "/":
-      app.appendChild(Navbar());
-      app.appendChild(LandingPage());
-      app.appendChild(Footer());
+      switch (pathname) {
+        case "/":
+          app.appendChild(LandingPage());
+          app.appendChild(Footer());
+          break;
+        case "/register-user":
+          app.appendChild(RegisterPage(FormRegisterUser()));
+          app.appendChild(Footer());
+          break;
+        case "/login":
+          app.appendChild(RegisterPage(FormLogin()));
+          break;
+        case "/home":
+          app.appendChild(HomePage());
+          app.appendChild(Footer());
+          break;
+        case "/contact":
+          app.appendChild(ContactsPage());
+          app.appendChild(BtnEmergency());
+          break;
+        case "/chvg":
+          app.appendChild(violence());
+          app.appendChild(BtnEmergency());
+          app.appendChild(Footer());
+          break;
+        case "/historias":
+          app.appendChild(createHeroSection());
+          app.appendChild(BtnEmergency());
+          app.appendChild(Footer());
+          break;
+        case "/foros":
+          app.appendChild(Footer());
+          break;
+        case "/manos-unidas":
+          app.appendChild(ManosUnidas());
+          app.appendChild(forop());
+          app.appendChild(BtnEmergency());
+          app.appendChild(Footer());
+          break;
+        case "/profile":
+          app.appendChild(Perfil());
+          app.appendChild(Footer());
+          break;
+        case "/contactanos":
+          app.appendChild(formContacts());
+          app.appendChild(Footer());
+          break;
+        case "/articulos":
+          app.appendChild(articulos());
+          app.appendChild(Footer());
+          break;
+        case "/articulo-fisica":
+          app.appendChild(artFisco());
+          app.appendChild(Footer());
+          break;
+        case "/articulo-psicologico":
+          app.appendChild(artPsico());
+          app.appendChild(Footer());
+          break;
+        case "/articulo-abuso":
+          app.appendChild(artAbuso());
+          app.appendChild(Footer());
+          break;
+        case "/art":
+          app.appendChild(articulos());
+          app.appendChild(Footer());
+          break;
+      }
+
       LocalStorage();
-      break;
-    case "/register-user":
-      app.appendChild(Navbar());
-      app.appendChild(RegisterPage(FormRegisterUser()));
-      app.appendChild(Footer());
-      LocalStorage();
-      break;
-    case "/login":
-      app.appendChild(Navbar());
-      app.appendChild(RegisterPage(FormLogin()));
-      LocalStorage();
-      break;
-    case "/home":
-      app.appendChild(Navbar());
-      app.appendChild(HomePage());
-      app.appendChild(Footer());
-      LocalStorage();
-      break;
-    case "/contact":
-      app.appendChild(Navbar());
-      app.appendChild(ContactsPage());
-      app.appendChild(BtnEmergency());
-      break;
-    case "/chvg":
-      app.appendChild(Navbar());
-      app.appendChild(violence());
-      app.appendChild(BtnEmergency());
-      app.appendChild(Footer());
-      break;
-    case "/historias":
-      app.appendChild(Navbar());
-      app.appendChild(createHeroSection());
-      app.appendChild(BtnEmergency());
-      app.appendChild(Footer());
-      break;
-    case "/foros":
-      app.appendChild(Navbar());
-      app.appendChild(Footer());
-      break;
-    case "/manos-unidas":
-      app.appendChild(Navbar());
-      app.appendChild(ManosUnidas());
-      app.appendChild(forop());
-      app.appendChild(BtnEmergency());
-      app.appendChild(Footer());
-      break;
-    case "/profile":
-      app.appendChild(Navbar());
-      app.appendChild(Perfil());
-      app.appendChild(Footer());
-      break;
-    case "/contactanos":
-      app.appendChild(Navbar());
-      app.appendChild(formContacts());
-      app.appendChild(Footer());
-      break;
-    case "/articulos":
-      app.appendChild(Navbar());
-      app.appendChild(articulos());
-      app.appendChild(Footer());
-      break;
-    case "/articulo-fisica":
-      app.appendChild(Navbar());
-      app.appendChild(artFisco());
-      app.appendChild(Footer());
-      break;
-    case "/articulo-psicologico":
-      app.appendChild(Navbar());
-      app.appendChild(artPsico());
-      app.appendChild(Footer());
-      break;
-    case "/articulo-abuso":
-      app.appendChild(Navbar());
-      app.appendChild(artAbuso());
-      app.appendChild(Footer());
-      break;
-    case "/art":
-      app.appendChild(Navbar()); //renderiza un nadvar distinto a los otros
-      app.appendChild(articulos());
-      app.appendChild(Footer()); //no renderiza
-      break;
+    };
+
+    await renderPage();
+
+  } catch (error) {
+    console.error("Error al inicializar la aplicación:", error);
   }
 });

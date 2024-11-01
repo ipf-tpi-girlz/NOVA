@@ -74,6 +74,7 @@ export const updateUser = async (req, res) => {
   const id = user.id;
   const { nombre, departamento, localidad, nro_telefono, direccion, especialidad } = req.body;
 
+  console.log(nombre, departamento, localidad, nro_telefono, direccion, especialidad)
   console.log("Campo de archivo:", JSON.stringify(req.file));
   console.log("Campos del formulario:", JSON.stringify(req.body));
 
