@@ -17,7 +17,7 @@ export const artFisco = () => {
 
   // Header del artículo
   const header = document.createElement("header");
-  header.classList.add("bg-red-600", "text-white", "p-10", "relative");
+  header.classList.add("bg-base-200", "p-10", "relative");
 
   const overlay = document.createElement("div");
   overlay.classList.add(
@@ -46,7 +46,7 @@ export const artFisco = () => {
   headerContent.appendChild(h1);
 
   const headerParagraph = document.createElement("p");
-  headerParagraph.classList.add("text-xl", "text-white");
+  headerParagraph.classList.add("text-xl");
   headerParagraph.innerText =
     "Exploramos cómo identificar, prevenir y apoyar en casos de violencia física ";
   headerContent.appendChild(headerParagraph);
@@ -71,13 +71,7 @@ export const artFisco = () => {
 
   // Agregar el subtítulo ¿Qué es y Cómo Identificarla?
   const subtitle1 = document.createElement("h2");
-  subtitle1.classList.add(
-    "text-3xl",
-    "font-bold",
-    "mt-10",
-    "mb-6",
-    "text-red-900"
-  );
+  subtitle1.classList.add("text-3xl", "font-bold", "mt-10", "mb-6");
   subtitle1.innerText = "¿Qué es y Cómo Identificarla?";
   mainContent.appendChild(subtitle1);
 
@@ -89,13 +83,7 @@ export const artFisco = () => {
 
   // Agregar el subtítulo Impacto y Consecuencias
   const subtitle2 = document.createElement("h2");
-  subtitle2.classList.add(
-    "text-3xl",
-    "font-bold",
-    "mt-10",
-    "mb-6",
-    "text-red-900"
-  );
+  subtitle2.classList.add("text-3xl", "font-bold", "mt-10", "mb-6");
   subtitle2.innerText = "Impacto y Consecuencias";
   mainContent.appendChild(subtitle2);
 
@@ -107,13 +95,7 @@ export const artFisco = () => {
 
   // Sección Medidas de Prevención
   const subtitle3 = document.createElement("h2");
-  subtitle3.classList.add(
-    "text-3xl",
-    "font-bold",
-    "mt-10",
-    "mb-6",
-    "text-red-900"
-  );
+  subtitle3.classList.add("text-3xl", "font-bold", "mt-10", "mb-6");
   subtitle3.innerText = "Medidas de Prevención";
   mainContent.appendChild(subtitle3);
 
@@ -137,7 +119,13 @@ export const artFisco = () => {
     li.classList.add("flex", "items-center", "mb-4");
 
     const iconContainer = document.createElement("span");
-    iconContainer.classList.add("bg-red-600", "rounded-full", "p-2", "mr-4");
+    iconContainer.classList.add(
+      "bg-base-200",
+      "shadow",
+      "rounded-full",
+      "p-2",
+      "mr-4"
+    );
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "w-6 h-6 text-white");
@@ -156,7 +144,7 @@ export const artFisco = () => {
     li.appendChild(iconContainer);
 
     const itemText = document.createElement("span");
-    itemText.classList.add("text-lg", "text-black");
+    itemText.classList.add("text-lg");
     itemText.innerText = item;
     li.appendChild(itemText);
 
@@ -166,13 +154,7 @@ export const artFisco = () => {
 
   // Sección Recursos en Formosa
   const subtitle4 = document.createElement("h2");
-  subtitle4.classList.add(
-    "text-3xl",
-    "font-bold",
-    "mt-10",
-    "mb-6",
-    "text-red-900"
-  );
+  subtitle4.classList.add("text-3xl", "font-bold", "mt-10", "mb-6");
   subtitle4.innerText = "Recursos en Formosa";
   mainContent.appendChild(subtitle4);
 
@@ -196,7 +178,13 @@ export const artFisco = () => {
     li.classList.add("flex", "items-center", "mb-4");
 
     const iconContainer = document.createElement("span");
-    iconContainer.classList.add("bg-red-600", "rounded-full", "p-2", "mr-4");
+    iconContainer.classList.add(
+      "bg-base-200",
+      "shadow",
+      "rounded-full",
+      "p-2",
+      "mr-4"
+    );
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "w-6 h-6 text-white");
@@ -215,7 +203,7 @@ export const artFisco = () => {
     li.appendChild(iconContainer);
 
     const itemText = document.createElement("span");
-    itemText.classList.add("text-lg", "text-black");
+    itemText.classList.add("text-lg");
     itemText.innerText = item;
     li.appendChild(itemText);
 

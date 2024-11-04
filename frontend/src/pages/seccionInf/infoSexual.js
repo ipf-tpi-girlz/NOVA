@@ -38,7 +38,7 @@ export const articuloVioSex = () => {
   headerContent.appendChild(title);
 
   const subtitle = document.createElement("p");
-  subtitle.className = "text-xl text-purple-200";
+  subtitle.className = "text-xl ";
   subtitle.textContent =
     "Explorando una forma grave de violación de los derechos humanos";
   headerContent.appendChild(subtitle);
@@ -50,26 +50,26 @@ export const articuloVioSex = () => {
 
   // Agrega párrafo de introducción
   const intro = document.createElement("p");
-  intro.className = "text-lg text-gray-700 mb-6 leading-relaxed";
+  intro.className = "text-lg mb-6 leading-relaxed";
   intro.textContent =
     "La violencia sexual es una de las formas más graves de violación de los derechos humanos. Afecta profundamente la dignidad y la integridad de quienes la sufren, y tiene consecuencias devastadoras a nivel físico, emocional y social. En este artículo, exploraremos qué es la violencia sexual, cómo identificarla, medidas de prevención y recursos disponibles en la provincia de Formosa, Argentina.";
   content.appendChild(intro);
 
   // Agrega el título y la descripción de "¿Qué es la Violencia Sexual?"
   const section1Title = document.createElement("h2");
-  section1Title.className = "text-3xl font-bold mt-10 mb-6 text-purple-800";
+  section1Title.className = "text-3xl font-bold mt-10 mb-6 ";
   section1Title.textContent = "¿Qué es la Violencia Sexual?";
   content.appendChild(section1Title);
 
   const section1Desc = document.createElement("p");
-  section1Desc.className = "text-lg text-gray-700 mb-6 leading-relaxed";
+  section1Desc.className = "text-lg  mb-6 leading-relaxed";
   section1Desc.textContent =
     "La violencia sexual se define como cualquier acto de naturaleza sexual que se comete contra una persona sin su consentimiento. Incluye una amplia gama de comportamientos, como el acoso, la agresión, la violación, la explotación sexual y el abuso sexual infantil. La Organización Mundial de la Salud (OMS) señala que la violencia sexual no solo ocurre en el ámbito de pareja, sino también en entornos comunitarios, laborales y familiares. En Argentina, la Ley N° 26.485 para Prevenir, Sancionar y Erradicar la Violencia contra las Mujeres, reconoce la violencia sexual como una forma de violencia de género.";
   content.appendChild(section1Desc);
 
   // Agrega la lista de "Cómo Identificar la Violencia Sexual"
   const section2Title = document.createElement("h2");
-  section2Title.className = "text-3xl font-bold mt-10 mb-6 text-purple-800";
+  section2Title.className = "text-3xl font-bold mt-10 mb-6 ";
   section2Title.textContent = "Cómo Identificar la Violencia Sexual";
   content.appendChild(section2Title);
 
@@ -103,7 +103,7 @@ export const articuloVioSex = () => {
     iconContainer.appendChild(icon);
 
     const text = document.createElement("span");
-    text.className = "text-lg text-gray-700";
+    text.className = "text-lg ";
     text.textContent = item;
     listItem.appendChild(text);
 
@@ -112,7 +112,7 @@ export const articuloVioSex = () => {
 
   // Agrega el impacto de la violencia sexual
   const section3Title = document.createElement("h2");
-  section3Title.className = "text-3xl font-bold mt-10 mb-6 text-purple-800";
+  section3Title.className = "text-3xl font-bold mt-10 mb-6 ";
   section3Title.textContent = "Impacto de la Violencia Sexual";
   content.appendChild(section3Title);
 

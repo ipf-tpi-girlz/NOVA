@@ -1,6 +1,5 @@
 import { $themeLabel } from "./themeButton";
-import { checkSession } from '../api/auth.js'
-
+import { checkSession } from "../api/auth.js";
 
 export const Navbar = () => {
   const navbar = document.createElement("nav");
@@ -84,7 +83,7 @@ export const Navbar = () => {
     }
     const forums = createLink("/foros", "Foros");
     const histories = createLink("/historias", "Historias");
-    const articles = createLink("/chvg", "Artículos");
+    const articles = createLink("/articulos", "Artículos");
     const prof = createLink("/contact", "Profesionales");
 
     //Boton de cerrar sesión

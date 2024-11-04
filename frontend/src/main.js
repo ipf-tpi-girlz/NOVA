@@ -22,9 +22,9 @@ import { createHeroSection } from "./components/post";
 import { ContactsPage } from "./pages/contacsUsuario.js";
 import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
-import { Perfil } from './pages/profileUser.js';
+import { Perfil } from "./pages/profileUser.js";
 import { checkSession } from "./api/auth.js";
-import { formContacts } from "./pages/form.contacts.js"
+import { formContacts } from "./pages/form.contacts.js";
 
 import { articuloVioSex } from "./pages/seccionInf/infoSexual.js";
 import { artFisco } from "./pages/seccionInf/artFisico.js";
@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = "/home";
     return;
   }
-
 
   const app = document.getElementById("app");
   themeChange();
@@ -82,9 +81,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       app.appendChild(ContactsPage());
       app.appendChild(BtnEmergency());
       break;
-    case "/chvg":
+    case "/articulos":
       app.appendChild(Navbar());
-      app.appendChild(violence());
+      app.appendChild(articulos());
       app.appendChild(BtnEmergency());
       app.appendChild(Footer());
       break;
