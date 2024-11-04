@@ -74,7 +74,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(Footer());
           break;
         case "/contact":
-          app.appendChild(ContactsPage());
+          const contactsPage = await ContactsPage(); // Aquí se llama a la función correctamente
+          app.appendChild(contactsPage);
           app.appendChild(BtnEmergency());
           break;
         case "/chvg":

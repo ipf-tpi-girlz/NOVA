@@ -1,6 +1,37 @@
 
 const BASEURL = "http://localhost:4000";
 
+
+export const profileProf = async () => {
+    try {
+        const response = await fetch(`${BASEURL}/auth/profesionales`)
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Error al mostrar los perfiles");
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Error en la actualización del perfil:", error);
+        throw error;
+    }
+}
+
+// auth.js
+export const profileProfID = async (id) => {
+    try {
+        const response = await fetch(`${BASEURL}/auth/profile/${id}`);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Error al mostrar los perfiles");
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Error en la actualización del perfil:", error);
+        throw error;
+    }
+};
+
+
 // Función para actualizar el perfil
 export const updateProfile = async (formData) => {
     try {
@@ -44,6 +75,7 @@ export const getUserProfile = async () => {
         throw error;
     }
 };
+
 
 export const updatePassword = async (data) => {
     try {

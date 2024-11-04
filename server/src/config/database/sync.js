@@ -16,8 +16,8 @@ import Mensaje from "../../models/message.js";
 export const syncTables = async () => {
   try {
     // Usuario -> Perfil (One-to-One)
-    Usuario.hasOne(Perfil, { foreignKey: "usuario_id" });
-    Perfil.belongsTo(Usuario, { foreignKey: "usuario_id" });
+    Usuario.hasOne(Perfil, { foreignKey: "usuario_id", as: 'perfil' });
+    Perfil.belongsTo(Usuario, { foreignKey: "usuario_id", as: 'usuario' });
 
     // Usuario -> Publicacion (One-to-Many)
     Usuario.hasMany(Publicacion, { foreignKey: "usuario_id" });
