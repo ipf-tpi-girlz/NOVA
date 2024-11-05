@@ -1,6 +1,7 @@
-export function ProfessionalCard(name, desc) {
+export function ProfessionalCard(id, name, desc) {
   const card = document.createElement("div");
-  card.className = "card card-compact bg-base-100  bg-cover ";
+  card.className = "card card-compact bg-base-100  bg-cover cursor-pointer";
+  card.id = id;
 
   // Contenido de la tarjeta
   const cardBody = document.createElement("div");
