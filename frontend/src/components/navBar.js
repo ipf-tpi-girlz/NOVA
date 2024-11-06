@@ -1,5 +1,5 @@
 import { $themeLabel } from "./themeButton";
-import { isAuthenticated } from "../api/auth";
+import { checkSession } from "../api/auth.js";
 
 export const Navbar = () => {
   const navbar = document.createElement("nav");
@@ -69,7 +69,7 @@ export const Navbar = () => {
   );
 
   // Valida si el usuario inició sesión
-  if (isAuthenticated()) {
+  if (checkSession()) {
     //Funcion para crear link para el menu
     function createLink(link, text) {
       const li = document.createElement("li");
@@ -83,7 +83,7 @@ export const Navbar = () => {
     }
     const forums = createLink("/foros", "Foros");
     const histories = createLink("/historias", "Historias");
-    const articles = createLink("/chvg", "Artículos");
+    const articles = createLink("/articulos", "Artículos");
     const prof = createLink("/contact", "Profesionales");
 
     //Boton de cerrar sesión

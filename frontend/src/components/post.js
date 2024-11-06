@@ -1,10 +1,6 @@
 import Swal from "sweetalert2";
-import {
-  fetchGetForos,
-  fetchCreateForo,
-  fetchUpdateForo,
-  fetchDeleteForo,
-} from "../api/foro";
+import { fetchUpdateForo, fetchDeleteForo } from "../api/foro";
+import { notification } from "antd";
 
 const frases = [
   {
@@ -38,7 +34,8 @@ export const createHeroSection = () => {
     "items-center",
     "px-5",
     "md:px-25",
-    "md:-10"
+    "md:-10",
+    "h-min-screen"
   );
   let cardcount = 0;
 
@@ -53,7 +50,7 @@ export const createHeroSection = () => {
   titleSection.textContent = "Historias";
 
   const heroContent = document.createElement("div");
-  heroContent.classList.add("text-center", "w-full", "p-4");
+  heroContent.classList.add("text-center", "w-full", "p-4", "h-min-screen");
 
   // Botón para crear foro
   const createPostButton = document.createElement("button");
@@ -97,15 +94,20 @@ export const createHeroSection = () => {
           });
 
           if (!response.ok) {
-            throw new Error(`HTTP ERROR! Status: ${response.status}`);
+            notification.error({
+              message: "Se produjo un error al crear la publicacion",
+              description:
+                response.message || "Por favor, verifica tus credenciales.",
+            });
           }
 
           const data = await response.json();
-          Swal.fire({
-            icon: "success",
-            title: "¡Post creado!",
-            text: `Se ha creado el Post!`,
+
+          notification.success({
+            message: "La publicacion ha sido creada exitosamente",
+            description: response.message,
           });
+          notification.className = "bg-base-200";
 
           loadForos();
         } catch (error) {
@@ -122,7 +124,7 @@ export const createHeroSection = () => {
 
   const forumsContainer = document.createElement("div");
   forumsContainer.className =
-    "grid grid-cols-1 gap-9  md:grid-cols-3 mt-5 w-full ";
+    "grid grid-cols-1 gap-9  md:grid-cols-3 mt-5 w-full h-min-screen";
 
   const loadForos = async () => {
     try {
@@ -253,12 +255,11 @@ export const createHeroSection = () => {
                   "El foro ha sido eliminado.",
                   "success"
                 );
-
-                // Eliminar la carta del foro del DOM
-                forumCard.remove(); // Esto elimina la carta del foro inmediatamente
+                forumCard.remove();
               } catch (error) {
                 Swal.fire("Error", "No se pudo eliminar el foro", "error");
               }
+            } else {
             }
           });
         });
