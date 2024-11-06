@@ -18,17 +18,29 @@ export const BtnEmergency = () => {
 
   //contenido
   const title = document.createElement("h1");
-  title.className = "text-2xl mb-1 p-6";
-  title.textContent = "Red de contencion";
+  title.className = "text-2xl mb-1 p-2 font-serif";
+  title.textContent = "¿Necesitas ayuda?";
 
   const subTitle = document.createElement("h2");
-  subTitle.className = "text-sm mb-3 ";
+  subTitle.className = "text-sm mb-3 font-serif";
   subTitle.textContent = "Estamos aqui para escucharte";
 
   const helpBtn = document.createElement("button");
   helpBtn.className = "btn bg-pink-200 items-center hover:bg-pink-400 w-96";
   helpBtn.innerHTML = `<span class = "material-symbols-rounded ">favorite</span> Necesito ayuda ahora `;
   // helpBtn.addEventListener(click );
+
+  const recursos = document.createElement("div");
+  recursos.className = "flex justify-center center mt-4";
+  const message = document.createElement("p");
+  message.innerHTML = `<span class = "material-symbols-rounded ">Chat_Bubble</span> Contactanos`;
+
+  const llamada = document.createElement("p");
+  llamada.innerHTML = `<span class = "material-symbols-rounded ">phone_in_talk</span>Linea 144`;
+
+  recursos.appendChild(llamada);
+  recursos.appendChild(message);
+
   const modalBackdrop = document.createElement("form");
   modalBackdrop.method = "dialog";
   modalBackdrop.className = "modal-backdrop";
@@ -49,7 +61,7 @@ export const BtnEmergency = () => {
   modalBox.appendChild(title);
   modalBox.appendChild(subTitle);
   modalBox.appendChild(helpBtn);
-
+  modalBox.appendChild(recursos);
   modalBackdrop.appendChild(modalBackdropBtn);
 
   modal.appendChild(modalBox);
