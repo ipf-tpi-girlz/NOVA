@@ -11,6 +11,7 @@ import {
   Footer,
   FormLogin,
   FormRegisterUser,
+  FormRegisterProf,
   BtnEmergency,
 } from "./components";
 
@@ -24,15 +25,14 @@ import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
 import { Perfil } from './pages/profileUser.js';
 import { checkSession } from "./api/auth.js";
-import { formContacts } from "./pages/form.contacts.js"
-
+import { formContacts } from "./pages/form.contacts.js";
 import { artFisco } from "./pages/seccionInf/artFisico.js";
 import { artPsico } from "./pages/seccionInf/artPsico.js";
 import { artAbuso } from "./pages/seccionInf/artAbuso.js";
 import { articulos } from "./pages/seccionInf/seccionArticulos.js";
 
 // Rutas públicas
-const publicRoutes = ["/", "/register-user", "/login"];
+const publicRoutes = ["/", "/register-user", "/login", "/registrar-profesional"];
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -52,7 +52,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const app = document.getElementById("app");
     themeChange();
 
-    // Renderizado de Navbar y componentes según la ruta
     const renderPage = async () => {
       const navbar = await Navbar();
       app.appendChild(navbar);
@@ -74,14 +73,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(Footer());
           break;
         case "/contact":
-          const contactsPage = await ContactsPage(); // Aquí se llama a la función correctamente
+          const contactsPage = await ContactsPage();
           app.appendChild(contactsPage);
           app.appendChild(BtnEmergency());
-          break;
-        case "/chvg":
-          app.appendChild(violence());
-          app.appendChild(BtnEmergency());
-          app.appendChild(Footer());
           break;
         case "/historias":
           app.appendChild(createHeroSection());
@@ -106,6 +100,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(Footer());
           break;
         case "/articulos":
+          ;
           app.appendChild(articulos());
           app.appendChild(Footer());
           break;
@@ -120,6 +115,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         case "/articulo-abuso":
           app.appendChild(artAbuso());
           app.appendChild(Footer());
+          break;
+        case "/registrar-profesional":
+          app.appendChild(FormRegisterProf());
           break;
         case "/art":
           app.appendChild(articulos());

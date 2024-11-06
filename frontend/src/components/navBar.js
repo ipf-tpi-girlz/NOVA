@@ -4,7 +4,7 @@ import { checkSession } from '../api/auth.js';
 export const Navbar = async () => {
   const isAuthenticated = await checkSession().catch(error => {
     console.error("Error al verificar sesión:", error);
-    return false; // Devuelve `false` si ocurre un error en `checkSession`
+    return false;
   });
 
   console.log("Estado de autenticación:", isAuthenticated);
@@ -86,7 +86,7 @@ export const Navbar = async () => {
 
     const forums = createLink("/foros", "Foros");
     const histories = createLink("/historias", "Historias");
-    const articles = createLink("/chvg", "Artículos");
+    const articles = createLink("/articulos", "Artículos");
     const prof = createLink("/contact", "Profesionales");
 
     const profile = document.createElement("button");

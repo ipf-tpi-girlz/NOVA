@@ -1,4 +1,6 @@
-import { profileProfID } from "../api/auth.js"; // Asegúrate de que la importación esté correcta
+import { profileProfID } from "../api/auth.js";
+import bg from '../assets/vacio_perfil.jfif'
+
 
 export const ProfessionalCard = (nombre, desc, especialidad, usuario_id) => {
   const card = document.createElement("div");
@@ -30,16 +32,15 @@ export const ProfessionalCard = (nombre, desc, especialidad, usuario_id) => {
 const showProfileDetail = async (id) => {
   try {
     const profileData = await profileProfID(id);
-    displayProfile(profileData[0]); // Asegúrate de que estás enviando el primer objeto del array
+    displayProfile(profileData[0]);
   } catch (error) {
     console.error("Error al mostrar el perfil:", error);
   }
 };
 
 const displayProfile = (profileData) => {
-  // Seleccionar o crear el contenedor donde se mostrará el perfil
   let previewContainer = document.getElementById("previewContainer");
-  previewContainer.className = "profile-preview bg-white w-full max-w-2xl shadow-md p-6 rounded-lg max-w-md mx-auto";
+  previewContainer.className = "profile-preview shadow-md p-6 rounded-lg";
   if (!previewContainer) {
     previewContainer = document.createElement("div");
     previewContainer.id = "previewContainer";
@@ -47,74 +48,123 @@ const displayProfile = (profileData) => {
     document.body.appendChild(previewContainer);
   }
 
-  // Limpiar el contenido previo
   previewContainer.innerHTML = '';
 
-  // Crear un contenedor para la imagen y el nombre
   const headerContainer = document.createElement("div");
   headerContainer.className = "flex items-start mb-4";
+  const img = document.createElement("div");
+  const datos = document.createElement("div");
 
-  // Añadir la imagen
+  // Crear la imagen de perfil
   const profileImg = document.createElement("img");
-  profileImg.src = profileData.img;
-  profileImg.alt = `${profileData.nombre}'s profile image`;
-  profileImg.className = "w-24 h-24 rounded-full mr-4";
+  profileImg.src = profileData.img?.trim() ? profileData.img : bg;
+  profileImg.className = "w-32 h-32 md:w-48 md:h-48 rounded-full object-cover border-4 border-purple-500 shadow-md mr-4";
 
-  // Añadir el nombre
+
+  const profileDesc = document.createElement("p");
+  profileDesc.className = "text-gray-600";
+  profileDesc.textContent = `${profileData.perfil.descripcion || "Sin descripción"}`;
+
+  // Nombre del perfil
   const profileName = document.createElement("h2");
-  profileName.className = "text-xl font-bold text-gray-800";
+  profileName.className = "text-2xl font-bold text-gray-800 flex items-center";
   profileName.textContent = profileData.nombre;
 
-  // Agregar la imagen y el nombre al contenedor
-  headerContainer.appendChild(profileImg);
-  headerContainer.appendChild(profileName);
+
+  img.appendChild(profileImg);
+  datos.appendChild(profileName);
+  datos.appendChild(profileDesc);
+
+  // Añadir las partes a la cabecera
+  headerContainer.appendChild(img);
+  headerContainer.appendChild(datos);
+
   previewContainer.appendChild(headerContainer);
 
-  // Crear un contenedor para el resto de la información
+  // Información adicional del perfil
   const infoContainer = document.createElement("div");
-  infoContainer.className = "text-gray-700";
+  infoContainer.className = "text-gray-700 mb-4 flex flex-col gap-2";
 
-  // Añadir el género
+  const aboutMeConteiner = document.createElement("div");
+  aboutMeConteiner.className = "mb-4";
+  const aboutMeTitle = document.createElement("h3");
+  aboutMeTitle.className = "text-lg font-medium mb-2";
+  aboutMeTitle.textContent = "Sobre mí";
+  aboutMeConteiner.appendChild(aboutMeTitle);
+
+  const sectionUbi = document.createElement("div");
+  sectionUbi.className = "mb-4";
+  const ubicacionTitle = document.createElement("h3");
+  ubicacionTitle.className = "text-lg font-medium mb-2";
+  ubicacionTitle.textContent = "Ubicación";
+  sectionUbi.appendChild(ubicacionTitle);
+
+  const contactContainer = document.createElement("div");
+  contactContainer.className = "mb-4";
+  const contactTitle = document.createElement("h3");
+  contactTitle.className = "text-lg font-medium mb-2";
+  contactTitle.textContent = "Contactos";
+  contactContainer.appendChild(contactTitle);
+
   const profileGender = document.createElement("p");
+  profileGender.className = "text-gray-600";
   profileGender.textContent = `Género: ${profileData.genero}`;
 
-  // Añadir el departamento
   const profileDepartment = document.createElement("p");
-  profileDepartment.textContent = `Departamento: ${profileData.departamento}`;
+  profileDepartment.className = "text-gray-600";
+  profileDepartment.textContent = `Departamento: ${profileData.departamento ?? "-"}`;
 
-  // Añadir la localidad
   const profileLocation = document.createElement("p");
-  profileLocation.textContent = `Localidad: ${profileData.localidad}`;
+  profileLocation.className = "text-gray-600";
+  profileLocation.textContent = `Localidad: ${profileData.localidad ?? "-"}`;
 
-  // Añadir la descripción
-  const profileDesc = document.createElement("p");
-  profileDesc.textContent = `Descripción: ${profileData.perfil.descripcion}`;
+  const profileDirection = document.createElement("p");
+  profileDirection.className = "text-gray-600";
+  profileDirection.textContent = `Dirección: ${profileData.perfil.direccion ?? "-"}`;
 
-  // Añadir el número de teléfono
   const profilePhone = document.createElement("p");
-  profilePhone.textContent = `Teléfono: ${profileData.perfil.nro_telefono}`;
+  profilePhone.className = "text-gray-600";
+  profilePhone.textContent = `Teléfono: ${profileData.perfil.nro_telefono ?? "-"}`;
 
-  // Añadir la especialidad
   const profileEspecialidad = document.createElement("p");
-  profileEspecialidad.textContent = `Especialidad: ${profileData.perfil.especialidad}`;
+  profileEspecialidad.className = "text-gray-600";
+  profileEspecialidad.textContent = `Especialidad: ${profileData.perfil.especialidad ?? "-"}`;
 
-  // Añadir el modo de atención
   const profileAtencion = document.createElement("p");
-  profileAtencion.textContent = `Modo de Atención: ${profileData.perfil.modo_atencion}`;
+  profileAtencion.className = "text-gray-600";
+  profileAtencion.textContent = `Modo de Atención: ${profileData.perfil.modo_atencion ?? "-"}`;
+
+  const atencionConteiner = document.createElement("div");
+  atencionConteiner.className = "mb-4";
+  const atencionTitle = document.createElement("h3");
+  atencionTitle.className = "text-lg font-medium mb-2";
+  atencionTitle.textContent = "Modo de Atención";
+  atencionConteiner.appendChild(atencionTitle);
+
+  atencionConteiner.appendChild(profileAtencion);
+  aboutMeConteiner.appendChild(profileGender);
+  aboutMeConteiner.appendChild(profileEspecialidad);
+
+  sectionUbi.appendChild(profileDepartment);
+  sectionUbi.appendChild(profileLocation);
+  sectionUbi.appendChild(profileDirection);
+
+  contactContainer.appendChild(profilePhone);
 
 
-  // Añadir la fecha de registro
-  const profileDate = document.createElement("p");
-  profileDate.textContent = `Fecha de Registro: ${new Date(profileData.fecha_registro).toLocaleDateString()}`;
-  // Agregar todos los elementos al contenedor de información
-  infoContainer.appendChild(profileGender);
-  infoContainer.appendChild(profileDepartment);
-  infoContainer.appendChild(profileLocation);
-  infoContainer.appendChild(profileDesc);
-  infoContainer.appendChild(profilePhone);
-  infoContainer.appendChild(profileEspecialidad);
-  infoContainer.appendChild(profileAtencion);
-  infoContainer.appendChild(profileDate);
-  // Añadir el contenedor de información al contenedor principal
+
+  infoContainer.appendChild(aboutMeConteiner);
+  infoContainer.appendChild(sectionUbi);
+  infoContainer.appendChild(contactContainer);
+  infoContainer.appendChild(atencionConteiner);
+
+  const button = document.createElement("button");
+  button.className = "flex justify-center btn btn-primary ";
+  button.textContent = "Contactar";
+
+  const buttonContainer = document.createElement("div");
+  buttonContainer.className = "mt-4 flex justify-end";
+  buttonContainer.appendChild(button);
+  infoContainer.appendChild(buttonContainer);
   previewContainer.appendChild(infoContainer);
 };

@@ -7,7 +7,7 @@ export const ContactsPage = async () => {
   main.classList.add("flex", "flex-col");
 
   const interfazProfesionales = document.createElement("div");
-  interfazProfesionales.className = "flex bg-base-200 shadow-xl mx-12 mt-8 p-5 rounded-3xl";
+  interfazProfesionales.className = "flex flex-grow h-screen bg-base-200 shadow-xl mx-12 mt-8 p-5 rounded-3xl m-5";
 
   const containerProfesionales = document.createElement("div");
   containerProfesionales.className = "max-w-xl";
@@ -19,7 +19,6 @@ export const ContactsPage = async () => {
   const profesional = document.createElement("div");
   profesional.className = "flex flex-col justify-content mb-2 gap-2 overflow-auto max-h-[64vh]";
 
-  // Obtener perfiles desde la API
   try {
     const profiles = await profileProf();
     profiles.forEach(profile => {
@@ -31,6 +30,9 @@ export const ContactsPage = async () => {
     console.error("Error al cargar perfiles:", error);
   }
 
+  const divider = document.createElement("div");
+  divider.className = "divider lg:divider-horizontal";
+
   containerProfesionales.appendChild(containertitle);
   containerProfesionales.appendChild(profesional);
 
@@ -39,8 +41,10 @@ export const ContactsPage = async () => {
   previewContainer.className = "w-full flex items-center justify-center mt-4";
 
   interfazProfesionales.appendChild(containerProfesionales);
-  interfazProfesionales.appendChild(previewContainer); // Contenedor para mostrar detalles
+  interfazProfesionales.appendChild(divider);
+  interfazProfesionales.appendChild(previewContainer);
   main.appendChild(interfazProfesionales);
+
   main.appendChild(Footer());
 
   return main;
