@@ -1,19 +1,21 @@
-import { DataTypes } from '../config/database/db.js';
-import { sequelize } from '../config/database/db.js';
-import Usuario from './users.js';
+import { DataTypes } from "../config/database/db.js";
+import { sequelize } from "../config/database/db.js";
+import Usuario from "./users.js";
 
-const Perfil = sequelize.define('Perfil', {
+const Perfil = sequelize.define(
+  "Perfil",
+  {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
     usuario_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Usuario,
-            key: 'id',
-        },
+      type: DataTypes.INTEGER,
+      references: {
+        model: Usuario,
+        key: "id",
+      },
     },
     descripcion: DataTypes.TEXT,
     nro_telefono: DataTypes.TEXT,
@@ -24,9 +26,11 @@ const Perfil = sequelize.define('Perfil', {
     modo_atencion: DataTypes.TEXT,
     servi: DataTypes.TEXT,
     especialidad: DataTypes.TEXT,
-}, {
-    modelName: 'Perfil',
-    freezeTableName: true
-});
+  },
+  {
+    modelName: "Perfil",
+    freezeTableName: true,
+  }
+);
 
 export default Perfil;

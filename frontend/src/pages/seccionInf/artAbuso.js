@@ -17,7 +17,7 @@ export const artAbuso = () => {
 
   // Header del artículo
   const header = document.createElement("header");
-  header.classList.add("bg-red-600", "text-white", "p-10", "relative");
+  header.classList.add("bg-base-200", "p-10", "relative");
 
   const overlay = document.createElement("div");
   overlay.classList.add(
@@ -47,7 +47,7 @@ export const artAbuso = () => {
   headerContent.appendChild(h1);
 
   const headerParagraph = document.createElement("p");
-  headerParagraph.classList.add("text-xl", "text-white");
+  headerParagraph.classList.add("text-xl");
   headerParagraph.innerText =
     "Explorando una forma grave de violación de los derechos humanos";
   headerContent.appendChild(headerParagraph);
@@ -60,25 +60,14 @@ export const artAbuso = () => {
   mainContent.classList.add("p-8", "md:p-12");
 
   const mainParagraph = document.createElement("p");
-  mainParagraph.classList.add(
-    "text-lg",
-    "text-black",
-    "mb-6",
-    "leading-relaxed"
-  );
+  mainParagraph.classList.add("text-lg", "mb-6", "leading-relaxed");
   mainParagraph.innerText =
     "La violencia sexual es una de las formas más graves de violación de los derechos humanos. Afecta profundamente la dignidad y la integridad de quienes la sufren, y tiene consecuencias devastadoras a nivel físico, emocional y social. En este artículo, exploraremos qué es la violencia sexual, cómo identificarla, medidas de prevención y recursos disponibles en la provincia de Formosa, Argentina.";
   mainContent.appendChild(mainParagraph);
 
   // Agregar el subtítulo ¿Qué es la Violencia Psicológica?
   const subtitle1 = document.createElement("h2");
-  subtitle1.classList.add(
-    "text-3xl",
-    "font-bold",
-    "mt-10",
-    "mb-6",
-    "text-red-900"
-  );
+  subtitle1.classList.add("text-3xl", "font-bold", "mt-10", "mb-6");
   subtitle1.innerText = "¿Qué es la Violencia Sexual?";
   mainContent.appendChild(subtitle1);
 
@@ -90,13 +79,7 @@ export const artAbuso = () => {
 
   // Agregar lista de indicadores
   const subtitle2 = document.createElement("h2");
-  subtitle2.classList.add(
-    "text-3xl",
-    "font-bold",
-    "mt-10",
-    "mb-6",
-    "text-red-900"
-  );
+  subtitle2.classList.add("text-3xl", "font-bold", "mt-10", "mb-6");
   subtitle2.innerText = "Cómo Identificar la Violencia Sexual";
   mainContent.appendChild(subtitle2);
 
@@ -116,7 +99,7 @@ export const artAbuso = () => {
     listItem.classList.add("flex", "items-center", "mb-4");
 
     const iconContainer = document.createElement("span");
-    iconContainer.classList.add("bg-red-600", "rounded-full", "p-2", "mr-4");
+    iconContainer.classList.add("rounded-full", "p-2", "mr-4");
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "w-6 h-6 text-white");
@@ -135,7 +118,7 @@ export const artAbuso = () => {
     listItem.appendChild(iconContainer);
 
     const itemText = document.createElement("span");
-    itemText.classList.add("text-lg", "text-black");
+    itemText.classList.add("text-lg");
     itemText.innerText = indicator;
     listItem.appendChild(itemText);
 
@@ -147,12 +130,12 @@ export const artAbuso = () => {
 
   // Agrega el impacto de la violencia sexual
   const section3Title = document.createElement("h2");
-  section3Title.className = "text-3xl font-bold mt-10 mb-6 text-purple-800";
+  section3Title.className = "text-3xl font-bold mt-10 mb-6 ";
   section3Title.textContent = "Impacto de la Violencia Sexual";
   content.appendChild(section3Title);
 
   const impactDesc = document.createElement("p");
-  impactDesc.className = "text-lg text-gray-700 mb-6 leading-relaxed";
+  impactDesc.className = "text-lg  mb-6 leading-relaxed";
   impactDesc.textContent =
     "La violencia sexual tiene un impacto profundo en la salud física y emocional de las víctimas:";
   content.appendChild(impactDesc);
@@ -168,13 +151,7 @@ export const artAbuso = () => {
 
   // Sección Medidas de Prevención
   const subtitle3 = document.createElement("h2");
-  subtitle3.classList.add(
-    "text-3xl",
-    "font-bold",
-    "mt-10",
-    "mb-6",
-    "text-red-900"
-  );
+  subtitle3.classList.add("text-3xl", "font-bold", "mt-10", "mb-6");
   subtitle3.innerText = "Prevención de la Violencia Sexual";
   mainContent.appendChild(subtitle3);
 
@@ -199,7 +176,13 @@ export const artAbuso = () => {
     li.classList.add("flex", "items-center", "mb-4");
 
     const iconContainer = document.createElement("span");
-    iconContainer.classList.add("bg-red-600", "rounded-full", "p-2", "mr-4");
+    iconContainer.classList.add(
+      "bg-base-200",
+      "shadow",
+      "rounded-full",
+      "p-2",
+      "mr-4"
+    );
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "w-6 h-6 text-white");
@@ -218,7 +201,7 @@ export const artAbuso = () => {
     li.appendChild(iconContainer);
 
     const itemText = document.createElement("span");
-    itemText.classList.add("text-lg", "text-black");
+    itemText.classList.add("text-lg");
     itemText.innerText = item;
     li.appendChild(itemText);
 
@@ -228,13 +211,7 @@ export const artAbuso = () => {
 
   // Sección Cómo Buscar Ayuda
   const subtitle4 = document.createElement("h2");
-  subtitle4.classList.add(
-    "text-3xl",
-    "font-bold",
-    "mt-10",
-    "mb-6",
-    "text-red-900"
-  );
+  subtitle4.classList.add("text-3xl", "font-bold", "mt-10", "mb-6");
   subtitle4.innerText = "Recursos y Ayuda";
   mainContent.appendChild(subtitle4);
 
@@ -247,8 +224,7 @@ export const artAbuso = () => {
   // Agregar un botón de contacto para ayuda
   const contactButton = document.createElement("button");
   contactButton.classList.add(
-    "bg-red-600",
-    "text-white",
+    "bg-base-200",
     "py-3",
     "px-6",
     "rounded-full",
@@ -280,7 +256,13 @@ export const artAbuso = () => {
     li.classList.add("flex", "items-center", "mb-4");
 
     const iconContainer = document.createElement("span");
-    iconContainer.classList.add("bg-red-600", "rounded-full", "p-2", "mr-4");
+    iconContainer.classList.add(
+      "bg-base-200",
+      "shadow",
+      "rounded-full",
+      "p-2",
+      "mr-4"
+    );
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "w-6 h-6 text-white");
@@ -299,7 +281,7 @@ export const artAbuso = () => {
     li.appendChild(iconContainer);
 
     const itemText = document.createElement("span");
-    itemText.classList.add("text-lg", "text-black");
+    itemText.classList.add("text-lg");
     itemText.innerText = item;
     li.appendChild(itemText);
 

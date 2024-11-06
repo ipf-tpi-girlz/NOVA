@@ -1,29 +1,32 @@
 export const articulos = () => {
-  // Crear estilos
-  const style = document.createElement("style");
-  style.innerHTML = `
-    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
-    body {
-      font-family: "Poppins", sans-serif;
-      background-color: #e6e6fa;
-    }
-    .hidden {
-      display: none;
-    }
-  `;
-  document.head.appendChild(style);
+  document.addEventListener("DOMContentLoaded", function () {
+    // Crear estilos
+    const style = document.createElement("style");
+    style.innerHTML = `
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+        body {
+          font-family: "Poppins", sans-serif;
+          background-color: #e6e6fa;
+        }
+        .hidden {
+          display: none;
+        }
+      `;
+    document.head.appendChild(style);
+  });
 
   // Crear estructura principal
   const contenedorPrincipal = document.createElement("div");
   contenedorPrincipal.className =
-    "contenedorPrincipal bg-gray-100 min-h-screen";
+    "contenedorPrincipal bg-base min-h-screen mt-5";
+  document.body.appendChild(contenedorPrincipal);
 
   const maxWidthContainer = document.createElement("div");
   maxWidthContainer.className = "max-w-5xl mx-auto";
   contenedorPrincipal.appendChild(maxWidthContainer);
 
   const titulo = document.createElement("h1");
-  titulo.className = "text-4xl font-semibold text-center text-red-600 mb-12";
+  titulo.className = "text-4xl font-bold text-center  mb-12";
   titulo.textContent = "Recursos sobre Violencia de Género";
   maxWidthContainer.appendChild(titulo);
 
@@ -39,7 +42,7 @@ export const articulos = () => {
 
   const createButton = document.createElement("button");
   createButton.className =
-    "bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition";
+    "button bg-base-200 relative shadow px-4 py-2 rounded-md hover:bg-pink-200 transition";
   createButton.textContent = "Crear Artículo";
   createButton.onclick = openCreateArticleModal;
   buttonContainer.appendChild(createButton);
@@ -52,11 +55,11 @@ export const articulos = () => {
   document.body.appendChild(createArticleModal);
 
   const modalContent = document.createElement("div");
-  modalContent.className = "bg-white rounded-xl p-6 max-w-md w-full";
+  modalContent.className = "bg-white rounded-xl p-6 max-w-md w-full g-4";
   createArticleModal.appendChild(modalContent);
 
   const modalTitle = document.createElement("h2");
-  modalTitle.className = "text-2xl font-semibold text-red-600 mb-4";
+  modalTitle.className = "text-2xl font-semibold  mb-4";
   modalTitle.textContent = "Nuevo Artículo";
   modalContent.appendChild(modalTitle);
 
@@ -64,26 +67,25 @@ export const articulos = () => {
   titleInput.id = "newArticleTitle";
   titleInput.type = "text";
   titleInput.placeholder = "Título del artículo";
-  titleInput.className = "w-full mb-4 p-2 border border-gray-300 rounded";
+  titleInput.className = " input w-full mb-4 p-2 border  rounded";
   modalContent.appendChild(titleInput);
 
   const contentTextarea = document.createElement("textarea");
   contentTextarea.id = "newArticleContent";
   contentTextarea.placeholder = "Descripción del artículo";
-  contentTextarea.className =
-    "w-full mb-4 p-2 border border-gray-300 rounded";
+  contentTextarea.className = "input w-full mb-4 p-2 border  rounded";
   contentTextarea.rows = 4;
   modalContent.appendChild(contentTextarea);
 
   const publishButton = document.createElement("button");
   publishButton.className =
-    "bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition";
+    "bg-base-200 relative  px-4 py-2 rounded-md hover:bg-pink-200 transition";
   publishButton.textContent = "Publicar";
   publishButton.onclick = publishArticle;
   modalContent.appendChild(publishButton);
 
   const cancelButton = document.createElement("button");
-  cancelButton.className = "text-gray-500 mt-4 hover:underline";
+  cancelButton.className = " mt-4 hover:underline ml-4";
   cancelButton.textContent = "Cancelar";
   cancelButton.onclick = closeCreateArticleModal;
   modalContent.appendChild(cancelButton);
@@ -93,8 +95,7 @@ export const articulos = () => {
     {
       id: 1,
       title: "Comprendiendo la Violencia Psicológica",
-      content:
-        "Conoce cómo identificar y enfrentar la violencia psicológica.",
+      content: "Conoce cómo identificar y enfrentar la violencia psicológica.",
       redirectUrl: "/articulo-psicologico",
     },
     {
@@ -113,8 +114,7 @@ export const articulos = () => {
     {
       id: 4,
       title: "Recursos de Ayuda y Apoyo",
-      content:
-        "Accede a recursos de ayuda y apoyo para víctimas de violencia.",
+      content: "Accede a recursos de ayuda y apoyo para víctimas de violencia.",
       redirectUrl: "/ayuda",
     },
   ];
@@ -124,18 +124,18 @@ export const articulos = () => {
     card.className = "bg-white rounded-xl shadow-md p-6";
 
     const cardTitle = document.createElement("h2");
-    cardTitle.className = "text-xl font-semibold text-red-600 mb-2";
+    cardTitle.className = "text-xl font-semibold  mb-2";
     cardTitle.textContent = article.title;
     card.appendChild(cardTitle);
 
     const cardContent = document.createElement("p");
-    cardContent.className = "text-black mb-4";
+    cardContent.className = " mb-4";
     cardContent.textContent = article.content;
     card.appendChild(cardContent);
 
     const viewMoreButton = document.createElement("button");
     viewMoreButton.className =
-      "bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition";
+      "bg-base-200 relative shadow px-4 py-2 rounded-md hover:bg-pink-200 transition";
     viewMoreButton.textContent = "Ver más";
     viewMoreButton.onclick = function () {
       redirectTo(article.redirectUrl);
@@ -178,7 +178,6 @@ export const articulos = () => {
     }
   }
 
-  // Crear y agregar las tarjetas de artículos a la página
   articles.forEach((article) => {
     articleContainer.appendChild(createArticleCard(article));
   });

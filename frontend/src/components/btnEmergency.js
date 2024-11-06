@@ -4,7 +4,7 @@ export const BtnEmergency = () => {
   //boton red de contencion
   const BtnEmergency = document.createElement("button");
   BtnEmergency.className =
-    "btn btn-circle fixed bottom-20 z-50 right-4 btn-lg !text-3xl shadow-md";
+    "btn btn-circle fixed bottom-10 z-50 right-4 btn-lg !text-3xl shadow-md";
   BtnEmergency.onclick = () => modal.showModal();
   BtnEmergency.innerHTML = `<span class = "material-symbols-rounded ">notification_important</span>`;
 

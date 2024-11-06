@@ -17,7 +17,7 @@ export const artPsico = () => {
 
   // Header del artículo
   const header = document.createElement("header");
-  header.classList.add("bg-red-600", "text-white", "p-10", "relative");
+  header.classList.add("bg-base-200", "p-10", "relative");
 
   const overlay = document.createElement("div");
   overlay.classList.add(
@@ -47,7 +47,7 @@ export const artPsico = () => {
   headerContent.appendChild(h1);
 
   const headerParagraph = document.createElement("p");
-  headerParagraph.classList.add("text-xl", "text-white");
+  headerParagraph.classList.add("text-xl");
   headerParagraph.innerText =
     "Un análisis profundo sobre una forma invisible pero devastadora de maltrato";
   headerContent.appendChild(headerParagraph);
@@ -72,13 +72,7 @@ export const artPsico = () => {
 
   // Agregar el subtítulo ¿Qué es la Violencia Psicológica?
   const subtitle1 = document.createElement("h2");
-  subtitle1.classList.add(
-    "text-3xl",
-    "font-bold",
-    "mt-10",
-    "mb-6",
-    "text-red-900"
-  );
+  subtitle1.classList.add("text-3xl", "font-bold", "mt-10", "mb-6");
   subtitle1.innerText = "¿Qué es la Violencia Psicológica?";
   mainContent.appendChild(subtitle1);
 
@@ -90,13 +84,7 @@ export const artPsico = () => {
 
   // Agregar lista de indicadores
   const subtitle2 = document.createElement("h2");
-  subtitle2.classList.add(
-    "text-3xl",
-    "font-bold",
-    "mt-10",
-    "mb-6",
-    "text-red-900"
-  );
+  subtitle2.classList.add("text-3xl", "font-bold", "mt-10", "mb-6");
   subtitle2.innerText = "Cómo Identificar la Violencia Psicológica";
   mainContent.appendChild(subtitle2);
 
@@ -115,7 +103,13 @@ export const artPsico = () => {
     listItem.classList.add("flex", "items-center", "mb-4");
 
     const iconContainer = document.createElement("span");
-    iconContainer.classList.add("bg-red-600", "rounded-full", "p-2", "mr-4");
+    iconContainer.classList.add(
+      "bg-base-200",
+      "shadow",
+      "rounded-full",
+      "p-2",
+      "mr-4"
+    );
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "w-6 h-6 text-white");
@@ -134,7 +128,7 @@ export const artPsico = () => {
     listItem.appendChild(iconContainer);
 
     const itemText = document.createElement("span");
-    itemText.classList.add("text-lg", "text-black");
+    itemText.classList.add("text-lg");
     itemText.innerText = indicator;
     listItem.appendChild(itemText);
 
@@ -146,13 +140,7 @@ export const artPsico = () => {
 
   // Sección Medidas de Prevención
   const subtitle3 = document.createElement("h2");
-  subtitle3.classList.add(
-    "text-3xl",
-    "font-bold",
-    "mt-10",
-    "mb-6",
-    "text-red-900"
-  );
+  subtitle3.classList.add("text-3xl", "font-bold", "mt-10", "mb-6");
   subtitle3.innerText = "Medidas de Prevención";
   mainContent.appendChild(subtitle3);
 
@@ -178,7 +166,13 @@ export const artPsico = () => {
     li.classList.add("flex", "items-center", "mb-4");
 
     const iconContainer = document.createElement("span");
-    iconContainer.classList.add("bg-red-600", "rounded-full", "p-2", "mr-4");
+    iconContainer.classList.add(
+      "bg-base-200",
+      "shadow",
+      "rounded-full",
+      "p-2",
+      "mr-4"
+    );
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "w-6 h-6 text-white");
@@ -197,7 +191,7 @@ export const artPsico = () => {
     li.appendChild(iconContainer);
 
     const itemText = document.createElement("span");
-    itemText.classList.add("text-lg", "text-black");
+    itemText.classList.add("text-lg");
     itemText.innerText = item;
     li.appendChild(itemText);
 
@@ -207,13 +201,7 @@ export const artPsico = () => {
 
   // Sección Cómo Buscar Ayuda
   const subtitle4 = document.createElement("h2");
-  subtitle4.classList.add(
-    "text-3xl",
-    "font-bold",
-    "mt-10",
-    "mb-6",
-    "text-red-900"
-  );
+  subtitle4.classList.add("text-3xl", "font-bold", "mt-10", "mb-6");
   subtitle4.innerText = "Cómo Buscar Ayuda";
   mainContent.appendChild(subtitle4);
 
@@ -226,8 +214,7 @@ export const artPsico = () => {
   // Agregar un botón de contacto para ayuda
   const contactButton = document.createElement("button");
   contactButton.classList.add(
-    "bg-red-600",
-    "text-white",
+    "bg-base-200",
     "py-3",
     "px-6",
     "rounded-full",
@@ -259,7 +246,13 @@ export const artPsico = () => {
     li.classList.add("flex", "items-center", "mb-4");
 
     const iconContainer = document.createElement("span");
-    iconContainer.classList.add("bg-red-600", "rounded-full", "p-2", "mr-4");
+    iconContainer.classList.add(
+      "bg-base-200",
+      "shadow",
+      "rounded-full",
+      "p-2",
+      "mr-4"
+    );
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "w-6 h-6 text-white");
@@ -278,7 +271,7 @@ export const artPsico = () => {
     li.appendChild(iconContainer);
 
     const itemText = document.createElement("span");
-    itemText.classList.add("text-lg", "text-black");
+    itemText.classList.add("text-lg");
     itemText.innerText = item;
     li.appendChild(itemText);
 

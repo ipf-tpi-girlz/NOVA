@@ -23,13 +23,15 @@ import { createHeroSection } from "./components/post";
 import { ContactsPage } from "./pages/contacsUsuario.js";
 import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
-import { Perfil } from './pages/profileUser.js';
+import { Perfil } from "./pages/profileUser.js";
 import { checkSession } from "./api/auth.js";
 import { formContacts } from "./pages/form.contacts.js";
 import { artFisco } from "./pages/seccionInf/artFisico.js";
 import { artPsico } from "./pages/seccionInf/artPsico.js";
 import { artAbuso } from "./pages/seccionInf/artAbuso.js";
 import { articulos } from "./pages/seccionInf/seccionArticulos.js";
+import { Contactanos } from "./components/contactanosBtn.js";
+import { Nosotros } from "./pages/Nosotros.js";
 
 // Rutas públicas
 const publicRoutes = ["/", "/register-user", "/login", "/registrar-profesional"];
