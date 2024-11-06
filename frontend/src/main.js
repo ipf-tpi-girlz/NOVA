@@ -31,6 +31,8 @@ import { artFisco } from "./pages/seccionInf/artFisico.js";
 import { artPsico } from "./pages/seccionInf/artPsico.js";
 import { artAbuso } from "./pages/seccionInf/artAbuso.js";
 import { articulos } from "./pages/seccionInf/seccionArticulos.js";
+import { Contactanos } from "./components/contactanosBtn.js";
+import { Nosotros } from "./pages/Nosotros.js";
 
 // Rutas públicas
 const publicRoutes = ["/", "/register-user", "/login"];
@@ -134,10 +136,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       app.appendChild(artAbuso());
       app.appendChild(Footer());
       break;
-    case "/art":
-      app.appendChild(Navbar()); //renderiza un nadvar distinto a los otros
-      app.appendChild(articulos());
-      app.appendChild(Footer()); //no renderiza
-      break;
+    case "/Nosotros":
+      app.appendChild(Navbar());
+      app.appendChild(Nosotros());
+      app.appendChild(BtnEmergency());
+      app.appendChild(Contactanos());
+      app.appendChild(Footer());
   }
 });
