@@ -40,12 +40,12 @@ const showProfileDetail = async (id) => {
 
 const displayProfile = (profileData) => {
   let previewContainer = document.getElementById("previewContainer");
-  previewContainer.className = "profile-preview shadow-md p-6 rounded-lg";
+  previewContainer.className = "flex flex-col  profile-preview shadow-md p-6 rounded-lg ";
   if (!previewContainer) {
     previewContainer = document.createElement("div");
     previewContainer.id = "previewContainer";
-    previewContainer.className = "profile-preview shadow-md p-6 rounded-lg max-w-md mx-auto";
-    document.body.appendChild(previewContainer);
+    previewContainer.className = "profile-preview shadow-md p-6 rounded-lg max-w-md mx-auto bg-white";
+    return previewContainer
   }
 
   previewContainer.innerHTML = '';
@@ -57,8 +57,8 @@ const displayProfile = (profileData) => {
 
   // Crear la imagen de perfil
   const profileImg = document.createElement("img");
-  profileImg.src = profileData.img?.trim() ? profileData.img : bg;
-  profileImg.className = "w-32 h-32 md:w-48 md:h-48 rounded-full object-cover border-4 border-purple-500 shadow-md mr-4";
+  profileImg.src = profileData.img?.trim() ? profileData.img : "https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg";
+  profileImg.className = "w-24 h-24 md:w-32 md:h-32 rounded-full  border-4 mr-4";
 
 
   const profileDesc = document.createElement("p");
@@ -108,15 +108,15 @@ const displayProfile = (profileData) => {
 
   const profileGender = document.createElement("p");
   profileGender.className = "text-gray-600";
-  profileGender.textContent = `Género: ${profileData.genero}`;
+  profileGender.textContent = `Género: ${profileData.genero};`
 
   const profileDepartment = document.createElement("p");
   profileDepartment.className = "text-gray-600";
-  profileDepartment.textContent = `Departamento: ${profileData.departamento ?? "-"}`;
+  profileDepartment.textContent = `Departamento: ${profileData.departamento ?? "-"}`
 
   const profileLocation = document.createElement("p");
   profileLocation.className = "text-gray-600";
-  profileLocation.textContent = `Localidad: ${profileData.localidad ?? "-"}`;
+  profileLocation.textContent = `Localidad: ${profileData.localidad ?? "-"};`
 
   const profileDirection = document.createElement("p");
   profileDirection.className = "text-gray-600";

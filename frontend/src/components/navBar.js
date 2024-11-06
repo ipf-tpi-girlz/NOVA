@@ -1,13 +1,13 @@
 import { $themeLabel } from "./themeButton";
-import { checkSession } from '../api/auth.js';
-
+import { checkSession } from "../api/auth.js";
+import { logoutUser } from "../api/auth.js";
+import { notification } from "antd";
 export const Navbar = async () => {
+
   const isAuthenticated = await checkSession().catch(error => {
     console.error("Error al verificar sesión:", error);
     return false;
   });
-
-  console.log("Estado de autenticación:", isAuthenticated);
 
   const navbar = document.createElement("nav");
   navbar.classList.add(
@@ -37,18 +37,21 @@ export const Navbar = async () => {
   logo.classList.add("btn", "btn-ghost", "text-2xl", "font-serif");
   logo.textContent = "NOVA";
   logo.setAttribute("href", "/home");
+
   navbarStart.appendChild(logo);
 
-  // Dropdown para pantallas pequeñas
+  //Dropdown para pantallas pequeñas
   const dropdown = document.createElement("div");
   dropdown.classList.add("dropdown", "dropdown-end");
 
+  // Dropdown boton
   const dropdownButton = document.createElement("label");
   dropdownButton.classList.add("btn", "btn-ghost", "lg:hidden");
   dropdownButton.setAttribute("role", "button");
   dropdownButton.setAttribute("tabindex", "0");
-  dropdownButton.innerHTML = `<span class="material-symbols-rounded dark:text-pink-200">menu</span>`;
+  dropdownButton.innerHTML = `<span class = "material-symbols-rounded dark:text-pink-200">menu</span>`;
 
+  // Dropdown contenido
   const dropdownContent = document.createElement("ul");
   dropdownContent.classList.add(
     "menu",
@@ -64,6 +67,7 @@ export const Navbar = async () => {
     "gap-2"
   );
 
+  // Menu para pantallas grandes
   const menu = document.createElement("ul");
   menu.classList.add(
     "menu",
@@ -78,19 +82,17 @@ export const Navbar = async () => {
     "mt-4"
   );
 
-  // Verifica si el usuario está autenticado
   if (isAuthenticated) {
-    console.log("Usuario autenticado");
-
-    const createLink = (link, text) => {
+    function createLink(link, text) {
       const li = document.createElement("li");
       const a = document.createElement("a");
       a.setAttribute("href", link);
       a.textContent = text;
-      li.appendChild(a);
-      return li;
-    };
 
+      li.appendChild(a);
+
+      return li;
+    }
     const forums = createLink("/foros", "Foros");
     const histories = createLink("/historias", "Historias");
     const articles = createLink("/articulos", "Artículos");
@@ -136,14 +138,40 @@ export const Navbar = async () => {
     item1.appendChild(buttonPerfil);
 
     const item2 = document.createElement("li");
-    const buttonLogOut = document.createElement("button"); // Cambiar 'btn' por 'button'
+    const buttonLogOut = document.createElement("button");
     buttonLogOut.textContent = "Cerrar Sesion";
     buttonLogOut.setAttribute;
     buttonLogOut.type = "submit";
-    // buttonLogOut.setAttribute = ("href", "/");
-    // buttonLogOut.addEventListener("click", () => {
-    //   window.location.href = "http://localhost:5173";
-    // });
+    buttonLogOut.addEventListener("click", async () => {
+      try {
+        const response = await logoutUser();
+        console.log(response)
+        if (response && response.success) {
+          notification.success({
+            message: 'Cierre de sesión',
+            description: 'Sesión cerrada exitosamente.',
+            placement: 'topRight',
+            duration: 2,
+          });
+          setTimeout(() => {
+            window.location.href = "/login"; // Asegúrate de que esta ruta sea correcta
+          }, 2000);
+        } else {
+          notification.error({
+            message: 'Error',
+            description: response?.message || 'Error al cerrar sesión. Por favor, intenta de nuevo.',
+            placement: 'topRight',
+          });
+        }
+      } catch (error) {
+        console.error("Error del servidor:", error);
+        notification.error({
+          message: 'Error',
+          description: 'Hubo un problema al cerrar sesión.',
+          placement: 'topRight',
+        });
+      }
+    });
     item2.appendChild(buttonLogOut);
 
     dropdownProfile.appendChild(item1);
@@ -168,46 +196,53 @@ export const Navbar = async () => {
     });
 
     //Se añaden los links al menu para pantallas grandes
+
     menu.appendChild(forums);
     menu.appendChild(histories);
     menu.appendChild(articles);
     menu.appendChild(prof);
-    menu.appendChild(profile);
+    menu.appendChild(aboutUs);
+    menu.appendChild(dropdownContainer);
+    menu.appendChild($themeLabel());
 
     // Se copian los links al menu del dropdown
     dropdownContent.appendChild(forums.cloneNode(true));
     dropdownContent.appendChild(histories.cloneNode(true));
     dropdownContent.appendChild(articles.cloneNode(true));
     dropdownContent.appendChild(prof.cloneNode(true));
-    dropdownContent.appendChild(profile.cloneNode(true));
+    dropdownContent.appendChild(aboutUs.cloneNode(true));
+    dropdownContent.appendChild(dropdownContainer.cloneNode(true));
 
     navbarEnd.appendChild(menu);
     navbarEnd.appendChild(dropdownContent);
   } else {
-    console.log("Usuario no autenticado");
-
+    // Mostrar botones de login y register si el usuario no está autenticado
     const btnLogin = document.createElement("a");
     btnLogin.classList.add("btn", "btn-primary", "btn-sm");
     btnLogin.textContent = "Iniciar Sesión";
+    btnLogin.type = "submit";
     btnLogin.setAttribute("href", "/login");
 
     const btnRegister = document.createElement("a");
     btnRegister.classList.add("btn", "btn-primary", "btn-sm");
     btnRegister.textContent = "Registrarse";
+    btnRegister.type = "submit";
     btnRegister.setAttribute("href", "/register-user");
 
-    dropdownContent.append(btnLogin, btnRegister);
-    menu.append(btnLogin.cloneNode(true), btnRegister.cloneNode(true));
+    dropdownContent.appendChild(btnLogin);
+    dropdownContent.appendChild(btnRegister);
+    menu.appendChild(btnLogin.cloneNode(true));
+    menu.appendChild(btnRegister.cloneNode(true));
   }
 
   dropdown.appendChild(dropdownButton);
   dropdown.appendChild(dropdownContent);
 
   navbarEnd.appendChild(menu);
-  navbarEnd.appendChild($themeLabel());
   navbarEnd.appendChild(dropdown);
 
-  navbar.append(navbarStart, navbarEnd);
+  navbar.appendChild(navbarStart);
+  navbar.appendChild(navbarEnd);
 
   return navbar;
 };

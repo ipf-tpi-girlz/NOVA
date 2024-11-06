@@ -121,8 +121,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         case "/registrar-profesional":
           app.appendChild(FormRegisterProf());
           break;
-        case "/art":
-          app.appendChild(articulos());
+        case "/Nosotros":
+          app.appendChild(Nosotros());
+          app.appendChild(BtnEmergency());
+          app.appendChild(Contactanos());
           app.appendChild(Footer());
           break;
       }
