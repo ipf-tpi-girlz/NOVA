@@ -1,130 +1,136 @@
 export const Nosotros = () => {
   // Contenedor principal de la sección
   const conteiner = document.createElement("div");
-  conteiner.className = "hero min-h-screen w-full";
+  conteiner.className = "bg-base-200 bg-cover py-20 w-full";
 
   // Contenedor de la historia
   const historyConteiner = document.createElement("div");
-  historyConteiner.className = "hero-content flex gap-5";
+  historyConteiner.className = "container mx-auto flex flex-col md:flex-row gap-10 px-4";
 
   // Título de la historia
   const historyTitle = document.createElement("h1");
-  historyTitle.className = "text-5xl font-bold font-serif";
+  historyTitle.className = "text-5xl font-bold font-serif text-gray-800 opacity-0 translate-y-10 transition-all duration-700";
   historyTitle.textContent = "Nuestra historia";
 
   // Texto de la historia
-  const historyText = document.createElement("p");
-  historyText.className = "text-xl font-serif";
-  historyText.innerHTML = `
-    <p> 
-      Nova es un espacio pensado para acompañar a todas las personas afectadas por la violencia de género. Sabemos lo difícil que puede ser pedir ayuda, por eso hemos creado este sitio web interactivo, seguro y confidencial, donde puedes encontrar un lugar de apoyo, donde puedas navegar, comunicarte y expresarte libremente.
-    </p>
-    <p> 
-      En Nova, ofrecemos recursos educativos y acceso a profesionales como psicólogos para brindarte la orientación que necesitas. Nuestro propósito es dar visibilidad a la violencia de género, sensibilizar a la sociedad y, sobre todo, crear una comunidad de apoyo donde puedas sentirte respaldado, comprendido y acompañado en cada paso del proceso.
-    </p>
-    <p> 
-      Nuestro compromiso es que el silencio se rompa, que el apoyo esté siempre al alcance de quien lo necesite, y que la violencia de género no quede oculta ni sin respuesta.
-    </p>
-  `;
+  const historyText1 = document.createElement("p");
+  historyText1.className = "text-xl font-serif text-gray-600 opacity-0 translate-y-10 transition-all duration-700";
+  historyText1.textContent = "Nova es un espacio pensado para acompañar a todas las personas afectadas por la violencia de género. Sabemos lo difícil que puede ser pedir ayuda, por eso hemos creado este sitio web interactivo, seguro y confidencial, donde puedes encontrar un lugar de apoyo, donde puedas navegar, comunicarte y expresarte libremente.";
+
+  const historyText2 = document.createElement("p");
+  historyText2.className = "text-xl font-serif text-gray-600 opacity-0 translate-y-10 transition-all duration-700";
+  historyText2.textContent = "En Nova, ofrecemos recursos educativos y acceso a profesionales como psicólogos para brindarte la orientación que necesitas. Nuestro propósito es dar visibilidad a la violencia de género, sensibilizar a la sociedad y, sobre todo, crear una comunidad de apoyo donde puedas sentirte respaldado, comprendido y acompañado en cada paso del proceso.";
+
+  const historyText3 = document.createElement("p");
+  historyText3.className = "text-xl font-serif text-gray-600 opacity-0 translate-y-10 transition-all duration-700";
+  historyText3.textContent = "Nuestro compromiso es que el silencio se rompa, que el apoyo esté siempre al alcance de quien lo necesite, y que la violencia de género no quede oculta ni sin respuesta.";
+
+  // Imagen de la historia
+  const imgHistorie = document.createElement("img");
+  imgHistorie.src = "https://i.pinimg.com/564x/3e/c0/bc/3ec0bc0d4f927411e5318d08d94d18ab.jpg";
+  imgHistorie.className = "w-full sm:w-2/3 md:w-1/3 h-auto object-cover rounded-lg opacity-0 translate-y-10 transition-all duration-700";
+
+  // Contenedor de la información de la historia
+  const historyInfoContainer = document.createElement("div");
+  historyInfoContainer.className = "md:w-1/2 flex flex-col justify-center";
+  historyInfoContainer.appendChild(historyTitle);
+  historyInfoContainer.appendChild(historyText1);
+  historyInfoContainer.appendChild(historyText2);
+  historyInfoContainer.appendChild(historyText3);
+
+  // Agregar imagen e información de la historia al contenedor
+  historyConteiner.appendChild(imgHistorie);
+  historyConteiner.appendChild(historyInfoContainer);
 
   // Contenedor de las tarjetas de compromiso
-  const conteinerCommit = document.createElement("div");
-  conteinerCommit.className = "hero-content flex gap-5 flex-wrap justify-center"; // Contenedor para las cards
+  const commitConteiner = document.createElement("div");
+  commitConteiner.className = "container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4 mt-16";
 
   // Título de las tarjetas
-  const commitTitle = document.createElement("h1");
-  commitTitle.className = "text-5xl font-bold font-serif mb-6 text-center w-full";
+  const commitTitle = document.createElement("h4");
+  commitTitle.className = "text-5xl font-bold font-serif text-center text-gray-800 mb-8 opacity-0 translate-y-10 transition-all duration-700";
   commitTitle.textContent = "Nuestro compromiso";
 
   // Card 1: Privacidad
   const cardCommit1 = document.createElement("div");
-  cardCommit1.className = "card card-compact bg-base-100 shadow-xl p-5 w-80 text-center";
-
-  const card1Title = document.createElement("h2");
-  card1Title.className = "card-title text-xl font-semibold";
+  cardCommit1.className = "bg-white rounded-lg shadow-md p-6 flex flex-col items-center opacity-0 translate-y-10 transition-all duration-700";
+  cardCommit1.style.backgroundImage = "url('https://i.pinimg.com/564x/5d/62/8e/5d628ee3a03b36749a8b433e0dea883a.jpg')"; // Fondo de la imagen
+  cardCommit1.style.backgroundSize = "cover";  // Asegura que la imagen cubra toda la tarjeta
+  cardCommit1.style.backgroundPosition = "center"; // Centra la imagen
+  const card1Title = document.createElement("h3");
+  card1Title.className = "text-xl font-semibold text-gray-800 mb-4";
   card1Title.textContent = "Privacidad";
 
-  const svg1 = document.createElement("svg");
-  svg1.className = "w-12 h-12 mx-auto";
-  svg1.innerHTML = `
-    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-  `;
-
   const card1Text = document.createElement("p");
-  card1Text.className = "text-gray-600 mt-3";
+  card1Text.className = "text-gray-600";
   card1Text.textContent = "La privacidad y seguridad de nuestros usuarios es lo más importante para nosotros. Utilizamos medidas de seguridad avanzadas para proteger tus datos personales.";
 
   cardCommit1.appendChild(card1Title);
-  cardCommit1.appendChild(svg1);
   cardCommit1.appendChild(card1Text);
 
   // Card 2: Inclusión
   const cardCommit2 = document.createElement("div");
-  cardCommit2.className = "card card-compact bg-base-100 shadow-xl p-5 w-80 text-center";
-
-  const card2Title = document.createElement("h2");
-  card2Title.className = "card-title text-xl font-semibold";
+  cardCommit2.className = "bg-white rounded-lg shadow-md p-6 flex flex-col items-center opacity-0 translate-y-10 transition-all duration-700";
+  cardCommit2.style.backgroundImage = "url('https://i.pinimg.com/564x/5d/62/8e/5d628ee3a03b36749a8b433e0dea883a.jpg')";
+  cardCommit2.style.backgroundSize = "cover";
+  cardCommit2.style.backgroundPosition = "center";
+  const card2Title = document.createElement("h3");
+  card2Title.className = "text-xl font-semibold text-gray-800 mb-4";
   card2Title.textContent = "Inclusión";
 
-  const svg2 = document.createElement("svg");
-  svg2.className = "w-12 h-12 mx-auto";
-  svg2.innerHTML = `
-    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-  `;
-
   const card2Text = document.createElement("p");
-  card2Text.className = "text-gray-600 mt-3";
-  card2Text.textContent = "Nos comprometemos a brindar un ambiente de inclusión y equidad para todas las personas. Para nosotros es muy importante que todos puedan sentirse respetados y comprendidos.";
+  card2Text.className = "text-gray-600";
+  card2Text.textContent = "Nos comprometemos a brindar un ambiente de inclusión y equidad para todas las personas. Para nosotros es muy importante dar visibilidad a la diversidad de identidades y experiencias.";
 
   cardCommit2.appendChild(card2Title);
-  cardCommit2.appendChild(svg2);
   cardCommit2.appendChild(card2Text);
 
-  // Card 3: Apoyo
+  // Card 3: Apoyo Psicológico
   const cardCommit3 = document.createElement("div");
-  cardCommit3.className = "card card-compact bg-base-100 shadow-xl p-5 w-80 text-center";
-
-  const card3Title = document.createElement("h2");
-  card3Title.className = "card-title text-xl font-semibold";
-  card3Title.textContent = "Apoyo";
-
-  const svg3 = document.createElement("svg");
-  svg3.className = "w-12 h-12 mx-auto";
-  svg3.innerHTML = `
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v12m3-3l3 3-3 3M6 18l-3 3 3 3" />
-  `;
+  cardCommit3.className = "bg-white rounded-lg shadow-md p-6 flex flex-col items-center opacity-0 translate-y-10 transition-all duration-700";
+  cardCommit3.style.backgroundImage = "url('https://i.pinimg.com/564x/5d/62/8e/5d628ee3a03b36749a8b433e0dea883a.jpg')";
+  cardCommit3.style.backgroundSize = "cover";
+  cardCommit3.style.backgroundPosition = "center";
+  const card3Title = document.createElement("h3");
+  card3Title.className = "text-xl font-semibold text-gray-800 mb-4";
+  card3Title.textContent = "Apoyo Psicológico";
 
   const card3Text = document.createElement("p");
-  card3Text.className = "text-gray-600 mt-3";
-  card3Text.textContent = "Estamos aquí para brindar apoyo emocional, profesional y social a todas las personas que lo necesiten, para que puedan superar la violencia de género y empezar una nueva etapa."
+  card3Text.className = "text-gray-600";
+  card3Text.textContent = "Ofrecemos apoyo psicológico para ayudarte a superar situaciones de violencia. Nuestros profesionales están disponibles para brindarte orientación y acompañamiento en el proceso de recuperación.";
 
   cardCommit3.appendChild(card3Title);
-  cardCommit3.appendChild(svg3);
   cardCommit3.appendChild(card3Text);
 
   // Agregar las tarjetas al contenedor
-  conteinerCommit.appendChild(cardCommit1);
-  conteinerCommit.appendChild(cardCommit2);
-  conteinerCommit.appendChild(cardCommit3);
+  commitConteiner.appendChild(cardCommit1);
+  commitConteiner.appendChild(cardCommit2);
+  commitConteiner.appendChild(cardCommit3);
 
-  // Contenedor de la historia
-  const imgHistorie = document.createElement("img");
-  imgHistorie.src = "https://i.pinimg.com/564x/40/e6/21/40e621207bd87bcc3ed9f44e3a5d8f67.jpg";
-  imgHistorie.className = "w-full md:w-96 md:h-96";
-  imgHistorie.style.objectFit = "cover"; // Para ajustar la imagen
-
-  // Agregar título, texto e imagen de la historia al contenedor de la historia
-  const historyTiTe = document.createElement("div");
-  historyTiTe.className = "flex flex-col justify-center items-start md:w-1/2";
-  historyTiTe.appendChild(historyTitle);
-  historyTiTe.appendChild(historyText);
-
-  historyConteiner.appendChild(historyTiTe);
-  historyConteiner.appendChild(imgHistorie);
-
-  // Agregar la historia y el compromiso al contenedor principal
+  // Agregar todo al contenedor principal
   conteiner.appendChild(historyConteiner);
-  conteiner.appendChild(conteinerCommit);
+  conteiner.appendChild(commitTitle);
+  conteiner.appendChild(commitConteiner);
+
+  // Función para observar los elementos y aplicar animaciones cuando entran en el viewport
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('opacity-100', 'translate-y-0');
+      }
+    });
+  }, { threshold: 0.5 }); // Cuando el 50% del elemento es visible
+
+  // Observar cada uno de los elementos que deben aparecer
+  observer.observe(historyTitle);
+  observer.observe(historyText1);
+  observer.observe(historyText2);
+  observer.observe(historyText3);
+  observer.observe(imgHistorie);
+  observer.observe(commitTitle);
+  observer.observe(cardCommit1);
+  observer.observe(cardCommit2);
+  observer.observe(cardCommit3);
 
   return conteiner;
 };
