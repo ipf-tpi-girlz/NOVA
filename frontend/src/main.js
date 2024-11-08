@@ -25,7 +25,7 @@ import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
 import { Perfil } from "./pages/profileUser.js";
 import { checkSession } from "./api/auth.js";
-import { formContacts } from "./pages/form.contacts.js";
+
 import { artFisco } from "./pages/seccionInf/artFisico.js";
 import { artPsico } from "./pages/seccionInf/artPsico.js";
 import { artAbuso } from "./pages/seccionInf/artAbuso.js";
@@ -95,10 +95,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           break;
         case "/profile":
           app.appendChild(Perfil());
-          app.appendChild(Footer());
-          break;
-        case "/contactanos":
-          app.appendChild(formContacts());
           app.appendChild(Footer());
           break;
         case "/articulos":

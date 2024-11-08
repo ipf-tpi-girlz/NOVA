@@ -133,9 +133,12 @@ export const Navbar = async () => {
 
     // Crear los elementos del menú
     const item1 = document.createElement("li");
-    const buttonPerfil = document.createElement("button"); // Cambiar 'btn' por 'button'
+    const buttonPerfil = document.createElement("button");
     buttonPerfil.textContent = "Ver Perfil";
     item1.appendChild(buttonPerfil);
+    buttonPerfil.addEventListener("click", () => {
+      window.location.href = "/profile";
+    })
 
     const item2 = document.createElement("li");
     const buttonLogOut = document.createElement("button");
@@ -154,7 +157,7 @@ export const Navbar = async () => {
             duration: 2,
           });
           setTimeout(() => {
-            window.location.href = "/login"; // Asegúrate de que esta ruta sea correcta
+            window.location.href = "/login";
           }, 2000);
         } else {
           notification.error({
