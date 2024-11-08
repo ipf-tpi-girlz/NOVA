@@ -50,8 +50,7 @@ export const Navbar = () => {
     "menu",
     "menu-compact",
     "dropdown-content",
-    "mt-3",
-    "p-2",
+
     "shadow",
     "bg-base-100",
     "rounded-box",
@@ -66,13 +65,12 @@ export const Navbar = () => {
     "menu",
     "menu-md",
     "menu-horizontal",
-
+    "my-0",
     "font-semibold",
     "text-lg",
     "hidden",
     "lg:flex",
-    "gap-2",
-    "mt-4"
+    "gap-2"
   );
 
   // Valida si el usuario inició sesión

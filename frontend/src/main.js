@@ -20,7 +20,7 @@ import { RegisterPage } from "./pages/RegisterPage.js";
 import { HomePage } from "./pages/homePageUsuarios.js";
 import { createHeroSection } from "./components/post";
 import { ContactsPage } from "./pages/contacsUsuario.js";
-import { ManosUnidas } from "./pages/manosUnidas.js";
+import { ForumPage } from "./pages/ForumPage.js";
 import { forop } from "./components/foroPreview.js";
 import { Perfil } from "./pages/profileUser.js";
 import { checkSession } from "./api/auth.js";
@@ -99,9 +99,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       app.appendChild(Navbar());
       app.appendChild(Footer());
       break;
-    case "/manos-unidas":
+    case "/Forum-page":
       app.appendChild(Navbar());
-      app.appendChild(ManosUnidas());
+      app.appendChild(ForumPage());
       app.appendChild(forop());
       app.appendChild(BtnEmergency());
       app.appendChild(Footer());

@@ -12,9 +12,6 @@ export const HomePage = () => {
   main.appendChild(title);
   main.appendChild(BtnEmergency());
 
-  // //Estadisticas
-  // main.appendChild(Stats());
-
   //Feed
   main.appendChild(Feed());
 

@@ -31,9 +31,9 @@ export function ForumCard(img, title, desc) {
   cardBtn.className = "btn btn-primary";
   cardBtn.textContent = "Unirse a foro";
   cardBtn.type = "submit";
-  cardBtn.setAttribute = ("href", "/manos-unidas");
+  cardBtn.setAttribute = ("href", "/Forum-page");
   cardBtn.addEventListener("click", () => {
-    window.location.href = "http://localhost:5173/manos-unidas";
+    window.location.href = "http://localhost:5173/Forum-page";
   });
 
   cardAction.appendChild(cardBtn);

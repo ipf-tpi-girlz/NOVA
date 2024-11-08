@@ -8,6 +8,7 @@ export const forop = () => {
         "Deja tu huella en nuestra comunidad. ¡Comenta y comparte tus pensamientos!",
       comments: [],
     },
+
     {
       id: 2,
       title: "Tema del día: exposicion social",
@@ -28,7 +29,7 @@ export const forop = () => {
 
   //Container para el nuevo post
   const newPostContainer = document.createElement("div");
-  newPostContainer.classList.add("p-5");
+  newPostContainer.className = "p-5 gap-2";
 
   const newPostForm = document.createElement("form");
   newPostForm.classList.add(
@@ -43,12 +44,7 @@ export const forop = () => {
   //Titulo
   const newPostTitle = document.createElement("h2");
   newPostTitle.textContent = "Crear Nuevo Post";
-  newPostTitle.classList.add(
-    "text-xl",
-    "font-semibold",
-    "mb-4",
-    "text-gray-700"
-  );
+  newPostTitle.classList.add("text-xl", "font-semibold", "mb-4");
 
   // Input para el título del nuevo post
   const newPostTitleInput = document.createElement("input");
@@ -77,7 +73,32 @@ export const forop = () => {
   newPostForm.appendChild(newPostTextArea);
   newPostForm.appendChild(newPostButton);
 
+  //Container Miembros
+  const miembrosContainer = document.createElement("div");
+  miembrosContainer.classList.add(
+    "p-5",
+    "bg-base-200",
+    "rounded-lg",
+    "flex",
+    "flex-col",
+    "gap-3",
+    "mt-4"
+  );
+  const moderador = document.createElement("div");
+  moderador.textContent = "Moderador";
+  const moderadorinput = document.createElement("div");
+  moderadorinput.className = "divider lg:divider-horizontal";
+
+  const miembros = document.createElement("div");
+  miembros.textContent = "Miembros";
+
+  miembrosContainer.appendChild(moderador);
+  miembrosContainer.appendChild(moderadorinput);
+  miembrosContainer.appendChild(miembros);
+
   newPostContainer.appendChild(newPostForm);
+
+  newPostContainer.appendChild(miembrosContainer);
 
   //Contenedor de posts
 
@@ -101,18 +122,13 @@ export const forop = () => {
       // Título del post
       const postTitle = document.createElement("h2");
       postTitle.textContent = post.title;
-      postTitle.classList.add(
-        "text-xl",
-        "font-semibold",
-        "mb-2",
-        "text-gray-800"
-      );
+      postTitle.classList.add("text-xl", "font-semibold", "mb-2");
       postElement.appendChild(postTitle);
 
       // Contenido del post
       const postContent = document.createElement("p");
       postContent.textContent = post.content;
-      postContent.classList.add("text-gray-600", "mb-4");
+      postContent.classList.add("mb-4");
       postElement.appendChild(postContent);
 
       // Sección de comentarios
