@@ -26,12 +26,11 @@ import { ContactsPage } from "./pages/contacs";
 import { violence } from "./pages/seccionInf/violenceInf";
 import { ManosUnidas } from "./pages/manosUnidas.js";
 import { forop } from "./components/foroPreview.js";
-import { menu } from "./components/menuProf.js";
-import { articuloVioSex } from "./pages/seccionInf/infoSexual.js";
 import { artFisco } from "./pages/seccionInf/artFisico.js";
 import { artPsico } from "./pages/seccionInf/artPsico.js";
 import { artAbuso } from "./pages/seccionInf/artAbuso.js";
 import { articulos } from "./pages/seccionInf/seccionArticulos.js";
+import { menuProfesional } from "./pages/barraProf.js";
 
 const app = document.getElementById("app");
 const pathname = window.location.pathname;
@@ -126,7 +125,7 @@ switch (pathname) {
 
   case "/home-prof": //no renderiza nada
     app.appendChild(Navbar());
-    app.appendChild(menu());
+    app.appendChild(menuProfesional());
     app.appendChild(Footer());
     break;
 }
