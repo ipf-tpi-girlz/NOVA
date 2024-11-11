@@ -9,37 +9,31 @@ export const Nosotros = () => {
 
   // Título de la historia
   const historyTitle = document.createElement("h1");
-  historyTitle.className = "text-5xl font-bold font-serif text-gray-800 opacity-0 translate-y-10 transition-all duration-700";
+  historyTitle.className = "text-5xl font-bold font-serif text-gray-800 text-center mb-8";
   historyTitle.textContent = "Nuestra historia";
 
   // Texto de la historia
   const historyText1 = document.createElement("p");
-  historyText1.className = "text-xl font-serif text-gray-600 opacity-0 translate-y-10 transition-all duration-700";
+  historyText1.className = "text-xl font-serif text-gray-600 mt-4";
   historyText1.textContent = "Nova es un espacio pensado para acompañar a todas las personas afectadas por la violencia de género. Sabemos lo difícil que puede ser pedir ayuda, por eso hemos creado este sitio web interactivo, seguro y confidencial, donde puedes encontrar un lugar de apoyo, donde puedas navegar, comunicarte y expresarte libremente.";
 
   const historyText2 = document.createElement("p");
-  historyText2.className = "text-xl font-serif text-gray-600 opacity-0 translate-y-10 transition-all duration-700";
+  historyText2.className = "text-xl font-serif text-gray-600 mt-4";
   historyText2.textContent = "En Nova, ofrecemos recursos educativos y acceso a profesionales como psicólogos para brindarte la orientación que necesitas. Nuestro propósito es dar visibilidad a la violencia de género, sensibilizar a la sociedad y, sobre todo, crear una comunidad de apoyo donde puedas sentirte respaldado, comprendido y acompañado en cada paso del proceso.";
 
   const historyText3 = document.createElement("p");
-  historyText3.className = "text-xl font-serif text-gray-600 opacity-0 translate-y-10 transition-all duration-700";
+  historyText3.className = "text-xl font-serif text-gray-600 mt-4";
   historyText3.textContent = "Nuestro compromiso es que el silencio se rompa, que el apoyo esté siempre al alcance de quien lo necesite, y que la violencia de género no quede oculta ni sin respuesta.";
-
-  // Imagen de la historia
-  const imgHistorie = document.createElement("img");
-  imgHistorie.src = "https://i.pinimg.com/564x/3e/c0/bc/3ec0bc0d4f927411e5318d08d94d18ab.jpg";
-  imgHistorie.className = "w-full sm:w-2/3 md:w-1/3 h-auto object-cover rounded-lg opacity-0 translate-y-10 transition-all duration-700";
 
   // Contenedor de la información de la historia
   const historyInfoContainer = document.createElement("div");
-  historyInfoContainer.className = "md:w-1/2 flex flex-col justify-center";
+
   historyInfoContainer.appendChild(historyTitle);
   historyInfoContainer.appendChild(historyText1);
   historyInfoContainer.appendChild(historyText2);
   historyInfoContainer.appendChild(historyText3);
 
   // Agregar imagen e información de la historia al contenedor
-  historyConteiner.appendChild(imgHistorie);
   historyConteiner.appendChild(historyInfoContainer);
 
   // Contenedor de las tarjetas de compromiso
@@ -48,15 +42,13 @@ export const Nosotros = () => {
 
   // Título de las tarjetas
   const commitTitle = document.createElement("h4");
-  commitTitle.className = "text-5xl font-bold font-serif text-center text-gray-800 mb-8 opacity-0 translate-y-10 transition-all duration-700";
+  commitTitle.className = "text-5xl font-bold font-serif text-center text-gray-800 mb-8";
   commitTitle.textContent = "Nuestro compromiso";
 
   // Card 1: Privacidad
   const cardCommit1 = document.createElement("div");
-  cardCommit1.className = "bg-white rounded-lg shadow-md p-6 flex flex-col items-center opacity-0 translate-y-10 transition-all duration-700";
-  cardCommit1.style.backgroundImage = "url('https://i.pinimg.com/564x/5d/62/8e/5d628ee3a03b36749a8b433e0dea883a.jpg')"; // Fondo de la imagen
-  cardCommit1.style.backgroundSize = "cover";  // Asegura que la imagen cubra toda la tarjeta
-  cardCommit1.style.backgroundPosition = "center"; // Centra la imagen
+  cardCommit1.className = "bg-base-100 bg-cover rounded-lg shadow-md p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:shadow-lg hover:scale-105";
+
   const card1Title = document.createElement("h3");
   card1Title.className = "text-xl font-semibold text-gray-800 mb-4";
   card1Title.textContent = "Privacidad";
@@ -70,10 +62,8 @@ export const Nosotros = () => {
 
   // Card 2: Inclusión
   const cardCommit2 = document.createElement("div");
-  cardCommit2.className = "bg-white rounded-lg shadow-md p-6 flex flex-col items-center opacity-0 translate-y-10 transition-all duration-700";
-  cardCommit2.style.backgroundImage = "url('https://i.pinimg.com/564x/5d/62/8e/5d628ee3a03b36749a8b433e0dea883a.jpg')";
-  cardCommit2.style.backgroundSize = "cover";
-  cardCommit2.style.backgroundPosition = "center";
+  cardCommit2.className = "bg-base-100 bg-cover rounded-lg shadow-md p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:shadow-lg hover:scale-105";
+
   const card2Title = document.createElement("h3");
   card2Title.className = "text-xl font-semibold text-gray-800 mb-4";
   card2Title.textContent = "Inclusión";
@@ -87,10 +77,8 @@ export const Nosotros = () => {
 
   // Card 3: Apoyo Psicológico
   const cardCommit3 = document.createElement("div");
-  cardCommit3.className = "bg-white rounded-lg shadow-md p-6 flex flex-col items-center opacity-0 translate-y-10 transition-all duration-700";
-  cardCommit3.style.backgroundImage = "url('https://i.pinimg.com/564x/5d/62/8e/5d628ee3a03b36749a8b433e0dea883a.jpg')";
-  cardCommit3.style.backgroundSize = "cover";
-  cardCommit3.style.backgroundPosition = "center";
+  cardCommit3.className = "bg-base-100 bg-cover rounded-lg shadow-md p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:shadow-lg hover:scale-105";
+
   const card3Title = document.createElement("h3");
   card3Title.className = "text-xl font-semibold text-gray-800 mb-4";
   card3Title.textContent = "Apoyo Psicológico";
@@ -107,30 +95,106 @@ export const Nosotros = () => {
   commitConteiner.appendChild(cardCommit2);
   commitConteiner.appendChild(cardCommit3);
 
+  // Sección ¿Qué hacemos?
+  const weDo = document.createElement("div");
+  weDo.className = "rounded-lg m-8 flex flex-col items-center";
+  const titleWedo = document.createElement("h1");
+  const textWedo = document.createElement("p");
+
+  titleWedo.className = "text-5xl font-bold font-serif text-center text-gray-800 mb-8";
+  textWedo.className = "text-gray-600 text-center";
+  titleWedo.textContent = "¿Qué hacemos?";
+  textWedo.textContent = "En Nova, nos dedicamos a conectar a las personas con profesionales de la salud mental especializados en el acompañamiento durante el proceso de superación de situaciones de violencia de género. Nuestro objetivo es ofrecer apoyo psicológico integral para ayudarte a sanar y superar las secuelas del maltrato, brindándote las herramientas necesarias para avanzar hacia tu bienestar y crecimiento personal mediante:";
+
+  weDo.appendChild(titleWedo);
+  weDo.appendChild(textWedo);
+
   // Agregar todo al contenedor principal
   conteiner.appendChild(historyConteiner);
   conteiner.appendChild(commitTitle);
   conteiner.appendChild(commitConteiner);
+  conteiner.appendChild(weDo);
 
-  // Función para observar los elementos y aplicar animaciones cuando entran en el viewport
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('opacity-100', 'translate-y-0');
-      }
-    });
-  }, { threshold: 0.5 }); // Cuando el 50% del elemento es visible
+  // Crear las nuevas tarjetas debajo de "¿Qué hacemos?"
+  const cardsContainer = document.createElement("div");
+  cardsContainer.className = "container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 px-4 ";
 
-  // Observar cada uno de los elementos que deben aparecer
-  observer.observe(historyTitle);
-  observer.observe(historyText1);
-  observer.observe(historyText2);
-  observer.observe(historyText3);
-  observer.observe(imgHistorie);
-  observer.observe(commitTitle);
-  observer.observe(cardCommit1);
-  observer.observe(cardCommit2);
-  observer.observe(cardCommit3);
+  // Card de Artículos
+  const cardArticle = document.createElement("div");
+  cardArticle.className = "bg-base-100  rounded-lg shadow-md p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:shadow-lg hover:scale-105";
+  const articleTitle = document.createElement("h3");
+  articleTitle.className = "text-xl font-semibold text-gray-800 mb-4";
+  articleTitle.textContent = "Artículos";
+  const articleText = document.createElement("p");
+  articleText.className = "text-gray-600";
+  articleText.textContent = "Aquí puedes encontrar información y artículos subidos por profesionales, que te ayudarán a comprender mejor las situaciones de violencia de género y cómo abordarlas.";
+  const articleButton = document.createElement("a");
+  articleButton.href = "/articulos";
+  articleButton.className = "mt-4 bg-gradient-to-r from-purple-500 to-purple-700 text-white py-2 px-6 rounded-lg transition-all duration-300 hover:from-purple-600 hover:to-purple-800";
+  articleButton.textContent = "Ver";
+  cardArticle.appendChild(articleTitle);
+  cardArticle.appendChild(articleText);
+  cardArticle.appendChild(articleButton);
+
+  // Card de Historias
+  const cardStory = document.createElement("div");
+  cardStory.className = "bg-base-100 rounded-lg shadow-md p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:shadow-lg hover:scale-105";
+  const storyTitle = document.createElement("h3");
+  storyTitle.className = "text-xl font-semibold text-gray-800 mb-4";
+  storyTitle.textContent = "Historias";
+  const storyText = document.createElement("p");
+  storyText.className = "text-gray-600";
+  storyText.textContent = "Encuentra historias redactadas por usuarios que han pasado por situaciones de violencia, compartiendo sus experiencias y superación.";
+  const storyButton = document.createElement("a");
+  storyButton.href = "/historias";
+  storyButton.className = "mt-4 bg-gradient-to-r from-purple-500 to-purple-700 text-white py-2 px-6 rounded-lg transition-all duration-300 hover:from-purple-600 hover:to-purple-800";
+  storyButton.textContent = "Ver ";
+  cardStory.appendChild(storyTitle);
+  cardStory.appendChild(storyText);
+  cardStory.appendChild(storyButton);
+
+  // Card de Comunidades
+  const cardCommunity = document.createElement("div");
+  cardCommunity.className = "bg-base-100 rounded-lg shadow-md p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:shadow-lg hover:scale-105";
+  const communityTitle = document.createElement("h3");
+  communityTitle.className = "text-xl font-semibold text-gray-800 mb-4";
+  communityTitle.textContent = "Comunidades";
+  const communityText = document.createElement("p");
+  communityText.className = "text-gray-600";
+  communityText.textContent = "Únete a nuestra comunidad de apoyo gestionada por profesionales. Interactúa mediante publicaciones y encuentra el respaldo que necesitas.";
+  const communityButton = document.createElement("a");
+  communityButton.href = "/comunidades";
+  communityButton.className = "mt-4 bg-gradient-to-r from-purple-600 to-purple-800 text-white py-2 px-6 rounded-lg transition-all duration-300 hover:from-purple-700 hover:to-purple-900";
+  communityButton.textContent = "Ver";
+  cardCommunity.appendChild(communityTitle);
+  cardCommunity.appendChild(communityText);
+  cardCommunity.appendChild(communityButton);
+
+  // Card de Profesionales
+  const cardProfessionals = document.createElement("div");
+  cardProfessionals.className = "bg-base-100 rounded-lg shadow-md p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:shadow-lg hover:scale-105";
+  const professionalsTitle = document.createElement("h3");
+  professionalsTitle.className = "text-xl font-semibold text-gray-800 mb-4";
+  professionalsTitle.textContent = "Profesionales";
+  const professionalsText = document.createElement("p");
+  professionalsText.className = "text-gray-600";
+  professionalsText.textContent = "En esta sección podrás obtener más información sobre los profesionales de la salud mental que pueden brindarte ayuda para superar situaciones de violencia de género.";
+  const professionalsButton = document.createElement("a");
+  professionalsButton.href = "/profesionales";
+  professionalsButton.className = "mt-4 bg-gradient-to-r from-purple-500 to-purple-700 text-white py-2 px-6 rounded-lg transition-all duration-300 hover:from-purple-600 hover:to-purple-800";
+  professionalsButton.textContent = "Ver";
+  cardProfessionals.appendChild(professionalsTitle);
+  cardProfessionals.appendChild(professionalsText);
+  cardProfessionals.appendChild(professionalsButton);
+
+  // Agregar las nuevas tarjetas al contenedor
+  cardsContainer.appendChild(cardArticle);
+  cardsContainer.appendChild(cardStory);
+  cardsContainer.appendChild(cardCommunity);
+  cardsContainer.appendChild(cardProfessionals);  // Aquí añadimos la nueva tarjeta
+
+  // Agregar las nuevas tarjetas al contenedor principal
+  conteiner.appendChild(cardsContainer);
 
   return conteiner;
 };

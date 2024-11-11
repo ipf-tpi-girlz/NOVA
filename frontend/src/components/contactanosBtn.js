@@ -1,11 +1,11 @@
-
+import { showNotification } from "../components/notification.js"
 export const Contactanos = () => {
   const container = document.createElement("div");
   container.className = "shadow-lg flex flex-col";
 
   const BtnContactanos = document.createElement("div");
   BtnContactanos.className =
-    "flex flex-col fixed bottom-36 z-50 right-0 !text-3xl shadow-md bg-base-200 cursor-pointer rounded-l-full p-2 transition-all duration-300";
+    "flex flex-col fixed bottom-36 z-50 right-0 !text-3xl shadow-md bg-base-100 bg-cover cursor-pointer rounded-l-full p-2 transition-all duration-300";
   BtnContactanos.onclick = () => {
     BtnContactanos.style.transform = "translateX(100%)";
     setTimeout(() => {
@@ -14,9 +14,10 @@ export const Contactanos = () => {
     }, 300);
   };
 
+  // Botón de cerrar sin borde circular, solo X
   const modalCloseBtn = document.createElement("button");
   modalCloseBtn.className =
-    "btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-base-content";
+    "absolute right-2 top-2 text-1xl font-bold text-gray-600 bg-transparent border-none cursor-pointer";
   modalCloseBtn.textContent = "X";
   modalCloseBtn.onclick = () => {
     modal.close(); // Cierra el modal
@@ -37,7 +38,7 @@ export const Contactanos = () => {
   modal.className = "modal";
 
   const modalBox = document.createElement("div");
-  modalBox.className = "modal-box text-center bg-base-100 text-base-content";
+  modalBox.className = "modal-box shadow-lg text-center bg-white bg-cover text-base-content";
 
   // Título del modal
   const modalTitle = document.createElement("h1");
@@ -54,9 +55,9 @@ export const Contactanos = () => {
   container.appendChild(BtnContactanos);
   container.appendChild(modal);
 
-  // Contenedor del formulario con efecto glassmorphism mejorado
+  // Contenedor del formulario con fondo más claro y efecto "glassmorphism"
   const formWrapper = document.createElement('div');
-  formWrapper.className = 'w-full max-w-xl rounded-2xl p-8 space-y-6  ';
+  formWrapper.className = 'w-full max-w-xl rounded-2xl p-8 space-y-6 bg-white/90 backdrop-blur-lg'; // Fondo más claro y con desenfoque de fondo
 
   // Icono principal y contenedor del encabezado
   const headerContainer = document.createElement('div');
@@ -68,7 +69,7 @@ export const Contactanos = () => {
     <svg class="w-16 h-16 mx-auto text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
     </svg>
-`;
+  `;
   headerContainer.appendChild(mainIcon);
 
   const $title = document.createElement('h1');
@@ -169,13 +170,14 @@ export const Contactanos = () => {
   $submitButton.type = 'submit';
   $submitButton.id = 'button';
   $submitButton.className = `
-    w-full bg-gradient-to-r from-purple-500 to-purple-500 
-    text-white font-semibold py-3 px-6 rounded-lg
-    hover:from-purple-600 hover:to-purple-600 
-    transform transition-all duration-200 
-    hover:shadow-lg hover:-translate-y-0.5
+ w-auto bg-gradient-to-r from-blue-400 to-blue-500
+    text-white font-semibold py-2 px-4 rounded-md
+    hover:from-blue-500 hover:to-blue-600
+    transform transition-all duration-150
+    hover:shadow-md hover:scale-105
     disabled:opacity-50 disabled:cursor-not-allowed
     flex items-center justify-center gap-2
+    mx-auto
 `;
 
   // Agregar icono al botón
@@ -266,7 +268,6 @@ export const Contactanos = () => {
   formWrapper.appendChild($form);
   modalBox.appendChild(formWrapper);
   document.body.appendChild($script1);
-
 
   return container;
 };
