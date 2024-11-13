@@ -29,7 +29,7 @@ export const getUserProf = async (req, res) => {
     console.log(color.green(id));
 
     const users = await Usuario.findAll({
-      where: { id: id }, // Asegúrate de que 'id' sea el campo correcto
+      where: { id: id },
       include: [
         {
           model: Perfil,

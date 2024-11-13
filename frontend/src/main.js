@@ -56,7 +56,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const renderPage = async () => {
       const navbar = await Navbar();
+
       app.appendChild(navbar);
+
 
       switch (pathname) {
         case "/":
@@ -78,6 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           const contactsPage = await ContactsPage();
           app.appendChild(contactsPage);
           app.appendChild(BtnEmergency());
+          app.appendChild(Footer());
           break;
         case "/historias":
           app.appendChild(createHeroSection());
@@ -116,6 +119,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           break;
         case "/registrar-profesional":
           app.appendChild(FormRegisterProf());
+          app.appendChild(Footer());
           break;
         case "/Nosotros":
           app.appendChild(Nosotros());

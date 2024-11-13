@@ -55,7 +55,7 @@ export const ContactsPage = async () => {
   conteiner.appendChild(interfazProfesionales);
   conteiner.appendChild(inspirationContainer());
   main.appendChild(conteiner);
-  main.appendChild(Footer());
+
 
   return main;
 };

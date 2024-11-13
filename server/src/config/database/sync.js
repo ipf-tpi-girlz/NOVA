@@ -9,7 +9,7 @@ import Conversacion from "../../models/chat.js";
 import InformacionProfesional from "../../models/info.js";
 import Comunidad from "../../models/comunnity.js";
 import PublicacionComunidad from "../../models/post.community.js";
-import ParticipanteComunidad from "../../models/participan.comunity.js";
+import ParticipanteComunidad from "../../models/join.comunity.js";
 import Mensaje from "../../models/message.js";
 
 // Función para sincronizar tablas y relaciones
@@ -74,12 +74,12 @@ export const syncTables = async () => {
     PublicacionComunidad.belongsTo(Usuario, { foreignKey: "usuario_id" });
 
     // Comunidad -> ParticipanteComunidad (One-to-Many)
-    Comunidad.hasMany(ParticipanteComunidad, { foreignKey: "comunidad_id" });
-    ParticipanteComunidad.belongsTo(Comunidad, { foreignKey: "comunidad_id" });
+    Comunidad.hasMany(ParticipanteComunidad, { foreignKey: "comunidad_id", as: "participantes" });
+    ParticipanteComunidad.belongsTo(Comunidad, { foreignKey: "comunidad_id", as: "comunidad" });
 
     // Usuario -> ParticipanteComunidad (One-to-Many)
-    Usuario.hasMany(ParticipanteComunidad, { foreignKey: "usuario_id" });
-    ParticipanteComunidad.belongsTo(Usuario, { foreignKey: "usuario_id" });
+    Usuario.hasMany(ParticipanteComunidad, { foreignKey: "usuario_id", as: "participantes" });
+    ParticipanteComunidad.belongsTo(Usuario, { foreignKey: "usuario_id", as: "usuario" });
 
     // Sincronización de tablas
     await sequelize.sync();

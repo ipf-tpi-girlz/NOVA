@@ -70,9 +70,13 @@ export const updateCommunity = async (req, res) => {
         await Comunidad.update({
             nombre,
             desc,
-            img_perfil: req.file ? req.file.path : null,
-            img_portada: req.file ? req.file.path : null
         }, { where: { id } })
+        if (req.file) {
+            await Comunidad.update({
+                img_perfil: req.file ? req.file.path : null
+            }, { where: { id } })
+
+        }
         console.log(color.blue(`Comunidad actualizada`))
         return res.status(200).json({ message: "Comunidad actualizada" })
     }

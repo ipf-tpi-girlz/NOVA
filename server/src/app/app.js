@@ -12,6 +12,7 @@ import routerComunity from "../routes/comunity.routes.js";
 import routerPostComunity from "../routes/post.comunity.routes.js";
 import postRouter from "../routes/post.routes.js";
 import authRoutes from "../routes/auth.routes.js";
+import routerJoinC from "../routes/join.community.routes.js"
 import articleRouter from "../routes/article.routes.js";
 export const app = express();
 const server = createServer(app);
@@ -63,6 +64,7 @@ app.use("/comunity", routerComunity);
 app.use("/comunity-post", routerPostComunity);
 app.use("/auth", authRoutes);
 app.use("/article", articleRouter);
+app.use("/join-community", routerJoinC)
 
 // Evento de conexión para Socket.IO
 io.on("connection", (socket) => {
