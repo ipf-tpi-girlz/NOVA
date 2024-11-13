@@ -32,6 +32,7 @@ import { artAbuso } from "./pages/seccionInf/artAbuso.js";
 import { articulos } from "./pages/seccionInf/seccionArticulos.js";
 import { Contactanos } from "./components/contactanosBtn.js";
 import { Nosotros } from "./pages/Nosotros.js";
+import { menuProfesional } from "./pages/barraProf.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
@@ -128,6 +129,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(Contactanos());
           app.appendChild(Footer());
           break;
+        case "/menu-prof":
+          app.appendChild(menuProfesional());
+          app.appendChild(Footer());
       }
 
       LocalStorage();
