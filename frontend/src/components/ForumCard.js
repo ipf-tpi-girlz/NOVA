@@ -4,6 +4,7 @@ export function ForumCard(id, img, title, desc) {
   card.className = "card bg-base-100 image-full lg:w-96 w-72 shadow-xl ";
 
   const cardFigure = document.createElement("figure");
+  cardFigure.className = "h-full";
 
   // Imagen de la tarjeta
   const cardImg = document.createElement("img");
