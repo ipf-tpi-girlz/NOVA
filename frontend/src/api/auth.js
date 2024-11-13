@@ -1,18 +1,47 @@
 
-// URL base para la API
 const BASEURL = "http://localhost:4000";
 
+
+export const profileProf = async () => {
+    try {
+        const response = await fetch(`${BASEURL}/auth/profesionales`)
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Error al mostrar los perfiles");
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Error en la actualización del perfil:", error);
+        throw error;
+    }
+}
+
+// auth.js
+export const profileProfID = async (id) => {
+    try {
+        const response = await fetch(`${BASEURL}/auth/profile/${id}`);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Error al mostrar los perfiles");
+        }
+        return response.json();
+    } catch (error) {
+        console.error("Error en la actualización del perfil:", error);
+        throw error;
+    }
+};
+
+
 // Función para actualizar el perfil
-export const updateProfile = async (data) => {
+export const updateProfile = async (formData) => {
     try {
         const response = await fetch(`${BASEURL}/auth/update`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data),
+            // No pongas el encabezado "Content-Type"
+            body: formData,
             credentials: "include",
         });
+
 
         // Verifica si la respuesta es ok
         if (!response.ok) {
@@ -23,7 +52,7 @@ export const updateProfile = async (data) => {
         return response; // Devuelve la respuesta completa
     } catch (error) {
         console.error("Error en la actualización del perfil:", error);
-        throw error; // Lanza el error para manejarlo en otro lugar
+        throw error;
     }
 };
 // Función para obtener la imagen de perfil
@@ -46,6 +75,7 @@ export const getUserProfile = async () => {
         throw error;
     }
 };
+
 
 export const updatePassword = async (data) => {
     try {

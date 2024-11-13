@@ -1,7 +1,14 @@
 import { $themeLabel } from "./themeButton";
 import { checkSession } from "../api/auth.js";
+import { logoutUser } from "../api/auth.js";
+import { notification } from "antd";
+export const Navbar = async () => {
 
-export const Navbar = () => {
+  const isAuthenticated = await checkSession().catch(error => {
+    console.error("Error al verificar sesión:", error);
+    return false;
+  });
+
   const navbar = document.createElement("nav");
   navbar.classList.add(
     "navbar",
@@ -73,9 +80,7 @@ export const Navbar = () => {
     "gap-2"
   );
 
-  // Valida si el usuario inició sesión
-  if (checkSession()) {
-    //Funcion para crear link para el menu
+  if (isAuthenticated) {
     function createLink(link, text) {
       const li = document.createElement("li");
       const a = document.createElement("a");
@@ -126,19 +131,48 @@ export const Navbar = () => {
 
     // Crear los elementos del menú
     const item1 = document.createElement("li");
-    const buttonPerfil = document.createElement("button"); // Cambiar 'btn' por 'button'
+    const buttonPerfil = document.createElement("button");
     buttonPerfil.textContent = "Ver Perfil";
     item1.appendChild(buttonPerfil);
+    buttonPerfil.addEventListener("click", () => {
+      window.location.href = "/profile";
+    })
 
     const item2 = document.createElement("li");
-    const buttonLogOut = document.createElement("button"); // Cambiar 'btn' por 'button'
+    const buttonLogOut = document.createElement("button");
     buttonLogOut.textContent = "Cerrar Sesion";
     buttonLogOut.setAttribute;
     buttonLogOut.type = "submit";
-    // buttonLogOut.setAttribute = ("href", "/");
-    // buttonLogOut.addEventListener("click", () => {
-    //   window.location.href = "http://localhost:5173";
-    // });
+    buttonLogOut.addEventListener("click", async () => {
+      try {
+        const response = await logoutUser();
+        console.log(response)
+        if (response && response.success) {
+          notification.success({
+            message: 'Cierre de sesión',
+            description: 'Sesión cerrada exitosamente.',
+            placement: 'topRight',
+            duration: 2,
+          });
+          setTimeout(() => {
+            window.location.href = "/login";
+          }, 2000);
+        } else {
+          notification.error({
+            message: 'Error',
+            description: response?.message || 'Error al cerrar sesión. Por favor, intenta de nuevo.',
+            placement: 'topRight',
+          });
+        }
+      } catch (error) {
+        console.error("Error del servidor:", error);
+        notification.error({
+          message: 'Error',
+          description: 'Hubo un problema al cerrar sesión.',
+          placement: 'topRight',
+        });
+      }
+    });
     item2.appendChild(buttonLogOut);
 
     dropdownProfile.appendChild(item1);

@@ -12,6 +12,9 @@ import { PostsFeed } from "./PostsFeed";
 import { FormLogin } from "./forms/FormLogin";
 import { FormRegisterUser } from "./forms/FormRegisterUser";
 import { BtnEmergency } from "./btnEmergency";
+import { FormRegisterProf } from "./forms/FormRegisterProf";
+import { ForumHeader } from "./ForumHeader";
+import { forop } from "./foroPreview";
 
 export {
   HeroLanding,
@@ -28,4 +31,7 @@ export {
   FormLogin,
   FormRegisterUser,
   BtnEmergency,
+  FormRegisterProf,
+  ForumHeader,
+  forop,
 };

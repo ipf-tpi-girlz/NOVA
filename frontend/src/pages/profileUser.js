@@ -307,11 +307,11 @@ const formEditUser = async () => {
             </svg>`
         }
     ];
-
+    console.log("imagen de perfil", userProfile.img)
     const $imgContent = document.createElement("div")
     $imgContent.classList.add("flex", "items-center", "space-x-2");
     const $img = document.createElement("img");
-    $img.src = userProfile.img;
+    $img.src = "";
     $img.classList.add("w-10", "h-10", "rounded-full");
     $imgContent.appendChild($img);
     $form.appendChild($imgContent);

@@ -30,7 +30,7 @@ export const HeaderProfile = () => {
     getUserProfile().then(user => {
         console.log("Perfil del usuario:", user);
 
-        $img.src = user.img || '../assets/img/foto-profile.jfif';
+        $img.src = user.img ? user.img : 'https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg';
         $name.textContent = user.nombre || 'Usuario';
         $bio.textContent = user.bio || 'Bienvenido a mi perfil!';
 

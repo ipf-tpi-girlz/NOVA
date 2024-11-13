@@ -7,11 +7,6 @@ const SECRET_KEY = config.SECRET_KEY;
 // Middleware para verificar el token JWT
 export const validarJWT = async (req, res, next) => {
   try {
-    console.log(color.green("------------session---------------------\n\n"));
-    console.log(color.greenBright(req.session.token));
-    console.log(color.green("------------cookies---------------------\n\n"));
-    console.log(color.greenBright(req.cookies.authToken));
-    console.log(color.green("----------------------------------------"));
 
     // Obtener el token de las cookies o la sesión
     const token = req.cookies.authToken || req.session.token;

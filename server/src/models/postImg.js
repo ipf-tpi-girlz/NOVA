@@ -1,6 +1,6 @@
 import { DataTypes } from '../config/database/db.js';
 import { sequelize } from '../config/database/db.js';
-import Publicacion from './post.js';
+import Usuario from './users.js';
 
 const PublicacionImagen = sequelize.define('PublicacionImagen', {
     id: {
@@ -8,12 +8,20 @@ const PublicacionImagen = sequelize.define('PublicacionImagen', {
         primaryKey: true,
         autoIncrement: true,
     },
-    publicacion_id: {
+    usuario_id: {
         type: DataTypes.INTEGER,
         references: {
-            model: Publicacion,
+            model: Usuario,
             key: 'id',
         },
+    },
+    nombre: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+    },
+    desc: {
+        type: DataTypes.TEXT,
+        allowNull: false,
     },
     imagen: DataTypes.TEXT,
 }, {
