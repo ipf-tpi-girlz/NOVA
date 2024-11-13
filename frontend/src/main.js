@@ -32,9 +32,15 @@ import { artAbuso } from "./pages/seccionInf/artAbuso.js";
 import { articulos } from "./pages/seccionInf/seccionArticulos.js";
 import { Contactanos } from "./components/contactanosBtn.js";
 import { Nosotros } from "./pages/Nosotros.js";
+import { menuProfesional } from "./pages/barraProf.js";
 
 // Rutas públicas
-const publicRoutes = ["/", "/register-user", "/login", "/registrar-profesional"];
+const publicRoutes = [
+  "/",
+  "/register-user",
+  "/login",
+  "/registrar-profesional",
+];
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -98,7 +104,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(Footer());
           break;
         case "/articulos":
-          ;
           app.appendChild(articulos());
           app.appendChild(Footer());
           break;
@@ -123,13 +128,15 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(Contactanos());
           app.appendChild(Footer());
           break;
+        case "/menu-prof":
+          app.appendChild(menuProfesional());
+          app.appendChild(Footer());
       }
 
       LocalStorage();
     };
 
     await renderPage();
-
   } catch (error) {
     console.error("Error al inicializar la aplicación:", error);
   }
