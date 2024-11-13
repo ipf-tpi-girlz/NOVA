@@ -8,7 +8,6 @@ import {
 } from "../controllers/community.controllers.js";
 import { validarJWT } from "../middlewares/jwt.validation.js";
 
-
 const routerComunity = Router();
 
 routerComunity.get("/", getCommunity);
