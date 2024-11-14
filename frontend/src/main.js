@@ -35,12 +35,7 @@ import { Nosotros } from "./pages/Nosotros.js";
 import { menuProfesional } from "./pages/barraProf.js";
 
 // Rutas públicas
-const publicRoutes = [
-  "/",
-  "/register-user",
-  "/login",
-  "/registrar-profesional",
-];
+const publicRoutes = ["/", "/register-user", "/login", "/register-prof"];
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -72,6 +67,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         case "/register-user":
           app.appendChild(RegisterPage(FormRegisterUser()));
           app.appendChild(Footer());
+          break;
+        case "/register-prof":
+          app.appendChild(RegisterPage(FormRegisterProf()));
+          appendChild(Footer());
           break;
         case "/login":
           app.appendChild(RegisterPage(FormLogin()));
@@ -119,8 +118,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(artAbuso());
           app.appendChild(Footer());
           break;
-        case "/registrar-profesional":
+        case "/register-prof":
           app.appendChild(FormRegisterProf());
+          app.appendChild(Footer());
           break;
         case "/Nosotros":
           app.appendChild(Nosotros());
