@@ -1,3 +1,5 @@
+import socket from "../config/socket.oiConfig";
+
 export const BtnEmergency = () => {
   const container = document.createElement("div");
   container.className = "shadow-lg";
@@ -30,21 +32,52 @@ export const BtnEmergency = () => {
     "Al presionar este botón, se abrirá un espacio de apoyo donde podrás solicitar ayuda. Notificaremos a alguien disponible para hablar y te acompañará en un chat privado.";
   descripcion.className = "font-thin font-serif text-xs text-opacity-95";
 
+  // Botones de red de contencion
+
+  //Boton Help
   const helpBtn = document.createElement("button");
   helpBtn.className =
     "btn bg-pink-200 items-center hover:bg-pink-400 w-96 mt-2 mb-4";
   helpBtn.innerHTML = `<span class = "material-symbols-rounded ">favorite</span> Necesito ayuda ahora `;
-  // helpBtn.addEventListener(click );
+
+  const helpAccepted = document.createElement("button");
+
+  const sendMessage = document.createElement("button");
+
+  //Logica detras de los botones
+
+  //Requerir ayuda
+  helpBtn.addEventListener("click", () => {
+    socket.emit("Un usuario necesita ayuda");
+    console.log("se ha enviado el mensaje");
+  });
+
+  //aceptar ayudar
+  helpAccepted.addEventListener("click", () => {
+    const requesterSocketId = id.user; // Aquí debes colocar el ID del usuario que solicita ayuda
+    socket.emit("Ayuda Aceptada", { requesterId: requesterSocketId });
+  });
+
+  // Lógica del botón para enviar mensaje en el chat
+  sendMessage.addEventListener("click", () => {
+    const chatRoom = "Red de contencion"; // Define el chat room si tienes uno
+    const message = document.getElementById("messageInput").value;
+    socket.emit("send", { chatRoom, message });
+  });
 
   const recursos = document.createElement("div");
   recursos.className = "flex justify-center center mt-4 gap-8 items-center ";
-  const message = document.createElement("h4");
+  const message = document.createElement("a");
   message.innerHTML = `<span class = "material-symbols-rounded items-center ">Chat_Bubble</span> Contactanos`;
-  message.className = "text-sm font-serif";
+  message.className = "text-sm font-serif cursor-pointer";
+  message.href = "https://www.example.com";
 
-  const llamada = document.createElement("div");
+  const llamada = document.createElement("a");
   llamada.innerHTML = `<span class = "material-symbols-rounded  items-center">phone_in_talk</span>Linea 144`;
-  llamada.className = "text-sm font-serif";
+  llamada.className = "text-sm font-serif cursor-pointer";
+  llamada.addEventListener("click", () => {
+    window.location.href = "tel:144";
+  });
 
   recursos.appendChild(llamada);
   recursos.appendChild(message);

@@ -1,5 +1,7 @@
 import "./style.css";
 import "material-symbols";
+import "./config/socket.oiConfig.js";
+import "socket.io-client";
 
 // Manejo de modo claro y oscuro
 import { themeChange } from "theme-change";
@@ -91,6 +93,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           const contactsPage = await ContactsPage();
           app.appendChild(contactsPage);
           app.appendChild(BtnEmergency());
+          app.appendChild(Footer());
           break;
         case "/historias":
           app.appendChild(createHeroSection());
