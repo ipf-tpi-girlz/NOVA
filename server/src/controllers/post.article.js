@@ -19,7 +19,6 @@ export const getArticles = async (req, res) => {
         res.status(500).json({ error: "Error al obtener los datos" });
     }
 }
-
 export const getArticleId = async (req, res) => {
     const { id } = req.params
     try {
@@ -39,7 +38,6 @@ export const getArticleId = async (req, res) => {
         res.status(500).json({ error: "Error al obtener los datos" });
     }
 }
-
 export const createArticle = async (req, res) => {
     const user = req.user
     const { nombre, desc } = req.body;
@@ -59,7 +57,6 @@ export const createArticle = async (req, res) => {
         res.status(500).json({ error: "Error al crear el registro" });
     }
 }
-
 export const editArticle = async (req, res) => {
     const { id } = req.params
     const user = req.user
@@ -93,7 +90,6 @@ export const editArticle = async (req, res) => {
         res.status(500).json({ error: "Error al crear el registro" });
     }
 }
-
 export const deleteArticle = async (req, res) => {
     const { id } = req.params
     const user = req.user
@@ -114,3 +110,26 @@ export const deleteArticle = async (req, res) => {
         res.status(500).json({ error: "Error al crear el registro" });
     }
 }
+export const getArticlesByUser = async (req, res) => {
+    const { usuarioId } = req.params;
+    try {
+        const articulos = await PublicacionImagen.findAll({
+            where: { usuario_id: usuarioId },
+            include: [
+                {
+                    model: Usuario,
+                    as: 'usuario'
+                }
+            ]
+        });
+
+        if (articulos.length === 0) {
+            return res.status(404).json({ error: "No se encontraron artículos para este usuario" });
+        }
+
+        res.status(200).json(articulos);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error al obtener los artículos del usuario" });
+    }
+};
