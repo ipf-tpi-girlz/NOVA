@@ -33,10 +33,13 @@ export const createCommunity = async (req, res) => {
   const user = req.user;
   const { nombre, desc } = req.body;
   try {
-    // if (user.role !== "institucion" && user.role !== "profesional") {
-    //     console.log(color.red("No puede crear una comunidad"))
-    //     return res.status(403).json({ message: "Solo las instituciones y profesionales pueden crear una comunidad" });
-    // }
+    if (user.role !== "institucion" && user.role !== "profesional") {
+      console.log(color.red("No puede crear una comunidad"));
+      return res.status(403).json({
+        message:
+          "Solo las instituciones y profesionales pueden crear una comunidad",
+      });
+    }
 
     await Comunidad.create({
       nombre,
