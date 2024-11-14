@@ -1,5 +1,9 @@
 import Comunidad from "../models/comunnity.js";
 import color from "chalk";
+import ParticipanteComunidad from "../models/join.comunity.js";
+import Usuario from "../models/users.js";
+import PublicacionComunidad from "../models/post.community.js";
+import Comentario from "../models/coments.js";
 
 export const getCommunity = async (req, res) => {
   try {
@@ -10,6 +14,53 @@ export const getCommunity = async (req, res) => {
     console.log(color.red(error));
   }
 };
+
+export const community = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const community = await Comunidad.findOne({
+      where: { id },
+      include: [
+        {
+          model: PublicacionComunidad,
+          as: "publicaciones",
+          include: [
+            {
+              model: Comentario,
+              as: "comentarios",
+              include: [
+                {
+                  model: Usuario,
+                  as: "usuario"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          model: ParticipanteComunidad,
+          as: "participantes",
+          include: [
+            {
+              model: Usuario,
+              as: "usuario"
+            }
+          ]
+        }
+      ]
+    });
+
+
+    if (!community) {
+      console.log(color.red("Comunidad no encontrada"));
+      return res.status(404).json({ message: "Comunidad no encontrada" });
+    }
+    console.log(color.green(`Comunidad encontrada: ${community}`));
+    return res.status(200).json({ community });
+  } catch {
+
+  }
+}
 
 export const getCommunityID = async (req, res) => {
   const user = req.user;
@@ -33,10 +84,10 @@ export const createCommunity = async (req, res) => {
   const user = req.user;
   const { nombre, desc } = req.body;
   try {
-    // if (user.role !== "institucion" && user.role !== "profesional") {
-    //     console.log(color.red("No puede crear una comunidad"))
-    //     return res.status(403).json({ message: "Solo las instituciones y profesionales pueden crear una comunidad" });
-    // }
+    if (user.role !== "institucion" && user.role !== "profesional") {
+      console.log(color.red("No puede crear una comunidad"))
+      return res.status(403).json({ message: "Solo las instituciones y profesionales pueden crear una comunidad" });
+    }
 
     await Comunidad.create({
       nombre,

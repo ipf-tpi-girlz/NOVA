@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(LandingPage());
           app.appendChild(Footer());
           break;
-        case "/register-user/":
+        case "/register-user":
           app.appendChild(RegisterPage(FormRegisterUser()));
           app.appendChild(Footer());
           break;

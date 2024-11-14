@@ -63,7 +63,7 @@ app.use("/foro", postRouter);
 app.use("/comunity", routerComunity);
 app.use("/comunity-post", routerPostComunity);
 app.use("/auth", authRoutes);
-app.use("/article", articleRouter);
+app.use("/articles", articleRouter);
 app.use("/join-community", routerJoinC)
 
 // Evento de conexión para Socket.IO

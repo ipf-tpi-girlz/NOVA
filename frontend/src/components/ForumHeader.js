@@ -38,11 +38,14 @@ export const ForumHeader = () => {
 
   const botones = document.createElement("div");
   botones.className = "gap-4 flex center items-center self-end p-5";
-
+  //!BOTON DE UNION AL FORO
   const joinBtn = document.createElement("button");
   joinBtn.className =
     "btn cursor-point bg-base-300 rounded-lg selft-end shadow";
   joinBtn.textContent = "Unirte";
+  joinBtn.addEventListener('click', () => {
+
+  })
 
   // Crear el contenedor del dropdown
   const DropdowncontainerMore = document.createElement("div");

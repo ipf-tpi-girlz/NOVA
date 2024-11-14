@@ -5,12 +5,13 @@ import {
   createCommunity,
   updateCommunity,
   deleteCommunity,
+  community
 } from "../controllers/community.controllers.js";
 import { upload } from "../middlewares/img.middleware.js";
 import { validarJWT } from "../middlewares/jwt.validation.js";
 
 const routerComunity = Router();
-
+routerComunity.get("/general/:id", community)
 routerComunity.get("/", getCommunity);
 routerComunity.get("/user", validarJWT, getCommunityID);
 routerComunity.post("/create", validarJWT, upload.single("img"), createCommunity);

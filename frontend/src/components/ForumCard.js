@@ -1,8 +1,7 @@
-export function ForumCard(id, img, title, desc) {
+export function ForumCard(id, img, nombre, desc) {
   const card = document.createElement("div");
   card.id = id;
-  card.className = "card bg-base-100 image-full lg:w-96 w-72 shadow-xl ";
-
+  card.className = "card bg-base-100 image-full lg:w-72 w-72 shadow-xl ";
   const cardFigure = document.createElement("figure");
   cardFigure.className = "h-full";
 
@@ -18,7 +17,7 @@ export function ForumCard(id, img, title, desc) {
 
   const cardTitle = document.createElement("h2");
   cardTitle.className = "card-title";
-  cardTitle.textContent = title;
+  cardTitle.textContent = nombre;
 
   const cardDesc = document.createElement("p");
   cardDesc.textContent = desc;
@@ -30,8 +29,8 @@ export function ForumCard(id, img, title, desc) {
   // Crear el botón "Unirse a foro"
   const cardBtn = document.createElement("button");
   cardBtn.className = "btn btn-primary";
-  cardBtn.textContent = "Ir a foro";
   cardBtn.type = "submit";
+  cardBtn.textContent = "Ver más";
 
   // Agregar el evento de clic al botón
   cardBtn.addEventListener("click", async () => {

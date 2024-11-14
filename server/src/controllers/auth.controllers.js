@@ -37,14 +37,12 @@ export const getUserProf = async (req, res) => {
         },
       ],
     });
-
-    // Cambiar la verificación a la longitud del array
     if (users.length === 0) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    console.log(color.green(users)); // Cambié 'user' por 'users' para reflejar el cambio
-    res.status(200).json(users); // Devolver todos los usuarios encontrados
+    console.log(color.green(users));
+    res.status(200).json(users);
   } catch (error) {
     console.log(color.red(error));
     return res.status(500).json({ message: "Se produjo un error en el servidor" });
@@ -54,7 +52,6 @@ export const getUserProf = async (req, res) => {
 
 export const getUserById = async (req, res) => {
   const user = req.user;
-  console.log(color.green(user.role));
   try {
     if (user.role === "profesional" || user.role === "institucion") {
       const perfil = await Perfil.findOne({ where: { usuario_id: user.id } });
@@ -111,7 +108,7 @@ export const updatePassword = async (req, res) => {
 export const updateUser = async (req, res) => {
   const user = req.user;
   const id = user.id;
-  const { nombre, departamento, localidad, nro_telefono, direccion, especialidad } = req.body;
+  const { nombre, modo_atencion, departamento, localidad, nro_telefono, descripcion, direccion, especialidad } = req.body;
 
   try {
     const updateUser = {
@@ -127,7 +124,7 @@ export const updateUser = async (req, res) => {
     console.log("URL de imagen guardada:", updateUser.img);
 
     if (user.role === "profesional") {
-      const userUpdateResult = await Usuario.update(updateUser, { where: { usuario_id: id } });
+      const userUpdateResult = await Usuario.update(updateUser, { where: { id: id } });
 
       if (userUpdateResult[0] === 0) {
         return res.status(404).json({ message: "Usuario no encontrado o no actualizado" });
@@ -145,6 +142,8 @@ export const updateUser = async (req, res) => {
       await perfil.update({
         nro_telefono,
         direccion,
+        descripcion,
+        modo_atencion,
         especialidad: updatedEspecialidad,
       });
 

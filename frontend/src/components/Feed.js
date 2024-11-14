@@ -1,5 +1,6 @@
 import manosunidas from "../assets/manosunidas.png";
 import { ForumCard, ArticleCard, PostsFeed } from "./index";
+import { fetchComunities } from "../api/comunity"
 
 export function Feed() {
   //Contenedor del feed
@@ -37,6 +38,8 @@ export function Feed() {
     "items-center",
     "lg:items-start"
   );
+
+
   //Titulo
   const forumstTitle = document.createElement("h1");
   forumstTitle.className = "text-lg font-semibold";
@@ -44,6 +47,7 @@ export function Feed() {
 
   containerForums.appendChild(forumstTitle);
   containerForums.appendChild(divider);
+
 
   //Contenedor de los articulos
   const containerArticulo = document.createElement("div");
@@ -62,22 +66,21 @@ export function Feed() {
   containerArticulo.appendChild(articlesTitle);
   containerArticulo.appendChild(divider.cloneNode(true));
 
-  //Foros
-  const newForum1 = ForumCard(
-    1,
-    manosunidas,
-    "Manos Unidas",
-    "Somos una comunidad en busca de la sanacion al trauma, un espacio para poder expresarte e interactuar con otros que han pasado lo mismo."
-  );
-  const newForum2 = ForumCard(
-    2,
-    "https://media.istockphoto.com/id/857146092/es/foto/mar-de-manos.jpg?s=612x612&w=0&k=20&c=7iUAtDTLL8MpCqDJXDHo8E8ZySoZqGoSTjdNJs9HXj8=",
-    "Otro foro",
-    "Somos una comunidad en busca de la sanacion al trauma, un espacio para poder expresarte e interactuar con otros que han pasado lo mismo."
-  );
+  fetchComunities().then(data => {
+    const foros = data.community
+    console.log(foros)
+    foros.forEach(e => {
+      const newForum = ForumCard(
+        e.id,
+        e.img_perfil || "https://media.istockphoto.com/id/857146092/es/foto/mar-de-manos.jpg?s=612x612&w=0&k=20&c=7iUAtDTLL8MpCqDJXDHo8E8ZySoZqGoSTjdNJs9HXj8=",
+        e.nombre,
+        e.desc
+      );
+      console.log(e.desc)
+      containerForums.appendChild(newForum);
+    });
+  });
 
-  containerForums.appendChild(newForum1);
-  containerForums.appendChild(newForum2);
 
   //Articulos
   const newArticle1 = ArticleCard(
@@ -99,3 +102,4 @@ export function Feed() {
 
   return containerFeed;
 }
+

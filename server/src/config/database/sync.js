@@ -35,8 +35,8 @@ export const syncTables = async () => {
     Reaccion.belongsTo(Usuario, { foreignKey: "usuario_id" });
 
     // Publicacion -> Comentario (One-to-Many)
-    Publicacion.hasMany(Comentario, { foreignKey: "publicacion_id" });
-    Comentario.belongsTo(Publicacion, { foreignKey: "publicacion_id" });
+    PublicacionComunidad.hasMany(Comentario, { foreignKey: "publicacion_id", as: "comentarios" });
+    Comentario.belongsTo(PublicacionComunidad, { foreignKey: "publicacion_id", as: "publicacion" });
 
     // Comentario -> Comentario (Self-referencing)
     Comentario.hasMany(Comentario, { foreignKey: "comentario_padre_id" });
@@ -66,12 +66,12 @@ export const syncTables = async () => {
     Comunidad.belongsTo(Usuario, { foreignKey: "moderador_id" });
 
     // Comunidad -> PublicacionComunidad (One-to-Many)
-    Comunidad.hasMany(PublicacionComunidad, { foreignKey: "comunidad_id" });
-    PublicacionComunidad.belongsTo(Comunidad, { foreignKey: "comunidad_id" });
+    Comunidad.hasMany(PublicacionComunidad, { foreignKey: "comunidad_id", as: "publicaciones" });
+    PublicacionComunidad.belongsTo(Comunidad, { foreignKey: "comunidad_id", as: "comunidad" });
 
     // Usuario -> PublicacionComunidad (One-to-Many)
-    Usuario.hasMany(PublicacionComunidad, { foreignKey: "usuario_id" });
-    PublicacionComunidad.belongsTo(Usuario, { foreignKey: "usuario_id" });
+    Usuario.hasMany(PublicacionComunidad, { foreignKey: "usuario_id", as: "publicaciones" });
+    PublicacionComunidad.belongsTo(Usuario, { foreignKey: "usuario_id", as: "usuario" });
 
     // Comunidad -> ParticipanteComunidad (One-to-Many)
     Comunidad.hasMany(ParticipanteComunidad, { foreignKey: "comunidad_id", as: "participantes" });
@@ -80,6 +80,9 @@ export const syncTables = async () => {
     // Usuario -> ParticipanteComunidad (One-to-Many)
     Usuario.hasMany(ParticipanteComunidad, { foreignKey: "usuario_id", as: "participantes" });
     ParticipanteComunidad.belongsTo(Usuario, { foreignKey: "usuario_id", as: "usuario" });
+
+    Comentario.belongsTo(Usuario, { foreignKey: 'usuario_id', as: 'usuario' });
+    Usuario.hasMany(Comentario, { foreignKey: 'usuario_id', as: 'comentarios' });
 
     // Sincronización de tablas
     await sequelize.sync();

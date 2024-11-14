@@ -20,22 +20,42 @@ export const getArticles = async (req, res) => {
     }
 }
 
-export const getArticleId = async (req, res) => {
-    const { id } = req.params
+export const getUserArticle = async (req, res) => {
+    const user = req.user
     try {
+        console.log(color.red(user.id))
         const data = await PublicacionImagen.findAll({
-            where: { id },
+            where: { usuario_id: user.id },
             include: [{
                 model: Usuario,
                 as: 'usuario'
             }]
         });
+
         if (data[0] === undefined) {
+            console.log(color.red("No se encontraron datos"));
             return res.status(404).json({ error: "No se encontraron datos" });
         }
-        res.status(200).json(data);
+        return res.status(200).json({ data });
     } catch (error) {
         console.log(error);
+        return res.status(500).json({ error: "Error al obtener los datos" });
+    }
+}
+export const getArticleId = async (req, res) => {
+    const id = req.params
+
+    try {
+        const data = await PublicacionImagen.findAll({
+            where: { usuario_id: id }, include: [{
+                model: Usuario,
+                as: 'usuario'
+            }]
+        })
+        console.log(color.green(data))
+        return res.status(200).json({ data });
+    } catch (error) {
+        console.log(color.red(error));
         res.status(500).json({ error: "Error al obtener los datos" });
     }
 }
