@@ -18,17 +18,37 @@ export const BtnEmergency = () => {
 
   //contenido
   const title = document.createElement("h1");
-  title.className = "text-2xl mb-1 p-6";
-  title.textContent = "Red de contencion";
+  title.className = "text-3xl   font-serif font-bold";
+  title.textContent = "¿Necesitas ayuda?";
 
   const subTitle = document.createElement("h2");
-  subTitle.className = "text-sm mb-3 ";
+  subTitle.className = "text-1xl mb-8 font-serif font-semibold";
   subTitle.textContent = "Estamos aqui para escucharte";
 
+  const descripcion = document.createElement("p");
+  descripcion.textContent =
+    "Al presionar este botón, se abrirá un espacio de apoyo donde podrás solicitar ayuda. Notificaremos a alguien disponible para hablar y te acompañará en un chat privado.";
+  descripcion.className = "font-thin font-serif text-xs text-opacity-95";
+
   const helpBtn = document.createElement("button");
-  helpBtn.className = "btn bg-pink-200 items-center hover:bg-pink-400 w-96";
+  helpBtn.className =
+    "btn bg-pink-200 items-center hover:bg-pink-400 w-96 mt-2 mb-4";
   helpBtn.innerHTML = `<span class = "material-symbols-rounded ">favorite</span> Necesito ayuda ahora `;
   // helpBtn.addEventListener(click );
+
+  const recursos = document.createElement("div");
+  recursos.className = "flex justify-center center mt-4 gap-8 items-center ";
+  const message = document.createElement("h4");
+  message.innerHTML = `<span class = "material-symbols-rounded items-center ">Chat_Bubble</span> Contactanos`;
+  message.className = "text-sm font-serif";
+
+  const llamada = document.createElement("div");
+  llamada.innerHTML = `<span class = "material-symbols-rounded  items-center">phone_in_talk</span>Linea 144`;
+  llamada.className = "text-sm font-serif";
+
+  recursos.appendChild(llamada);
+  recursos.appendChild(message);
+
   const modalBackdrop = document.createElement("form");
   modalBackdrop.method = "dialog";
   modalBackdrop.className = "modal-backdrop";
@@ -48,8 +68,9 @@ export const BtnEmergency = () => {
   modalBox.appendChild(modalClose);
   modalBox.appendChild(title);
   modalBox.appendChild(subTitle);
+  modalBox.appendChild(descripcion);
   modalBox.appendChild(helpBtn);
-
+  modalBox.appendChild(recursos);
   modalBackdrop.appendChild(modalBackdropBtn);
 
   modal.appendChild(modalBox);

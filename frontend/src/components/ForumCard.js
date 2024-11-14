@@ -1,14 +1,14 @@
-export function ForumCard(img, title, desc) {
+export function ForumCard(id, img, title, desc) {
   const card = document.createElement("div");
-  card.className =
-    "card bg-base-100 image-full lg:w-96 w-72 shadow-xl bg-cover ";
+  card.id = id;
+  card.className = "card bg-base-100 image-full lg:w-96 w-72 shadow-xl ";
 
   const cardFigure = document.createElement("figure");
+  cardFigure.className = "h-full";
 
   // Imagen de la tarjeta
   const cardImg = document.createElement("img");
   cardImg.src = img;
-  cardImg.alt = "Manos Unidas";
 
   cardFigure.appendChild(cardImg);
 
@@ -27,13 +27,15 @@ export function ForumCard(img, title, desc) {
   const cardAction = document.createElement("div");
   cardAction.className = "card-actions justify-end";
 
+  // Crear el botón "Unirse a foro"
   const cardBtn = document.createElement("button");
   cardBtn.className = "btn btn-primary";
-  cardBtn.textContent = "Unirse a foro";
+  cardBtn.textContent = "Ir a foro";
   cardBtn.type = "submit";
-  cardBtn.setAttribute = ("href", "/manos-unidas");
-  cardBtn.addEventListener("click", () => {
-    window.location.href = "http://localhost:5173/manos-unidas";
+
+  // Agregar el evento de clic al botón
+  cardBtn.addEventListener("click", async () => {
+    window.location.href = `/forum/${id}`;
   });
 
   cardAction.appendChild(cardBtn);

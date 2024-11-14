@@ -64,11 +64,13 @@ export function Feed() {
 
   //Foros
   const newForum1 = ForumCard(
+    1,
     manosunidas,
     "Manos Unidas",
     "Somos una comunidad en busca de la sanacion al trauma, un espacio para poder expresarte e interactuar con otros que han pasado lo mismo."
   );
   const newForum2 = ForumCard(
+    2,
     "https://media.istockphoto.com/id/857146092/es/foto/mar-de-manos.jpg?s=612x612&w=0&k=20&c=7iUAtDTLL8MpCqDJXDHo8E8ZySoZqGoSTjdNJs9HXj8=",
     "Otro foro",
     "Somos una comunidad en busca de la sanacion al trauma, un espacio para poder expresarte e interactuar con otros que han pasado lo mismo."

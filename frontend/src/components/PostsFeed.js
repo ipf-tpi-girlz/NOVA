@@ -40,6 +40,10 @@ export function PostsFeed() {
     commentButton.classList.add("btn", "btn-primary");
     postElement.appendChild(commentButton);
 
+    commentButton.addEventListener("click", () => {
+      window.location.href = `/post`;
+    });
+
     // Añadir el post al contenedor de posts
     postsContainer.appendChild(postElement);
   });

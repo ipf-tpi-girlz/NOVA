@@ -5,9 +5,10 @@ export const forop = () => {
       id: 1,
       title: "Bienvenidos al foro",
       content:
-        "Deja tu huella en nuestra comunidad. ¡Comenta y comparte tus pensamientos!",
+        "Somos una comunidad en busca de la sanacion al trauma, un espacio para poder expresarte e interactuar con otros que han pasado lo mismo.",
       comments: [],
     },
+
     {
       id: 2,
       title: "Tema del día: exposicion social",
@@ -28,7 +29,7 @@ export const forop = () => {
 
   //Container para el nuevo post
   const newPostContainer = document.createElement("div");
-  newPostContainer.classList.add("p-5");
+  newPostContainer.className = "p-5 gap-2";
 
   const newPostForm = document.createElement("form");
   newPostForm.classList.add(
@@ -43,12 +44,7 @@ export const forop = () => {
   //Titulo
   const newPostTitle = document.createElement("h2");
   newPostTitle.textContent = "Crear Nuevo Post";
-  newPostTitle.classList.add(
-    "text-xl",
-    "font-semibold",
-    "mb-4",
-    "text-gray-700"
-  );
+  newPostTitle.classList.add("text-xl", "font-semibold", "mb-4", "font-serif");
 
   // Input para el título del nuevo post
   const newPostTitleInput = document.createElement("input");
@@ -70,14 +66,41 @@ export const forop = () => {
   const newPostButton = document.createElement("button");
   newPostButton.type = "submit";
   newPostButton.textContent = "Publicar";
-  newPostButton.classList.add("btn", "btn-primary");
+  newPostButton.classList.add("btn", "btn-primary", "font-serif");
 
   newPostForm.appendChild(newPostTitle);
   newPostForm.appendChild(newPostTitleInput);
   newPostForm.appendChild(newPostTextArea);
   newPostForm.appendChild(newPostButton);
-
   newPostContainer.appendChild(newPostForm);
+
+  //Container Miembros
+  const miembrosMain = document.createElement("div");
+  miembrosMain.className = "p-5";
+  const miembrosContainer = document.createElement("div");
+  miembrosContainer.classList.add(
+    "p-5",
+    "bg-base-200",
+    "rounded-lg",
+    "flex",
+    "flex-col",
+    "gap-3",
+    "h-fit",
+    "w-52"
+  );
+  const moderador = document.createElement("div");
+  moderador.textContent = "Moderador";
+  moderador.className = "font-serif font-bold";
+  const divider = document.createElement("div");
+  divider.className = "divider";
+  const miembros = document.createElement("div");
+  miembros.textContent = "Miembros";
+  miembros.className = "font-serif font-bold";
+
+  miembrosContainer.appendChild(moderador);
+  miembrosContainer.appendChild(divider);
+  miembrosContainer.appendChild(miembros);
+  miembrosMain.appendChild(miembrosContainer);
 
   //Contenedor de posts
 
@@ -101,18 +124,13 @@ export const forop = () => {
       // Título del post
       const postTitle = document.createElement("h2");
       postTitle.textContent = post.title;
-      postTitle.classList.add(
-        "text-xl",
-        "font-semibold",
-        "mb-2",
-        "text-gray-800"
-      );
+      postTitle.classList.add("text-xl", "font-semibold", "mb-2", "font-serif");
       postElement.appendChild(postTitle);
 
       // Contenido del post
       const postContent = document.createElement("p");
       postContent.textContent = post.content;
-      postContent.classList.add("text-gray-600", "mb-4");
+      postContent.classList.add("mb-4");
       postElement.appendChild(postContent);
 
       // Sección de comentarios
@@ -143,7 +161,7 @@ export const forop = () => {
       const commentSubmitButton = document.createElement("button");
       commentSubmitButton.type = "submit";
       commentSubmitButton.textContent = "Comentar";
-      commentSubmitButton.classList.add("btn", "btn-primary");
+      commentSubmitButton.classList.add("btn", "btn-primary", "font-serif");
       commentForm.appendChild(commentSubmitButton);
 
       postElement.appendChild(commentForm);
@@ -193,6 +211,7 @@ export const forop = () => {
 
   container.appendChild(newPostContainer);
   container.appendChild(postsContainer);
+  container.appendChild(miembrosMain);
 
   return container;
 };

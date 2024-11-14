@@ -1,6 +1,7 @@
 import { getUserProfile } from "../api/auth";
 import { fetchDeleteForo, fetchGetForosById, fetchUpdateForo, fetchCreateForo } from "../api/foro";
 import { fetchComunitiesUser } from "../api/comunity";
+import { fetchArticlesByUser } from "../api/articles.js"
 import { showNotification } from "../components/notification.js";
 import Swal from "sweetalert2";
 
@@ -32,25 +33,49 @@ export const HeaderProfile = () => {
 
         $img.src = user.img ? user.img : 'https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg';
         $name.textContent = user.nombre || 'Usuario';
-        $bio.textContent = user.bio || 'Bienvenido a mi perfil!';
+        if (user.role == "profesional") {
+            $bio.textContent = user.perfil.descripcion || 'Bienvenido a mi perfil!';
+        } else {
+            $bio.textContent = user.bio || 'Bienvenido a mi perfil!';
+        }
 
-        // Contar foros
-        fetchGetForosById().then(foros => {
-            const forosCount = foros.foros.length;
-            console.log("Cantidad de foros:", forosCount);
+        if (user.role == "profesional") {
+            fetchArticlesByUser().then(article => {
+                console.log(article)
+                const ArticleCount = article.data.length;
+                console.log("Cantidad de foros:", forosCount);
 
-            // Contar comunidades
-            const comunidadesCount = user.comunidades && Array.isArray(user.comunidades) ? user.comunidades.length : 0;
-            console.log("Cantidad de comunidades:", comunidadesCount);
+                // Contar comunidades
+                const comunidadesCount = user.comunidades && Array.isArray(user.comunidades) ? user.comunidades.length : 0;
+                console.log("Cantidad de comunidades:", comunidadesCount);
 
-            // Mostrar cantidad de foros y comunidades
-            $stats.innerHTML = `
-                <span>${forosCount}</span> Publicaciones
-            `;
-        }).catch(error => {
-            console.error("Error al obtener foros:", error);
-            $stats.innerHTML = '<span>0</span> foros<span>•</span><span>0</span> comunidades';
-        });
+
+                $stats.innerHTML = `
+                    <span>${ArticleCount}</span> Articles
+                `;
+            }).catch(error => {
+                console.error("Error al obtener foros:", error);
+                $stats.innerHTML = '<span>0</span> foros<span>•</span><span>0</span> comunidades';
+            });
+        } else {
+            fetchGetForosById().then(foros => {
+                const forosCount = foros.foros.length;
+                console.log("Cantidad de foros:", forosCount);
+
+                // Contar comunidades
+                const comunidadesCount = user.comunidades && Array.isArray(user.comunidades) ? user.comunidades.length : 0;
+                console.log("Cantidad de comunidades:", comunidadesCount);
+
+                // Mostrar cantidad de foros y comunidades
+                $stats.innerHTML = `
+                    <span>${forosCount}</span> Publicaciones
+                `;
+            }).catch(error => {
+                console.error("Error al obtener foros:", error);
+                $stats.innerHTML = '<span>0</span> foros<span>•</span><span>0</span> comunidades';
+            });
+        }
+
     }).catch(error => {
         console.error("Error al obtener el perfil del usuario:", error);
         $img.src = 'https://i.pravatar.cc/300';

@@ -21,7 +21,7 @@ import { RegisterPage } from "./pages/RegisterPage.js";
 import { HomePage } from "./pages/homePageUsuarios.js";
 import { createHeroSection } from "./components/post";
 import { ContactsPage } from "./pages/contacsUsuario.js";
-import { ManosUnidas } from "./pages/manosUnidas.js";
+import { ForumPage } from "./pages/ForumPage.js";
 import { forop } from "./components/foroPreview.js";
 import { Perfil } from "./pages/profileUser.js";
 import { checkSession } from "./api/auth.js";
@@ -32,9 +32,19 @@ import { artAbuso } from "./pages/seccionInf/artAbuso.js";
 import { articulos } from "./pages/seccionInf/seccionArticulos.js";
 import { Contactanos } from "./components/contactanosBtn.js";
 import { Nosotros } from "./pages/Nosotros.js";
+import { menuProfesional } from "./pages/barraProf.js";
+
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get("id");
+console.log(id);
 
 // Rutas públicas
-const publicRoutes = ["/", "/register-user", "/login", "/registrar-profesional"];
+const publicRoutes = [
+  "/",
+  "/register-user",
+  "/login",
+  "/registrar-profesional",
+];
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -65,9 +75,12 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(LandingPage());
           app.appendChild(Footer());
           break;
-        case "/register-user":
+        case "/register-user/":
           app.appendChild(RegisterPage(FormRegisterUser()));
           app.appendChild(Footer());
+          break;
+        case "/registrar-profesional":
+          app.appendChild(FormRegisterProf());
           break;
         case "/login":
           app.appendChild(RegisterPage(FormLogin()));
@@ -87,12 +100,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(BtnEmergency());
           app.appendChild(Footer());
           break;
-        case "/foros":
-          app.appendChild(Footer());
-          break;
-        case "/manos-unidas":
-          app.appendChild(ManosUnidas());
-          app.appendChild(forop());
+        case `/forum`:
+          app.appendChild(ForumPage());
           app.appendChild(BtnEmergency());
           app.appendChild(Footer());
           break;
@@ -101,7 +110,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(Footer());
           break;
         case "/articulos":
-          ;
           app.appendChild(articulos());
           app.appendChild(Footer());
           break;
@@ -127,13 +135,15 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(Contactanos());
           app.appendChild(Footer());
           break;
+        case "/menu-prof":
+          app.appendChild(menuProfesional());
+          app.appendChild(Footer());
       }
 
       LocalStorage();
     };
 
     await renderPage();
-
   } catch (error) {
     console.error("Error al inicializar la aplicación:", error);
   }

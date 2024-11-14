@@ -16,7 +16,7 @@ export const showNotification = (type, message) => {
     "items-center",
     "space-x-3",
     "z-50",
-    type === "error" ? "bg-red-500" : "bg-green-500",
+    type === "error" ? "bg-pink-200" : "bg-base-200",
     "translate-y-full",
     "opacity-0"
   );
