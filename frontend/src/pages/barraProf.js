@@ -191,6 +191,8 @@ export const menuProfesional = () => {
         if (response.ok) {
           console.log("Comunidad creada:", result.message);
           $modal.classList.add("hidden");
+
+          window.location.href = "/menu-comunidad/";
         } else {
           console.error("Error al crear la comunidad:", result.message);
         }

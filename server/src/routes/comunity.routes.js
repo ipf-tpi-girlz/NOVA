@@ -5,12 +5,14 @@ import {
   createCommunity,
   updateCommunity,
   deleteCommunity,
+  community,
 } from "../controllers/community.controllers.js";
 import { validarJWT } from "../middlewares/jwt.validation.js";
 
 const routerComunity = Router();
 
-routerComunity.get("/", getCommunity);
+routerComunity.get("/general/:id", community); // trae comunidad con sus úblicaciones y comentarios y usuarios que comentaron
+routerComunity.get("/", getCommunity); //trae todos los post de el grupo
 routerComunity.get("/user:id", validarJWT, getCommunityID);
 routerComunity.post("/create", validarJWT, createCommunity);
 routerComunity.put("/update/:id", validarJWT, updateCommunity);

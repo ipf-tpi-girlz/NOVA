@@ -1,5 +1,9 @@
 import Comunidad from "../models/comunnity.js";
 import color from "chalk";
+import PublicacionComunidad from "../models/post.community.js";
+import Comentario from "../models/coments.js";
+import Usuario from "../models/users.js";
+import ParticipanteComunidad from "../models/participan.comunity.js";
 
 export const getCommunity = async (req, res) => {
   try {
@@ -91,12 +95,20 @@ export const updateCommunity = async (req, res) => {
 export const deleteCommunity = async (req, res) => {
   const user = req.user;
   const { id } = req.params;
+  console.log(user.id);
   try {
-    const community = await Comunidad.findOne({ where: { id } });
+    const communities = await Comunidad.findAll({
+      where: { moderador_id: user.id },
+    });
+    console.log({ communities });
+    const community = await Comunidad.findOne({ where: { id: +id } });
+    console.log({ community });
     if (!community) {
       console.log(color.red("No se encontro la comunidad"));
       return res.status(404).json({ message: "No se encontro la comunidad" });
     }
+
+    console.log({ user });
     if (community.moderador_id !== user.id) {
       console.log(color.red("No puede eliminar esta comunidad"));
       return res
@@ -106,6 +118,54 @@ export const deleteCommunity = async (req, res) => {
     await Comunidad.destroy({ where: { id } });
     console.log(color.blue(`Comunidad eliminada`));
     return res.status(200).json({ message: "Comunidad eliminada" });
+  } catch (error) {
+    console.log("Error catch");
+    console.log(color.red(error));
+    res.status(500).json({ message: "Se produjo un error en el servidor" });
+  }
+};
+
+export const community = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const community = await Comunidad.findOne({
+      where: { id },
+      include: [
+        {
+          model: PublicacionComunidad,
+          as: "publicaciones",
+          include: [
+            {
+              model: Comentario,
+              as: "comentarios",
+              include: [
+                {
+                  model: Usuario,
+                  as: "usuario",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: ParticipanteComunidad,
+          as: "participantes",
+          include: [
+            {
+              model: Usuario,
+              as: "usuario",
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!community) {
+      console.log(color.red("Comunidad no encontrada"));
+      return res.status(404).json({ message: "Comunidad no encontrada" });
+    }
+    console.log(color.green(`Comunidad encontrada: ${community}`));
+    return res.status(200).json({ community });
   } catch (error) {
     console.log(color.red(error));
     res.status(500).json({ message: "Se produjo un error en el servidor" });

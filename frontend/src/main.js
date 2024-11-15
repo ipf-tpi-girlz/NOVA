@@ -13,6 +13,7 @@ import {
   FormRegisterUser,
   FormRegisterProf,
   BtnEmergency,
+  PostsFeed,
 } from "./components";
 
 // Páginas
@@ -33,6 +34,8 @@ import { articulos } from "./pages/seccionInf/seccionArticulos.js";
 import { Contactanos } from "./components/contactanosBtn.js";
 import { Nosotros } from "./pages/Nosotros.js";
 import { menuProfesional } from "./pages/barraProf.js";
+import { menuComunidad } from "./pages/barraGrupo.js";
+import { postPrev } from "./components/contenPost.js";
 
 // Rutas públicas
 const publicRoutes = ["/", "/register-user", "/login", "/register-prof"];
@@ -131,6 +134,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         case "/menu-prof":
           app.appendChild(menuProfesional());
           app.appendChild(Footer());
+          break;
+      }
+
+      if (pathname.startsWith("/post/")) {
+        app.appendChild(postPrev());
+      }
+
+      if (pathname.startsWith("/menu-comunidad/")) {
+        app.appendChild(menuComunidad());
+        app.appendChild(Footer());
       }
 
       LocalStorage();
