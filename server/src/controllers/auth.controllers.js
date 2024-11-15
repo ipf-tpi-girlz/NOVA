@@ -9,7 +9,7 @@ export const getUsers = async (req, res) => {
       include: [
         {
           model: Perfil,
-          as: 'perfil',  // Asegúrate de que este alias coincida
+          as: 'perfil',
         },
       ],
     });
@@ -20,9 +20,6 @@ export const getUsers = async (req, res) => {
     res.status(500).json({ message: "Error al obtener los usuarios y perfiles" });
   }
 };
-
-
-
 export const getUserProf = async (req, res) => {
   const { id } = req.params;
   try {
@@ -48,8 +45,6 @@ export const getUserProf = async (req, res) => {
     return res.status(500).json({ message: "Se produjo un error en el servidor" });
   }
 };
-
-
 export const getUserById = async (req, res) => {
   const user = req.user;
   try {
@@ -104,7 +99,6 @@ export const updatePassword = async (req, res) => {
     return res.status(500).json({ message: "Se produjo un error en el servidor" });
   }
 }
-
 export const updateUser = async (req, res) => {
   const user = req.user;
   const id = user.id;
@@ -164,7 +158,6 @@ export const updateUser = async (req, res) => {
     return res.status(500).json({ message: "Se produjo un error en el servidor" });
   }
 };
-
 
 export const deleteAccount = async (req, res) => {
   try {
