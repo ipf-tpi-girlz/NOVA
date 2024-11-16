@@ -1,64 +1,227 @@
-export const forop = () => {
-  //Datos iniciales de posts
-  const posts = [
-    {
-      id: 1,
-      title: "Bienvenidos al foro",
-      content:
-        "Somos una comunidad en busca de la sanacion al trauma, un espacio para poder expresarte e interactuar con otros que han pasado lo mismo.",
-      comments: [],
-    },
-
-    {
-      id: 2,
-      title: "Tema del día: exposicion social",
-      content: "¿Como llevas el salir de tu zona de comfort?",
-      comments: [],
-    },
-    {
-      id: 3,
-      title: "Separacion y soledad",
-      content:
-        "Sali de una relacion toxica, donde sufria de violencia psicologica y fisica, pero no puedo acostumbrarmey hay veces que extraño a mi ex pareja. ¿Que me recomiendan hacer?",
-      comments: [],
-    },
-  ];
-
+import { fetchComunity } from "../api/comunity"
+export const forop = (id) => {
   const container = document.createElement("div");
-  container.classList.add("flex", "px-10");
+  container.classList.add("flex");
 
-  //Container para el nuevo post
-  const newPostContainer = document.createElement("div");
-  newPostContainer.className = "p-5 gap-2";
+  const createPostSection = document.createElement("div");
+  createPostSection.classList.add("flex", "flex-col", "w-1/3", "p-5");
+  createPostSection.appendChild(newPost(id)); //!id de la comunidad
+
+  const postsSection = document.createElement("div");
+  postsSection.classList.add("flex", "flex-col", "w-2/3", "p-5");
+
+  renderPosts(id).then((data) => {
+    postsSection.appendChild(data);
+  });
+
+  const membersSection = document.createElement("div");
+  membersSection.classList.add("w-1/5", "p-5");
+
+  renderMembers(id).then((data) => {
+    membersSection.appendChild(data);
+  });
+
+  container.appendChild(createPostSection);
+  container.appendChild(postsSection);
+  container.appendChild(membersSection);
+
+  return container;
+};
+
+//!Función que retorna el formulario para crear un nuevo post
+
+const renderPosts = (id) => {
+  return fetchComunity(id).then((data) => {
+    const postsContainer = document.createElement("div");
+    postsContainer.innerHTML = '';
+
+    const publicaciones = data.community.publicaciones;
+    publicaciones.forEach((post) => {
+      const postContainer = document.createElement("div");
+      postContainer.classList.add("post", "p-5", "mb-5", "bg-base-200", "rounded-lg");
+
+      //* Usuario
+      const user = document.createElement("div");
+      user.classList.add("flex", "items-center", "gap-3");
+
+      const imgProfile = document.createElement("img");
+      imgProfile.src = post.usuario.img || 'default-https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg';
+      imgProfile.classList.add("rounded-full", "w-10", "h-10");
+
+      const nameUser = document.createElement("h6");
+      nameUser.textContent = post.usuario.nombre;
+      nameUser.classList.add("font-semibold");
+
+      user.appendChild(imgProfile);
+      user.appendChild(nameUser);
+
+      //* Post
+      const postContent = document.createElement("div");
+      postContent.classList.add("post-content", "mt-4");
+
+      const title = document.createElement("h1");
+      title.textContent = post.titulo;
+      title.classList.add("text-xl", "font-semibold", "text-center");
+
+      const desc = document.createElement("p");
+      desc.textContent = post.contenido;
+      desc.classList.add("text-gray-700");
+
+      if (post.img) {
+        const img = document.createElement("div");
+        img.style.backgroundImage = `url(${post.img})`;
+        img.classList.add("post-image", "mt-3", "h-40", "bg-cover", "rounded-lg");
+        postContent.appendChild(title);
+        postContent.appendChild(desc);
+        postContent.appendChild(img);
+      } else {
+        postContent.appendChild(title);
+        postContent.appendChild(desc);
+      }
+
+      //* Comentarios
+      const commentsContainer = document.createElement("div");
+      const divider = document.createElement("div");
+      divider.classList.add("divider", "m-1");
+      commentsContainer.classList.add("comments", "flex");
+
+      post.comentarios.forEach((comment) => {
+        const commentElement = document.createElement("div");
+        commentElement.classList.add("comment", "bg-base-100", "p-3", "rounded-lg", "mb-3");
+
+        const user = document.createElement("div");
+        user.classList.add("flex", "gap-3");
+
+        const imgComment = document.createElement("div");
+        imgComment.style.backgroundImage = `url(${comment.usuario.img || "https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg"})`;
+        imgComment.classList.add("comment-image", "w-10", "h-10", "bg-cover", "rounded-full");
+
+        const nameU = document.createElement("h5");
+        nameU.textContent = comment.usuario.nombre; // Nombre del usuario que comentó
+        nameU.classList.add("font-medium");
+
+        const commentText = document.createElement("p");
+        commentText.textContent = comment.contenido;
+        commentText.classList.add("text-gray-600");
+
+        commentElement.appendChild(nameU);
+        commentElement.appendChild(commentText);
+        user.appendChild(imgComment);
+        commentsContainer.appendChild(user);
+        commentsContainer.appendChild(divider);
+        commentsContainer.appendChild(commentElement);
+
+        const comentarContainer = document.createElement("div");
+        comentarContainer.classList.add("flex", "gap-3");
+
+        const comentarInput = document.createElement("input");
+        comentarInput.type = "text";
+        comentarInput.placeholder = "Comentar...";
+        comentarInput.classList.add("input", "input-bordered", "w-full");
+
+        const comentarButton = document.createElement("button");
+        comentarButton.textContent = "Comentar";
+        comentarButton.classList.add("btn", "btn-primary");
+
+        comentarContainer.appendChild(comentarInput);
+        comentarContainer.appendChild(comentarButton);
+      });
+
+      //* Agregar todo al contenedor de post
+      postContainer.appendChild(user);
+      postContainer.appendChild(postContent);
+      postContainer.appendChild(commentsContainer);
+
+      postsContainer.appendChild(postContainer);
+    });
+
+    return postsContainer;
+  });
+};
+
+const renderMembers = (id) => {
+  return fetchComunity(id).then((data) => {
+    console.log(data);
+
+    const moderador = data.moderador.nombre;
+    const data2 = data.community.participantes;
+
+    const membersContainer = document.createElement("div");
+    membersContainer.classList.add(
+      "p-5",
+      "bg-base-200",
+      "rounded-lg",
+      "flex",
+      "flex-col",
+      "gap-3",
+      "h-fit"
+    );
+
+    const moderator = document.createElement("div");
+    moderator.textContent = `Moderador: ${moderador}`;
+    moderator.className = "font-serif font-bold";
+
+
+    // Divisor
+    const divider = document.createElement("div");
+    divider.className = "divider";
+
+    const members = document.createElement("div");
+    members.textContent = "Miembros";
+    members.className = "font-serif font-bold";
+
+    const membersList = document.createElement("ul");
+    membersList.className = "list-disc pl-4";
+
+    data2.forEach((member) => {
+      const memberItem = document.createElement("li");
+      memberItem.textContent = member.usuario.nombre;
+      membersList.appendChild(memberItem);
+    });
+
+    // Agregar los elementos al contenedor
+    membersContainer.appendChild(moderator);
+    membersContainer.appendChild(divider);
+    membersContainer.appendChild(members);
+    membersContainer.appendChild(membersList);
+
+    return membersContainer;
+  });
+};
+
+export const newPost = (id) => {
 
   const newPostForm = document.createElement("form");
   newPostForm.classList.add(
     "p-5",
+    "border",
+    "border-gray-200",
     "bg-base-200",
     "rounded-lg",
     "flex",
     "flex-col",
-    "gap-3"
+    "gap-3",
+    "shadow-2xl"
   );
 
-  //Titulo
+  // Título
   const newPostTitle = document.createElement("h2");
-  newPostTitle.textContent = "Crear Nuevo Post";
-  newPostTitle.classList.add("text-xl", "font-semibold", "mb-4", "font-serif");
+  newPostTitle.textContent = "Publicar";
+  newPostTitle.classList.add("text-xl", "font-semibold", "font-serif");
 
   // Input para el título del nuevo post
   const newPostTitleInput = document.createElement("input");
   newPostTitleInput.type = "text";
   newPostTitleInput.id = "postTitle";
-  newPostTitleInput.placeholder = "Título del post";
-  newPostTitleInput.classList.add("input");
+  newPostTitleInput.placeholder = "Título";
+  newPostTitleInput.classList.add("input", "border", "border-gray-200", "shadow-md");
   newPostTitleInput.required = true;
 
   // Textarea para el contenido del nuevo post
   const newPostTextArea = document.createElement("textarea");
   newPostTextArea.id = "postContent";
-  newPostTextArea.placeholder = "Contenido del post";
-  newPostTextArea.classList.add("textarea");
+  newPostTextArea.placeholder = "Contenido";
+  newPostTextArea.classList.add("textarea", "border", "border-gray-200", "shadow-md");
   newPostTextArea.rows = 4;
   newPostTextArea.required = true;
 
@@ -66,152 +229,18 @@ export const forop = () => {
   const newPostButton = document.createElement("button");
   newPostButton.type = "submit";
   newPostButton.textContent = "Publicar";
-  newPostButton.classList.add("btn", "btn-primary", "font-serif");
+  newPostButton.classList.add("btn", "border", "border-gray-200", "bg-base-100", "shadow-lg", "font-serif", "hover:bg-base-200");
 
+  newPostForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    //!usamos el id del parametro
+  })
+
+  // Agregar inputs al formulario
   newPostForm.appendChild(newPostTitle);
   newPostForm.appendChild(newPostTitleInput);
   newPostForm.appendChild(newPostTextArea);
   newPostForm.appendChild(newPostButton);
-  newPostContainer.appendChild(newPostForm);
 
-  //Container Miembros
-  const miembrosMain = document.createElement("div");
-  miembrosMain.className = "p-5";
-  const miembrosContainer = document.createElement("div");
-  miembrosContainer.classList.add(
-    "p-5",
-    "bg-base-200",
-    "rounded-lg",
-    "flex",
-    "flex-col",
-    "gap-3",
-    "h-fit",
-    "w-52"
-  );
-  const moderador = document.createElement("div");
-  moderador.textContent = "Moderador";
-  moderador.className = "font-serif font-bold";
-  const divider = document.createElement("div");
-  divider.className = "divider";
-  const miembros = document.createElement("div");
-  miembros.textContent = "Miembros";
-  miembros.className = "font-serif font-bold";
-
-  miembrosContainer.appendChild(moderador);
-  miembrosContainer.appendChild(divider);
-  miembrosContainer.appendChild(miembros);
-  miembrosMain.appendChild(miembrosContainer);
-
-  //Contenedor de posts
-
-  const postsContainer = document.createElement("div");
-  postsContainer.classList.add("p-5", "flex", "flex-col", "gap-4");
-
-  // Función para renderizar los posts
-  function renderPosts() {
-    postsContainer.innerHTML = ""; // Limpiar el contenedor de posts
-
-    posts.forEach((post) => {
-      // Crear el elemento de cada post
-      const postElement = document.createElement("div");
-      postElement.classList.add(
-        "bg-base-200",
-        "p-6",
-        "rounded-lg",
-        "shadow-md"
-      );
-
-      // Título del post
-      const postTitle = document.createElement("h2");
-      postTitle.textContent = post.title;
-      postTitle.classList.add("text-xl", "font-semibold", "mb-2", "font-serif");
-      postElement.appendChild(postTitle);
-
-      // Contenido del post
-      const postContent = document.createElement("p");
-      postContent.textContent = post.content;
-      postContent.classList.add("mb-4");
-      postElement.appendChild(postContent);
-
-      // Sección de comentarios
-      const commentsContainer = document.createElement("div");
-      commentsContainer.classList.add("comments", "space-y-2");
-
-      post.comments.forEach((comment) => {
-        const commentContainer = document.createElement("div");
-        const commentElement = document.createElement("div");
-        commentElement.classList.add("bg-base-300", "p-3", "rounded-full");
-        commentElement.textContent = comment;
-        commentsContainer.appendChild(commentElement);
-      });
-
-      postElement.appendChild(commentsContainer);
-
-      // Formulario de comentarios
-      const commentForm = document.createElement("form");
-      commentForm.classList.add("mt-4", "flex", "gap-3", "comment-form");
-      commentForm.dataset.postId = post.id;
-
-      const commentInput = document.createElement("input");
-      commentInput.type = "text";
-      commentInput.placeholder = "Añade un comentario";
-      commentInput.classList.add("input", "w-full");
-      commentForm.appendChild(commentInput);
-
-      const commentSubmitButton = document.createElement("button");
-      commentSubmitButton.type = "submit";
-      commentSubmitButton.textContent = "Comentar";
-      commentSubmitButton.classList.add("btn", "btn-primary", "font-serif");
-      commentForm.appendChild(commentSubmitButton);
-
-      postElement.appendChild(commentForm);
-
-      // Añadir el post al contenedor de posts
-      postsContainer.appendChild(postElement);
-    });
-  }
-
-  // Manejador para crear un nuevo post
-  newPostForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const title = newPostTitleInput.value;
-    const content = newPostTextArea.value;
-
-    if (title && content) {
-      posts.unshift({
-        id: Date.now(),
-        title,
-        content,
-        comments: [],
-      });
-      renderPosts();
-      this.reset();
-    }
-  });
-
-  // Manejador para añadir comentarios
-  postsContainer.addEventListener("submit", function (e) {
-    if (e.target.classList.contains("comment-form")) {
-      e.preventDefault();
-      const postId = parseInt(e.target.dataset.postId);
-      const commentInput = e.target.querySelector("input");
-      const comment = commentInput.value;
-
-      if (comment) {
-        const post = posts.find((p) => p.id === postId);
-        post.comments.push(comment);
-        renderPosts();
-        commentInput.value = "";
-      }
-    }
-  });
-
-  renderPosts();
-
-  container.appendChild(newPostContainer);
-  container.appendChild(postsContainer);
-  container.appendChild(miembrosMain);
-
-  return container;
+  return newPostForm;
 };

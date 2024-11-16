@@ -17,6 +17,7 @@ const Comunidad = sequelize.define('Comunidad', {
         references: {
             model: Usuario,
             key: 'id',
+            as: 'moderador',
         },
     },
     img_perfil: DataTypes.TEXT,

@@ -7,16 +7,16 @@ import { HeaderProfile } from './HeaderProfile.js';
 
 const ProfileUser = () => {
     const $container = document.createElement("div");
-    $container.classList.add("flex", "justify-center", "items-center", "min-h-screen", "bg-gradient-to-br", "from-purple-100", "to-indigo-200", "p-4");
+    $container.classList.add("flex", "justify-center", "items-center", "min-h-screen", "bg-base-100", "bg-cover", "p-4");
 
     const $card = document.createElement("div");
-    $card.classList.add("bg-white", "rounded-2xl", "shadow-2xl", "w-full", "max-w-2xl", "overflow-hidden", "transform", "transition-all");
+    $card.classList.add("bg-base-100", "border", "border-gray-200", "rounded-2xl", "shadow-2xl", "w-full", "max-w-2xl", "overflow-hidden", "transform", "transition-all");
 
     const $header = document.createElement("div");
-    $header.classList.add("bg-gradient-to-r", "from-purple-500", "to-indigo-600", "text-white", "p-8");
+    $header.classList.add("bg-gradient-to-r", "from-base-300", "to-indigo-200", "text", "p-8");
     $header.innerHTML = `
         <h2 class="text-4xl font-bold mb-2">Perfil de Usuario</h2>
-        <p class="text-purple-100">Bienvenido a tu espacio personal</p>
+        <p class="text">Bienvenido a tu espacio personal</p>
     `;
 
     const $content = document.createElement("div");
@@ -41,16 +41,16 @@ const ProfileUser = () => {
         ];
 
         const $fieldsContainer = document.createElement("div");
-        $fieldsContainer.classList.add("bg-gray-50", "rounded-xl", "p-6", "mb-6", "shadow-inner");
+        $fieldsContainer.classList.add("bg-base-200", "border", "border-gray-300", "rounded-xl", "p-6", "mb-6", "shadow-inner");
 
         fields.forEach(field => {
             const $field = document.createElement("div");
-            $field.classList.add("mb-4", "flex", "items-center", "hover:bg-white", "p-2", "rounded-lg", "transition-colors", "duration-200");
+            $field.classList.add("mb-4", "flex", "items-center", "hover:bg-base-300", "p-2", "rounded-lg", "transition-colors", "duration-200");
             $field.innerHTML = `
-                <span class="text-3xl mr-4 bg-purple-100 text-purple-500 p-2 rounded-full">${field.icon}</span>
+                <span class="text-3xl mr-4 bg-base-100 bg-cover text p-2 rounded-full">${field.icon}</span>
                 <div>
-                    <p class="text-sm font-medium text-gray-500">${field.label}</p>
-                    <p class="text-lg text-gray-800 font-semibold">${field.value}</p>
+                    <p class="text-sm font-medium text">${field.label}</p>
+                    <p class="text-lg text font-semibold">${field.value}</p>
                 </div>
             `;
             $fieldsContainer.appendChild($field);
@@ -66,7 +66,7 @@ const ProfileUser = () => {
         $details.classList.add("cursor-pointer");
 
         const $summary = document.createElement("summary");
-        $summary.classList.add("text-xl", "font-bold", "mb-4", "text-gray-700", "flex", "items-center", "p-2", "bg-gray-100", "rounded-lg", "hover:bg-gray-200", "transition-colors", "duration-200");
+        $summary.classList.add("text-xl", "font-bold", "mb-4", "text", "flex", "items-center", "p-2", "bg-base-200", "border", "border-gray-300", "rounded-lg", "hover:bg-base-300", "bg-cover", "transition-colors", "duration-200");
 
         const $icon = document.createElement("span");
         $icon.classList.add("text-2xl", "mr-2");
@@ -82,15 +82,15 @@ const ProfileUser = () => {
         $buttonContainer.classList.add("pl-8", "mt-2", "space-y-2");
 
         const $editButton = document.createElement("button");
-        $editButton.classList.add("w-full", "text-left", "px-4", "py-2", "text-purple-600", "hover:bg-purple-50", "rounded-lg", "transition-colors", "duration-200");
+        $editButton.classList.add("w-full", "text-left", "px-4", "py-2", "text", "hover:bg-base-300", "rounded-lg", "transition-colors", "duration-200");
         $editButton.textContent = "Editar datos";
 
         const $changePasswordButton = document.createElement("button");
-        $changePasswordButton.classList.add("w-full", "text-left", "px-4", "py-2", "text-blue-600", "hover:bg-blue-50", "rounded-lg", "transition-colors", "duration-200");
+        $changePasswordButton.classList.add("w-full", "text-left", "px-4", "py-2", "text", "hover:bg-base-300", "rounded-lg", "transition-colors", "duration-200");
         $changePasswordButton.textContent = "Cambiar contraseña";
 
         const $deleteButton = document.createElement("button");
-        $deleteButton.classList.add("w-full", "text-left", "px-4", "py-2", "text-red-600", "hover:bg-red-50", "rounded-lg", "transition-colors", "duration-200");
+        $deleteButton.classList.add("w-full", "text-left", "px-4", "py-2", "text", "hover:bg-base-300", "rounded-lg", "transition-colors", "duration-200");
         $deleteButton.textContent = "Eliminar cuenta";
 
         // Añadir la funcionalidad de los botones
@@ -130,7 +130,7 @@ const ProfileUser = () => {
         // Condicional: Si es profesional, agregar el botón "Editar descripción"
         if (user.role === "profesional") {
             const $editDesc = document.createElement("button");
-            $editDesc.classList.add("w-full", "text-left", "px-4", "py-2", "text-purple-600", "hover:bg-purple-50", "rounded-lg", "transition-colors", "duration-200");
+            $editDesc.classList.add("w-full", "text-left", "px-4", "py-2", "text", "hover:bg-base-300", "rounded-lg", "transition-colors", "duration-200");
             $editDesc.textContent = "Editar descripción";
 
             $editDesc.addEventListener("click", () => {
@@ -174,10 +174,10 @@ const showModal = (form) => {
     }
 
     const $modalOverlay = document.createElement("div");
-    $modalOverlay.classList.add("fixed", "inset-0", "bg-black", "bg-opacity-50", "backdrop-blur-sm", "flex", "justify-center", "items-center", "z-50", "p-4", "transition-opacity", "duration-300", "opacity-0");
+    $modalOverlay.classList.add("fixed", "inset-0", "bg-base", "bg-opacity-50", "backdrop-blur-sm", "flex", "justify-center", "items-center", "z-50", "p-4", "duration-300", "opacity-0");
 
     const $modal = document.createElement("div");
-    $modal.classList.add("bg-white", "rounded-xl", "shadow-2xl", "p-6", "w-full", "max-w-md", "transform", "transition-all", "duration-300", "scale-95", "opacity-0");
+    $modal.classList.add("bg-base", "rounded-xl", "shadow-2xl", "p-6", "w-full", "max-w-md");
 
     requestAnimationFrame(() => {
         $modalOverlay.classList.add("opacity-100");
@@ -234,7 +234,7 @@ const formEditUser = async () => {
     // Título del formulario
     const $title = document.createElement("h2");
     $title.textContent = "Editar Perfil";
-    $title.classList.add("text-2xl", "font-bold", "text-gray-800", "text-center", "mb-8");
+    $title.classList.add("text-2xl", "font-bold", "text", "text-center", "mb-8");
     $form.appendChild($title);
 
     // Campos del formulario (nombre, departamento, etc.)
@@ -294,14 +294,16 @@ const formEditUser = async () => {
         if (file) {
             const reader = new FileReader();
             reader.onload = (e) => {
-                $img.src = e.target.result;  // Actualiza la imagen con la nueva seleccionada
+                $img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
     });
 
+
     $imgContent.appendChild($img);
-    $imgContent.appendChild($imgInput); // Añadimos el input al DOM aunque esté oculto
+    $imgContent.appendChild($imgInput);
+
 
     $form.appendChild($imgContent);
 
@@ -312,10 +314,10 @@ const formEditUser = async () => {
 
         const $label = document.createElement("label");
         $label.textContent = field.label;
-        $label.classList.add("block", "text-sm", "font-medium", "text-gray-700");
+        $label.classList.add("block", "text-sm", "font-medium", "text");
 
         const $inputWrapper = document.createElement("div");
-        $inputWrapper.classList.add("relative", "rounded-md", "shadow-sm");
+        $inputWrapper.classList.add("relative", "rounded-md", "shadow-sm", "bg-base-100");
 
         const $iconWrapper = document.createElement("div");
         $iconWrapper.classList.add("absolute", "inset-y-0", "left-0", "pl-3", "flex", "items-center", "pointer-events-none");
@@ -324,7 +326,7 @@ const formEditUser = async () => {
         const $input = document.createElement("input");
         $input.type = field.type;
         $input.name = field.name;
-        $input.classList.add("block", "w-full", "pl-10", "pr-3", "py-2", "border", "border-gray-300", "rounded-md", "shadow-sm", "focus:ring-2", "focus:ring-indigo-500", "focus:border-indigo-500", "sm:text-sm", "transition-colors", "duration-200");
+        $input.classList.add("block", "w-full", "pl-10", "pr-3", "py-2", "border", "border-gray-300", "rounded-md", "bg-base-100", "bg-cover", "shadow-sm", "focus:ring-2", "focus:ring-base-200", "sm:text-sm", "transition-colors", "duration-200");
 
         if (field.type === "file") {
             // Dejar este campo sin cambios ya que se maneja en otro bloque
@@ -354,8 +356,7 @@ const formEditUser = async () => {
             <span>Guardar cambios</span>
         </span>
     `;
-    $submitButton.classList.add("px-4", "py-2", "text-sm", "font-medium", "text-white", "bg-indigo-600", "border", "border-transparent", "rounded-md", "hover:bg-indigo-700", "focus:outline-none", "focus:ring-2", "focus:ring-offset-2", "focus:ring-indigo-500", "transition-colors", "duration-200");
-
+    $submitButton.classList.add("px-4", "py-2", "text-sm", "font-medium", "text", "bg-base-200", "bg-cover", "border", "border-gray-300", "rounded-md");
     $buttonsContainer.appendChild($submitButton);
     $form.appendChild($buttonsContainer);
 
@@ -560,7 +561,7 @@ const formEditPassword = () => {
 
     const $title = document.createElement("h2");
     $title.textContent = "Cambiar Contraseña";
-    $title.classList.add("text-2xl", "font-bold", "text-gray-800", "text-center");
+    $title.classList.add("text-2xl", "font-bold", "text", "text-center");
 
     const fields = [
         {
@@ -594,10 +595,10 @@ const formEditPassword = () => {
 
         const $label = document.createElement("label");
         $label.textContent = field.label;
-        $label.classList.add("block", "text-sm", "font-medium", "text-gray-700");
+        $label.classList.add("block", "text-sm", "font-medium", "text");
 
         const $inputWrapper = document.createElement("div");
-        $inputWrapper.classList.add("relative", "rounded-md", "shadow-sm");
+        $inputWrapper.classList.add("relative", "rounded-md", "shadow-sm", "bg-base-100");
 
         const $iconWrapper = document.createElement("div");
         $iconWrapper.classList.add("absolute", "inset-y-0", "left-0", "pl-3", "flex", "items-center", "pointer-events-none");
@@ -606,7 +607,7 @@ const formEditPassword = () => {
         const $input = document.createElement("input");
         $input.type = field.type;
         $input.name = field.name;
-        $input.classList.add("block", "w-full", "pl-10", "pr-3", "py-2", "border", "border-gray-300", "rounded-md", "shadow-sm", "focus:ring-2", "focus:ring-indigo-500", "focus:border-indigo-500", "sm:text-sm", "transition", "duration-150", "ease-in-out");
+        $input.classList.add("block", "w-full", "pl-10", "pr-3", "py-2", "bg-base-100", "border", "border-gray-300", "rounded-md", "shadow-sm", "focus:ring-2", "focus:ring-indigo-500", "focus:border-indigo-500", "sm:text-sm", "transition", "duration-150", "ease-in-out");
 
         const $errorMessage = document.createElement("span");
         $errorMessage.classList.add("text-sm", "text-red-600", "hidden");
@@ -628,7 +629,7 @@ const formEditPassword = () => {
     const $submitButton = document.createElement("button");
     $submitButton.type = "submit";
     $submitButton.textContent = "Cambiar contraseña";
-    $submitButton.classList.add("px-4", "py-2", "text-sm", "font-medium", "text-white", "bg-indigo-600", "border", "border-transparent", "rounded-md", "hover:bg-indigo-700", "focus:outline-none", "focus:ring-2", "focus:ring-offset-2", "focus:ring-indigo-500", "transition", "duration-150", "ease-in-out");
+    $submitButton.classList.add("px-4", "py-2", "text-sm", "font-medium", "text", "bg-base-300", "border", "border-transparent", "rounded-md");
     $submitButton.innerHTML = `
         <span class="flex items-center space-x-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

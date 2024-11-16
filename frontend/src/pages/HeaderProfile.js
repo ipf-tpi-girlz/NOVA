@@ -12,21 +12,21 @@ export const HeaderProfile = () => {
         return element;
     };
 
-    const $main = createElementWithClasses('div', ["flex", "flex-col", "min-h-screen", "w-full", "bg-gradient-to-br", "from-purple-100", "to-indigo-100", "p-8"]);
+    const $main = createElementWithClasses('div', ["flex", "flex-col", "min-h-screen", "w-full", "bg-base-100", "p-8"]);
 
-    const $container = createElementWithClasses('div', ['bg-white', 'rounded-3xl', 'shadow-xl', 'p-8', 'mb-8', 'transition-all', 'duration-300', 'hover:shadow-2xl']);
+    const $container = createElementWithClasses('div', ['bg-base-200', "bg-cover", "border", "border-gray-300", 'rounded-3xl', 'shadow-xl', 'p-8', 'mb-8', 'transition-all', 'duration-300', 'hover:shadow-2xl']);
 
     const $header = createElementWithClasses('div', ['flex', 'flex-col', 'md:flex-row', 'items-center', 'md:items-start', 'gap-6']);
 
     const $imgContainer = createElementWithClasses('div', ['relative']);
-    const $img = createElementWithClasses('img', ['w-32', 'h-32', 'md:w-48', 'md:h-48', 'rounded-full', 'object-cover', 'border-4', 'border-purple-500', 'shadow-lg']);
+    const $img = createElementWithClasses('img', ['w-32', 'h-32', 'md:w-48', 'md:h-48', 'rounded-full', 'object-cover', 'border-4', 'border-gray-200', 'shadow-lg']);
 
 
     const $textContainer = createElementWithClasses('div', ['flex', 'flex-col', 'justify-start', 'text-center', 'md:text-left']);
 
-    const $name = createElementWithClasses('h2', ['text-3xl', 'md:text-4xl', 'font-bold', 'text-gray-800', 'mb-2']);
-    const $bio = createElementWithClasses('p', ['text-gray-600', 'mb-4', 'max-w-lg']);
-    const $stats = createElementWithClasses('div', ['flex', 'gap-4', 'text-sm', 'text-gray-500']);
+    const $name = createElementWithClasses('h2', ['text-3xl', 'md:text-4xl', 'font-bold', 'text', 'mb-2']);
+    const $bio = createElementWithClasses('p', ['text', 'mb-4', 'max-w-lg']);
+    const $stats = createElementWithClasses('div', ['flex', 'gap-4', 'text-sm', 'text']);
 
     getUserProfile().then(user => {
         console.log("Perfil del usuario:", user);
@@ -92,14 +92,14 @@ export const HeaderProfile = () => {
 
     const $columnContainer = createElementWithClasses('div', ['flex', 'flex-col', 'lg:flex-row', 'gap-8']);
 
-    const $leftColumn = createElementWithClasses('div', ['flex-1', 'bg-white', 'rounded-3xl', 'shadow-lg', 'p-6', 'transition-all', 'duration-300', 'hover:shadow-xl']);
+    const $leftColumn = createElementWithClasses('div', ['flex-1', 'bg-base-200', "border", "border-gray-300", 'rounded-3xl', 'shadow-lg', 'p-6', 'transition-all', 'duration-300', 'hover:shadow-xl']);
     const $leftTitleContainer = createElementWithClasses('div', ['flex', 'justify-between', 'items-center', 'mb-6']);
-    const $leftTitle = createElementWithClasses('h3', ['text-2xl', 'font-bold', 'text-gray-800', 'flex', 'items-center']);
-    $leftTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>Mis publicaciones';
+    const $leftTitle = createElementWithClasses('h3', ['text-2xl', 'font-bold', 'text', 'flex', 'items-center']);
+    $leftTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-base-800 bg-cover" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>Mis publicaciones';
 
     const $buttonContainer = createElementWithClasses('div', ['flex', 'gap-4']);
 
-    const $createButton = createElementWithClasses('button', ['bg-indigo-500', 'hover:bg-indigo-600', 'text-white', 'py-2', 'px-4', 'rounded-full', 'text-sm', 'font-medium', 'shadow-md', 'transition', 'duration-300', 'ease-in-out', 'hover:shadow-lg', 'flex', 'items-center', 'justify-center']);
+    const $createButton = createElementWithClasses('button', ['bg-base-900', "border", "border-gray-300", 'text', 'py-2', 'px-4', 'rounded-full', 'text-sm', 'font-medium', 'shadow-xl', 'transition', 'duration-300', 'ease-in-out', 'hover:shadow-lg', 'flex', 'items-center', 'justify-center']);
     $createButton.innerHTML = '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Crear';
     $createButton.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -170,12 +170,13 @@ export const HeaderProfile = () => {
 
     loadData();
 
-    const $rightColumn = createElementWithClasses('div', ['lg:w-1/3', 'bg-white', 'rounded-3xl', 'shadow-lg', 'p-6', 'transition-all', 'duration-300', 'hover:shadow-xl']);
-    const $rightTitle = createElementWithClasses('h3', ['text-2xl', 'font-bold', 'mb-6', 'text-gray-800', 'flex', 'items-center']);
-    $rightTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Mis comunidades';
+    const $rightColumn = createElementWithClasses('div', ['lg:w-1/3', 'bg-base-200', 'rounded-3xl', 'shadow-lg', 'p-6', 'transition-all', 'duration-300', 'hover:shadow-xl', "border", "border-gray-300"]);
+    const $rightTitle = createElementWithClasses('h3', ['text-2xl', 'font-bold', 'mb-6', 'text', 'flex', 'items-center']);
+    $rightTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-base-800 bg-cover" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Mis comunidades';
     $rightColumn.appendChild($rightTitle);
 
-    const communitiesContainer = createElementWithClasses('div', ['grid', 'grid-cols-1', 'gap-4']);
+    const communitiesContainer = createElementWithClasses('div', ['grid', 'grid-cols-1', 'gap-4',
+    ]);
     communitiesContainer.id = "communities-container";
     $rightColumn.appendChild(communitiesContainer);
 
@@ -224,94 +225,6 @@ const loadComunities = async (data) => {
     }
 }
 
-const createCommunityCard = (community) => {
-    const card = document.createElement('div');
-    card.classList.add('bg-white', 'rounded-lg', 'shadow-md', 'overflow-hidden', 'flex', 'items-center', 'p-4');
-
-    const img = document.createElement('img');
-    img.src = community.img_perfil || 'path/to/default/community/image.jpg';
-    img.classList.add('w-16', 'h-16', 'rounded-full', 'object-cover', 'mr-4');
-
-    const textContainer = document.createElement('div');
-    textContainer.classList.add('flex-grow');
-
-    const title = document.createElement('h4');
-    title.textContent = community.nombre;
-    title.classList.add('font-semibold', 'text-lg', 'mb-1');
-
-    const description = document.createElement('p');
-    description.textContent = community.desc;
-    description.classList.add('text-sm', 'text-gray-600');
-
-    textContainer.append(title, description);
-    card.append(img, textContainer);
-
-    return card;
-};
-
-const createNoCommunityCard = () => {
-    const card = document.createElement("div");
-    card.classList.add(
-        "w-full",
-        "h-64",
-        "bg-gradient-to-br",
-        "from-purple-100",
-        "to-indigo-100",
-        "rounded-xl",
-        "shadow-lg",
-        "overflow-hidden",
-        "transition-all",
-        "duration-300",
-        "hover:shadow-2xl",
-        "hover:scale-105",
-        "cursor-pointer",
-        "flex",
-        "flex-col",
-        "justify-center",
-        "items-center"
-    );
-
-    const cardContent = document.createElement("div");
-    cardContent.classList.add(
-        "p-6",
-        "flex",
-        "flex-col",
-        "justify-center",
-        "items-center",
-        "text-center"
-    );
-
-    const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    icon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    icon.setAttribute("viewBox", "0 0 24 24");
-    icon.setAttribute("fill", "none");
-    icon.setAttribute("stroke", "currentColor");
-    icon.setAttribute("height", "48");
-    icon.setAttribute("width", "48");
-    icon.classList.add("text-purple-500", "mb-4");
-
-    const iconPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    iconPath.setAttribute("stroke-linecap", "round");
-    iconPath.setAttribute("stroke-linejoin", "round");
-    iconPath.setAttribute("stroke-width", "2");
-    iconPath.setAttribute("d", "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z");
-
-    icon.appendChild(iconPath);
-
-    const title = document.createElement("h3");
-    title.classList.add("text-xl", "font-semibold", "text-gray-800", "mb-2");
-    title.textContent = "Sin comunidades";
-
-    const description = document.createElement("p");
-    description.classList.add("text-sm", "text-gray-600");
-    description.textContent = "Aún no estás unido a una comunidad.";
-
-    cardContent.append(icon, title, description);
-    card.appendChild(cardContent);
-
-    return card;
-};
-
 const loadPublication = (data) => {
     const publicacionesContainer = document.getElementById("publicaciones-container");
     publicacionesContainer.innerHTML = "";
@@ -329,13 +242,15 @@ const createPublicationCard = (post) => {
     console.log(post)
     const card = document.createElement("div");
     card.classList.add(
-        "bg-white",
+        "bg-base-100",
         "break-words",
         "rounded-lg",
         "p-4",
         "shadow-md",
         "hover:shadow-lg",
-        "hover:bg-gray-100",
+        "border",
+        "border-gray-200",
+        "hover:bg-base-400",
         "transition-shadow",
         "transition-bg",
         "duration-300",
@@ -345,7 +260,7 @@ const createPublicationCard = (post) => {
 
     const dropdownContainer = createDropdownMenu(post);
     const cardTitle = createCardElement("h4", ["font-bold", "text-lg", "mb-2"], post.nombre);
-    const cardDesc = createCardElement("p", ["text-sm", "text-gray-600"], post.desc);
+    const cardDesc = createCardElement("p", ["text-sm", "text"], post.desc);
 
     card.append(dropdownContainer, cardTitle, cardDesc);
 
@@ -356,7 +271,7 @@ const createDropdownMenu = (foro) => {
     const dropdownContainer = document.createElement("div");
     dropdownContainer.classList.add("dropdown", "float-right");
 
-    const dropdownButton = createCardElement("div", ["btn", "bg-transparent", "border-transparent", "box-border-0"], "🤍");
+    const dropdownButton = createCardElement("div", ["btn", "btn-circle", "btn-ghost"], "🤍");
     dropdownButton.setAttribute("tabindex", "0");
     dropdownButton.setAttribute("role", "button");
 
@@ -463,9 +378,6 @@ const createCard = () => {
         "w-full",
         "max-w-sm",
         "h-64",
-        "bg-gradient-to-br",
-        "from-purple-100",
-        "to-indigo-100",
         "rounded-xl",
         "shadow-lg",
         "overflow-hidden",

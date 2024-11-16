@@ -34,8 +34,10 @@ export function ForumCard(id, img, nombre, desc) {
 
   // Agregar el evento de clic al botón
   cardBtn.addEventListener("click", async () => {
-    window.location.href = `/forum/${id}`;
+    sessionStorage.setItem("forumId", id);
+    window.location.href = "/forum";
   });
+
 
   cardAction.appendChild(cardBtn);
 

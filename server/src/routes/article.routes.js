@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getArticleId, getArticles, createArticle, editArticle, deleteArticle, getArticlesByUser } from "../controllers/post.article.js";
+import { getArticleId, getArticles, createArticle, editArticle, deleteArticle, getUserArticle, getArticlesByUser } from "../controllers/post.article.js";
 import { validarJWT } from "../middlewares/jwt.validation.js"
 import { upload } from "../middlewares/img.middleware.js"
 

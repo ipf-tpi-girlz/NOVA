@@ -34,6 +34,10 @@ export const community = async (req, res) => {
                   as: "usuario"
                 }
               ]
+            },
+            {
+              model: Usuario,
+              as: "usuario"
             }
           ]
         },
@@ -50,17 +54,37 @@ export const community = async (req, res) => {
       ]
     });
 
-
     if (!community) {
       console.log(color.red("Comunidad no encontrada"));
       return res.status(404).json({ message: "Comunidad no encontrada" });
     }
-    console.log(color.green(`Comunidad encontrada: ${community}`));
-    return res.status(200).json({ community });
-  } catch {
 
+    const moderador = await Usuario.findOne({
+      where: { id: community.moderador_id }
+    });
+
+    if (!moderador) {
+      console.log(color.red("Moderador no encontrado"));
+      return res.status(404).json({ message: "Moderador no encontrado" });
+    }
+
+    console.log(color.green(`Comunidad encontrada: ${community.nombre}`));
+    console.log(color.green(`Moderador encontrado: ${moderador.nombre}`));
+
+    return res.status(200).json({
+      community,
+      moderador: {
+        id: moderador.id,
+        nombre: moderador.nombre,
+        img: moderador.img || null // Imagen del moderador (si está disponible)
+      }
+    });
+  } catch (error) {
+    console.error(color.red("Error al obtener la comunidad"), error);
+    return res.status(500).json({ message: "Error interno del servidor" });
   }
-}
+};
+
 
 export const getCommunityID = async (req, res) => {
   const user = req.user;
