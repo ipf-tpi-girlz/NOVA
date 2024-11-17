@@ -149,16 +149,158 @@ export const HeaderProfile = () => {
         }
     };
 
-    loadData();
+    const createCommunityCard = (community) => {
+        const card = createElementWithClasses('div', [
+            'bg-white',
+            'rounded-2xl',
+            'shadow-lg',
+            'overflow-hidden',
+            'w-full',
+            'max-w-xs',
+            'transition-all',
+            'duration-300',
+            'hover:shadow-2xl',
+            'hover:scale-105',
+            'group',
+            'relative',
+            'animate-fadeIn',
+            'flex',
+            'flex-col'
+        ]);
 
-    const $rightColumn = createElementWithClasses('div', ['lg:w-1/3', 'bg-base-200', 'rounded-3xl', 'shadow-lg', 'p-6', 'transition-all', 'duration-300', 'hover:shadow-xl', "border", "border-gray-300", 'scroll-invisible']);  // Aplicar scroll-invisible aquí
-    const $rightTitle = createElementWithClasses('h3', ['text-2xl', 'font-bold', 'mb-6', 'text', 'flex', 'items-center']);
-    $rightTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-base-800 bg-cover" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Mis comunidades';
-    $rightColumn.appendChild($rightTitle);
+        const content = createElementWithClasses('div', [
+            'p-6',
+            'space-y-3',
+            'flex-grow',
+            'relative',
+            'z-10'
+        ]);
 
-    const communitiesContainer = createElementWithClasses('div', ['grid', 'grid-cols-1', 'gap-4']);
-    communitiesContainer.id = "communities-container";
-    $rightColumn.appendChild(communitiesContainer);
+        const cardTitle = createElementWithClasses('h4', [
+            'font-semibold',
+            'text-xl',
+            'text-gray-900',
+            'group-hover:text-purple-600',
+            'transition-colors',
+            'duration-300'
+        ]);
+        cardTitle.innerHTML = `${community.nombre || 'Comunidad'} <span class="text-sm text-purple-500">✨</span>`;
+
+        const cardDesc = createElementWithClasses('p', [
+            'text-sm',
+            'text-gray-600',
+            'line-clamp-3',
+            'group-hover:text-gray-700',
+            'transition-colors',
+            'duration-300'
+        ]);
+        cardDesc.textContent = community.desc || 'Descripción no disponible';
+
+        const joinButton = createElementWithClasses('button', [
+            'mt-4',
+            'w-full',
+            'px-4',
+            'py-2',
+            'bg-gradient-to-r',
+            'from-purple-500',
+            'to-pink-500',
+            'text-white',
+            'font-medium',
+            'rounded-xl',
+            'transition-all',
+            'duration-300',
+            'transform',
+            'hover:shadow-lg',
+            'hover:scale-105',
+            'active:scale-95',
+            'flex',
+            'items-center',
+            'justify-center',
+            'gap-2'
+        ]);
+        joinButton.innerHTML = '<span>Ver Foro</span> <span class="text-lg">🚀</span>';
+
+        joinButton.addEventListener('click', () => {
+            joinButton.classList.add('animate-pulse-slow');
+            sessionStorage.setItem('forumId', community.id);
+            setTimeout(() => {
+                window.location.href = '/forum';
+            }, 300);
+        });
+
+        content.append(cardTitle, cardDesc);
+        card.append(content, joinButton);
+
+        return card;
+    };
+
+    const createNoCommunityCard = (message) => {
+        const card = createElementWithClasses('div', [
+            'w-full',
+            'max-w-sm',
+            'h-64',
+            'rounded-2xl',
+            'shadow-lg',
+            'overflow-hidden',
+            'flex',
+            'flex-col',
+            'justify-center',
+            'items-center',
+            'text-center',
+            'bg-gradient-to-br',
+            'from-purple-50',
+            'to-pink-50',
+            'p-8',
+            'animate-float'
+        ]);
+
+        const icon = createElementWithClasses('div', [
+            'text-6xl',
+            'mb-4',
+            'animate-pulse-slow'
+        ]);
+        icon.textContent = '🌟';
+
+        const title = createElementWithClasses('h3', [
+            'text-xl',
+            'font-semibold',
+            'text-transparent',
+            'bg-clip-text',
+            'bg-gradient-to-r',
+            'from-purple-600',
+            'to-pink-600',
+            'mb-2'
+        ]);
+        title.textContent = '¡Explora nuevas comunidades!';
+
+        const description = createElementWithClasses('p', [
+            'text-sm',
+            'text-gray-600',
+            'mb-6'
+        ]);
+        description.textContent = message;
+
+        const exploreButton = createElementWithClasses('button', [
+            'px-6',
+            'py-2',
+            'bg-white',
+            'text-purple-600',
+            'font-medium',
+            'rounded-xl',
+            'shadow-md',
+            'transition-all',
+            'duration-300',
+            'hover:shadow-lg',
+            'hover:scale-105',
+            'active:scale-95'
+        ]);
+        exploreButton.textContent = '¡Descubre más! 🔍';
+
+        card.append(icon, title, description, exploreButton);
+        $communitiesContainer.appendChild(card);
+    };
+
+    loadCommunities();
 
     $columnContainer.append($leftColumn, $rightColumn);
     $main.append($container, $columnContainer);
