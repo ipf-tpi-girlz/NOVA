@@ -1,7 +1,7 @@
 import { getUserProfile } from "../api/auth";
-import { fetchDeleteForo, fetchGetForosById, fetchUpdateForo, fetchCreateForo } from "../api/foro";
-import { fetchComunitiesUser } from "../api/comunity";
-import { fetchArticlesByUser } from "../api/articles.js"
+import { fetchGetForosById, fetchUpdateForo, fetchCreateForo } from "../api/foro";
+import { fetchUserComunnity } from "../api/comunity";
+import { fetchArticlesByUser } from "../api/articles.js";
 import { showNotification } from "../components/notification.js";
 import Swal from "sweetalert2";
 
@@ -13,81 +13,49 @@ export const HeaderProfile = () => {
     };
 
     const $main = createElementWithClasses('div', ["flex", "flex-col", "min-h-screen", "w-full", "bg-base-100", "p-8"]);
-
     const $container = createElementWithClasses('div', ['bg-base-200', "bg-cover", "border", "border-gray-300", 'rounded-3xl', 'shadow-xl', 'p-8', 'mb-8', 'transition-all', 'duration-300', 'hover:shadow-2xl']);
+    const $header = createElementWithClasses('div', ['flex', 'items-center', 'gap-6']); // Alineación horizontal en todos los tamaños de pantalla
 
-    const $header = createElementWithClasses('div', ['flex', 'flex-col', 'md:flex-row', 'items-center', 'md:items-start', 'gap-6']);
-
-    const $imgContainer = createElementWithClasses('div', ['relative']);
-    const $img = createElementWithClasses('img', ['w-32', 'h-32', 'md:w-48', 'md:h-48', 'rounded-full', 'object-cover', 'border-4', 'border-gray-200', 'shadow-lg']);
-
+    // Foto de perfil
+    const $img = createElementWithClasses('img', ['w-32', 'h-32', 'rounded-full', 'shadow-lg', 'border-2', 'border-purple-500']);
+    $img.src = 'https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg';
 
     const $textContainer = createElementWithClasses('div', ['flex', 'flex-col', 'justify-start', 'text-center', 'md:text-left']);
-
     const $name = createElementWithClasses('h2', ['text-3xl', 'md:text-4xl', 'font-bold', 'text', 'mb-2']);
     const $bio = createElementWithClasses('p', ['text', 'mb-4', 'max-w-lg']);
     const $stats = createElementWithClasses('div', ['flex', 'gap-4', 'text-sm', 'text']);
 
     getUserProfile().then(user => {
-        console.log("Perfil del usuario:", user);
-
-        $img.src = user.img ? user.img : 'https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg';
+        $img.src = user.img || 'https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg';
         $name.textContent = user.nombre || 'Usuario';
-        if (user.role == "profesional") {
-            $bio.textContent = user.perfil.descripcion || 'Bienvenido a mi perfil!';
-        } else {
-            $bio.textContent = user.bio || 'Bienvenido a mi perfil!';
-        }
+        $bio.textContent = user.bio || 'Bienvenido a mi perfil! 👋';
 
         if (user.role == "profesional") {
             fetchArticlesByUser().then(article => {
-                console.log(article)
                 const ArticleCount = article.data.length;
-                console.log("Cantidad de foros:", forosCount);
-
-                // Contar comunidades
-                const comunidadesCount = user.comunidades && Array.isArray(user.comunidades) ? user.comunidades.length : 0;
-                console.log("Cantidad de comunidades:", comunidadesCount);
-
-
-                $stats.innerHTML = `
-                    <span>${ArticleCount}</span> Articles
-                `;
+                $stats.innerHTML = `<span>📄 ${ArticleCount}</span> Artículos`;
             }).catch(error => {
-                console.error("Error al obtener foros:", error);
-                $stats.innerHTML = '<span>0</span> foros<span>•</span><span>0</span> comunidades';
+                console.error("Error al obtener artículos:", error);
+                $stats.innerHTML = '📄 0 Artículos';
             });
         } else {
             fetchGetForosById().then(foros => {
                 const forosCount = foros.foros.length;
-                console.log("Cantidad de foros:", forosCount);
-
-                // Contar comunidades
-                const comunidadesCount = user.comunidades && Array.isArray(user.comunidades) ? user.comunidades.length : 0;
-                console.log("Cantidad de comunidades:", comunidadesCount);
-
-                // Mostrar cantidad de foros y comunidades
-                $stats.innerHTML = `
-                    <span>${forosCount}</span> Publicaciones
-                `;
+                $stats.innerHTML = `<span>📚 ${forosCount}</span> Publicaciones`;
             }).catch(error => {
                 console.error("Error al obtener foros:", error);
-                $stats.innerHTML = '<span>0</span> foros<span>•</span><span>0</span> comunidades';
+                $stats.innerHTML = '📚 0 Publicaciones';
             });
         }
-
     }).catch(error => {
         console.error("Error al obtener el perfil del usuario:", error);
-        $img.src = 'https://i.pravatar.cc/300';
         $name.textContent = 'Usuario';
-        $bio.textContent = 'Bienvenido a mi perfil!';
-        $stats.innerHTML = '<span>0</span> foros<span>•</span><span>0</span> comunidades';
+        $bio.textContent = 'Bienvenido a mi perfil! 👋';
+        $stats.innerHTML = '📚 0 Publicaciones';
     });
 
-
-    $imgContainer.append($img);
     $textContainer.append($name, $bio, $stats);
-    $header.append($imgContainer, $textContainer);
+    $header.append($img, $textContainer); // Aseguramos que la foto y el texto estén juntos
     $container.appendChild($header);
 
     const $columnContainer = createElementWithClasses('div', ['flex', 'flex-col', 'lg:flex-row', 'gap-8']);
@@ -95,348 +63,272 @@ export const HeaderProfile = () => {
     const $leftColumn = createElementWithClasses('div', ['flex-1', 'bg-base-200', "border", "border-gray-300", 'rounded-3xl', 'shadow-lg', 'p-6', 'transition-all', 'duration-300', 'hover:shadow-xl']);
     const $leftTitleContainer = createElementWithClasses('div', ['flex', 'justify-between', 'items-center', 'mb-6']);
     const $leftTitle = createElementWithClasses('h3', ['text-2xl', 'font-bold', 'text', 'flex', 'items-center']);
-    $leftTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-base-800 bg-cover" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>Mis publicaciones';
+    $leftTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-base-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>Mis publicaciones';
 
     const $buttonContainer = createElementWithClasses('div', ['flex', 'gap-4']);
 
     const $createButton = createElementWithClasses('button', ['bg-base-900', "border", "border-gray-300", 'text', 'py-2', 'px-4', 'rounded-full', 'text-sm', 'font-medium', 'shadow-xl', 'transition', 'duration-300', 'ease-in-out', 'hover:shadow-lg', 'flex', 'items-center', 'justify-center']);
-    $createButton.innerHTML = '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Crear';
-    $createButton.addEventListener('click', async (e) => {
-        e.preventDefault();
-        Swal.fire({
-            title: 'Crear Foro',
-            html: `
-                <input id="swal-title" class="swal2-input" placeholder="Título">
-                <textarea id="swal-desc" class="swal2-textarea" placeholder="Descripción" rows="4"></textarea>
-            `,
-            focusConfirm: false,
-            preConfirm: () => {
-                const title = document.getElementById('swal-title').value;
-                const desc = document.getElementById('swal-desc').value;
-                if (!title || !desc) {
-                    Swal.showValidationMessage('Por favor, completa todos los campos.');
-                    return false;
-                }
-                return { title, desc };
-            }
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    const response = await fetchCreateForo({
-                        title: result.value.title,
-                        desc: result.value.desc
-                    });
-                    if (response) {
-                        showNotification('success', 'El foro ha sido creado.');
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1200);
-                    } else {
-                        throw new Error('No se pudo crear el foro');
-                    }
-                } catch (error) {
-                    console.error('Error al crear el foro:', error);
-                    showNotification('error', 'No se pudo crear el foro');
-                }
-            }
-        });
-    });
-
-
-
+    $createButton.innerHTML = '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Crear 📝';
     $buttonContainer.append($createButton);
     $leftTitleContainer.append($leftTitle, $buttonContainer);
-    $leftColumn.appendChild($leftTitleContainer);
+    $leftColumn.append($leftTitleContainer);
 
-    const publicacionesContainer = createElementWithClasses('div', ['grid', 'grid-cols-1', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-6', 'justify-center', 'items-center', 'mx-auto', 'max-w-6xl']);
-    publicacionesContainer.id = "publicaciones-container";
-    $leftColumn.appendChild(publicacionesContainer);
-
-    const loadData = async () => {
-        try {
-            const data = await fetchGetForosById();
-            console.log("los datos son: ", data)
-            publicacionesContainer.innerHTML = "";
-            if (!data.foros || data.foros.length === 0) {
-                createCard();
-            } else {
-                loadPublication(data);
-            }
-        } catch (error) {
-            console.error("Error loading foros:", error);
-            createCard();
-        }
-    };
-
-    loadData();
-
-    const $rightColumn = createElementWithClasses('div', ['lg:w-1/3', 'bg-base-200', 'rounded-3xl', 'shadow-lg', 'p-6', 'transition-all', 'duration-300', 'hover:shadow-xl', "border", "border-gray-300"]);
-    const $rightTitle = createElementWithClasses('h3', ['text-2xl', 'font-bold', 'mb-6', 'text', 'flex', 'items-center']);
-    $rightTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-base-800 bg-cover" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Mis comunidades';
-    $rightColumn.appendChild($rightTitle);
-
-    const communitiesContainer = createElementWithClasses('div', ['grid', 'grid-cols-1', 'gap-4',
+    // Contenedor de comunidades con efecto glassmorphism
+    const $rightColumn = createElementWithClasses('div', [
+        'flex-1',
+        'bg-white/80',
+        'backdrop-filter',
+        'backdrop-blur-lg',
+        'border',
+        'border-gray-200',
+        'rounded-3xl',
+        'shadow-lg',
+        'p-6',
+        'transition-all',
+        'duration-500',
+        'hover:shadow-2xl',
+        'hover:bg-white/90'
     ]);
-    communitiesContainer.id = "communities-container";
-    $rightColumn.appendChild(communitiesContainer);
 
-    const loadCommunity = async () => {
+    const $communityTitleContainer = createElementWithClasses('div', [
+        'flex',
+        'justify-between',
+        'items-center',
+        'mb-8',
+        'bg-gradient-to-r',
+        'from-purple-100',
+        'to-pink-100',
+        'p-4',
+        'rounded-2xl',
+        'border',
+        'border-gray-200'
+    ]);
+
+    const $communityTitle = createElementWithClasses('h3', [
+        'text-3xl', // Reducir tamaño si es necesario
+        'font-bold',
+        'text-gray-900', // Asegurar que sea un color oscuro visible
+        'flex',
+        'items-center',
+        'gap-3',
+        'text-shadow-lg', // Añade sombra para contraste
+        'w-full',
+        'text-center' // Centrado para claridad
+    ]);
+    $communityTitle.textContent = 'Mis comunidades';
+
+    const $communitiesContainer = createElementWithClasses('div', [
+        'grid',
+        'grid-cols-1',
+        'md:grid-cols-2',
+        'lg:grid-cols-3',
+        'gap-6',
+        'animate-fadeIn'
+    ]);
+    // Agregamos estilos CSS para las animaciones
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 2s ease-in-out infinite;
+        }
+    `;
+    document.head.appendChild(style);
+
+    $rightColumn.append($communityTitleContainer, $communitiesContainer);
+
+    const loadCommunities = async () => {
         try {
-            const data = await fetchComunitiesUser();
-            console.log("Datos de la comunidad:", data);
+            const data = await fetchUserComunnity();
+            const communities = data && data.comunidades ? data.comunidades : [];
 
-            communitiesContainer.innerHTML = "";
-
-            // Verifica si hay un mensaje específico
-            if (data.message) {
-                createNoCommunityCard(data.message); // Pasa el mensaje a la función
-            } else if (!data.community || data.community.length === 0) {
-                createNoCommunityCard();
+            if (communities.length === 0) {
+                createNoCommunityCard("¡Aún no te has unido a ninguna comunidad! 🌱");
             } else {
-                loadComunities(data);
+                communities.forEach((communi, index) => {
+                    setTimeout(() => {
+                        const card = createCommunityCard(communi);
+                        $communitiesContainer.appendChild(card);
+                        card.style.opacity = '0';
+                        card.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
+                    }, index * 100);
+                });
             }
         } catch (error) {
-            console.error("Error loading foros:", error);
-            createNoCommunityCard("Ocurrió un error al cargar las comunidades."); // Mensaje de error
+            console.error("Error al cargar las comunidades:", error);
+            createNoCommunityCard("¡Ups! Hubo un error al cargar las comunidades ⚠️");
         }
     };
 
-    loadCommunity()
+    const createCommunityCard = (community) => {
+        const card = createElementWithClasses('div', [
+            'bg-white',
+            'rounded-2xl',
+            'shadow-lg',
+            'overflow-hidden',
+            'w-full',
+            'max-w-xs',
+            'transition-all',
+            'duration-300',
+            'hover:shadow-2xl',
+            'hover:scale-105',
+            'group',
+            'relative',
+            'animate-fadeIn',
+            'flex',
+            'flex-col'
+        ]);
+
+        const content = createElementWithClasses('div', [
+            'p-6',
+            'space-y-3',
+            'flex-grow',
+            'relative',
+            'z-10'
+        ]);
+
+        const cardTitle = createElementWithClasses('h4', [
+            'font-semibold',
+            'text-xl',
+            'text-gray-900',
+            'group-hover:text-purple-600',
+            'transition-colors',
+            'duration-300'
+        ]);
+        cardTitle.innerHTML = `${community.nombre || 'Comunidad'} <span class="text-sm text-purple-500">✨</span>`;
+
+        const cardDesc = createElementWithClasses('p', [
+            'text-sm',
+            'text-gray-600',
+            'line-clamp-3',
+            'group-hover:text-gray-700',
+            'transition-colors',
+            'duration-300'
+        ]);
+        cardDesc.textContent = community.desc || 'Descripción no disponible';
+
+        const joinButton = createElementWithClasses('button', [
+            'mt-4',
+            'w-full',
+            'px-4', // Reduced button size for better layout
+            'py-2',
+            'bg-gradient-to-r',
+            'from-purple-500',
+            'to-pink-500',
+            'text-white',
+            'font-medium',
+            'rounded-xl',
+            'transition-all',
+            'duration-300',
+            'transform',
+            'hover:shadow-lg',
+            'hover:scale-105',
+            'active:scale-95',
+            'flex',
+            'items-center',
+            'justify-center',
+            'gap-2'
+        ]);
+        joinButton.innerHTML = '<span>Ver Foro</span> <span class="text-lg">🚀</span>';
+
+        joinButton.addEventListener('click', () => {
+            joinButton.classList.add('animate-pulse-slow');
+            sessionStorage.setItem('forumId', community.id);
+            setTimeout(() => {
+                window.location.href = '/forum';
+            }, 300);
+        });
+
+        content.append(cardTitle, cardDesc);
+        card.append(content, joinButton);
+
+        return card;
+    };
+
+    const createNoCommunityCard = (message) => {
+        const card = createElementWithClasses('div', [
+            'w-full',
+            'max-w-sm',
+            'h-64',
+            'rounded-2xl',
+            'shadow-lg',
+            'overflow-hidden',
+            'flex',
+            'flex-col',
+            'justify-center',
+            'items-center',
+            'text-center',
+            'bg-gradient-to-br',
+            'from-purple-50',
+            'to-pink-50',
+            'p-8',
+            'animate-float'
+        ]);
+
+        const icon = createElementWithClasses('div', [
+            'text-6xl',
+            'mb-4',
+            'animate-pulse-slow'
+        ]);
+        icon.textContent = '🌟';
+
+        const title = createElementWithClasses('h3', [
+            'text-xl',
+            'font-semibold',
+            'text-transparent',
+            'bg-clip-text',
+            'bg-gradient-to-r',
+            'from-purple-600',
+            'to-pink-600',
+            'mb-2'
+        ]);
+        title.textContent = '¡Explora nuevas comunidades!';
+
+        const description = createElementWithClasses('p', [
+            'text-sm',
+            'text-gray-600',
+            'mb-6'
+        ]);
+        description.textContent = message;
+
+        const exploreButton = createElementWithClasses('button', [
+            'px-6',
+            'py-2',
+            'bg-white',
+            'text-purple-600',
+            'font-medium',
+            'rounded-xl',
+            'shadow-md',
+            'transition-all',
+            'duration-300',
+            'hover:shadow-lg',
+            'hover:scale-105',
+            'active:scale-95'
+        ]);
+        exploreButton.textContent = '¡Descubre más! 🔍';
+
+        card.append(icon, title, description, exploreButton);
+        $communitiesContainer.appendChild(card);
+    };
+
+    loadCommunities();
 
     $columnContainer.append($leftColumn, $rightColumn);
     $main.append($container, $columnContainer);
 
     return $main;
-};
-
-const loadComunities = async (data) => {
-    const communitiesContainer = document.getElementById('communities-container');
-    communitiesContainer.innerHTML = '';
-    if (data.community && data.community.length > 0) {
-        const fragment = document.createDocumentFragment();
-        data.community.forEach(communi => {
-            const card = createCommunityCard(communi);
-            console.log("Tarjeta creada:", card); // Verifica la tarjeta creada
-            fragment.appendChild(card);
-        });
-        communitiesContainer.appendChild(fragment);
-    } else {
-        createNoCommunityCard();
-    }
-}
-
-const loadPublication = (data) => {
-    const publicacionesContainer = document.getElementById("publicaciones-container");
-    publicacionesContainer.innerHTML = "";
-    if (data.foros && data.foros.length > 0) {
-        data.foros.forEach((foro) => {
-            const card = createPublicationCard(foro);
-            publicacionesContainer.appendChild(card);
-        });
-    } else {
-        createCard();
-    }
-};
-
-const createPublicationCard = (post) => {
-    console.log(post)
-    const card = document.createElement("div");
-    card.classList.add(
-        "bg-base-100",
-        "break-words",
-        "rounded-lg",
-        "p-4",
-        "shadow-md",
-        "hover:shadow-lg",
-        "border",
-        "border-gray-200",
-        "hover:bg-base-400",
-        "transition-shadow",
-        "transition-bg",
-        "duration-300",
-        "w-full",
-        "max-w-xs"
-    );
-
-    const dropdownContainer = createDropdownMenu(post);
-    const cardTitle = createCardElement("h4", ["font-bold", "text-lg", "mb-2"], post.nombre);
-    const cardDesc = createCardElement("p", ["text-sm", "text"], post.desc);
-
-    card.append(dropdownContainer, cardTitle, cardDesc);
-
-    return card;
-};
-
-const createDropdownMenu = (foro) => {
-    const dropdownContainer = document.createElement("div");
-    dropdownContainer.classList.add("dropdown", "float-right");
-
-    const dropdownButton = createCardElement("div", ["btn", "btn-circle", "btn-ghost"], "🤍");
-    dropdownButton.setAttribute("tabindex", "0");
-    dropdownButton.setAttribute("role", "button");
-
-    const dropdownContent = document.createElement("ul");
-    dropdownContent.setAttribute("tabindex", "0");
-    dropdownContent.classList.add(
-        "dropdown-content",
-        "menu",
-        "bg-base-100",
-        "rounded-box",
-        "z-[1]",
-        "w-52",
-        "p-2",
-        "shadow"
-    );
-
-    const itemEditar = createDropdownItem("Editar", () => editPublication(foro));
-    const itemEliminar = createDropdownItem("Borrar", () => deletePublication(foro.id));
-
-    dropdownContent.append(itemEditar, itemEliminar);
-    dropdownContainer.append(dropdownButton, dropdownContent);
-
-    return dropdownContainer;
-};
-
-const createCardElement = (tag, classes, textContent) => {
-    const element = document.createElement(tag);
-    element.classList.add(...classes);
-    element.textContent = textContent;
-    return element;
-};
-
-const createDropdownItem = (text, onClick) => {
-    const item = document.createElement("li");
-    const button = document.createElement("btn");
-    button.textContent = text;
-    button.addEventListener("click", onClick);
-    item.appendChild(button);
-    return item;
-};
-
-
-
-const editPublication = (foro) => {
-    Swal.fire({
-        title: "Editar Publicación",
-        html: `
-            <input id="swal-edit-title" class="swal2-input" value="${foro.nombre}" placeholder="Título">
-            <textarea id="swal-edit-desc" class="swal2-textarea" placeholder="Descripción">${foro.desc}</textarea>
-        `,
-        focusConfirm: false,
-        showCancelButton: true,
-        confirmButtonText: 'Guardar',
-        cancelButtonText: 'Cancelar',
-        preConfirm: () => {
-            const title = document.getElementById("swal-edit-title").value.trim();
-            const desc = document.getElementById("swal-edit-desc").value.trim();
-            if (!title || !desc) {
-                Swal.showValidationMessage("Por favor, completa todos los campos.");
-                return false;
-            }
-            return { title, desc };
-        }
-    }).then(async (result) => {
-        if (result.isConfirmed) {
-            const dataForo = {
-                title: result.value.title,
-                desc: result.value.desc
-            }
-            await fetchUpdateForo(foro.id, dataForo);
-            showNotification('success', 'La publicación se ha actualizado correctamente.');
-            setTimeout(() => {
-                window.location.reload();
-            }, 1200);
-        }
-    });
-};
-
-
-const deletePublication = (foroId) => {
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: "No podrás revertir esta acción",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-    }).then(async (result) => {
-        if (result.isConfirmed) {
-            await fetchDeleteForo(foroId);
-            showNotification('success', 'La publicación ha sido eliminada correctamente.');
-            setTimeout(() => {
-                window.location.reload();
-            }, 1200);
-        }
-    });
-}
-
-const createCard = () => {
-    const card = document.createElement("div");
-    card.classList.add(
-        "w-full",
-        "max-w-sm",
-        "h-64",
-        "rounded-xl",
-        "shadow-lg",
-        "overflow-hidden",
-        "transition-all",
-        "duration-300",
-        "hover:shadow-2xl",
-        "hover:scale-105",
-        "cursor-pointer",
-        "flex",
-        "flex-col",
-        "justify-center",
-        "items-center"
-    );
-
-    const cardContent = document.createElement("div");
-    cardContent.classList.add(
-        "p-6",
-        "flex",
-        "flex-col",
-        "justify-center",
-        "items-center",
-        "text-center"
-    );
-
-    const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    icon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    icon.setAttribute("viewBox", "0 0 24 24");
-    icon.setAttribute("fill", "none");
-    icon.setAttribute("stroke", "currentColor");
-    icon.setAttribute("height", "48");
-    icon.setAttribute("width", "48");
-    icon.classList.add("text-purple-500", "mb-4");
-
-    const iconPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    iconPath.setAttribute("stroke-linecap", "round");
-    iconPath.setAttribute("stroke-linejoin", "round");
-    iconPath.setAttribute("stroke-width", "2");
-    iconPath.setAttribute("d", "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10");
-
-    icon.appendChild(iconPath);
-
-    const title = document.createElement("h3");
-    title.classList.add("text-xl", "font-semibold", "text-gray-800", "mb-2");
-    title.textContent = "Sin publicaciones";
-
-    const description = document.createElement("p");
-    description.classList.add("text-sm", "text-gray-600");
-    description.textContent = "Aún no tienes publicaciones.";
-
-    cardContent.append(icon, title, description);
-    card.appendChild(cardContent);
-
-    const publicacionesContainer = document.getElementById("publicaciones-container");
-    publicacionesContainer.innerHTML = '';
-    publicacionesContainer.classList.add(
-        "flex",
-        "justify-center",
-        "items-center",
-        "min-h-[400px]"
-    );
-    publicacionesContainer.appendChild(card);
 };
