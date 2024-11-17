@@ -224,7 +224,7 @@ export const HeaderProfile = () => {
         const joinButton = createElementWithClasses('button', [
             'mt-4',
             'w-full',
-            'px-4', // Reduced button size for better layout
+            'px-4',
             'py-2',
             'bg-gradient-to-r',
             'from-purple-500',

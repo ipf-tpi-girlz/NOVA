@@ -1,175 +1,241 @@
-import { fetchComunity } from "../api/comunity"
+import { fetchComunity } from "../api/comunity";
 import { joinComunity, deleteRelationC } from "../api/relation.comunity";
 import { showNotification } from "./notification";
-export const ForumHeader = (id, userId) => {
 
+export const ForumHeader = (id, userId) => {
   const ForumHeader = document.createElement("div");
-  ForumHeader.classList.add();
+  ForumHeader.classList.add("forum-header-container");
+
+  const style = document.createElement("style");
+  style.textContent = `
+    @keyframes gentleFadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes gentlePulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 rgba(255,182,193,0); }
+      50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(255,182,193,0.3); }
+      100% { transform: scale(1); box-shadow: 0 0 0 rgba(255,182,193,0); }
+    }
+
+    .forum-header-container {
+      animation: gentleFadeIn 1.2s ease-out;
+    }
+
+    .support-button {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .support-button:hover {
+      animation: gentlePulse 2s infinite;
+    }
+
+    .profile-image {
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 3px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .profile-image:hover {
+      transform: scale(1.03);
+    }
+
+    .safe-space-badge {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      color: #9f7aea;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .member-actions {
+      position: absolute;
+      bottom: 1rem;
+      right: 1.5rem;  /* Changed from left to right */
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 20;
+    }
+
+    .member-message {
+      background: rgba(255, 255, 255, 0.9);
+      color: #805ad5;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 500;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  `;
+  document.head.appendChild(style);
 
   const caratula = document.createElement("div");
   caratula.classList.add(
-    "min-h-32",
+    "h-48",
     "flex",
-    "rounded-lg",
+    "rounded-xl",
     "justify-between",
-    "px-20",
+    "px-8",
     "border",
-    "border-gray-200",
+    "border-purple-100",
+    "relative",
+    "overflow-hidden",
+    "shadow-lg"
   );
-  caratula.style.backgroundImage = `url(${"https://i.pinimg.com/736x/28/a2/66/28a26660a48dc34608ea6514e7935edb.jpg"})`;
+  caratula.style.backgroundImage = `url("https://images.unsplash.com/photo-1516541196182-6bdb0516ed27?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80")`;
+  caratula.style.backgroundSize = "cover";
+  caratula.style.backgroundPosition = "center";
 
-  const black = document.createElement("div");
-  black.classList.add("absolute", "inset-0", "w-full", "h-full", "bg-black/40");
+  const overlay = document.createElement("div");
+  overlay.classList.add(
+    "absolute",
+    "inset-0",
+    "w-full",
+    "h-full",
+    "bg-gradient-to-r",
+    "from-purple-400/50",
+    "to-pink-300/50"
+  );
 
   fetchComunity(id).then((comunidad) => {
-    const datos = comunidad.community
+    const datos = comunidad.community;
 
-    //!DATOS PERFIL
-
-    const perfil = document.createElement("div");
-    perfil.className = " flex gap-4 my-4";
-
-
-    const datosPerfil = document.createElement("div");
-    datosPerfil.classList.add("flex", "flex-col", "gap-2", "justify-center"
-    );
-
-    const nameProfile = document.createElement("h1");
-    nameProfile.textContent = datos.nombre;
-    nameProfile.classList.add("text-4xl", "font-bold", "font-serif");
-
-    const desc = document.createElement("p");
-    desc.textContent = datos.desc;
-    desc.classList.add("text-2xl", "font-serif");
+    const contentContainer = document.createElement("div");
+    contentContainer.className = "flex items-center gap-8 z-10 relative py-4";
 
     const img = document.createElement("img");
-    img.src = datos.img_perfil || "https://i.pinimg.com/736x/55/f9/be/55f9bebb5ca0a5f2111618f13cfe0220.jpg";
+    img.src = datos.img_perfil || "https://images.unsplash.com/photo-1517677129300-07b130802f46?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&h=150&q=80";
     img.classList.add(
-      "w-32",
-      "h-32",
-      "m-4",
+      "w-40",
+      "h-40",
       "rounded-2xl",
-      "border-solid",
-      "border-2",
-      "border-gray-200"
+      "shadow-xl",
+      "profile-image",
+      "object-cover"
     );
 
-
-
-
-
-    const botones = document.createElement("div");
-    botones.className = "gap-4 flex center items-center self-end p-5";
-    //!BOTON DE UNION AL FORO
-    const joinBtn = document.createElement("button");
-    joinBtn.className =
-      "btn cursor-point bg-base-100 border border-gray-200 rounded-lg self-end shadow-md hover:shadow-lg transition-shadow duration-300";
-    joinBtn.textContent = "Unirte";
-    joinBtn.addEventListener('click', async () => {
-      try {
-        await joinComunity(id);
-        showNotification("success", `Te has unido a la comunidad ${datos.nombre || 'desconocida'}`);
-      } catch (error) {
-        showNotification("error", error.message);
-        console.error(error);
-      }
-    });
-
-
-    // Crear el contenedor del dropdown
-    const DropdowncontainerMore = document.createElement("div");
-    DropdowncontainerMore.classList.add("dropdown");
-
-    const moreBtn = document.createElement("button");
-    moreBtn.innerHTML = `<span class = "material-symbols-rounded ">Expand_Circle_Down</span>`;
-
-    // Crear el contenido del dropdown
-    const DropdownMore = document.createElement("ul");
-    DropdownMore.setAttribute("tabindex", "0");
-    DropdownMore.classList.add(
-      "dropdown-content",
-      "menu",
-      "bg-base-100",
-      "rounded-box",
-      "shadow",
-      "absolute",
-      "top-full",
-      "left-1/2",
-      "transform",
-      "-translate-x-1/2",
-      "invisible",
-      "w-36",
-      "text-center",
-      "z-10"
+    const textContent = document.createElement("div");
+    textContent.classList.add(
+      "flex",
+      "flex-col",
+      "gap-3",
+      "justify-center",
+      "text-white",
+      "max-w-2xl"
     );
-    DropdownMore.style.display = "none"; // Ocultar el menú inicialmente
-    //!REVISAR
-    // Crear los elementos del menú
-    const item1 = document.createElement("li");
-    const buttonQuejas = document.createElement("button");
-    buttonQuejas.textContent = "Mis publicaciones";
-    item1.appendChild(buttonQuejas);
 
-    const item2 = document.createElement("li");
-    const buttonLogOut = document.createElement("button");
-    buttonLogOut.textContent = "Salir";
-    buttonLogOut.setAttribute;
-    buttonLogOut.type = "submit";
-    buttonLogOut.setAttribute = ("href", "/");
-    buttonLogOut.addEventListener("click", async () => {
-      try {
-        await deleteRelationC(id)
-        showNotification("success", `Has salido de la comunidad ${datos.nombre}`);
-        window.location.href = "/home";
-      } catch (error) {
-        showNotification("error", error.message);
-        console.error(error);
-      }
-    });
-    item2.appendChild(buttonLogOut);
+    const safeBadge = document.createElement("div");
+    safeBadge.className = "safe-space-badge";
+    safeBadge.innerHTML = `
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"></path>
+      </svg>
+      Espacio Seguro y Confidencial
+    `;
 
-    DropdownMore.appendChild(item1);
-    DropdownMore.appendChild(item2);
+    const nameProfile = document.createElement("h1");
+    nameProfile.innerHTML = `💜 ${datos.nombre}`;
+    nameProfile.classList.add(
+      "text-4xl",
+      "font-bold",
+      "font-sans",
+      "drop-shadow-lg",
+      "tracking-wide"
+    );
 
-    // Añadir el botón y el contenido al contenedor del dropdown
-    DropdowncontainerMore.appendChild(moreBtn);
-    DropdowncontainerMore.appendChild(DropdownMore);
+    const desc = document.createElement("p");
+    desc.innerHTML = `${datos.desc}`;
+    desc.classList.add(
+      "text-xl",
+      "font-sans",
+      "drop-shadow-md",
+      "leading-relaxed"
+    );
 
-    // Evento de clic para mostrar/ocultar el menú
-    moreBtn.addEventListener("click", () => {
-      // Alternar visibilidad del dropdown
-      DropdownMore.style.display =
-        DropdownMore.style.display === "none" ? "block" : "none";
-    });
-
-    // Cerrar el menú si se hace clic fuera de él
-    document.addEventListener("click", (event) => {
-      if (!DropdowncontainerMore.contains(event.target)) {
-        DropdownMore.style.display = "none";
-      }
-    });
-
-    //!AGREGAR DATOS
-    perfil.appendChild(img);
-    datosPerfil.appendChild(nameProfile);
-    datosPerfil.appendChild(desc);
-    perfil.appendChild(datosPerfil);
-    caratula.appendChild(perfil);
+    const memberActions = document.createElement("div");
+    memberActions.className = "member-actions";
 
     const participantes = datos.participantes || [];
     const usuarioIds = participantes.map((participante) => participante.usuario_id);
 
     if (!usuarioIds.includes(userId)) {
-      botones.appendChild(joinBtn);
-    } else {
-      botones.appendChild(DropdowncontainerMore);
-    }
-    caratula.appendChild(botones);
-  })
+      const joinBtn = document.createElement("button");
+      joinBtn.className =
+        "support-button px-8 py-3 bg-white/90 text-purple-700 rounded-full font-medium shadow-lg hover:bg-purple-50 transition-all duration-300 flex items-center gap-2";
+      joinBtn.innerHTML = `
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Unirme al espacio de apoyo
+      `;
 
+      joinBtn.addEventListener('click', async () => {
+        try {
+          await joinComunity(id);
+          showNotification("success", `💜 Te has unido a ${datos.nombre || 'nuestra comunidad de apoyo'}`);
+          window.location.reload();
+        } catch (error) {
+          showNotification("error", "No se pudo completar la acción. Por favor, intenta nuevamente.");
+          console.error(error);
+        }
+      });
+
+      memberActions.appendChild(joinBtn);
+    } else {
+      const alreadyJoinedMessage = document.createElement("p");
+      alreadyJoinedMessage.className = "member-message";
+      alreadyJoinedMessage.innerHTML = `
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+        💜 Eres parte de nuestra comunidad
+      `;
+
+      const leaveBtn = document.createElement("button");
+      leaveBtn.className =
+        "support-button px-6 py-3 bg-white/90 text-purple-700 rounded-full font-medium shadow-lg hover:bg-purple-50 transition-all duration-300 flex items-center gap-2";
+      leaveBtn.innerHTML = `
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+        </svg>
+        Dejar comunidad
+      `;
+
+      leaveBtn.addEventListener("click", async () => {
+        try {
+          await deleteRelationC(id);
+          showNotification("success", `Has dejado la comunidad ${datos.nombre}. Recuerda que siempre puedes volver.`);
+          window.location.reload();
+        } catch (error) {
+          showNotification("error", "No se pudo completar la acción. Por favor, intenta nuevamente.");
+          console.error(error);
+        }
+      });
+
+      memberActions.appendChild(alreadyJoinedMessage);
+      memberActions.appendChild(leaveBtn);
+    }
+
+    textContent.appendChild(safeBadge);
+    textContent.appendChild(nameProfile);
+    textContent.appendChild(desc);
+
+    contentContainer.appendChild(img);
+    contentContainer.appendChild(textContent);
+
+    caratula.appendChild(overlay);
+    caratula.appendChild(contentContainer);
+    caratula.appendChild(memberActions);
+  });
 
   ForumHeader.appendChild(caratula);
-
   return ForumHeader;
 };
-
