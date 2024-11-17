@@ -1,7 +1,7 @@
 import { getUserProfile } from "../api/auth";
-import { fetchDeleteForo, fetchGetForosById, fetchUpdateForo, fetchCreateForo } from "../api/foro";
-import { fetchComunitiesUser } from "../api/comunity";
-import { fetchArticlesByUser } from "../api/articles.js"
+import { fetchGetForosById, fetchUpdateForo, fetchCreateForo } from "../api/foro";
+import { fetchUserComunnity } from "../api/comunity";
+import { fetchArticlesByUser } from "../api/articles.js";
 import { showNotification } from "../components/notification.js";
 import { myCommunities } from "../api/relation.comunity.js";
 import Swal from "sweetalert2";
@@ -14,17 +14,14 @@ export const HeaderProfile = () => {
     };
 
     const $main = createElementWithClasses('div', ["flex", "flex-col", "min-h-screen", "w-full", "bg-base-100", "p-8"]);
-
     const $container = createElementWithClasses('div', ['bg-base-200', "bg-cover", "border", "border-gray-300", 'rounded-3xl', 'shadow-xl', 'p-8', 'mb-8', 'transition-all', 'duration-300', 'hover:shadow-2xl']);
+    const $header = createElementWithClasses('div', ['flex', 'items-center', 'gap-6']); // Alineación horizontal en todos los tamaños de pantalla
 
-    const $header = createElementWithClasses('div', ['flex', 'flex-col', 'md:flex-row', 'items-center', 'md:items-start', 'gap-6']);
-
-    const $imgContainer = createElementWithClasses('div', ['relative']);
-    const $img = createElementWithClasses('img', ['w-32', 'h-32', 'md:w-48', 'md:h-48', 'rounded-full', 'object-cover', 'border-4', 'border-gray-200', 'shadow-lg']);
-
+    // Foto de perfil
+    const $img = createElementWithClasses('img', ['w-32', 'h-32', 'rounded-full', 'shadow-lg', 'border-2', 'border-purple-500']);
+    $img.src = 'https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg';
 
     const $textContainer = createElementWithClasses('div', ['flex', 'flex-col', 'justify-start', 'text-center', 'md:text-left']);
-
     const $name = createElementWithClasses('h2', ['text-3xl', 'md:text-4xl', 'font-bold', 'text', 'mb-2']);
     const $bio = createElementWithClasses('p', ['text', 'mb-4', 'max-w-lg']);
     const $stats = createElementWithClasses('div', ['flex', 'gap-4', 'text-sm', 'text']);
@@ -33,11 +30,7 @@ export const HeaderProfile = () => {
 
         $img.src = user.img ? user.img : 'https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg';
         $name.textContent = user.nombre || 'Usuario';
-        if (user.role == "profesional") {
-            $bio.textContent = user.perfil.descripcion || 'Bienvenido a mi perfil!';
-        } else {
-            $bio.textContent = user.bio || 'Bienvenido a mi perfil!';
-        }
+        $bio.textContent = user.bio || 'Bienvenido a mi perfil! 👋';
 
         if (user.role == "profesional") {
             fetchArticlesByUser().then(article => {
@@ -47,8 +40,8 @@ export const HeaderProfile = () => {
                     <span>${ArticleCount}</span> Articles
                 `;
             }).catch(error => {
-                console.error("Error al obtener foros:", error);
-                $stats.innerHTML = '<span>0</span> foros<span>•</span><span>0</span> comunidades';
+                console.error("Error al obtener artículos:", error);
+                $stats.innerHTML = '📄 0 Artículos';
             });
         } else {
             fetchGetForosById().then(foros => {
@@ -59,22 +52,18 @@ export const HeaderProfile = () => {
                 `;
             }).catch(error => {
                 console.error("Error al obtener foros:", error);
-                $stats.innerHTML = '<span>0</span> foros<span>•</span><span>0</span> comunidades';
+                $stats.innerHTML = '📚 0 Publicaciones';
             });
         }
-
     }).catch(error => {
         console.error("Error al obtener el perfil del usuario:", error);
-        $img.src = 'https://i.pravatar.cc/300';
         $name.textContent = 'Usuario';
-        $bio.textContent = 'Bienvenido a mi perfil!';
-        $stats.innerHTML = '<span>0</span> foros<span>•</span><span>0</span> comunidades';
+        $bio.textContent = 'Bienvenido a mi perfil! 👋';
+        $stats.innerHTML = '📚 0 Publicaciones';
     });
 
-
-    $imgContainer.append($img);
     $textContainer.append($name, $bio, $stats);
-    $header.append($imgContainer, $textContainer);
+    $header.append($img, $textContainer); // Aseguramos que la foto y el texto estén juntos
     $container.appendChild($header);
 
     const $columnContainer = createElementWithClasses('div', ['flex', 'flex-col', 'lg:flex-row', 'gap-8']);
@@ -82,7 +71,7 @@ export const HeaderProfile = () => {
     const $leftColumn = createElementWithClasses('div', ['flex-1', 'bg-base-200', "border", "border-gray-300", 'rounded-3xl', 'shadow-lg', 'p-6', 'transition-all', 'duration-300', "overflow-y-auto", 'hover:shadow-xl', 'h-screen', 'scroll-invisible']);  // Aplicar scroll-invisible aquí
     const $leftTitleContainer = createElementWithClasses('div', ['flex', 'justify-between', 'items-center', 'mb-6']);
     const $leftTitle = createElementWithClasses('h3', ['text-2xl', 'font-bold', 'text', 'flex', 'items-center']);
-    $leftTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-base-800 bg-cover" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>Mis publicaciones';
+    $leftTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-base-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>Mis publicaciones';
 
     const $buttonContainer = createElementWithClasses('div', ['flex', 'gap-4']);
 
@@ -132,7 +121,7 @@ export const HeaderProfile = () => {
 
     $buttonContainer.append($createButton);
     $leftTitleContainer.append($leftTitle, $buttonContainer);
-    $leftColumn.appendChild($leftTitleContainer);
+    $leftColumn.append($leftTitleContainer);
 
     const publicacionesContainer = createElementWithClasses('div', ['grid', 'sm:grid-cols-2', 'gap-6']);
     publicacionesContainer.id = "publicaciones-container";
@@ -145,11 +134,18 @@ export const HeaderProfile = () => {
             if (!data.foros || data.foros.length === 0) {
                 createCard();
             } else {
-                loadPublication(data);
+                communities.forEach((communi, index) => {
+                    setTimeout(() => {
+                        const card = createCommunityCard(communi);
+                        $communitiesContainer.appendChild(card);
+                        card.style.opacity = '0';
+                        card.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
+                    }, index * 100);
+                });
             }
         } catch (error) {
-            console.error("Error loading foros:", error);
-            createCard();
+            console.error("Error al cargar las comunidades:", error);
+            createNoCommunityCard("¡Ups! Hubo un error al cargar las comunidades ⚠️");
         }
     };
 

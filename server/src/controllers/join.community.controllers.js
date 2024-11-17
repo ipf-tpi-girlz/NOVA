@@ -102,3 +102,50 @@ export const deleteJoin = async (req, res) => {
         return res.status(500).json({ message: "Se produjo un error en el servidor" });
     }
 }
+
+export const getCommunitiesForUser = async (req, res) => {
+    const userId = req.user.id; // El ID del usuario autenticado lo tomamos de req.user
+
+    try {
+        // Primero, obtenemos las comunidades del usuario autenticado
+        const comunidades = await ParticipanteComunidad.findAll({
+            where: { usuario_id: userId },
+            include: [{
+                model: Comunidad,
+                as: 'comunidad',
+                attributes: ['id', 'nombre', 'desc', 'img_perfil', 'img_portada'],
+            }]
+        });
+
+        // Si el usuario no pertenece a ninguna comunidad
+        if (comunidades.length === 0) {
+            return res.status(404).json({ message: "El usuario no pertenece a ninguna comunidad." });
+        }
+
+        // Obtenemos los datos del usuario autenticado
+        const user = req.user; // Los datos del usuario se encuentran en req.user, gracias al middleware validarJWT
+
+        // Formateamos las comunidades para retornar solo los datos relevantes
+        const comunidadesData = comunidades.map(participante => participante.comunidad);
+
+        // Retornamos tanto las comunidades como los datos del usuario en la respuesta
+        return res.status(200).json({
+            usuario: {
+                id: user.id,
+                nombre: user.nombre,
+                email: user.email,
+                genero: user.genero,
+                departamento: user.departamento,
+                localidad: user.localidad,
+                img_perfil: user.img_perfil,
+                fecha_registro: user.fecha_registro
+            },
+            comunidades: comunidadesData
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Se produjo un error en el servidor." });
+    }
+};
+
+
