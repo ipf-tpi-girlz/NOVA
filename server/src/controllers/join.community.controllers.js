@@ -2,6 +2,8 @@ import ParticipanteComunidad from "../models/join.comunity.js"
 import color from "chalk"
 import Comunidad from "../models/comunnity.js"
 import Usuario from "../models/users.js"
+import { ValidationErrorItemOrigin } from "sequelize"
+
 
 export const getUsersJoin = async (req, res) => {
     const { id } = req.params;
@@ -20,6 +22,43 @@ export const getUsersJoin = async (req, res) => {
         return res.status(500).json({ message: "Se produjo un error en el servidor" });
     }
 }
+
+export const userCommunity = async (req, res) => {
+    const user = req.user;
+    try {
+        const communities = await Comunidad.findAll({
+            include: [
+                {
+                    model: ParticipanteComunidad,
+                    as: 'participantes',
+                    where: { usuario_id: 1 },
+                    attributes: ['usuario_id', 'comunidad_id'],
+                    include: [
+                        {
+                            model: Usuario,
+                            as: 'usuario',
+                            attributes: ['nombre']
+                        }
+                    ]
+                }
+            ]
+        });
+
+        if (communities.length === 0) {
+            return res.status(200).json({
+                message: "Aún no perteneces a ninguna comunidad"
+            });
+        }
+
+        return res.status(200).json({
+            communities
+        });
+    } catch (error) {
+        console.log(color.red(error));
+        return res.status(500).json({ message: "Se produjo un error en el servidor" });
+    }
+};
+
 
 export const joinCommunity = async (req, res) => {
     const { id } = req.params;

@@ -16,7 +16,7 @@ export const ProfessionalCard = (nombre, desc, especialidad, usuario_id) => {
   cardDesc.textContent = desc;
 
   const cardEspecialidad = document.createElement("p");
-  cardEspecialidad.className = "text-sm text-gray-500";
+  cardEspecialidad.className = "text-sm text";
   cardEspecialidad.textContent = `Especialidad: ${especialidad}`;
 
   cardBody.appendChild(cardTitle);
@@ -30,7 +30,7 @@ export const ProfessionalCard = (nombre, desc, especialidad, usuario_id) => {
 const showProfileDetail = async (id) => {
   try {
     const profileData = await profileProfID(id);
-    displayProfile(profileData[0]); // Asegúrate de que estás enviando el primer objeto del array
+    displayProfile(profileData[0]);
   } catch (error) {
     console.error("Error al mostrar el perfil:", error);
   }
@@ -39,7 +39,7 @@ const showProfileDetail = async (id) => {
 const displayProfile = (profileData) => {
   // Seleccionar o crear el contenedor donde se mostrará el perfil
   let previewContainer = document.getElementById("previewContainer");
-  previewContainer.className = "profile-preview bg-white w-full max-w-2xl shadow-md p-6 rounded-lg max-w-md mx-auto";
+  previewContainer.className = "profile-preview bg-base-100 w-full max-w-2xl shadow-md p-6 rounded-lg max-w-md mx-auto";
   if (!previewContainer) {
     previewContainer = document.createElement("div");
     previewContainer.id = "previewContainer";
@@ -62,7 +62,7 @@ const displayProfile = (profileData) => {
 
   // Añadir el nombre
   const profileName = document.createElement("h2");
-  profileName.className = "text-xl font-bold text-gray-800";
+  profileName.className = "text-xl  text";
   profileName.textContent = profileData.nombre;
 
   // Agregar la imagen y el nombre al contenedor
@@ -72,7 +72,7 @@ const displayProfile = (profileData) => {
 
   // Crear un contenedor para el resto de la información
   const infoContainer = document.createElement("div");
-  infoContainer.className = "text-gray-700";
+  infoContainer.className = "text";
 
   // Añadir el género
   const profileGender = document.createElement("p");
@@ -103,9 +103,7 @@ const displayProfile = (profileData) => {
   profileAtencion.textContent = `Modo de Atención: ${profileData.perfil.modo_atencion}`;
 
 
-  // Añadir la fecha de registro
-  const profileDate = document.createElement("p");
-  profileDate.textContent = `Fecha de Registro: ${new Date(profileData.fecha_registro).toLocaleDateString()}`;
+
   // Agregar todos los elementos al contenedor de información
   infoContainer.appendChild(profileGender);
   infoContainer.appendChild(profileDepartment);
@@ -114,7 +112,6 @@ const displayProfile = (profileData) => {
   infoContainer.appendChild(profilePhone);
   infoContainer.appendChild(profileEspecialidad);
   infoContainer.appendChild(profileAtencion);
-  infoContainer.appendChild(profileDate);
   // Añadir el contenedor de información al contenedor principal
   previewContainer.appendChild(infoContainer);
 };

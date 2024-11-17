@@ -3,6 +3,7 @@ import { fetchDeleteForo, fetchGetForosById, fetchUpdateForo, fetchCreateForo } 
 import { fetchComunitiesUser } from "../api/comunity";
 import { fetchArticlesByUser } from "../api/articles.js"
 import { showNotification } from "../components/notification.js";
+import { myCommunities } from "../api/relation.comunity.js";
 import Swal from "sweetalert2";
 
 export const HeaderProfile = () => {
@@ -29,7 +30,6 @@ export const HeaderProfile = () => {
     const $stats = createElementWithClasses('div', ['flex', 'gap-4', 'text-sm', 'text']);
 
     getUserProfile().then(user => {
-        console.log("Perfil del usuario:", user);
 
         $img.src = user.img ? user.img : 'https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg';
         $name.textContent = user.nombre || 'Usuario';
@@ -41,15 +41,8 @@ export const HeaderProfile = () => {
 
         if (user.role == "profesional") {
             fetchArticlesByUser().then(article => {
-                console.log(article)
                 const ArticleCount = article.data.length;
                 console.log("Cantidad de foros:", forosCount);
-
-                // Contar comunidades
-                const comunidadesCount = user.comunidades && Array.isArray(user.comunidades) ? user.comunidades.length : 0;
-                console.log("Cantidad de comunidades:", comunidadesCount);
-
-
                 $stats.innerHTML = `
                     <span>${ArticleCount}</span> Articles
                 `;
@@ -61,12 +54,6 @@ export const HeaderProfile = () => {
             fetchGetForosById().then(foros => {
                 const forosCount = foros.foros.length;
                 console.log("Cantidad de foros:", forosCount);
-
-                // Contar comunidades
-                const comunidadesCount = user.comunidades && Array.isArray(user.comunidades) ? user.comunidades.length : 0;
-                console.log("Cantidad de comunidades:", comunidadesCount);
-
-                // Mostrar cantidad de foros y comunidades
                 $stats.innerHTML = `
                     <span>${forosCount}</span> Publicaciones
                 `;
@@ -92,7 +79,7 @@ export const HeaderProfile = () => {
 
     const $columnContainer = createElementWithClasses('div', ['flex', 'flex-col', 'lg:flex-row', 'gap-8']);
 
-    const $leftColumn = createElementWithClasses('div', ['flex-1', 'bg-base-200', "border", "border-gray-300", 'rounded-3xl', 'shadow-lg', 'p-6', 'transition-all', 'duration-300', 'hover:shadow-xl']);
+    const $leftColumn = createElementWithClasses('div', ['flex-1', 'bg-base-200', "border", "border-gray-300", 'rounded-3xl', 'shadow-lg', 'p-6', 'transition-all', 'duration-300', "overflow-y-auto", 'hover:shadow-xl', 'h-screen', 'scroll-invisible']);  // Aplicar scroll-invisible aquí
     const $leftTitleContainer = createElementWithClasses('div', ['flex', 'justify-between', 'items-center', 'mb-6']);
     const $leftTitle = createElementWithClasses('h3', ['text-2xl', 'font-bold', 'text', 'flex', 'items-center']);
     $leftTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-base-800 bg-cover" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>Mis publicaciones';
@@ -143,19 +130,17 @@ export const HeaderProfile = () => {
     });
 
 
-
     $buttonContainer.append($createButton);
     $leftTitleContainer.append($leftTitle, $buttonContainer);
     $leftColumn.appendChild($leftTitleContainer);
 
-    const publicacionesContainer = createElementWithClasses('div', ['grid', 'grid-cols-1', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-6', 'justify-center', 'items-center', 'mx-auto', 'max-w-6xl']);
+    const publicacionesContainer = createElementWithClasses('div', ['grid', 'sm:grid-cols-2', 'gap-6']);
     publicacionesContainer.id = "publicaciones-container";
     $leftColumn.appendChild(publicacionesContainer);
 
     const loadData = async () => {
         try {
             const data = await fetchGetForosById();
-            console.log("los datos son: ", data)
             publicacionesContainer.innerHTML = "";
             if (!data.foros || data.foros.length === 0) {
                 createCard();
@@ -170,60 +155,112 @@ export const HeaderProfile = () => {
 
     loadData();
 
-    const $rightColumn = createElementWithClasses('div', ['lg:w-1/3', 'bg-base-200', 'rounded-3xl', 'shadow-lg', 'p-6', 'transition-all', 'duration-300', 'hover:shadow-xl', "border", "border-gray-300"]);
+    const $rightColumn = createElementWithClasses('div', ['lg:w-1/3', 'bg-base-200', 'rounded-3xl', 'shadow-lg', 'p-6', 'transition-all', 'duration-300', 'hover:shadow-xl', "border", "border-gray-300", 'scroll-invisible']);  // Aplicar scroll-invisible aquí
     const $rightTitle = createElementWithClasses('h3', ['text-2xl', 'font-bold', 'mb-6', 'text', 'flex', 'items-center']);
     $rightTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-base-800 bg-cover" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Mis comunidades';
     $rightColumn.appendChild($rightTitle);
 
-    const communitiesContainer = createElementWithClasses('div', ['grid', 'grid-cols-1', 'gap-4',
-    ]);
+    const communitiesContainer = createElementWithClasses('div', ['grid', 'grid-cols-1', 'gap-4']);
     communitiesContainer.id = "communities-container";
     $rightColumn.appendChild(communitiesContainer);
-
-    const loadCommunity = async () => {
-        try {
-            const data = await fetchComunitiesUser();
-            console.log("Datos de la comunidad:", data);
-
-            communitiesContainer.innerHTML = "";
-
-            // Verifica si hay un mensaje específico
-            if (data.message) {
-                createNoCommunityCard(data.message); // Pasa el mensaje a la función
-            } else if (!data.community || data.community.length === 0) {
-                createNoCommunityCard();
-            } else {
-                loadComunities(data);
-            }
-        } catch (error) {
-            console.error("Error loading foros:", error);
-            createNoCommunityCard("Ocurrió un error al cargar las comunidades."); // Mensaje de error
-        }
-    };
-
-    loadCommunity()
 
     $columnContainer.append($leftColumn, $rightColumn);
     $main.append($container, $columnContainer);
 
+    loadComunities(); // Llamada a la función para cargar las comunidades
+
     return $main;
 };
 
-const loadComunities = async (data) => {
-    const communitiesContainer = document.getElementById('communities-container');
-    communitiesContainer.innerHTML = '';
-    if (data.community && data.community.length > 0) {
-        const fragment = document.createDocumentFragment();
-        data.community.forEach(communi => {
-            const card = createCommunityCard(communi);
-            console.log("Tarjeta creada:", card); // Verifica la tarjeta creada
-            fragment.appendChild(card);
-        });
-        communitiesContainer.appendChild(fragment);
-    } else {
-        createNoCommunityCard();
-    }
+
+
+
+
+const createCard = () => {
+    const card = document.createElement("div");
+    card.classList.add(
+        "max-w-2xl",
+        "rounded-xl",
+        "shadow-lg",
+        "transition-all",
+        "duration-300",
+        "hover:shadow-2xl",
+        "hover:scale-105",
+        "cursor-pointer",
+        "flex",
+        "flex-col",
+        "justify-center",
+        "items-center",
+        "h-[500px]",
+    );
+
+    const cardContent = document.createElement("div");
+    cardContent.classList.add(
+        "flex",
+        "flex-col",
+        "justify-center",
+        "items-center",
+        "text-center",
+        "max-h-full"
+    );
+
+    const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    icon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    icon.setAttribute("viewBox", "0 0 24 24");
+    icon.setAttribute("fill", "none");
+    icon.setAttribute("stroke", "currentColor");
+    icon.setAttribute("height", "48");
+    icon.setAttribute("width", "48");
+    icon.classList.add("text-purple-500", "mb-4");
+
+    const iconPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    iconPath.setAttribute("stroke-linecap", "round");
+    iconPath.setAttribute("stroke-linejoin", "round");
+    iconPath.setAttribute("stroke-width", "2");
+    iconPath.setAttribute("d", "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10");
+
+    icon.appendChild(iconPath);
+
+    const title = document.createElement("h3");
+    title.classList.add("text-xl", "font-semibold", "text", "mb-2");
+    title.textContent = "Sin publicaciones";
+
+    const description = document.createElement("p");
+    description.classList.add("text-sm", "text-gray-600");
+    description.textContent = "Aún no tienes publicaciones.";
+
+    cardContent.append(icon, title, description);
+    card.appendChild(cardContent);
+
+    const publicacionesContainer = document.getElementById("publicaciones-container");
+    publicacionesContainer.appendChild(card);
+};
+
+
+const loadComunities = async () => {
+
+    myCommunities().then((data) => {
+        console.log(data)
+        const communities = data.community
+
+        communities.forEach((community) => {
+            const card = createComunityCard(community);
+            const communitiesContainer = document.getElementById("communities-container");
+            const title = document.createElement("h1");
+            title.textContent = community.name;
+            const desc = document.createElement("p");
+            desc.textContent = community.desc;
+
+            communitiesContainer.appendChild(card);
+        })
+        return communitiesContainer;
+
+    })
+
 }
+
+
+
 
 const loadPublication = (data) => {
     const publicacionesContainer = document.getElementById("publicaciones-container");
@@ -239,7 +276,6 @@ const loadPublication = (data) => {
 };
 
 const createPublicationCard = (post) => {
-    console.log(post)
     const card = document.createElement("div");
     card.classList.add(
         "bg-base-100",
@@ -371,72 +407,3 @@ const deletePublication = (foroId) => {
         }
     });
 }
-
-const createCard = () => {
-    const card = document.createElement("div");
-    card.classList.add(
-        "w-full",
-        "max-w-sm",
-        "h-64",
-        "rounded-xl",
-        "shadow-lg",
-        "overflow-hidden",
-        "transition-all",
-        "duration-300",
-        "hover:shadow-2xl",
-        "hover:scale-105",
-        "cursor-pointer",
-        "flex",
-        "flex-col",
-        "justify-center",
-        "items-center"
-    );
-
-    const cardContent = document.createElement("div");
-    cardContent.classList.add(
-        "p-6",
-        "flex",
-        "flex-col",
-        "justify-center",
-        "items-center",
-        "text-center"
-    );
-
-    const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    icon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    icon.setAttribute("viewBox", "0 0 24 24");
-    icon.setAttribute("fill", "none");
-    icon.setAttribute("stroke", "currentColor");
-    icon.setAttribute("height", "48");
-    icon.setAttribute("width", "48");
-    icon.classList.add("text-purple-500", "mb-4");
-
-    const iconPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    iconPath.setAttribute("stroke-linecap", "round");
-    iconPath.setAttribute("stroke-linejoin", "round");
-    iconPath.setAttribute("stroke-width", "2");
-    iconPath.setAttribute("d", "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10");
-
-    icon.appendChild(iconPath);
-
-    const title = document.createElement("h3");
-    title.classList.add("text-xl", "font-semibold", "text-gray-800", "mb-2");
-    title.textContent = "Sin publicaciones";
-
-    const description = document.createElement("p");
-    description.classList.add("text-sm", "text-gray-600");
-    description.textContent = "Aún no tienes publicaciones.";
-
-    cardContent.append(icon, title, description);
-    card.appendChild(cardContent);
-
-    const publicacionesContainer = document.getElementById("publicaciones-container");
-    publicacionesContainer.innerHTML = '';
-    publicacionesContainer.classList.add(
-        "flex",
-        "justify-center",
-        "items-center",
-        "min-h-[400px]"
-    );
-    publicacionesContainer.appendChild(card);
-};

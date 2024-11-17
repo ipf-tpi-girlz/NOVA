@@ -12,6 +12,18 @@ export const joinComunity = async (id) => {
     return response.json()
 }
 
+export const myCommunities = async () => {
+    const response = await fetch(`${BASEURL}/user`, {
+        method: "GET",
+        credentials: "include",
+    })
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Se produjo un error al obtener las comunidades");
+    }
+    return response.json()
+}
+
 export const deleteRelationC = async (id) => {
     const response = await fetch(`${BASEURL}/delete/${id}`, {
         method: "DELETE",

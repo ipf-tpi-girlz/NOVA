@@ -14,6 +14,7 @@ import postRouter from "../routes/post.routes.js";
 import authRoutes from "../routes/auth.routes.js";
 import routerJoinC from "../routes/join.community.routes.js"
 import articleRouter from "../routes/article.routes.js";
+import routerComents from "../routes/coments.router.js";
 export const app = express();
 const server = createServer(app);
 
@@ -59,6 +60,7 @@ app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 //! RUTAS
 app.use("/users", UserRouter);
+app.use("/coments", routerComents)
 app.use("/foro", postRouter);
 app.use("/comunity", routerComunity);
 app.use("/comunity-post", routerPostComunity);

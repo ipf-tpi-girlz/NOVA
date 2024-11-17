@@ -23,20 +23,21 @@ export const getArticles = async (req, res) => {
 export const getUserArticle = async (req, res) => {
     const user = req.user
     try {
-        console.log(color.red(user.id))
-        const data = await PublicacionImagen.findAll({
-            where: { usuario_id: user.id },
-            include: [{
-                model: Usuario,
-                as: 'usuario'
-            }]
+        const articulos = await PublicacionImagen.findAll({
+            where: { usuario_id: user.id }
         });
+        console.log(articulos);
 
-        if (data[0] === undefined) {
-            console.log(color.red("No se encontraron datos"));
+
+        if (data.length === 0) {
+            console.log(color.red("No posee articulos"));
             return res.status(404).json({ error: "No se encontraron datos" });
         }
-        return res.status(200).json({ data });
+        return res.status(200).json({
+            usuarioId: user.id,
+            articulos: data.articulos || [] // Ajustar según el modelo
+        });
+
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: "Error al obtener los datos" });
@@ -132,10 +133,10 @@ export const deleteArticle = async (req, res) => {
     }
 }
 export const getArticlesByUser = async (req, res) => {
-    const { usuarioId } = req.params;
+    const { id } = req.user;
     try {
         const articulos = await PublicacionImagen.findAll({
-            where: { usuario_id: usuarioId },
+            where: { usuario_id: id },
             include: [
                 {
                     model: Usuario,

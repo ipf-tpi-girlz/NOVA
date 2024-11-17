@@ -2,26 +2,18 @@ import Comentario from "../models/coments.js";
 import color from "chalk";
 import PublicacionComunidad from "../models/post.community.js"
 
-export const getComments = async (req, res) => {
-    const { id } = req.params;
+export const getComment = async (req, res) => {
+
     try {
-        const existPublication = await PublicacionComunidad.findOne({ where: { id } })
-        if (!existPublication) {
-            console.log(color.red("Publicacion no encontrada"))
-            return res.status(404).json({ message: "Publicacion no encontrada" })
-        }
-        const commentsTrue = await Comentario.findAll({
-            where: {
-                publicacion_id: id
-            }
+        const comments = await Comentario.findAll({
         })
 
-        if (commentsTrue.length === 0) {
+        if (comments.length === 0) {
             console.log(color.red("no hay comentarios"))
             return res.status(404).json({ message: "Aun no han comentado en esta publicacion" })
         }
-        console.log(color.green(commentsTrue))
-        return res.status(200).json({ commentsTrue })
+
+        return res.status(200).json({ comments })
     } catch (error) {
         console.log(color.red(error))
         return res.status(500).json({ message: "Error al obtener los comentarios" })

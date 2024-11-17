@@ -3,7 +3,7 @@ const BASEURL = 'http://localhost:4000/articles';
 
 export const fetchArticlesByUser = async () => {
     try {
-        const response = await fetch(`${BASEURL}/user`, {
+        const response = await fetch(`${BASEURL}/profesional/articulos`, {
             method: "GET",
             credentials: "include",
         });

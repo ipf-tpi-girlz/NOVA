@@ -80,9 +80,10 @@ export function Feed() {
       containerForums.appendChild(newForum);
     });
   });
+  //!FOROS TERMINADO
 
 
-  //Articulos
+  //!Articulos
   const newArticle1 = ArticleCard(
     "https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=600",
     "Articulo 1",

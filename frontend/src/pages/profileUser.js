@@ -2,15 +2,15 @@ import { getUserProfile, deleteAccount, updateProfile, updatePassword } from '..
 import Swal from 'sweetalert2';
 import { showNotification } from '../components/notification.js';
 import { HeaderProfile } from './HeaderProfile.js';
+import { HeaderProf } from './HeaderProf.js';
 
 
 
 const ProfileUser = () => {
     const $container = document.createElement("div");
-    $container.classList.add("flex", "justify-center", "items-center", "min-h-screen", "bg-base-100", "bg-cover", "p-4");
 
     const $card = document.createElement("div");
-    $card.classList.add("bg-base-100", "border", "border-gray-200", "rounded-2xl", "shadow-2xl", "w-full", "max-w-2xl", "overflow-hidden", "transform", "transition-all");
+    $card.classList.add("bg-base-100", "border", "rounded-2xl", "w-full", "max-w-2xl", "transform", "transition-all");
 
     const $header = document.createElement("div");
     $header.classList.add("bg-gradient-to-r", "from-base-300", "to-indigo-200", "text", "p-8");
@@ -166,7 +166,6 @@ const ProfileUser = () => {
 
 
 
-// Función para mostrar el modal
 const showModal = (form) => {
     if (!(form instanceof HTMLElement)) {
         console.error("Error: `form` no es un elemento HTML válido.");
@@ -688,10 +687,14 @@ const formEditPassword = () => {
 
 export const Perfil = () => {
     const $container = document.createElement("div");
-    $container.classList.add("flex", "gap-4", "bg-base-", "min-h-screen");
+    $container.classList.add("flex", "bg-base-", "min-h-screen", "items-stretch");
+    getUserProfile().then((data) => {
+        console.log(data)
+        $container.appendChild(ProfileUser())
+        $container.appendChild(HeaderProf())
 
-    $container.appendChild(ProfileUser())
+    })
 
-    $container.appendChild(HeaderProfile())
+
     return $container;
 }
