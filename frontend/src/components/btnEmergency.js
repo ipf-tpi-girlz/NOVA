@@ -64,7 +64,7 @@ export const BtnEmergency = () => {
   });
 
   socket.on("help_accepted", (data) => {
-    console.log("hola primo");
+    console.log("Si anda 😭");
     helpBtn.textContent = "Se ha aceptado la ayuda";
     document.getElementById("app").appendChild(Chat());
   });

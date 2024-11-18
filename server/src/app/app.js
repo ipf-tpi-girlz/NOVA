@@ -13,6 +13,7 @@ import routerPostComunity from "../routes/post.comunity.routes.js";
 import postRouter from "../routes/post.routes.js";
 import authRoutes from "../routes/auth.routes.js";
 import articleRouter from "../routes/article.routes.js";
+import { time } from "node:console";
 export const app = express();
 const server = createServer(app);
 
@@ -73,6 +74,7 @@ io.on("connect", (socket) => {
     console.log("hola");
     activeHelpRequests[socket.id] = false;
     console.log(activeHelpRequests);
+
     io.emit("help_requested", {
       message: "un usuario necesita ayuda",
       ayudatario: socket.id,
@@ -85,10 +87,17 @@ io.on("connect", (socket) => {
 
     activeHelpRequests[data.ayudatario] = false;
     console.log("noentedo", data);
-    io.emit("help_accepted", "holaaaaaaaaa");
+    io.emit("help_accepted", "holaMundo");
   });
 
-  socket.on("chat_sala", () => {});
+  socket.on("chat_message", ({ socketId, msg }) => {
+    console.log("Mensaje recibido: ", msg, "de: ", socketId);
+    const currentTime = new Date();
+    const hours = currentTime.getHours().toString().padStart(2, "0"); // Hora
+    const minutes = currentTime.getMinutes().toString().padStart(2, "0"); // Minutos
+    const timeString = `${hours}:${minutes}`;
+    io.emit("chat_message", { socketId, msg, time: timeString });
+  });
 
   // Desconexión del cliente
   socket.on("disconnect", () => {
