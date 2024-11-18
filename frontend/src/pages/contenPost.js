@@ -1,3 +1,5 @@
+//esto funciona si yo no le redijo, es decir le coloco el id en el parametro manualmente
+
 const comunidadId = window.location.pathname.split("/")[2];
 
 export const postPrev = () => {
@@ -84,65 +86,76 @@ export const postPrev = () => {
   }
 
   // Función para renderizar los posts
+  // Función para renderizar los posts
   function renderPosts(posts) {
-    console.log(posts);
     postsContainer.innerHTML = ""; // Limpiar el contenedor de posts
 
-    // Crear el elemento de cada post
-    const postElement = document.createElement("div");
-    postElement.classList.add("bg-base-200", "p-6", "rounded-lg", "shadow-md");
+    // Iterar sobre las publicaciones
+    posts.community.publicaciones.forEach((post) => {
+      const postElement = document.createElement("div");
+      postElement.classList.add(
+        "bg-base-200",
+        "p-6",
+        "rounded-lg",
+        "shadow-md",
+        "shadow-md",
+        "w-full", // Asegura que el contenedor use el ancho completo disponible
+        "max-w-4xl", // Limita el ancho máximo (puedes ajustar este valor)
+        "mx-auto"
+      );
 
-    // Título del post
-    const postTitle = document.createElement("h2");
-    postTitle.textContent = posts.community.titulo;
-    postTitle.classList.add(
-      "text-xl",
-      "font-semibold",
-      "mb-2",
-      "text-gray-800"
-    );
-    postElement.appendChild(postTitle);
+      // Título del post
+      const postTitle = document.createElement("h2");
+      postTitle.textContent = post.titulo;
+      postTitle.classList.add(
+        "text-xl",
+        "font-semibold",
+        "mb-2",
+        "text-gray-800"
+      );
+      postElement.appendChild(postTitle);
 
-    // Contenido del post
-    const postContent = document.createElement("p");
-    postContent.textContent = posts.community.contenido;
-    postContent.classList.add("text-gray-600", "mb-4");
-    postElement.appendChild(postContent);
+      // Contenido del post
+      const postContent = document.createElement("p");
+      postContent.textContent = post.contenido;
+      postContent.classList.add("text-gray-600", "mb-4");
+      postElement.appendChild(postContent);
 
-    // Sección de comentarios
-    const commentsContainer = document.createElement("div");
-    commentsContainer.classList.add("comments", "space-y-2");
+      // Sección de comentarios
+      const commentsContainer = document.createElement("div");
+      commentsContainer.classList.add("comments", "space-y-2");
 
-    posts.community.comments?.forEach((comment) => {
-      const commentElement = document.createElement("div");
-      commentElement.classList.add("bg-base-300", "p-3", "rounded-full");
-      commentElement.textContent = comment;
-      commentsContainer.appendChild(commentElement);
+      post.comentarios.forEach((comment) => {
+        const commentElement = document.createElement("div");
+        commentElement.classList.add("bg-base-300", "p-3", "rounded-full");
+        commentElement.textContent = comment.contenido; // Ajusta según el campo correcto
+        commentsContainer.appendChild(commentElement);
+      });
+
+      postElement.appendChild(commentsContainer);
+
+      // Formulario de comentarios
+      const commentForm = document.createElement("form");
+      commentForm.classList.add("mt-4", "flex", "gap-3", "comment-form");
+      commentForm.dataset.postId = post.id;
+
+      const commentInput = document.createElement("input");
+      commentInput.type = "text";
+      commentInput.placeholder = "Añade un comentario";
+      commentInput.classList.add("input", "w-full");
+      commentForm.appendChild(commentInput);
+
+      const commentSubmitButton = document.createElement("button");
+      commentSubmitButton.type = "submit";
+      commentSubmitButton.textContent = "Comentar";
+      commentSubmitButton.classList.add("btn", "btn-primary");
+      commentForm.appendChild(commentSubmitButton);
+
+      postElement.appendChild(commentForm);
+
+      // Añadir el post al contenedor de posts
+      postsContainer.appendChild(postElement);
     });
-
-    postElement.appendChild(commentsContainer);
-
-    // Formulario de comentarios
-    const commentForm = document.createElement("form");
-    commentForm.classList.add("mt-4", "flex", "gap-3", "comment-form");
-    commentForm.dataset.postId = posts.community.id;
-
-    const commentInput = document.createElement("input");
-    commentInput.type = "text";
-    commentInput.placeholder = "Añade un comentario";
-    commentInput.classList.add("input", "w-full");
-    commentForm.appendChild(commentInput);
-
-    const commentSubmitButton = document.createElement("button");
-    commentSubmitButton.type = "submit";
-    commentSubmitButton.textContent = "Comentar";
-    commentSubmitButton.classList.add("btn", "btn-primary");
-    commentForm.appendChild(commentSubmitButton);
-
-    postElement.appendChild(commentForm);
-
-    // Añadir el post al contenedor de posts
-    postsContainer.appendChild(postElement);
   }
 
   // Manejador para crear un nuevo post
@@ -163,14 +176,13 @@ export const postPrev = () => {
         body: JSON.stringify({ titulo, contenido }),
       })
         .then((response) => {
-          if (response.status !== 200) {
-            console.error("Error al crear el post:", response.statusText);
-            return;
+          if (!response.ok) {
+            throw new Error(`Error al crear el post: ${response.statusText}`);
           }
-
           return response.json();
         })
         .then((data) => {
+          console.log(data); // Para verificar la estructura de la respuesta
           if (data.success) {
             postPrev(); // Recargar los posts después de crear uno nuevo
             newPostForm.reset();
@@ -191,13 +203,6 @@ export const postPrev = () => {
       const postId = parseInt(e.target.dataset.postId);
       const commentInput = e.target.querySelector("input");
       const comment = commentInput.value;
-
-      // if (comment) {
-      //   const post = posts.find((p) => p.id === postId);
-      //   post.comments.push(comment);
-      //   renderPosts(post); // Recargar los posts
-      //   commentInput.value = "";
-      // }
     }
   });
 

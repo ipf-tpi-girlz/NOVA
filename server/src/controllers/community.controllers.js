@@ -7,11 +7,23 @@ import ParticipanteComunidad from "../models/participan.comunity.js";
 
 export const getCommunity = async (req, res) => {
   try {
-    const community = await Comunidad.findAll();
-    console.log(color.green(`Comunidades encontradas: ${community}`));
-    return res.status(200).json({ community });
+    // Obtener todas las comunidades
+    const communities = await Comunidad.findAll();
+    // Convertir las instancias de Sequelize a objetos planos
+    const plainCommunities = communities.map((community) =>
+      community.get({ plain: true })
+    );
+
+    console.log(
+      color.green(
+        `Comunidades encontradas: ${JSON.stringify(plainCommunities)}`
+      )
+    );
+    // Enviar el array directamente, sin envolverlo en un objeto extra
+    return res.status(200).json(plainCommunities); // Directamente el array
   } catch (error) {
     console.log(color.red(error));
+    return res.status(500).json({ error: "Error al obtener las comunidades" });
   }
 };
 

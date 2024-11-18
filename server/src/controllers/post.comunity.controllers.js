@@ -6,7 +6,9 @@ export const getPostsComunity = async (req, res) => {
   //*id de la comunidad
   const { id } = req.params;
   try {
-    const posts = await PublicacionComunidad.findAll({ where: { comunidad_id: id } });
+    const posts = await PublicacionComunidad.findAll({
+      where: { comunidad_id: id },
+    });
     if (posts.length === 0) {
       console.log(color.red("No se encontraron posts en esta comunidad"));
       return res
@@ -41,12 +43,17 @@ export const createPostComunity = async (req, res) => {
       contenido,
       img: req.file ? req.file.path : null,
     });
-    return res.status(201).json(post);
+    return res.status(201).json({
+      success: true,
+      message: "Post creado exitosamente",
+      post,
+    });
   } catch (error) {
     console.log(color.red(error));
-    return res
-      .status(500)
-      .json({ message: "Se produjo un error en el servidor" });
+    return res.status(500).json({
+      success: false,
+      message: "Se produjo un error en el servidor",
+    });
   }
 };
 

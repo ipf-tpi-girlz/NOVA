@@ -1,5 +1,7 @@
 import { fetchDeleteComunity } from "../api/comunity";
 
+//no se esta utilizando, esto te da la opcion de eliminar y editar
+
 const id = window.location.pathname.split("/")[2];
 
 export const menuComunidad = () => {

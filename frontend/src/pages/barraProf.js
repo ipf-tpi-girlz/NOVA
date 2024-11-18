@@ -1,3 +1,6 @@
+// const comunidadId = window.location.pathname.split("/")[2];
+//lo de rriba probe por si se podia agarrar el id para redirigir
+
 export const menuProfesional = () => {
   const $container = document.createElement("div");
   $container.classList.add(
@@ -192,7 +195,10 @@ export const menuProfesional = () => {
           console.log("Comunidad creada:", result.message);
           $modal.classList.add("hidden");
 
-          window.location.href = "/menu-comunidad/";
+          //probe agarrar la id por el window.location y por el reult.id los dos devuelven unddefild
+          // Redirigir a la comunidad recién creada
+          window.location.href = `/post/${result.id}`;
+          cons;
         } else {
           console.error("Error al crear la comunidad:", result.message);
         }
