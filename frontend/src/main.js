@@ -94,9 +94,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(BtnEmergency());
           app.appendChild(Footer());
           break;
-        case "/foros":
-          app.appendChild(Footer());
-          break;
+        // case "/foros":
+        //   app.appendChild(Footer());
+        //   break;
         case "/manos-unidas":
           app.appendChild(ManosUnidas());
           app.appendChild(forop());
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(menuProfesional());
           app.appendChild(Footer());
           break;
-        case "/comunidades-general":
+        case "/foros":
           // app.appendChild(menuProfesional());
           app.appendChild(getComunidades());
           break;

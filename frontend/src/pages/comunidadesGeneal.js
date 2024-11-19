@@ -1,44 +1,129 @@
 export const getComunidades = () => {
   const container = document.createElement("div");
-  container.classList.add("flex", "px-10", "flex-col", "items-center"); // Centrar el contenido
+  container.classList.add("flex", "px-10", "flex-col", "items-center");
 
   // Crear el h1 centrado y más grande
   const title = document.createElement("h1");
   title.textContent = "Comunidades";
   title.classList.add("text-4xl", "font-bold", "text-center", "mb-8", "mt-12");
-
-  // Agregar el título al contenedor
   container.appendChild(title);
+
+  // Botón Crear Grupo
+  const createButton = document.createElement("button");
+  createButton.classList.add(
+    "bg-gradient-to-r",
+    "from-purple-500",
+    "to-indigo-600",
+    "text-white",
+    "py-2",
+    "px-4",
+    "rounded-xl",
+    "hover:opacity-90",
+    "transition-opacity",
+    "duration-200",
+    "font-semibold",
+    "mb-4"
+  );
+  createButton.textContent = "Crear Grupo";
+  container.appendChild(createButton);
 
   // Contenedor de comunidades
   const comunidadesContainer = document.createElement("div");
   comunidadesContainer.classList.add("grid", "grid-cols-4", "gap-4", "p-5");
+  container.appendChild(comunidadesContainer);
+
+  // Modal
+  const modal = document.createElement("div");
+  modal.classList.add(
+    "fixed",
+    "inset-0",
+    "bg-black",
+    "bg-opacity-50",
+    "flex",
+    "justify-center",
+    "items-center",
+    "hidden"
+  );
+
+  const modalContent = document.createElement("div");
+  modalContent.classList.add(
+    "bg-white",
+    "p-6",
+    "rounded-xl",
+    "w-80",
+    "shadow-lg"
+  );
+  modalContent.innerHTML = `
+    <h3 class="text-xl font-bold mb-4">Crear Nuevo Grupo</h3>
+    <input type="text" id="nombreGrupo" class="w-full p-2 border rounded-lg mb-4" placeholder="Nombre del grupo" />
+    <textarea id="descGrupo" class="w-full p-2 border rounded-lg mb-4" placeholder="Descripción del grupo"></textarea>
+    <button class="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-2 rounded-lg hover:opacity-90 transition-opacity duration-200 font-semibold">Crear</button>
+  `;
+
+  modal.appendChild(modalContent);
+  container.appendChild(modal);
+
+  // Mostrar modal al hacer clic en el botón "Crear Grupo"
+  createButton.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+  });
+
+  // Lógica para cerrar el modal al hacer clic fuera del contenido
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.classList.add("hidden");
+    }
+  });
+
+  // Lógica para crear el grupo
+  const createGroupButton = modalContent.querySelector("button");
+  createGroupButton.addEventListener("click", async () => {
+    const nombre = document.getElementById("nombreGrupo").value;
+    const desc = document.getElementById("descGrupo").value;
+
+    try {
+      const response = await fetch("http://localhost:4000/comunity/create", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nombre, desc }),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        console.log("Comunidad creada:", result.message);
+        modal.classList.add("hidden");
+
+        // Redirigir a la comunidad recién creada
+      } else {
+        console.error("Error al crear la comunidad:", result.message);
+      }
+    } catch (error) {
+      console.error("Error en el servidor:", error);
+    }
+  });
 
   // Función para obtener las comunidades desde el backend
   function fetchCommunities() {
-    console.log("Iniciando la solicitud de comunidades..."); // Agregar log para depuración
-    fetch("http://localhost:4000/comunity/") // Reemplaza con la URL de tu API
+    console.log("Iniciando la solicitud de comunidades...");
+    fetch("http://localhost:4000/comunity/")
       .then((response) => {
         if (!response.ok) {
           return Promise.reject(
             `Error al obtener las comunidades: ${response.statusText}`
           );
         }
-        console.log("Respuesta obtenida correctamente"); // Agregar log de éxito
+        console.log("Respuesta obtenida correctamente");
         return response.json();
       })
       .then((comunity) => {
-        console.log("Datos de las comunidades recibidos:", comunity); // Agregar log de los datos
+        console.log("Datos de las comunidades recibidos:", comunity);
         if (typeof comunity === "object") {
-          // Recorrer las comunidades como un objeto (por ejemplo, { id1: {...}, id2: {...} })
           Object.keys(comunity).forEach((id) => {
-            const community = comunity[id]; // Acceder a cada comunidad usando su ID
-            console.log(`Comunidad ID: ${id}`); // Mostrar ID de cada comunidad
-            console.log(`Comunidad Nombre: ${community.nombre}`); // Mostrar nombre
-            console.log(`Comunidad Descripción: ${community.desc}`); // Mostrar descripción
-
+            const community = comunity[id];
             if (community && community.nombre && community.desc) {
-              // Llamar a la función para renderizar cada comunidad
               renderCommunity(community);
             } else {
               console.error(
@@ -58,7 +143,6 @@ export const getComunidades = () => {
 
   // Función para renderizar una comunidad en la pantalla
   function renderCommunity(community) {
-    console.log("Renderizando comunidad:", community); // Agregar log para depurar renderización
     const communityElement = document.createElement("div");
     communityElement.classList.add(
       "bg-base-300",
@@ -69,7 +153,6 @@ export const getComunidades = () => {
       "shadow-md"
     );
 
-    // Nombre de la comunidad
     const communityName = document.createElement("h2");
     communityName.textContent = community.nombre;
     communityName.classList.add(
@@ -80,13 +163,11 @@ export const getComunidades = () => {
     );
     communityElement.appendChild(communityName);
 
-    // Descripción de la comunidad
     const communityDesc = document.createElement("p");
     communityDesc.textContent = community.desc || "Descripción no disponible";
     communityDesc.classList.add("text-gray-600", "mb-4");
     communityElement.appendChild(communityDesc);
 
-    // Botón para unirse
     const joinButton = document.createElement("button");
     joinButton.textContent = "Unirse";
     joinButton.classList.add(
@@ -99,23 +180,16 @@ export const getComunidades = () => {
       "hover:bg-blue-600"
     );
 
-    // Agregar funcionalidad al botón (Aquí puedes implementar la lógica para unirse)
     joinButton.addEventListener("click", () => {
       alert(`Te has unido a la comunidad: ${community.nombre}`);
-      // Aquí puedes agregar la lógica para procesar la acción de unirse a la comunidad
     });
 
     communityElement.appendChild(joinButton);
-
-    // Añadir la comunidad al contenedor de comunidades
     comunidadesContainer.appendChild(communityElement);
   }
 
   // Llamar a la función para obtener y renderizar las comunidades
   fetchCommunities();
-
-  // Agregar el contenedor de comunidades debajo del título
-  container.appendChild(comunidadesContainer);
 
   return container;
 };
