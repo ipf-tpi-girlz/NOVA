@@ -65,8 +65,7 @@ const displayProfile = (profileData) => {
   profileImg.className = "w-24 h-24 rounded-full mr-4";
 
   // Añadir el nombre
-  profileImg.src = profileData.img;
-  profileImg.alt = `${profileData.nombre}'s profile image`;
+  profileImg.src = profileData.img ? profileData.img : "https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg";
   profileImg.className = "w-24 h-24 rounded-full mr-4";
 
   // Añadir el nombre

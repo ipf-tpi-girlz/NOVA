@@ -1,6 +1,6 @@
 import { getUserProfile } from "../api/auth";
 import { fetchGetForosById, fetchUpdateForo, fetchCreateForo } from "../api/foro";
-import { fetchUserComunnity } from "../api/comunity";
+import { fetchComunitiesUser } from "../api/comunity";
 import { fetchArticlesByUser } from "../api/articles.js";
 import { showNotification } from "../components/notification.js";
 import Swal from "sweetalert2";
@@ -159,7 +159,7 @@ export const HeaderProfile = () => {
 
   const loadCommunities = async () => {
     try {
-      const data = await fetchUserComunnity();
+      const data = await fetchComunitiesUser();
       const communities = data && data.comunidades ? data.comunidades : [];
 
       if (communities.length === 0) {

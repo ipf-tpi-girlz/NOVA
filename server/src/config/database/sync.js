@@ -15,17 +15,23 @@ import Mensaje from "../../models/message.js";
 // Función para sincronizar tablas y relaciones
 export const syncTables = async () => {
   try {
-    // Usuario -> Perfil (One-to-One)
-    Usuario.hasOne(Perfil, { foreignKey: "usuario_id", as: 'perfil' });
-    Perfil.belongsTo(Usuario, { foreignKey: "usuario_id", as: 'usuario' });
+    // Definición de relaciones
+    Usuario.hasOne(Perfil, { foreignKey: "usuario_id", as: "perfil" });
+    Perfil.belongsTo(Usuario, { foreignKey: "usuario_id", as: "usuario" });
 
     // Usuario -> Publicacion (One-to-Many)
     Usuario.hasMany(Publicacion, { foreignKey: "usuario_id" });
     Publicacion.belongsTo(Usuario, { foreignKey: "usuario_id" });
 
     // Modelo PublicacionImagen
-    PublicacionImagen.belongsTo(Usuario, { foreignKey: 'usuario_id', as: "usuario" });
-    Usuario.hasMany(PublicacionImagen, { foreignKey: 'usuario_id', as: "articulos" });
+    PublicacionImagen.belongsTo(Usuario, {
+      foreignKey: "usuario_id",
+      as: "usuario",
+    });
+    Usuario.hasMany(PublicacionImagen, {
+      foreignKey: "usuario_id",
+      as: "articulos",
+    });
     // Publicacion -> Reaccion (One-to-Many)
     Publicacion.hasMany(Reaccion, { foreignKey: "publicacion_id" });
     Reaccion.belongsTo(Publicacion, { foreignKey: "publicacion_id" });

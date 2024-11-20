@@ -15,6 +15,7 @@ import {
   FormRegisterUser,
   FormRegisterProf,
   BtnEmergency,
+  PostsFeed,
 } from "./components";
 
 // Páginas
@@ -35,18 +36,17 @@ import { articulos } from "./pages/seccionInf/seccionArticulos.js";
 import { Contactanos } from "./components/contactanosBtn.js";
 import { Nosotros } from "./pages/Nosotros.js";
 import { menuProfesional } from "./pages/barraProf.js";
+import { menuComunidad } from "./pages/barraGrupo.js";
+import { postPrev } from "./pages/contenPost.js";
+import { getComunidades } from "./pages/comunidadesGeneal.js";
+import { menuProfesionall } from "./pages/contenedorGeneral.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
 console.log(id);
 
 // Rutas públicas
-const publicRoutes = [
-  "/",
-  "/register-user",
-  "/login",
-  "/registrar-profesional",
-];
+const publicRoutes = ["/", "/register-user", "/login", "/register-prof"];
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -81,8 +81,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(RegisterPage(FormRegisterUser()));
           app.appendChild(Footer());
           break;
-        case "/registrar-profesional":
-          app.appendChild(FormRegisterProf());
+        case "/register-prof":
+          app.appendChild(RegisterPage(FormRegisterProf()));
+          appendChild(Footer());
           break;
         case "/login":
           app.appendChild(RegisterPage(FormLogin()));
@@ -127,7 +128,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(artAbuso());
           app.appendChild(Footer());
           break;
-        case "/registrar-profesional":
+        case "/register-prof":
           app.appendChild(FormRegisterProf());
           app.appendChild(Footer());
           break;
@@ -140,7 +141,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         case "/menu-prof":
           app.appendChild(menuProfesional());
           app.appendChild(Footer());
+          break;
+        case "/foros":
+          // app.appendChild(menuProfesional());
+          app.appendChild(getComunidades());
+          break;
+        case "/prueba":
+          app.appendChild(menuProfesionall());
+          app.appendChild(Footer());
+          break;
       }
+
+      if (pathname.startsWith("/post/")) {
+        app.appendChild(postPrev());
+      }
+
+      // if (pathname.startsWith("/menu-comunidad/")) {
+      //   app.appendChild(menuComunidad());
+      //   app.appendChild(Footer());
+      // }
 
       LocalStorage();
     };

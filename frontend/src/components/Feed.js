@@ -67,7 +67,8 @@ export function Feed() {
   containerArticulo.appendChild(divider.cloneNode(true));
 
   fetchComunities().then(data => {
-    const foros = data.community
+    console.log(data)
+    const foros = data
     console.log(foros)
     foros.forEach(e => {
       const newForum = ForumCard(

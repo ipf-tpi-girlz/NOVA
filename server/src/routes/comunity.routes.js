@@ -5,7 +5,7 @@ import {
   createCommunity,
   updateCommunity,
   deleteCommunity,
-  community
+  community,
 } from "../controllers/community.controllers.js";
 import { upload } from "../middlewares/img.middleware.js";
 import { validarJWT } from "../middlewares/jwt.validation.js";

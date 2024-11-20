@@ -7,11 +7,23 @@ import Comentario from "../models/coments.js";
 
 export const getCommunity = async (req, res) => {
   try {
-    const community = await Comunidad.findAll();
-    console.log(color.green(`Comunidades encontradas: ${community}`));
-    return res.status(200).json({ community });
+    // Obtener todas las comunidades
+    const communities = await Comunidad.findAll();
+    // Convertir las instancias de Sequelize a objetos planos
+    const plainCommunities = communities.map((community) =>
+      community.get({ plain: true })
+    );
+
+    console.log(
+      color.green(
+        `Comunidades encontradas: ${JSON.stringify(plainCommunities)}`
+      )
+    );
+    // Enviar el array directamente, sin envolverlo en un objeto extra
+    return res.status(200).json(plainCommunities); // Directamente el array
   } catch (error) {
     console.log(color.red(error));
+    return res.status(500).json({ error: "Error al obtener las comunidades" });
   }
 };
 
@@ -112,8 +124,11 @@ export const createCommunity = async (req, res) => {
   const { nombre, desc } = req.body;
   try {
     if (user.role !== "institucion" && user.role !== "profesional") {
-      console.log(color.red("No puede crear una comunidad"))
-      return res.status(403).json({ message: "Solo las instituciones y profesionales pueden crear una comunidad" });
+      console.log(color.red("No puede crear una comunidad"));
+      return res.status(403).json({
+        message:
+          "Solo las instituciones y profesionales pueden crear una comunidad",
+      });
     }
 
     await Comunidad.create({
@@ -166,12 +181,20 @@ export const updateCommunity = async (req, res) => {
 export const deleteCommunity = async (req, res) => {
   const user = req.user;
   const { id } = req.params;
+  console.log(user.id);
   try {
-    const community = await Comunidad.findOne({ where: { id } });
+    const communities = await Comunidad.findAll({
+      where: { moderador_id: user.id },
+    });
+    console.log({ communities });
+    const community = await Comunidad.findOne({ where: { id: +id } });
+    console.log({ community });
     if (!community) {
       console.log(color.red("No se encontro la comunidad"));
       return res.status(404).json({ message: "No se encontro la comunidad" });
     }
+
+    console.log({ user });
     if (community.moderador_id !== user.id) {
       console.log(color.red("No puede eliminar esta comunidad"));
       return res
@@ -182,7 +205,9 @@ export const deleteCommunity = async (req, res) => {
     console.log(color.blue(`Comunidad eliminada`));
     return res.status(200).json({ message: "Comunidad eliminada" });
   } catch (error) {
+    console.log("Error catch");
     console.log(color.red(error));
     res.status(500).json({ message: "Se produjo un error en el servidor" });
   }
 };
+

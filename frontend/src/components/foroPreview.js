@@ -43,6 +43,7 @@ const renderPosts = (id) => {
   return fetchComunity(id).then((data) => {
     const postsContainer = document.createElement("div");
     postsContainer.innerHTML = '';
+    console.log(data)
     const publicaciones = data.community.publicaciones;
 
     if (publicaciones.length === 0) {
