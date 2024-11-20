@@ -13,10 +13,15 @@ socket.on("help_requested", (data) => {
     console.log("help_requested", data);
     swal
       .fire({
-        color: "text-base",
-        background: "bg-base-200",
-        title: "Alguien necesita ayuda!",
-        confirmButtonText: "Ayudar",
+        background: "#fce7f3",
+        showConfirmButton: true,
+        confirmButtonColor: "#ec4899",
+        buttonsStyling: true,
+        html:
+          '<h1 class="text-lg text-pink-950 font-serif font-bold">Alerta: Red de contención </h1>' +
+          '<p class="text-lg  font-serif  text-pink-950 font-semibold">¿Te gustaría ayudar a esta persona?</p>' +
+          '<p class="text-sm mt-0 font-serif text-pink-950">Un usuario esta solicitando ayuda en un momento de crisis emocional</p>',
+
         timer: 100000,
         timerProgressBar: true,
       })
