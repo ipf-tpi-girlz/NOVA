@@ -1,4 +1,7 @@
+import { createComent } from "../api/comments.postC";
 import { fetchComunity } from "../api/comunity"
+import { createPost } from "../api/post.community";
+import { showNotification } from "./notification";
 
 export const forop = (id) => {
   const container = document.createElement("div");
@@ -9,11 +12,11 @@ export const forop = (id) => {
   createPostSection.appendChild(newPost(id));
 
   const postsSection = document.createElement("div");
-  postsSection.classList.add("flex", "flex-col", "w-2/3", "p-5");
+  postsSection.classList.add("flex", "flex-col", "w-2/3", "p-5", "overflow-y-auto", "max-h-screen");
 
   // Mensaje de bienvenida
   const welcomeMessage = document.createElement("div");
-  welcomeMessage.classList.add("mb-6", "text-center", "p-4", "bg-white", "rounded-lg", "shadow-md");
+  welcomeMessage.classList.add("mb-6", "text-center", "p-4", "bg-base", "rounded-lg", "shadow-md", "border", "border-gray-200");
   welcomeMessage.innerHTML = `
     <h1 class="text-2xl font-serif text-purple-800 mb-2">Espacio Seguro 💜</h1>
     <p class="text-gray-600">Este es un lugar de apoyo y comprensión. Tu voz importa y estás a salvo aquí.</p>
@@ -44,11 +47,11 @@ const renderPosts = (id) => {
 
     if (publicaciones.length === 0) {
       const emptyState = document.createElement("div");
-      emptyState.classList.add("text-center", "p-8", "bg-white", "rounded-lg", "shadow-md");
+      emptyState.classList.add("text-center", "p-8", "bg-base", "border", "border-gray-200", "rounded-lg", "shadow-md");
       emptyState.innerHTML = `
         <div class="text-6xl mb-4">🫂</div>
-        <h3 class="text-xl font-serif text-purple-800 mb-2">Aún no hay publicaciones</h3>
-        <p class="text-gray-600">Sé la primera persona en compartir tu historia. Estamos aquí para escucharte y apoyarte 💜</p>
+        <h3 class="text-xl font-serif text-base-800 mb-2">Aún no hay publicaciones</h3>
+        <p class="text">Sé la primera persona en compartir tu historia. Estamos aquí para escucharte y apoyarte 💜</p>
       `;
       postsContainer.appendChild(emptyState);
       return postsContainer;
@@ -60,9 +63,11 @@ const renderPosts = (id) => {
         "post",
         "p-5",
         "mb-5",
-        "bg-white",
+        "bg-base",
         "rounded-lg",
-        "shadow-md",
+        "shadow-xl",
+        "border",
+        "border-gray-200",
         "transition-transform",
         "duration-200",
         "hover:transform",
@@ -76,18 +81,18 @@ const renderPosts = (id) => {
       imgProfile.classList.add("rounded-full", "w-10", "h-10", "border-2", "border-purple-200");
       const nameUser = document.createElement("h6");
       nameUser.textContent = post.usuario.nombre;
-      nameUser.classList.add("font-serif", "text-purple-800");
+      nameUser.classList.add("font-serif", "text-base-800");
       user.appendChild(imgProfile);
       user.appendChild(nameUser);
 
       const postContent = document.createElement("div");
-      postContent.classList.add("post-content", "mt-4");
+      postContent.classList.add("post-content", "mt-4", "max-h-60", "overflow-y-auto");
       const title = document.createElement("h1");
       title.textContent = post.titulo;
-      title.classList.add("text-xl", "font-serif", "text-purple-900", "text-center", "mb-3");
+      title.classList.add("text-xl", "font-serif", "text-base-800", "text-center", "mb-3");
       const desc = document.createElement("p");
       desc.textContent = post.contenido;
-      desc.classList.add("text-gray-700", "leading-relaxed");
+      desc.classList.add("text", "leading-relaxed");
 
       if (post.img) {
         const img = document.createElement("div");
@@ -102,35 +107,40 @@ const renderPosts = (id) => {
       }
 
       const commentsContainer = document.createElement("div");
-      const divider = document.createElement("div");
-      divider.classList.add("divider", "m-1");
-      commentsContainer.classList.add("comments", "flex", "flex-col", "gap-3", "mt-4");
+      commentsContainer.classList.add(
+        "comments",
+        "overflow-y-auto",
+        "flex-col",
+        "gap-3",
+        "max-h-80", // Ajustar el tamaño de los comentarios
+        "transition-all",
+        "duration-300"
+      );
 
+      // Mostrar comentarios existentes
       post.comentarios.forEach((comment) => {
         const commentElement = document.createElement("div");
         commentElement.classList.add(
           "comment",
           "bg-purple-50",
-          "p-3",
           "rounded-lg",
-          "mb-3",
           "transition-colors",
           "duration-200",
           "hover:bg-purple-100"
         );
 
         const user = document.createElement("div");
-        user.classList.add("flex", "gap-3", "items-center", "mb-2");
+        user.classList.add("flex", "gap-3", "items-center");
         const imgComment = document.createElement("div");
         imgComment.style.backgroundImage = `url(${comment.usuario.img || "https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg"})`;
         imgComment.classList.add("w-8", "h-8", "bg-cover", "rounded-full", "border-2", "border-purple-200");
         const nameU = document.createElement("h5");
         nameU.textContent = comment.usuario.nombre;
-        nameU.classList.add("font-serif", "text-purple-800");
+        nameU.classList.add("font-serif", "text-base-800");
 
         const commentText = document.createElement("p");
         commentText.textContent = comment.contenido;
-        commentText.classList.add("text-gray-600", "pl-11");
+        commentText.classList.add("text", "pl-11");
 
         user.appendChild(imgComment);
         user.appendChild(nameU);
@@ -139,41 +149,79 @@ const renderPosts = (id) => {
         commentsContainer.appendChild(commentElement);
       });
 
-      const comentarContainer = document.createElement("div");
-      comentarContainer.classList.add("flex", "gap-3", "mt-4");
-      const comentarInput = document.createElement("input");
-      comentarInput.type = "text";
-      comentarInput.placeholder = "Comparte tu apoyo...";
-      comentarInput.classList.add(
-        "input",
-        "input-bordered",
-        "w-full",
-        "focus:border-purple-400",
-        "focus:ring-purple-400"
-      );
-      const comentarButton = document.createElement("button");
-      comentarButton.textContent = "Comentar";
-      comentarButton.classList.add(
-        "btn",
-        "bg-purple-600",
-        "text-white",
-        "hover:bg-purple-700",
-        "transition-colors",
-        "duration-200"
-      );
-      comentarContainer.appendChild(comentarInput);
-      comentarContainer.appendChild(comentarButton);
-      commentsContainer.appendChild(comentarContainer);
+      const newCommentContainer = document.createElement("div");
+      newCommentContainer.classList.add("flex", "gap-3", "items-center", "mt-4"); // Asegurar que el formulario esté separado de los comentarios
+      const newComment = document.createElement("input");
+      newComment.placeholder = "Escribe un comentario...";
+      newComment.classList.add("border", "border-gray-200", "rounded", "bg-base-100", "w-full", "px-4", "py-2", "rounded-lg");
+      const newCommentButton = document.createElement("button");
+      newCommentButton.textContent = "";
+
+      const icon = document.createElement("svg");
+      icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+      </svg>`;
+      newCommentButton.appendChild(icon);
+      newCommentButton.classList.add("text", "px-2", "py-2", "rounded-full", "hover:shadow-lg");
+
+      newCommentContainer.appendChild(newComment);
+      newCommentContainer.appendChild(newCommentButton);
+      commentsContainer.appendChild(newCommentContainer);
+
+      const id = post.id;
+      // Evento para agregar nuevo comentario
+      newCommentButton.addEventListener("click", async () => {
+        const content = newComment.value;
+        if (content.trim() === "") {
+          return showNotification("error", "No puedes enviar comentarios vacios");
+        }
+        try {
+          await createComent(id, content);
+          window.location.reload();
+        } catch (error) {
+          showNotification("error", error.message);
+        }
+      });
+
+      // Botón para alternar visibilidad de los comentarios
+      const toggleCommentsBtn = document.createElement("button");
+      toggleCommentsBtn.textContent = " ";
+      const iconComments = document.createElement("svg");
+      iconComments.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
+      </svg>`;
+
+      toggleCommentsBtn.appendChild(iconComments);
+      toggleCommentsBtn.classList.add("toggle-comments", "text-purple-600", "mt-4", "hover:underline");
+      const iconNoComment = document.createElement("svg");
+      iconNoComment.innerHTML = ` 
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
+      </svg>
+
+      `
+      toggleCommentsBtn.addEventListener("click", () => {
+        const isHidden = commentsContainer.classList.contains("hidden");
+        commentsContainer.classList.toggle("hidden", !isHidden);
+        toggleCommentsBtn.textContent = isHidden ? "" : "";
+        toggleCommentsBtn.appendChild(isHidden ? iconNoComment : iconNoComment, isHidden ? iconComments : iconNoComment)
+      });
 
       postContainer.appendChild(user);
       postContainer.appendChild(postContent);
+      postContainer.appendChild(toggleCommentsBtn);
       postContainer.appendChild(commentsContainer);
       postsContainer.appendChild(postContainer);
     });
 
+
     return postsContainer;
   });
 };
+
+
+
 
 const renderMembers = (id) => {
   return fetchComunity(id).then((data) => {
@@ -182,9 +230,9 @@ const renderMembers = (id) => {
     const membersContainer = document.createElement("div");
     membersContainer.classList.add(
       "p-5",
-      "bg-white",
+      "bg-base",
       "rounded-lg",
-      "shadow-md",
+      "shadow-xl",
       "flex",
       "flex-col",
       "gap-3",
@@ -192,7 +240,7 @@ const renderMembers = (id) => {
     );
 
     const moderator = document.createElement("div");
-    moderator.innerHTML = `<span class="text-purple-800">👋 Moderador:</span> ${moderador}`;
+    moderator.innerHTML = `<span class="text-base-800">👋 Moderador:</span> ${moderador}`;
     moderator.className = "font-serif font-bold";
 
     const divider = document.createElement("div");
@@ -200,13 +248,13 @@ const renderMembers = (id) => {
 
     const members = document.createElement("div");
     members.innerHTML = "💜 Miembros de la comunidad";
-    members.className = "font-serif font-bold text-purple-800";
+    members.className = "font-serif font-bold text";
 
     const membersList = document.createElement("ul");
     membersList.className = "space-y-2";
     data2.forEach((member) => {
       const memberItem = document.createElement("li");
-      memberItem.classList.add("flex", "items-center", "gap-2", "text-gray-700");
+      memberItem.classList.add("flex", "items-center", "gap-2", "text");
       memberItem.innerHTML = `
         <span class="w-2 h-2 bg-purple-400 rounded-full"></span>
         ${member.usuario.nombre}
@@ -226,21 +274,22 @@ export const newPost = (id) => {
   const newPostForm = document.createElement("form");
   newPostForm.classList.add(
     "p-5",
-    "bg-white",
+    "bg-base",
     "rounded-lg",
-    "shadow-md",
+    "shadow-xl",
     "flex",
     "flex-col",
-    "gap-3"
+    "gap-3",
+    "shadow-xl"
   );
 
   const newPostTitle = document.createElement("h2");
   newPostTitle.innerHTML = "Comparte tu historia 💜";
-  newPostTitle.classList.add("text-xl", "font-serif", "text-purple-800", "text-center");
+  newPostTitle.classList.add("text-xl", "font-serif", "text-base-800", "text-center");
 
   const supportMessage = document.createElement("p");
   supportMessage.textContent = "Este es un espacio seguro para compartir. Tu experiencia puede ayudar a otras personas.";
-  supportMessage.classList.add("text-gray-600", "text-sm", "text-center", "mb-2");
+  supportMessage.classList.add("text", "text-sm", "text-center", "mb-2");
 
   const newPostTitleInput = document.createElement("input");
   newPostTitleInput.type = "text";
@@ -249,7 +298,7 @@ export const newPost = (id) => {
   newPostTitleInput.classList.add(
     "input",
     "border",
-    "border-gray-200",
+    "border-gray-300",
     "focus:border-purple-400",
     "focus:ring-purple-400",
     "transition-colors",
@@ -277,9 +326,9 @@ export const newPost = (id) => {
   newPostButton.innerHTML = "Publicar 💜";
   newPostButton.classList.add(
     "btn",
-    "bg-purple-600",
-    "text-white",
-    "hover:bg-purple-700",
+    "bg-primary",
+    "text",
+    "hover:shadow-lg",
     "transition-colors",
     "duration-200",
     "font-serif"
@@ -287,7 +336,26 @@ export const newPost = (id) => {
 
   newPostForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    // Aquí va la lógica del submit
+
+    const titulo = newPostTitleInput.value;
+    const contenido = newPostTextArea.value;
+
+    if (titulo && contenido) {
+      const data = {
+        titulo,
+        contenido,
+      }
+      await createPost(id, data);
+      newPostTitleInput.value = "";
+      newPostTextArea.value = "";
+      showNotification("success", "Publicación creada con exito.");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } else {
+      showNotification("error", "Debe llenar todos los campos.");
+    }
+
   });
 
   newPostForm.appendChild(newPostTitle);

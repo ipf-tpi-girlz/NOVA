@@ -399,10 +399,15 @@ const createCommunityCard = (community) => {
     const title = document.createElement('h2');
     title.textContent = community.nombre;
     title.classList.add(
-        'text-xl',
+        'text-3xl', // Reducir tamaño si es necesario
         'font-bold',
-        'text',
-        'tracking-tight'
+        'text-gray-900', // Asegurar que sea un color oscuro visible
+        'flex',
+        'items-center',
+        'gap-3',
+        'text-shadow-lg', // Añade sombra para contraste
+        'w-full',
+        'text-center'
     );
 
     const desc = document.createElement('p');

@@ -5,7 +5,7 @@ const SECRET_KEY = config.SECRET_KEY;
 
 export const validarJWT = async (req, res, next) => {
   try {
-    const token = req.cookies.authToken || req.session.token;
+    const token = req.cookies.authToken
     console.log(token);
     if (!token) {
       return res.status(403).json({ message: "Token no proporcionado" });

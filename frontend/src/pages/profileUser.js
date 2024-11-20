@@ -30,7 +30,7 @@ const ProfileUser = () => {
 
     // Llamamos a getUserProfile() usando .then() en vez de await
     getUserProfile().then(user => {
-        $content.innerHTML = ''; // Limpiar el contenido de la carga
+        $content.innerHTML = '';
 
         const fields = [
             { icon: '👤', label: 'Email', value: user.mail },
@@ -689,9 +689,14 @@ export const Perfil = () => {
     const $container = document.createElement("div");
     $container.classList.add("flex", "bg-base-", "min-h-screen", "items-stretch");
     getUserProfile().then((data) => {
-        console.log(data)
+
         $container.appendChild(ProfileUser())
-        $container.appendChild(HeaderProf())
+        if (data.role === "profesional" || data.role === "institucion") {
+            $container.appendChild(HeaderProf())
+        } else {
+            $container.appendChild(HeaderProfile())
+        }
+
 
     })
 

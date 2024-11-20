@@ -24,6 +24,7 @@ export const community = async (req, res) => {
         {
           model: PublicacionComunidad,
           as: "publicaciones",
+          order: [['createdAt', 'DESC']], // Asegúrate de que "createdAt" es el campo correcto para ordenar
           include: [
             {
               model: Comentario,
@@ -53,6 +54,8 @@ export const community = async (req, res) => {
         }
       ]
     });
+
+
 
     if (!community) {
       console.log(color.red("Comunidad no encontrada"));

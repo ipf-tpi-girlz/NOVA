@@ -1,6 +1,7 @@
 import Comentario from "../models/coments.js";
 import color from "chalk";
 import PublicacionComunidad from "../models/post.community.js"
+import ParticipanteComunidad from "../models/join.comunity.js"
 
 export const getComment = async (req, res) => {
 
@@ -29,6 +30,11 @@ export const createComment = async (req, res) => {
         if (!existPublication) {
             return res.status(404).json({ message: "Publicacion no encontrada" })
         }
+        const isMember = await ParticipanteComunidad.findOne({ where: { usuario_id: user.id, comunidad_id: existPublication.comunidad_id } })
+        if (!isMember) {
+            return res.status(403).json({ message: "Solo los miembros de la comunidad pueden comentar" })
+        }
+
         const newComment = await Comentario.create({
             publicacion_id: id,
             usuario_id: user.id,
