@@ -59,10 +59,13 @@ export const createHeroSection = () => {
 
   createPostButton.addEventListener("click", () => {
     Swal.fire({
-      title: "Crear historia",
+      confirmButtonColor: "#ec4899",
+      buttonsStyling: true,
+      background: "#fce7f3",
       html: `
+  <h1 class="text-lg text-pink-950 font-serif font-bold">Crear Historia</h1>,
         <input id="card-title" class="input input-bordered  w-full" placeholder="Título">
-        <textarea id="swal-desc" class="textarea textarea-bordered w-full " placeholder="Cuéntanos tu historia" rows="4"></textarea>
+        <textarea id="swal-desc" class="textarea textarea-bordered mt-4 w-full " placeholder="Cuéntanos tu historia" rows="4"></textarea>
       `,
       focusConfirm: false,
       preConfirm: () => {

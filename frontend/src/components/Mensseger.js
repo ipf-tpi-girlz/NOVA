@@ -5,7 +5,7 @@ export const Chat = () => {
     "flex flex-col w-96 z-50 fixed bottom-0  left-0 bg-white h-[100px] shadow-md rounded-t-2xl overflow-hidden transition-all duration-300 cursor pointer";
   const chatHeader = document.createElement("div");
   chatHeader.className =
-    "flex z-50 items-center text-center justify-center bg-pink-400  h-[50px] rounded-t-2xl font-serif font-semibold";
+    "flex z-50 items-center text-center cursor-pointer justify-center bg-pink-400  h-[50px] rounded-t-2xl font-serif font-semibold";
   chatHeader.textContent = "Chat";
 
   const chatBody = document.createElement("div");
@@ -98,7 +98,7 @@ export const Chat = () => {
     item.appendChild(messageText);
     item.appendChild(messageTime);
     mensajes.appendChild(item);
-    window.scrollTo(0, chatBody.scrollHeight);
+    chatBody.scrollTo(0, chatBody.scrollHeight);
   });
 
   return chatContainer;
