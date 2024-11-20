@@ -5,7 +5,7 @@ import { showNotification } from "./notification";
 
 export const forop = (id) => {
   const container = document.createElement("div");
-  container.classList.add("flex", "gap-4", "bg-purple-50", "min-h-screen", "p-4");
+  container.classList.add("flex", "gap-4", "bg-base-100", "bg-cover", "min-h-screen", "p-4");
 
   const createPostSection = document.createElement("div");
   createPostSection.classList.add("flex", "flex-col", "w-1/3", "p-5");
@@ -18,8 +18,8 @@ export const forop = (id) => {
   const welcomeMessage = document.createElement("div");
   welcomeMessage.classList.add("mb-6", "text-center", "p-4", "bg-base", "rounded-lg", "shadow-md", "border", "border-gray-200");
   welcomeMessage.innerHTML = `
-    <h1 class="text-2xl font-serif text-purple-800 mb-2">Espacio Seguro 💜</h1>
-    <p class="text-gray-600">Este es un lugar de apoyo y comprensión. Tu voz importa y estás a salvo aquí.</p>
+    <h1 class="text-2xl font-serif text-base-800 mb-2">Espacio Seguro 💜</h1>
+    <p class="text-base-600">Este es un lugar de apoyo y comprensión. Tu voz importa y estás a salvo aquí.</p>
   `;
   postsSection.appendChild(welcomeMessage);
 
@@ -237,7 +237,9 @@ const renderMembers = (id) => {
       "flex",
       "flex-col",
       "gap-3",
-      "h-fit"
+      "h-fit",
+      "border",
+      "border-gray-200"
     );
 
     const moderator = document.createElement("div");
@@ -281,7 +283,9 @@ export const newPost = (id) => {
     "flex",
     "flex-col",
     "gap-3",
-    "shadow-xl"
+    "shadow-xl",
+    "border",
+    "border-gray-200"
   );
 
   const newPostTitle = document.createElement("h2");

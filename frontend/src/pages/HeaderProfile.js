@@ -269,7 +269,7 @@ export const HeaderProfile = () => {
     const card = createElementWithClasses('div', [
       'w-full',
       'max-w-sm',
-      'h-64',
+      'h-80',
       'rounded-2xl',
       'shadow-lg',
       'overflow-hidden',
@@ -279,7 +279,7 @@ export const HeaderProfile = () => {
       'items-center',
       'text-center',
       'bg-gradient-to-br',
-      'from-purple-50',
+      'from-base-100',
       'to-pink-50',
       'p-8',
       'animate-float'
@@ -302,11 +302,11 @@ export const HeaderProfile = () => {
       'to-pink-600',
       'mb-2'
     ]);
-    title.textContent = '¡Explora nuevas comunidades!';
+    title.textContent = '¡Explora las comunidades!';
 
     const description = createElementWithClasses('p', [
       'text-sm',
-      'text-gray-600',
+      'text',
       'mb-6'
     ]);
     description.textContent = message;
@@ -314,8 +314,10 @@ export const HeaderProfile = () => {
     const exploreButton = createElementWithClasses('button', [
       'px-6',
       'py-2',
-      'bg-white',
-      'text-purple-600',
+      'bg-base-800',
+      "border",
+      "border-indigo-200",
+      'text',
       'font-medium',
       'rounded-xl',
       'shadow-md',

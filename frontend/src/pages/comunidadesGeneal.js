@@ -1,3 +1,5 @@
+import { showNotification } from "../components/notification";
+
 export const getComunidades = () => {
   const container = document.createElement("div");
   container.classList.add("flex", "px-10", "flex-col", "items-center");
@@ -94,14 +96,18 @@ export const getComunidades = () => {
       const result = await response.json();
       if (response.ok) {
         console.log("Comunidad creada:", result.message);
+        showNotification("success", result.message);
         modal.classList.add("hidden");
+        window.location.reload()
 
         // Redirigir a la comunidad recién creada
       } else {
+        showNotification("error", result.message);
         console.error("Error al crear la comunidad:", result.message);
       }
     } catch (error) {
       console.error("Error en el servidor:", error);
+      showNotification("error", error.message);
     }
   });
 

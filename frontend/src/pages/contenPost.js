@@ -1,4 +1,4 @@
-//esto funciona si yo no le redijo, es decir le coloco el id en el parametro manualmente
+import { showNotification } from "../components/notification";
 
 const comunidadId = window.location.pathname.split("/")[2];
 
@@ -76,7 +76,7 @@ export const postPrev = () => {
 
       const posts = await response.json();
       if (response.ok) {
-        renderPosts(posts); // Llama a la función para renderizar los posts
+        renderPosts(posts);
       } else {
         console.error("Error al obtener los posts:", posts.message);
       }
@@ -88,7 +88,7 @@ export const postPrev = () => {
   // Función para renderizar los posts
   // Función para renderizar los posts
   function renderPosts(posts) {
-    postsContainer.innerHTML = ""; // Limpiar el contenedor de posts
+    postsContainer.innerHTML = "";
 
     // Iterar sobre las publicaciones
     posts.community.publicaciones.forEach((post) => {
@@ -99,8 +99,8 @@ export const postPrev = () => {
         "rounded-lg",
         "shadow-md",
         "shadow-md",
-        "w-full", // Asegura que el contenedor use el ancho completo disponible
-        "max-w-4xl", // Limita el ancho máximo (puedes ajustar este valor)
+        "w-full",
+        "max-w-4xl",
         "mx-auto"
       );
 
@@ -128,7 +128,7 @@ export const postPrev = () => {
       post.comentarios.forEach((comment) => {
         const commentElement = document.createElement("div");
         commentElement.classList.add("bg-base-300", "p-3", "rounded-full");
-        commentElement.textContent = comment.contenido; // Ajusta según el campo correcto
+        commentElement.textContent = comment.contenido;
         commentsContainer.appendChild(commentElement);
       });
 
@@ -177,12 +177,13 @@ export const postPrev = () => {
       })
         .then((response) => {
           if (!response.ok) {
+
             throw new Error(`Error al crear el post: ${response.statusText}`);
           }
           return response.json();
         })
         .then((data) => {
-          console.log(data); // Para verificar la estructura de la respuesta
+          console.log(data);
           if (data.success) {
             postPrev(); // Recargar los posts después de crear uno nuevo
             newPostForm.reset();
@@ -191,6 +192,7 @@ export const postPrev = () => {
           }
         })
         .catch((error) => {
+          showNotification("error", error.message);
           console.error("Error en la creación del post:", error);
         });
     }

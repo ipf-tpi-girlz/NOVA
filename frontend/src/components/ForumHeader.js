@@ -45,7 +45,6 @@ export const ForumHeader = (id, userId) => {
       padding: 0.5rem 1rem;
       border-radius: 9999px;
       font-size: 0.875rem;
-      color: #9f7aea;
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -78,7 +77,7 @@ export const ForumHeader = (id, userId) => {
 
   const caratula = document.createElement("div");
   caratula.classList.add(
-    "h-48",
+    "h-64",
     "flex",
     "rounded-xl",
     "justify-between",
@@ -127,14 +126,14 @@ export const ForumHeader = (id, userId) => {
       "flex-col",
       "gap-3",
       "justify-center",
-      "text-white",
+      "text",
       "max-w-2xl"
     );
 
     const safeBadge = document.createElement("div");
-    safeBadge.className = "safe-space-badge";
+    safeBadge.className = "safe-space-badge text-base-800 bg-base";
     safeBadge.innerHTML = `
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+      <svg class="w-4 h-4 text-base-800" fill="currentColor"  viewBox="0 0 20 20">
         <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
         <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"></path>
       </svg>
@@ -169,7 +168,7 @@ export const ForumHeader = (id, userId) => {
     if (!usuarioIds.includes(userId)) {
       const joinBtn = document.createElement("button");
       joinBtn.className =
-        "support-button px-8 py-3 bg-white/90 text-purple-700 rounded-full font-medium shadow-lg hover:bg-purple-50 transition-all duration-300 flex items-center gap-2";
+        "support-button px-8 py-3 bg-white/90 text-text-800 rounded-full font-medium shadow-lg hover:bg-purple-50 transition-all duration-300 flex items-center gap-2";
       joinBtn.innerHTML = `
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
