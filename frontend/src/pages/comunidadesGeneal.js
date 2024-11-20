@@ -168,9 +168,10 @@ export const getComunidades = () => {
     communityDesc.classList.add("text-gray-600", "mb-4");
     communityElement.appendChild(communityDesc);
 
-    const joinButton = document.createElement("button");
-    joinButton.textContent = "Unirse";
-    joinButton.classList.add(
+    // Botón "Ver más"
+    const viewMoreButton = document.createElement("button");
+    viewMoreButton.textContent = "Ver más";
+    viewMoreButton.classList.add(
       "mt-2",
       "px-4",
       "py-2",
@@ -180,11 +181,15 @@ export const getComunidades = () => {
       "hover:bg-blue-600"
     );
 
-    joinButton.addEventListener("click", () => {
-      alert(`Te has unido a la comunidad: ${community.nombre}`);
+    viewMoreButton.addEventListener("click", () => {
+      // Aquí puedes agregar la lógica para redireccionar al detalle de la comunidad
+      window.location.href = `/comunidad/${community.id}`;
+
+      alert(`Ver más detalles de la comunidad: ${community.nombre}`);
+      // Aquí puedes agregar la lógica para mostrar más detalles de la comunidad
     });
 
-    communityElement.appendChild(joinButton);
+    communityElement.appendChild(viewMoreButton);
     comunidadesContainer.appendChild(communityElement);
   }
 
