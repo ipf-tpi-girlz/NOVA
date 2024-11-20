@@ -15,6 +15,7 @@ import authRoutes from "../routes/auth.routes.js";
 import routerJoinC from "../routes/join.community.routes.js"
 import articleRouter from "../routes/article.routes.js";
 import routerComents from "../routes/coments.router.js";
+import { time } from "node:console";
 export const app = express();
 const server = createServer(app);
 
@@ -68,15 +69,45 @@ app.use("/auth", authRoutes);
 app.use("/articles", articleRouter);
 app.use("/join-community", routerJoinC)
 
-// Evento de conexión para Socket.IO
-io.on("connection", (socket) => {
+let activeHelpRequests = {};
+io.on("connect", (socket) => {
   console.log(`Cliente conectado: ${socket.id}`);
 
+  // Solicitud de ayuda
+  socket.on("help_request", () => {
+    console.log("hola");
+    activeHelpRequests[socket.id] = false;
+    console.log(activeHelpRequests);
+
+    io.emit("help_requested", {
+      message: "un usuario necesita ayuda",
+      ayudatario: socket.id,
+    });
+  });
+
+  // Aceptar ayuda
+  socket.on("help_accept", (data) => {
+    console.log("data", data);
+
+    activeHelpRequests[data.ayudatario] = false;
+    console.log("noentedo", data);
+    io.emit("help_accepted", "holaMundo");
+  });
+
+  socket.on("chat_message", ({ socketId, msg }) => {
+    console.log("Mensaje recibido: ", msg, "de: ", socketId);
+    const currentTime = new Date();
+    const hours = currentTime.getHours().toString().padStart(2, "0"); // Hora
+    const minutes = currentTime.getMinutes().toString().padStart(2, "0"); // Minutos
+    const timeString = `${hours}:${minutes}`;
+    io.emit("chat_message", { socketId, msg, time: timeString });
+  });
+
+  // Desconexión del cliente
   socket.on("disconnect", () => {
-    console.log("Cliente desconectado");
+    console.log(`Cliente desconectado: ${socket.id}`);
   });
 });
-
 server.listen(config.PORT, () => {
   console.log(`Servidor corriendo en el puerto ${config.PORT}`);
 });

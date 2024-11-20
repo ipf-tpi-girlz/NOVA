@@ -1,3 +1,6 @@
+import socket from "../config/socket.oiConfig";
+import { Chat } from "./Mensseger.js";
+import Swal from "sweetalert2";
 export const BtnEmergency = () => {
   const container = document.createElement("div");
   container.className = "shadow-lg";
@@ -30,21 +33,56 @@ export const BtnEmergency = () => {
     "Al presionar este botón, se abrirá un espacio de apoyo donde podrás solicitar ayuda. Notificaremos a alguien disponible para hablar y te acompañará en un chat privado.";
   descripcion.className = "font-thin font-serif text-xs text-opacity-95";
 
+  // Botones de red de contencion
+
+  //Boton Help
   const helpBtn = document.createElement("button");
   helpBtn.className =
     "btn bg-pink-200 items-center hover:bg-pink-400 w-96 mt-2 mb-4";
   helpBtn.innerHTML = `<span class = "material-symbols-rounded ">favorite</span> Necesito ayuda ahora `;
-  // helpBtn.addEventListener(click );
+
+  // const sendMessage = document.createElement("button");
+  // sendMessage.className = "btn w-96 mt-2 mb-4";
+  // sendMessage.innerHTML = `<span class="material-symbols-rounded">send</span> Enviar mensaje`;
+
+  //Logica detras de los botones
+
+  //Requerir ayuda
+  helpBtn.addEventListener("click", () => {
+    socket.emit("help_request", socket.id);
+    console.log("se ha enviado el mensaje");
+    helpBtn.innerHTML = `<span class="material-symbols-rounded"></span> Buscando Ayuda.. <br> Tu solicitud ha sido enviada a los usuarios activos `;
+    helpBtn.className =
+      "animate-pulse p-4 mb-4 font-serif border-dashed border-2 border-base-300";
+
+    descripcion.style.display = "none";
+  });
+
+  //Escuchar ayuda
+  socket.on("help_requested", (data) => {
+    const { requesterId, message } = data;
+  });
+
+  socket.on("help_accepted", (data) => {
+    console.log("Si anda 😭");
+    helpBtn.textContent = "Se ha aceptado la ayuda";
+    document.getElementById("app").appendChild(Chat());
+  });
 
   const recursos = document.createElement("div");
   recursos.className = "flex justify-center center mt-4 gap-8 items-center ";
-  const message = document.createElement("h4");
+  const message = document.createElement("a");
   message.innerHTML = `<span class = "material-symbols-rounded items-center ">Chat_Bubble</span> Contactanos`;
-  message.className = "text-sm font-serif";
+  message.className = "text-sm font-serif cursor-pointer";
+  message.href =
+    "https://wa.me/3704675473?text=Quiero%20comunicarme%20con%20ustedes.";
 
-  const llamada = document.createElement("div");
+  const llamada = document.createElement("a");
   llamada.innerHTML = `<span class = "material-symbols-rounded  items-center">phone_in_talk</span>Linea 144`;
-  llamada.className = "text-sm font-serif";
+  llamada.className = "text-sm font-serif cursor-pointer";
+  llamada.addEventListener("click", () => {
+    window.location.href = "tel:144";
+  });
 
   recursos.appendChild(llamada);
   recursos.appendChild(message);

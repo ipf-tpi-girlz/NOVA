@@ -3,12 +3,15 @@ import { profileProfID } from "../api/auth.js";
 export const ProfessionalCard = (nombre, desc, especialidad, usuario_id) => {
   const card = document.createElement("div");
   card.className = "card card-compact bg-base-100 bg-cover";
+  card.className = "card card-compact bg-base-100 bg-cover";
   card.addEventListener("click", () => showProfileDetail(usuario_id));
 
   const cardBody = document.createElement("div");
   cardBody.className = "card-body";
+  cardBody.className = "card-body";
 
   const cardTitle = document.createElement("h2");
+  cardTitle.className = "card-title";
   cardTitle.className = "card-title";
   cardTitle.textContent = nombre;
 
@@ -53,9 +56,15 @@ const displayProfile = (profileData) => {
   // Crear un contenedor para la imagen y el nombre
   const headerContainer = document.createElement("div");
   headerContainer.className = "flex items-start mb-4";
-
+  // Crear un contenedor para la imagen y el nombre
+  // Añadir la imagen
   // Añadir la imagen
   const profileImg = document.createElement("img");
+  profileImg.src = profileData.img;
+  profileImg.alt = `${profileData.nombre}'s profile image`;
+  profileImg.className = "w-24 h-24 rounded-full mr-4";
+
+  // Añadir el nombre
   profileImg.src = profileData.img;
   profileImg.alt = `${profileData.nombre}'s profile image`;
   profileImg.className = "w-24 h-24 rounded-full mr-4";
@@ -89,6 +98,7 @@ const displayProfile = (profileData) => {
   // Añadir la descripción
   const profileDesc = document.createElement("p");
   profileDesc.textContent = `Descripción: ${profileData.perfil.descripcion}`;
+  profileDesc.textContent = `Descripción: ${profileData.perfil.descripcion}`;
 
   // Añadir el número de teléfono
   const profilePhone = document.createElement("p");
@@ -106,6 +116,10 @@ const displayProfile = (profileData) => {
 
   // Agregar todos los elementos al contenedor de información
   infoContainer.appendChild(profileGender);
+  infoContainer.appendChild(profileDepartment);
+  infoContainer.appendChild(profileLocation);
+  infoContainer.appendChild(profileDesc);
+  infoContainer.appendChild(profilePhone);
   infoContainer.appendChild(profileDepartment);
   infoContainer.appendChild(profileLocation);
   infoContainer.appendChild(profileDesc);

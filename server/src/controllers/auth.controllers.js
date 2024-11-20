@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 export const getUsers = async (req, res) => {
   try {
     const users = await Usuario.findAll({
-      where: { role: 'profesional' },
+      where: { role: "profesional" },
       include: [
         {
           model: Perfil,
@@ -17,7 +17,9 @@ export const getUsers = async (req, res) => {
     res.status(200).json(users);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error al obtener los usuarios y perfiles" });
+    res
+      .status(500)
+      .json({ message: "Error al obtener los usuarios y perfiles" });
   }
 };
 export const getUserProf = async (req, res) => {
@@ -30,7 +32,7 @@ export const getUserProf = async (req, res) => {
       include: [
         {
           model: Perfil,
-          as: 'perfil',
+          as: "perfil",
         },
       ],
     });
@@ -42,7 +44,9 @@ export const getUserProf = async (req, res) => {
     res.status(200).json(users);
   } catch (error) {
     console.log(color.red(error));
-    return res.status(500).json({ message: "Se produjo un error en el servidor" });
+    return res
+      .status(500)
+      .json({ message: "Se produjo un error en el servidor" });
   }
 };
 export const getUserById = async (req, res) => {
@@ -90,13 +94,19 @@ export const updatePassword = async (req, res) => {
 
     if (updatedPassword[0] === 0) {
       console.log(color.red("La contraseña no ha sido actualizada"));
-      return res.status(400).json({ message: "La contraseña no ha sido actualizada" });
+      return res
+        .status(400)
+        .json({ message: "La contraseña no ha sido actualizada" });
     }
 
-    return res.status(200).json({ message: "La contraseña ha sido actualizada correctamente" });
+    return res
+      .status(200)
+      .json({ message: "La contraseña ha sido actualizada correctamente" });
   } catch (error) {
     console.log(color.red(error));
-    return res.status(500).json({ message: "Se produjo un error en el servidor" });
+    return res
+      .status(500)
+      .json({ message: "Se produjo un error en el servidor" });
   }
 }
 export const updateUser = async (req, res) => {
@@ -108,7 +118,7 @@ export const updateUser = async (req, res) => {
     const updateUser = {
       nombre,
       departamento,
-      localidad
+      localidad,
     };
 
     if (req.file) {
@@ -121,7 +131,9 @@ export const updateUser = async (req, res) => {
       const userUpdateResult = await Usuario.update(updateUser, { where: { id: id } });
 
       if (userUpdateResult[0] === 0) {
-        return res.status(404).json({ message: "Usuario no encontrado o no actualizado" });
+        return res
+          .status(404)
+          .json({ message: "Usuario no encontrado o no actualizado" });
       }
 
       const perfil = await Perfil.findOne({ where: { usuario_id: id } });
@@ -130,7 +142,7 @@ export const updateUser = async (req, res) => {
       }
 
       const updatedEspecialidad = perfil.especialidad
-        ? `${perfil.especialidad} ${especialidad || ''}`.trim()
+        ? `${perfil.especialidad} ${especialidad || ""}`.trim()
         : especialidad;
 
       await perfil.update({
@@ -141,21 +153,31 @@ export const updateUser = async (req, res) => {
         especialidad: updatedEspecialidad,
       });
 
-      return res.status(200).json({ message: "Los datos han sido actualizados correctamente" });
+      return res
+        .status(200)
+        .json({ message: "Los datos han sido actualizados correctamente" });
     }
 
     if (user.role === "victima") {
-      const userUpdateResult = await Usuario.update(updateUser, { where: { id } });
+      const userUpdateResult = await Usuario.update(updateUser, {
+        where: { id },
+      });
 
       if (userUpdateResult[0] === 0) {
-        return res.status(404).json({ message: "Perfil no encontrado o no actualizado" });
+        return res
+          .status(404)
+          .json({ message: "Perfil no encontrado o no actualizado" });
       }
 
-      return res.status(200).json({ message: "Los datos han sido actualizados correctamente" });
+      return res
+        .status(200)
+        .json({ message: "Los datos han sido actualizados correctamente" });
     }
   } catch (error) {
     console.log("Error:", error);
-    return res.status(500).json({ message: "Se produjo un error en el servidor" });
+    return res
+      .status(500)
+      .json({ message: "Se produjo un error en el servidor" });
   }
 };
 
@@ -164,7 +186,7 @@ export const deleteAccount = async (req, res) => {
     const user = req.user;
     await Usuario.destroy({ where: { id: user.id } });
 
-    res.clearCookie('authToken');
+    res.clearCookie("authToken");
 
     res.status(200).json("La cuenta ha sido eliminada correctamente");
   } catch (error) {
@@ -172,6 +194,5 @@ export const deleteAccount = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Se produjo un error en el servidor" });
-
   }
 };

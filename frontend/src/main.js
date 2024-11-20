@@ -1,5 +1,7 @@
 import "./style.css";
 import "material-symbols";
+import "./config/socket.oiConfig.js";
+import "socket.io-client";
 
 // Manejo de modo claro y oscuro
 import { themeChange } from "theme-change";
