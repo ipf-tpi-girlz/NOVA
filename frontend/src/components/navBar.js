@@ -3,8 +3,7 @@ import { checkSession } from "../api/auth.js";
 import { logoutUser } from "../api/auth.js";
 import { notification } from "antd";
 export const Navbar = async () => {
-
-  const isAuthenticated = await checkSession().catch(error => {
+  const isAuthenticated = await checkSession().catch((error) => {
     console.error("Error al verificar sesión:", error);
     return false;
   });
@@ -34,7 +33,7 @@ export const Navbar = async () => {
   );
   //Logo
   const logo = document.createElement("a");
-  logo.classList.add("btn", "btn-ghost", "text-2xl", "font-serif");
+  logo.classList.add("btn", "btn-ghost", "text-xl", "font-serif");
   logo.textContent = "NOVA";
   logo.setAttribute("href", "/home");
 
@@ -91,6 +90,7 @@ export const Navbar = async () => {
 
       return li;
     }
+    const home = createLink("/home", "Inicio");
     const forums = createLink("/foros", "Foros");
     const histories = createLink("/historias", "Historias");
     const articles = createLink("/articulos", "Artículos");
@@ -136,7 +136,7 @@ export const Navbar = async () => {
     item1.appendChild(buttonPerfil);
     buttonPerfil.addEventListener("click", () => {
       window.location.href = "/profile";
-    })
+    });
 
     const item2 = document.createElement("li");
     const buttonLogOut = document.createElement("button");
@@ -146,12 +146,12 @@ export const Navbar = async () => {
     buttonLogOut.addEventListener("click", async () => {
       try {
         const response = await logoutUser();
-        console.log(response)
+        console.log(response);
         if (response && response.success) {
           notification.success({
-            message: 'Cierre de sesión',
-            description: 'Sesión cerrada exitosamente.',
-            placement: 'topRight',
+            message: "Cierre de sesión",
+            description: "Sesión cerrada exitosamente.",
+            placement: "topRight",
             duration: 2,
           });
           setTimeout(() => {
@@ -159,17 +159,19 @@ export const Navbar = async () => {
           }, 2000);
         } else {
           notification.error({
-            message: 'Error',
-            description: response?.message || 'Error al cerrar sesión. Por favor, intenta de nuevo.',
-            placement: 'topRight',
+            message: "Error",
+            description:
+              response?.message ||
+              "Error al cerrar sesión. Por favor, intenta de nuevo.",
+            placement: "topRight",
           });
         }
       } catch (error) {
         console.error("Error del servidor:", error);
         notification.error({
-          message: 'Error',
-          description: 'Hubo un problema al cerrar sesión.',
-          placement: 'topRight',
+          message: "Error",
+          description: "Hubo un problema al cerrar sesión.",
+          placement: "topRight",
         });
       }
     });
@@ -197,7 +199,7 @@ export const Navbar = async () => {
     });
 
     //Se añaden los links al menu para pantallas grandes
-
+    menu.appendChild(home);
     menu.appendChild(forums);
     menu.appendChild(histories);
     menu.appendChild(articles);

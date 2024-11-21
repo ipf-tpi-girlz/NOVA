@@ -12,7 +12,7 @@ import routerComunity from "../routes/comunity.routes.js";
 import routerPostComunity from "../routes/post.comunity.routes.js";
 import postRouter from "../routes/post.routes.js";
 import authRoutes from "../routes/auth.routes.js";
-import routerJoinC from "../routes/join.community.routes.js"
+import routerJoinC from "../routes/join.community.routes.js";
 import articleRouter from "../routes/article.routes.js";
 import routerComents from "../routes/coments.router.js";
 import { time } from "node:console";
@@ -61,13 +61,13 @@ app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 //! RUTAS
 app.use("/users", UserRouter);
-app.use("/coments", routerComents)
+app.use("/coments", routerComents);
 app.use("/foro", postRouter);
 app.use("/comunity", routerComunity);
 app.use("/comunity-post", routerPostComunity);
 app.use("/auth", authRoutes);
 app.use("/articles", articleRouter);
-app.use("/join-community", routerJoinC)
+app.use("/join-community", routerJoinC);
 
 let activeHelpRequests = {};
 io.on("connect", (socket) => {

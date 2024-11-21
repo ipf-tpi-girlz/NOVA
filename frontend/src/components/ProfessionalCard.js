@@ -2,8 +2,8 @@ import { profileProfID } from "../api/auth.js";
 
 export const ProfessionalCard = (nombre, desc, especialidad, usuario_id) => {
   const card = document.createElement("div");
-  card.className = "card card-compact bg-base-100 bg-cover";
-  card.className = "card card-compact bg-base-100 bg-cover";
+  card.className = "card card-compact cursor-pointer bg-base-100 bg-cover";
+  card.className = "card card-compact cursor-pointer bg-base-100 bg-cover";
   card.addEventListener("click", () => showProfileDetail(usuario_id));
 
   const cardBody = document.createElement("div");
@@ -42,16 +42,18 @@ const showProfileDetail = async (id) => {
 const displayProfile = (profileData) => {
   // Seleccionar o crear el contenedor donde se mostrará el perfil
   let previewContainer = document.getElementById("previewContainer");
-  previewContainer.className = "profile-preview bg-base-100 w-full max-w-2xl shadow-md p-6 rounded-lg max-w-md mx-auto";
+  previewContainer.className =
+    "profile-preview cursor-pointer bg-base-100 w-full max-w-2xl shadow-md p-6 rounded-lg max-w-md mx-auto";
   if (!previewContainer) {
     previewContainer = document.createElement("div");
     previewContainer.id = "previewContainer";
-    previewContainer.className = "profile-preview shadow-md p-6 rounded-lg max-w-md mx-auto";
+    previewContainer.className =
+      "profile-preview  cursor-point shadow-md p-6 rounded-lg max-w-md mx-auto";
     document.body.appendChild(previewContainer);
   }
 
   // Limpiar el contenido previo
-  previewContainer.innerHTML = '';
+  previewContainer.innerHTML = "";
 
   // Crear un contenedor para la imagen y el nombre
   const headerContainer = document.createElement("div");
@@ -65,7 +67,9 @@ const displayProfile = (profileData) => {
   profileImg.className = "w-24 h-24 rounded-full mr-4";
 
   // Añadir el nombre
-  profileImg.src = profileData.img ? profileData.img : "https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg";
+  profileImg.src = profileData.img
+    ? profileData.img
+    : "https://i.pinimg.com/564x/9e/c9/19/9ec919468e1ed8af1002b551f5950a94.jpg";
   profileImg.className = "w-24 h-24 rounded-full mr-4";
 
   // Añadir el nombre
@@ -110,8 +114,6 @@ const displayProfile = (profileData) => {
   // Añadir el modo de atención
   const profileAtencion = document.createElement("p");
   profileAtencion.textContent = `Modo de Atención: ${profileData.perfil.modo_atencion}`;
-
-
 
   // Agregar todos los elementos al contenedor de información
   infoContainer.appendChild(profileGender);
