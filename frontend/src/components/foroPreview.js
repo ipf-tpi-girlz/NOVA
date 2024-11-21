@@ -5,7 +5,7 @@ import { showNotification } from "./notification";
 
 export const forop = (id) => {
   const container = document.createElement("div");
-  container.classList.add("flex", "gap-4", "bg-base-100", "bg-cover", "min-h-screen", "p-4");
+  container.classList.add("flex", "gap-4", "bg-purple-50", "bg-cover", "min-h-screen", "p-4");
 
   const createPostSection = document.createElement("div");
   createPostSection.classList.add("flex", "flex-col", "w-1/3", "p-5");
@@ -48,7 +48,7 @@ const renderPosts = (id) => {
 
     if (publicaciones.length === 0) {
       const emptyState = document.createElement("div");
-      emptyState.classList.add("text-center", "p-8", "bg-base", "border", "border-gray-200", "rounded-lg", "shadow-md");
+      emptyState.classList.add("text-center", "p-8", "bg-purple-50", "border", "border-gray-200", "rounded-lg", "shadow-md");
       emptyState.innerHTML = `
         <div class="text-6xl mb-4">🫂</div>
         <h3 class="text-xl font-serif text-base-800 mb-2">Aún no hay publicaciones</h3>

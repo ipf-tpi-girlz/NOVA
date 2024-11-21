@@ -178,10 +178,10 @@ const showModal = (form) => {
   }
 
   const $modalOverlay = document.createElement("div");
-  $modalOverlay.classList.add("fixed", "inset-0", "bg-base", "bg-opacity-50", "backdrop-blur-sm", "flex", "justify-center", "items-center", "z-50", "p-4", "duration-300", "opacity-0");
+  $modalOverlay.classList.add("fixed", "inset-0", "bg-purple-100", "bg-opacity-50", "backdrop-blur-sm", "flex", "justify-center", "items-center", "z-50", "p-4", "duration-300", "opacity-0");
 
   const $modal = document.createElement("div");
-  $modal.classList.add("bg-base", "rounded-xl", "shadow-2xl", "p-6", "w-full", "max-w-md");
+  $modal.classList.add("bg-purple-50", "rounded-xl", "shadow-2xl", "p-6", "w-full", "max-w-md");
 
   requestAnimationFrame(() => {
     $modalOverlay.classList.add("opacity-100");

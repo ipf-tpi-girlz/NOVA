@@ -72,6 +72,9 @@ export const HeaderProfile = () => {
   $leftTitleContainer.append($leftTitle);
   $leftColumn.append($leftTitleContainer);
 
+  //!PUBLICACIONES ACA
+  const $publicationContainer = createElementWithClasses('div', ['flex', 'flex-col', 'gap-4', 'mb-8']);
+
 
   // Contenedor de comunidades con efecto glassmorphism
   const $rightColumn = createElementWithClasses('div', [
@@ -212,7 +215,7 @@ export const HeaderProfile = () => {
 
     const cardDesc = createElementWithClasses('p', [
       'text-sm',
-      'text-gray-600',
+      'text',
       'line-clamp-3',
       'group-hover:text-gray-700',
       'transition-colors',

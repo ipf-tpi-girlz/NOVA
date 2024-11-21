@@ -146,7 +146,7 @@ export const createHeroSection = () => {
         const forumCard = document.createElement("div");
         forumCard.classList.add(
           "card",
-          "bg-base-200",
+          "bg-purple-50",
           "break-words",
           "rounded-lg",
           "p-2",

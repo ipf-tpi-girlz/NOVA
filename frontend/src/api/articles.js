@@ -39,3 +39,25 @@ export const fetchArticles = async () => {
         console.error("Error al obtener los artículos:", error);
     }
 }
+
+
+export const fetchCreateArticles = async (data) => {
+    try {
+        const response = await fetch(`${BASEURL}/create`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Error al crear el artículos");
+        }
+        return response.json();
+    } catch (error) {
+        console.log(error)
+    }
+}

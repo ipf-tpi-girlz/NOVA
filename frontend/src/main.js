@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           break;
         case "/articulos":
           app.appendChild(articulos());
+          app.appendChild(BtnEmergency())
           app.appendChild(Footer());
           break;
         case "/articulo-fisica":
@@ -145,6 +146,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         case "/foros":
           // app.appendChild(menuProfesional());
           app.appendChild(getComunidades());
+          app.appendChild(BtnEmergency())
+          app.appendChild(Footer());
           break;
         case "/prueba":
           app.appendChild(menuProfesionall());
