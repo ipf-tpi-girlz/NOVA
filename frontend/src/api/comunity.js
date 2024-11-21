@@ -36,6 +36,22 @@ export const fetchComunitiesUser = async () => {
   }
 };
 
+export const fetchUserComunnity = async (id) => {
+  try {
+    const response = await fetch(`${BASEURL}/join-community/user/communities`, {
+      method: "GET",
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw new Error('Error en la respuesta del servidor');
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Error al obtener la comunidad del usuario:", error);
+    return { error: error.message }; // Devuelves el error para manejarlo en el frontend
+  }
+}
+
 //funcion para eliminar una comunidad
 
 export const fetchDeleteComunity = async (id) => {

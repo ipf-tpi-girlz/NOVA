@@ -1,9 +1,7 @@
 import { getUserProfile } from "../api/auth";
 import { fetchGetForosById, fetchUpdateForo, fetchCreateForo } from "../api/foro";
-import { fetchComunitiesUser } from "../api/comunity";
-import { fetchArticlesByUser } from "../api/articles.js";
-import { showNotification } from "../components/notification.js";
-import Swal from "sweetalert2";
+import { fetchUserComunnity } from "../api/comunity";
+
 
 export const HeaderProfile = () => {
   const createElementWithClasses = (tag, classes) => {
@@ -70,19 +68,15 @@ export const HeaderProfile = () => {
   const $leftTitle = createElementWithClasses('h3', ['text-2xl', 'font-bold', 'text', 'flex', 'items-center']);
   $leftTitle.innerHTML = '<svg class="w-6 h-6 mr-2 text-base-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>Mis publicaciones';
 
-  const $buttonContainer = createElementWithClasses("div", ["flex", "gap-4"]);
 
-  const $createButton = createElementWithClasses('button', ['bg-base-900', "border", "border-gray-300", 'text', 'py-2', 'px-4', 'rounded-full', 'text-sm', 'font-medium', 'shadow-xl', 'transition', 'duration-300', 'ease-in-out', 'hover:shadow-lg', 'flex', 'items-center', 'justify-center']);
-  $createButton.innerHTML = '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>Crear 📝';
-  $buttonContainer.append($createButton);
-  $leftTitleContainer.append($leftTitle, $buttonContainer);
+  $leftTitleContainer.append($leftTitle);
   $leftColumn.append($leftTitleContainer);
 
 
   // Contenedor de comunidades con efecto glassmorphism
   const $rightColumn = createElementWithClasses('div', [
     'flex-1',
-    'bg-white/80',
+    'bg-base-200',
     'backdrop-filter',
     'backdrop-blur-lg',
     'border',
@@ -92,8 +86,7 @@ export const HeaderProfile = () => {
     'p-6',
     'transition-all',
     'duration-500',
-    'hover:shadow-2xl',
-    'hover:bg-white/90'
+    'hover:shadow-2xl'
   ]);
 
   const $communityTitleContainer = createElementWithClasses('div', [
@@ -102,7 +95,7 @@ export const HeaderProfile = () => {
     'items-center',
     'mb-8',
     'bg-gradient-to-r',
-    'from-purple-100',
+    'from-base-100',
     'to-pink-100',
     'p-4',
     'rounded-2xl',
@@ -159,7 +152,7 @@ export const HeaderProfile = () => {
 
   const loadCommunities = async () => {
     try {
-      const data = await fetchComunitiesUser();
+      const data = await fetchUserComunnity();
       const communities = data && data.comunidades ? data.comunidades : [];
 
       if (communities.length === 0) {
@@ -182,7 +175,7 @@ export const HeaderProfile = () => {
 
   const createCommunityCard = (community) => {
     const card = createElementWithClasses('div', [
-      'bg-white',
+      'bg-base-100',
       'rounded-2xl',
       'shadow-lg',
       'overflow-hidden',
@@ -249,7 +242,7 @@ export const HeaderProfile = () => {
       'justify-center',
       'gap-2'
     ]);
-    joinButton.innerHTML = '<span>Ver Foro</span> <span class="text-lg">🚀</span>';
+    joinButton.innerHTML = '<span>Ver mas</span>';
 
     joinButton.addEventListener('click', () => {
       joinButton.classList.add('animate-pulse-slow');
@@ -327,7 +320,7 @@ export const HeaderProfile = () => {
       'hover:scale-105',
       'active:scale-95'
     ]);
-    exploreButton.textContent = '¡Descubre más! 🔍';
+    exploreButton.textContent = '¡Descubre las comunidades! 🔍';
 
     card.append(icon, title, description, exploreButton);
     $communitiesContainer.appendChild(card);
