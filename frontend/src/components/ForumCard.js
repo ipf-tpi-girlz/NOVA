@@ -1,7 +1,7 @@
 export function ForumCard(id, img, nombre, desc) {
   const card = document.createElement("div");
   card.id = id;
-  card.className = "card bg-base-800 image-full lg:w-82 w-62 shadow-xl ";
+  card.className = "card bg-base-800 image-full lg:w-72 w-72 shadow-xl ";
   const cardFigure = document.createElement("figure");
   cardFigure.className = "h-full";
 

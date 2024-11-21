@@ -4,21 +4,7 @@ import { showNotification } from "../../components/notification";
 import { Footer } from "../../components";
 
 export const articulos = () => {
-  document.addEventListener("DOMContentLoaded", function () {
-    // Crear estilos
-    const style = document.createElement("style");
-    style.innerHTML = `
-        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
-        body {
-          font-family: "Poppins", sans-serif;
-          background-color: #e6e6fa;
-        }
-        .hidden {
-          display: none;
-        }
-      `;
-    document.head.appendChild(style);
-  });
+
 
   checkSession().then((usu) => {
     console.log(usu)
@@ -312,5 +298,4 @@ export const articulos = () => {
 
   })
 
-  return contenedorPrincipal;
 };

@@ -40,6 +40,7 @@ import { menuComunidad } from "./pages/barraGrupo.js";
 import { postPrev } from "./pages/contenPost.js";
 import { getComunidades } from "./pages/comunidadesGeneal.js";
 import { menuProfesionall } from "./pages/contenedorGeneral.js";
+import { docsManual } from "./components/manualBtn.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
@@ -70,7 +71,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       const navbar = await Navbar();
 
       app.appendChild(navbar);
-
 
       switch (pathname) {
         case "/":
@@ -137,6 +137,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           app.appendChild(Nosotros());
           app.appendChild(BtnEmergency());
           app.appendChild(Contactanos());
+
           app.appendChild(Footer());
           break;
         case "/menu-prof":

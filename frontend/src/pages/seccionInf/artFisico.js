@@ -48,7 +48,7 @@ export const artFisco = () => {
   const headerParagraph = document.createElement("p");
   headerParagraph.classList.add("text-xl");
   headerParagraph.innerText =
-    "Exploramos cómo identificar, prevenir y apoyar en casos de violencia física ";
+    "Explorando una forma grave de violación de los derechos humanos ";
   headerContent.appendChild(headerParagraph);
 
   header.appendChild(headerContent);
