@@ -72,10 +72,165 @@ export const HeaderProfile = () => {
   $leftTitleContainer.append($leftTitle);
   $leftColumn.append($leftTitleContainer);
 
-  //!PUBLICACIONES ACA
+  // Crear el contenedor de publicaciones
   const $publicationContainer = createElementWithClasses('div', ['flex', 'flex-col', 'gap-4', 'mb-8']);
+  $publicationContainer.id = 'publicaciones-container';
 
+  // Función para cargar los datos
+  const loadData = async () => {
+    try {
+      const response = await fetchGetForosById();
+      const data = response.foros;
+      console.log(data);
 
+      // Limpiar el contenedor antes de cargar nuevos datos
+      $publicationContainer.innerHTML = "";
+
+      if (!data || data.length === 0) {
+        $publicationContainer.appendChild(createCard("Sin contenido disponible")); // Llamamos a createCard si no hay publicaciones
+      } else {
+        loadArticles(data);
+      }
+    } catch (error) {
+      console.error("Error al cargar las publicaciones:", error);
+      $publicationContainer.appendChild(createCard("Error al cargar las publicaciones"));
+    }
+  };
+
+  loadData()
+
+  // Cargar los artículos
+  const loadArticles = (data) => {
+    console.log(data)
+    data.forEach((art) => {
+      console.log(art)
+      const card = createPublicationCard(art);
+      $publicationContainer.appendChild(card);
+    });
+  };
+
+  // Crear la tarjeta de publicación
+  const createPublicationCard = (art) => {
+    const card = document.createElement("div");
+    card.classList.add(
+      "max-w-md",
+      "bg-base-100",
+      "rounded-xl",
+      "shadow-md",
+      "overflow-hidden",
+      "transition-all",
+      "duration-300",
+      "hover:shadow-xl",
+      "hover:-translate-y-1",
+      "group",
+      "cursor-pointer",
+      "border",
+      "border-gray-100",
+      "flex",
+      "flex-col"
+    );
+
+    // Contenedor del contenido (debajo de la imagen)
+    const contentWrapper = document.createElement("div");
+    contentWrapper.classList.add(
+      "p-6",
+      "space-y-4"
+    );
+
+    // Título y descripción del artículo
+    const textContent = document.createElement("div");
+    textContent.classList.add("flex-grow");
+
+    const title = document.createElement("h3");
+    title.classList.add(
+      "text-xl",
+      "font-semibold",
+      "mb-2",
+      "text",
+      "group-hover:text-primary",
+      "transition-colors",
+      "duration-300",
+      "line-clamp-2"
+    );
+    title.textContent = art.nombre || "Sin título";
+
+    const description = document.createElement("p");
+    description.classList.add(
+      "text-sm",
+      "text",
+      "leading-relaxed",
+      "line-clamp-3"
+    );
+    description.textContent = art.desc || "Sin descripción disponible.";
+
+    textContent.append(title, description);
+    contentWrapper.appendChild(textContent);
+    card.appendChild(contentWrapper);
+
+    return card;
+  };
+
+  const createCard = () => {
+    const card = document.createElement("div");
+    card.classList.add(
+      "relative",
+      "rounded-xl",
+      "shadow-lg",
+      "border",
+      "border-gray-200",
+      "bg-base-100",
+      "transition-all",
+      "duration-300",
+      "hover:shadow-2xl",
+      "cursor-pointer",
+      "flex",
+      "flex-col",
+      "justify-center",
+      "items-center",
+      "h-[500px]",
+    );
+
+    const cardContent = document.createElement("div");
+    cardContent.classList.add(
+      "flex",
+      "flex-col",
+      "justify-center",
+      "items-center",
+      "text-center",
+      "max-h-full"
+    );
+
+    const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    icon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    icon.setAttribute("viewBox", "0 0 24 24");
+    icon.setAttribute("fill", "none");
+    icon.setAttribute("stroke", "currentColor");
+    icon.setAttribute("height", "48");
+    icon.setAttribute("width", "48");
+    icon.classList.add("text-base-800", "mb-4");
+
+    const iconPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    iconPath.setAttribute("stroke-linecap", "round");
+    iconPath.setAttribute("stroke-linejoin", "round");
+    iconPath.setAttribute("stroke-width", "2");
+    iconPath.setAttribute("d", "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10");
+
+    icon.appendChild(iconPath);
+
+    const title = document.createElement("h3");
+    title.classList.add("text-xl", "font-semibold", "text", "mb-2");
+    title.textContent = "Sin Artículos";
+
+    const description = document.createElement("p");
+    description.classList.add("text-sm", "text");
+    description.textContent = "Aún no has creado articulos.";
+
+    cardContent.append(icon, title, description);
+    card.appendChild(cardContent);
+
+    const publicacionesContainer = document.getElementById("publicaciones-container");
+    publicacionesContainer.appendChild(card);
+  };
   // Contenedor de comunidades con efecto glassmorphism
   const $rightColumn = createElementWithClasses('div', [
     'flex-1',
@@ -338,28 +493,3 @@ export const HeaderProfile = () => {
 };
 
 
-//! FUNCION TRAER HISTORIAS 
-
-const loadForos = async () => {
-  try {
-    const data = await fetchGetForosById();
-
-    const communities = data && data.comunidades ? data.comunidades : [];
-
-    if (communities.length === 0) {
-      createNoCommunityCard("¡Aún no te has unido a ninguna comunidad! 🌱");
-    } else {
-      communities.forEach((communi, index) => {
-        setTimeout(() => {
-          const card = createCommunityCard(communi);
-          $communitiesContainer.appendChild(card);
-          card.style.opacity = '0';
-          card.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
-        }, index * 100);
-      });
-    }
-  } catch (error) {
-    console.error("Error al cargar las comunidades:", error);
-    createNoCommunityCard("¡Ups! Hubo un error al cargar las comunidades ⚠️");
-  }
-};

@@ -381,9 +381,9 @@ const formEditUser = async () => {
   $buttonsContainer.appendChild($submitButton);
   $form.appendChild($buttonsContainer);
 
-  // Manejo del formulario de envío
   $form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
     $submitButton.disabled = true;
     $submitButton.classList.add("opacity-75", "cursor-not-allowed");
 
@@ -393,9 +393,9 @@ const formEditUser = async () => {
       formData.append("departamento", $form.departamento.value);
       formData.append("localidad", $form.localidad.value);
 
-      const fileInput = $form.img;
-      if (fileInput.files[0]) {
-        formData.append("img", fileInput.files[0]);
+      // Asegúrate de que el input tenga el atributo `name`
+      if ($imgInput.files[0]) {
+        formData.append("img", $imgInput.files[0]);
       }
 
       const response = await updateProfile(formData);
@@ -423,6 +423,7 @@ const formEditUser = async () => {
       $submitButton.classList.remove("opacity-75", "cursor-not-allowed");
     }
   });
+
 
   return $form;
 };
